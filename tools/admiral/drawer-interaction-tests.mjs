@@ -59,7 +59,8 @@ try {
         await test('Right/left geometry, width, neutral appearance and close icon states', async () => {
             await open();
             let bounds = await drawer.boundingBox();
-            assert.equal(Math.round(bounds.x + bounds.width), 1440);
+            const layoutWidth = await page.evaluate(() => document.documentElement.clientWidth);
+            assert.equal(Math.round(bounds.x + bounds.width), layoutWidth);
             assert.equal(Math.round(bounds.width), 480);
             const primary = await drawer.evaluate(e => getComputedStyle(e).backgroundColor);
             const button = drawer.locator('.admiral-drawer__close');
@@ -175,7 +176,8 @@ try {
             assert.equal(Math.round((await drawer.boundingBox()).x), 16);
             await page.setViewportSize({ width: 360, height: 740 });
             const bounds = await drawer.boundingBox();
-            assert.equal(Math.round(bounds.width), 344);
+            const layoutWidth = await page.evaluate(() => document.documentElement.clientWidth);
+            assert.equal(Math.round(bounds.width), layoutWidth - 16);
             assert.equal(Math.round(bounds.height), 740);
             assert.equal(await drawer.locator('.admiral-drawer__actions').evaluate(e => getComputedStyle(e).flexDirection), 'column-reverse');
             await page.screenshot({ path: `${output}/${theme}-mobile.png` });
