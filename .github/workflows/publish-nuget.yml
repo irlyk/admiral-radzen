@@ -1,0 +1,58 @@
+name: Publish NuGet packages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout release source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install package verification tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ripgrep unzip
+
+      - name: Build and verify release packages
+        run: |
+          tools/admiral/build-admiral-packages.sh --configuration Release
+          node tools/admiral/verify-public-release.mjs
+          node tools/admiral/validate-consumer-integration.mjs
+
+      - name: Get short-lived NuGet publishing key
+        id: nuget-login
+        uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1
+        with:
+          user: irlyk
+
+      - name: Publish Icons, Themes, and Components
+        env:
+          NUGET_API_KEY: ${{ steps.nuget-login.outputs.NUGET_API_KEY }}
+        run: |
+          set -euo pipefail
+          source=https://api.nuget.org/v3/index.json
+          dotnet nuget push artifacts/packages/admiral/Radzen.Admiral.Icons.1.0.3.nupkg --api-key "$NUGET_API_KEY" --source "$source"
+          dotnet nuget push artifacts/packages/admiral/Radzen.Admiral.Themes.1.1.2.nupkg --api-key "$NUGET_API_KEY" --source "$source"
+          dotnet nuget push artifacts/packages/admiral/Radzen.Admiral.Components.1.2.2.nupkg --api-key "$NUGET_API_KEY" --source "$source"
