@@ -66,11 +66,11 @@ jobs:
           tools/admiral/rebuild-admiral-theme.sh
           git diff --exit-code -- Radzen.AdmiralThemes/wwwroot/css
 
-      - name: Restore solution
-        run: dotnet restore Radzen.Admiral.slnx
-
       - name: Build and verify three NuGet packages
         run: tools/admiral/build-admiral-packages.sh --configuration Release
+
+      - name: Restore solution
+        run: dotnet restore Radzen.Admiral.slnx
 
       - name: Verify package dependency graph
         run: |
