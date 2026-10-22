@@ -62,6 +62,7 @@ jobs:
         env:
           RADZEN_SOURCE_ROOT: ${{ github.workspace }}/radzen-source
         run: |
+          mkdir -p artifacts/packages/admiral
           tools/admiral/rebuild-admiral-theme.sh
           git diff --exit-code -- Radzen.AdmiralThemes/wwwroot/css
 
