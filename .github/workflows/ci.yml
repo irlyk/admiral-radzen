@@ -339,3 +339,22 @@ jobs:
           path: |
             ${{ runner.temp }}/smoke.log
             artifacts/
+
+  ci-gate:
+    name: CI gate
+    needs: [prepare, validate, browser]
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Require all validation groups
+        env:
+          PREPARE_RESULT: ${{ needs.prepare.result }}
+          VALIDATE_RESULT: ${{ needs.validate.result }}
+          BROWSER_RESULT: ${{ needs.browser.result }}
+        run: |
+          for result in "$PREPARE_RESULT" "$VALIDATE_RESULT" "$BROWSER_RESULT"; do
+            if [ "$result" != success ]; then
+              echo "Required CI group finished with: $result" >&2
+              exit 1
+            fi
+          done

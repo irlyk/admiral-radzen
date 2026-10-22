@@ -28,9 +28,9 @@ Radzen Blazor. Подключаются через NuGet и статически
 | --- | --- |
 | .NET SDK / целевая платформа | 10 / `net10.0` |
 | Radzen.Blazor | 12.0.6 |
-| AdmiralRadzen.Components | 1.2.2 |
-| AdmiralRadzen.Themes | 1.1.2 |
-| AdmiralRadzen.Icons | 1.0.3 |
+| [AdmiralRadzen.Components](https://www.nuget.org/packages/AdmiralRadzen.Components/1.2.2) | 1.2.2 |
+| [AdmiralRadzen.Themes](https://www.nuget.org/packages/AdmiralRadzen.Themes/1.1.2) | 1.1.2 |
+| [AdmiralRadzen.Icons](https://www.nuget.org/packages/AdmiralRadzen.Icons/1.0.3) | 1.0.3 |
 
 Версии заданы в файлах `.csproj`. API, примеры и ограничения описаны в
 [справочнике компонентов](docs/components.md).
