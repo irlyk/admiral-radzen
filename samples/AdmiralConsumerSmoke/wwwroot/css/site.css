@@ -32,6 +32,42 @@ body {
     line-height: 1rem;
 }
 
+.admiral-consumer-radius-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--rz-text-secondary-color);
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+.admiral-consumer-radius-control select {
+    min-height: 2rem;
+    padding: 0.25rem 0.5rem;
+    border: var(--rz-border-normal);
+    border-radius: var(--rz-border-radius-2);
+    background: var(--rz-base-background-color);
+    color: var(--rz-text-color);
+    font: inherit;
+}
+
+.admiral-consumer-radius-control select:focus-visible {
+    outline: 2px solid var(--rz-primary);
+    outline-offset: 2px;
+}
+
+@media (max-width: 48rem) {
+    .admiral-consumer-radius-control > span { display: none; }
+}
+
+.admiral-consumer-shell.admiral-layout--side-menu-iconsonly > .admiral-layout__side-menu:not(:hover):not(:focus-within) {
+    scrollbar-width: none;
+}
+
+.admiral-consumer-shell.admiral-layout--side-menu-iconsonly > .admiral-layout__side-menu:not(:hover):not(:focus-within)::-webkit-scrollbar {
+    display: none;
+}
+
 .admiral-consumer-menu-size select {
     appearance: none;
     min-height: 2rem;
@@ -845,6 +881,11 @@ body {
 
 .rz-admiral-dark .admiral-component-page__section a[href^="https://admiralds.github.io/react-ui/"],
 .rz-admiral-dark .admiral-component-page > p > a[href^="https://admiralds.github.io/react-ui/"] {
+    color: var(--rz-primary-light);
+}
+
+.rz-admiral-dark.admiral-consumer-shell .admiral-component-page__section a:not(.rz-button),
+.rz-admiral-dark.admiral-consumer-shell .docs-home__intro > a {
     color: var(--rz-primary-light);
 }
 

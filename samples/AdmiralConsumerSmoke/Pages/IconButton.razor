@@ -33,13 +33,14 @@
         <section class="admiral-component-page__section">
             <h2>@T("Интерактивный пример", "Interactive playground")</h2>
             <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
-                <AdmiralIconButton Icon="admiral:system/search-outline" AriaLabel="Search" Dimension="@dimension" Appearance="@appearance" Disabled="@disabled" Loading="@loading" Click="@(_ => clicks++)" />
+                <AdmiralIconButton Icon="admiral:system/search-outline" AriaLabel="Search" Dimension="@dimension" Appearance="@appearance" Disabled="@disabled" Loading="@loading" Skeleton="@skeleton" Click="@(_ => clicks++)" />
                 <output aria-live="polite">@T("Нажатия", "Clicks"): @clicks</output>
             </div><div class="admiral-component-controls">
                 <label><span>@SmokeL["Dimension"]</span><select @bind="dimension">@foreach (var value in Enum.GetValues<AdmiralButtonDimension>()) { <option value="@value">@value</option> }</select></label>
                 <label><span>@SmokeL["Appearance"]</span><select @bind="appearance">@foreach (var value in Enum.GetValues<AdmiralIconButtonAppearance>()) { <option value="@value">@value</option> }</select></label>
                 <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
                 <label class="admiral-component-controls__check"><input type="checkbox" @bind="loading" /> Loading</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="skeleton" /> Skeleton</label>
             </div></div>
             <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
         </section>
@@ -55,7 +56,7 @@
     private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
     private AdmiralButtonDimension dimension = AdmiralButtonDimension.M;
     private AdmiralIconButtonAppearance appearance = AdmiralIconButtonAppearance.Secondary;
-    private bool disabled, loading, directDisabled, directLoading;
+    private bool disabled, loading, skeleton, directDisabled, directLoading;
     private int clicks, directClicks;
     private static readonly IReadOnlyList<ApiReference.Entry> ApiRows = [
         new("Icon / AriaLabel", "string / required", "Icon token and accessible action name."),

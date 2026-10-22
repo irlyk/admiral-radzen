@@ -6,6 +6,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const base = process.env.SMOKE_URL || 'http://localhost:5072';
 const routes = [
   '/components/button', '/components/icon-button', '/components/text-button', '/components/button-groups',
+  '/components/icon-button-group',
   '/components/floating-button-menu', '/components/action-bar', '/components/checkbox', '/components/checkbox-group',
   '/components/text-input', '/components/text-area', '/components/number-input', '/components/select',
   '/components/input-field', '/components/drop-down', '/components/date-range-picker', '/components/tree-select',
@@ -102,7 +103,7 @@ try {
         failures++;
         console.error(`${theme} ${language} /components/checkbox-group names FAIL: ${error.message}`);
       }
-      for (const route of ['/components/icon-button', '/components/text-button', '/components/button-groups']) {
+      for (const route of ['/components/icon-button', '/components/text-button', '/components/button-groups', '/components/icon-button-group']) {
         try {
           await page.goto(base + route, { waitUntil: 'domcontentloaded' });
           await page.waitForTimeout(600);
@@ -119,6 +120,29 @@ try {
           failures++;
           console.error(`${theme} ${language} ${route} callback FAIL: ${error.message}`);
         }
+      }
+      let settingsStep = 'button group secondary';
+      try {
+        await page.goto(base + '/components/button-groups', { waitUntil: 'networkidle' });
+        await page.locator('.admiral-component-controls select').nth(1).selectOption('Secondary');
+        await page.waitForFunction(() => document.querySelector('.admiral-component-playground__preview .admiral-button-group > button')
+          ?.classList.contains('admiral-button--secondary'));
+        settingsStep = 'button group tertiary';
+        await page.locator('.admiral-component-controls select').nth(1).selectOption('Tertiary');
+        await page.waitForFunction(() => document.querySelector('.admiral-component-playground__preview .admiral-button-group > button')
+          ?.classList.contains('admiral-button--tertiary'));
+        settingsStep = 'smoke radius';
+        await page.locator('[data-testid="smoke-border-radius"]').selectOption('10');
+        await page.waitForFunction(() => getComputedStyle(document.documentElement)
+          .getPropertyValue('--admiral-radius-medium').trim() === '0.625rem');
+        settingsStep = 'icon group dimension';
+        await page.goto(base + '/components/icon-button-group', { waitUntil: 'networkidle' });
+        await page.locator('.admiral-component-controls select').first().selectOption('S');
+        await page.waitForFunction(() => document.querySelector('.admiral-component-playground__preview .admiral-icon-button-group > button')
+          ?.classList.contains('rz-button-xs'));
+      } catch (error) {
+        failures++;
+        console.error(`${theme} ${language} ${settingsStep} FAIL: ${error.message}`);
       }
       for (const [route, control] of [
         ['/components/chips', '.admiral-chip'],
