@@ -23,6 +23,7 @@ try {
         const errors = [];
         page.on('pageerror', error => errors.push(error.message));
         const drawer = page.locator('.admiral-drawer');
+        const backdrop = page.locator('.admiral-drawer-backdrop');
         const opener = page.getByRole('button', { name: 'Открыть Drawer', exact: true });
         const open = async () => {
             await opener.click();
@@ -59,8 +60,9 @@ try {
         await test('Right/left geometry, width, neutral appearance and close icon states', async () => {
             await open();
             let bounds = await drawer.boundingBox();
-            const layoutWidth = await page.evaluate(() => document.documentElement.clientWidth);
-            assert.equal(Math.round(bounds.x + bounds.width), layoutWidth);
+            const backdropBounds = await backdrop.boundingBox();
+            // The docs shell may reserve a root scrollbar gutter; the drawer must align with its overlay.
+            assert.equal(Math.round(bounds.x + bounds.width), Math.round(backdropBounds.x + backdropBounds.width));
             assert.equal(Math.round(bounds.width), 480);
             const primary = await drawer.evaluate(e => getComputedStyle(e).backgroundColor);
             const button = drawer.locator('.admiral-drawer__close');
@@ -176,8 +178,8 @@ try {
             assert.equal(Math.round((await drawer.boundingBox()).x), 16);
             await page.setViewportSize({ width: 360, height: 740 });
             const bounds = await drawer.boundingBox();
-            const layoutWidth = await page.evaluate(() => document.documentElement.clientWidth);
-            assert.equal(Math.round(bounds.width), layoutWidth - 16);
+            const backdropBounds = await backdrop.boundingBox();
+            assert.equal(Math.round(bounds.width), Math.round(backdropBounds.width) - 16);
             assert.equal(Math.round(bounds.height), 740);
             assert.equal(await drawer.locator('.admiral-drawer__actions').evaluate(e => getComputedStyle(e).flexDirection), 'column-reverse');
             await page.screenshot({ path: `${output}/${theme}-mobile.png` });
