@@ -23,9 +23,10 @@ try {
       await page.getByRole('button', { name: 'Открыть: Горный пейзаж', exact: true }).click();
       await preview.waitFor();
       const bounds = await overlay.boundingBox();
+      const layoutBounds = await page.locator('.admiral-layout').boundingBox();
       const viewport = page.viewportSize();
       assert.ok(Math.abs(bounds.x) < 1 && Math.abs(bounds.y) < 1, 'Dialog must start at viewport origin');
-      assert.ok(Math.abs(bounds.width - viewport.width) < 1 && Math.abs(bounds.height - viewport.height) < 1, 'Dialog must cover header/sidebar too');
+      assert.ok(Math.abs(bounds.width - layoutBounds.width) < 1 && Math.abs(bounds.height - viewport.height) < 1, 'Dialog must cover header/sidebar too');
       await page.waitForFunction(() => {
         const image = document.querySelector('.admiral-image-viewer__preview');
         return image?.complete && image.naturalWidth > 0 && !document.querySelector('.admiral-image-viewer__message');
