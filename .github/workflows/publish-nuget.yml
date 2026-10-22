@@ -35,6 +35,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ripgrep unzip
 
+      - name: Install consumer test browser
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
       - name: Build and verify release packages
         run: |
           tools/admiral/build-admiral-packages.sh --configuration Release
