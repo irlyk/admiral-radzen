@@ -10,9 +10,9 @@ Explore the local [smoke gallery](samples/AdmiralConsumerSmoke/README.md) or the
 
 | Package | Version | Purpose |
 | --- | --- | --- |
-| `AdmiralRadzen.Components` | 1.2.2 | `Admiral*` components built on Radzen |
-| `AdmiralRadzen.Themes` | 1.1.2 | Packaged CSS, SCSS snapshots, fonts, and styling for direct Radzen controls |
-| `AdmiralRadzen.Icons` | 1.0.3 | Admiral SVG assets and icon adapter |
+| [AdmiralRadzen.Components](https://www.nuget.org/packages/AdmiralRadzen.Components/1.2.2) | 1.2.2 | `Admiral*` components built on Radzen |
+| [AdmiralRadzen.Themes](https://www.nuget.org/packages/AdmiralRadzen.Themes/1.1.2) | 1.1.2 | Packaged CSS, SCSS snapshots, fonts, and styling for direct Radzen controls |
+| [AdmiralRadzen.Icons](https://www.nuget.org/packages/AdmiralRadzen.Icons/1.0.3) | 1.0.3 | Admiral SVG assets and icon adapter |
 
 The projects target .NET 10 and Components currently depends on Radzen.Blazor 12.0.6. See the [component guide](docs/components.md) for examples and limitations.
 
