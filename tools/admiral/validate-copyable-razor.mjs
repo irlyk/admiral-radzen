@@ -119,7 +119,7 @@ if (packageFolders.length !== 1 || path.resolve(packageFolders[0]) !== path.reso
   throw new Error(`Restore did not use the isolated NuGet cache: ${packageFolders.join(', ')}`);
 }
 for (const [name, version] of Object.entries({
-  'Radzen.Admiral.Components': '1.2.2', 'Radzen.Admiral.Icons': '1.0.3', 'Radzen.Admiral.Themes': '1.1.2'
+  'AdmiralRadzen.Components': '1.2.2', 'AdmiralRadzen.Icons': '1.0.3', 'AdmiralRadzen.Themes': '1.1.2'
 })) {
   const nupkg = path.join(root, 'artifacts/packages/admiral', `${name}.${version}.nupkg`);
   const cached = path.join(cache, name.toLowerCase(), version, `${name.toLowerCase()}.${version}.nupkg`);
@@ -127,8 +127,8 @@ for (const [name, version] of Object.entries({
     throw new Error(`${name} ${version} in isolated cache differs from local package`);
   }
 }
-if (assets.projectFileDependencyGroups?.['net10.0']?.some(dependency => dependency.startsWith('Radzen.Admiral.Components >=')) !== true) {
-  throw new Error('Consumer did not restore Radzen.Admiral.Components as a PackageReference');
+if (assets.projectFileDependencyGroups?.['net10.0']?.some(dependency => dependency.startsWith('AdmiralRadzen.Components >=')) !== true) {
+  throw new Error('Consumer did not restore AdmiralRadzen.Components as a PackageReference');
 }
 
 const originalSnippet = await readFile(snippetFile, 'utf8');

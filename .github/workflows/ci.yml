@@ -70,9 +70,9 @@ jobs:
 
           root = Path('.')
           packages = {
-              'Radzen.Admiral.Icons': root / 'Radzen.AdmiralIcons',
-              'Radzen.Admiral.Themes': root / 'Radzen.AdmiralThemes',
-              'Radzen.Admiral.Components': root / 'Radzen.AdmiralComponents',
+              'AdmiralRadzen.Icons': root / 'Radzen.AdmiralIcons',
+              'AdmiralRadzen.Themes': root / 'Radzen.AdmiralThemes',
+              'AdmiralRadzen.Components': root / 'Radzen.AdmiralComponents',
           }
           versions = {}
           for package_id, directory in packages.items():
@@ -90,13 +90,13 @@ jobs:
               assert nuspec.findtext('./n:metadata/n:version', namespaces=ns) == version
               dependencies = {node.attrib['id']: node.attrib['version']
                               for node in nuspec.findall('.//n:dependency', ns)}
-              if package_id == 'Radzen.Admiral.Components':
-                  for dependency in ('Radzen.Admiral.Icons', 'Radzen.Admiral.Themes'):
+              if package_id == 'AdmiralRadzen.Components':
+                  for dependency in ('AdmiralRadzen.Icons', 'AdmiralRadzen.Themes'):
                       assert dependencies.get(dependency) == versions[dependency], (
                           f'{package_id}: {dependency} must use local version {versions[dependency]}')
                   assert dependencies.get('Radzen.Blazor'), 'Components: missing Radzen.Blazor dependency'
               else:
-                  assert not any(name.startswith('Radzen.Admiral.') for name in dependencies), (
+                  assert not any(name.startswith('AdmiralRadzen.') for name in dependencies), (
                       f'{package_id}: unexpected Admiral dependency')
               print(f'{package_id} {version}: {dependencies}')
           PY

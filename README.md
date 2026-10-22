@@ -17,9 +17,9 @@ Radzen Blazor. Подключаются через NuGet и статически
 
 | Каталог | Пакет | Назначение |
 | --- | --- | --- |
-| [Radzen.AdmiralComponents](Radzen.AdmiralComponents/README.md) | `Radzen.Admiral.Components` | Компоненты `Admiral*` с декларативным API поверх Radzen |
-| [Radzen.AdmiralThemes](Radzen.AdmiralThemes/README.md) | `Radzen.Admiral.Themes` | Светлая и тёмная темы, шрифты, оформление прямых Radzen-компонентов |
-| [Radzen.AdmiralIcons](Radzen.AdmiralIcons/README.md) | `Radzen.Admiral.Icons` | SVG-иконки и адаптер параметра `Icon` |
+| [Radzen.AdmiralComponents](Radzen.AdmiralComponents/README.md) | `AdmiralRadzen.Components` | Компоненты `Admiral*` с декларативным API поверх Radzen |
+| [Radzen.AdmiralThemes](Radzen.AdmiralThemes/README.md) | `AdmiralRadzen.Themes` | Светлая и тёмная темы, шрифты, оформление прямых Radzen-компонентов |
+| [Radzen.AdmiralIcons](Radzen.AdmiralIcons/README.md) | `AdmiralRadzen.Icons` | SVG-иконки и адаптер параметра `Icon` |
 | [samples/AdmiralConsumerSmoke](samples/AdmiralConsumerSmoke/README.md) | — | Галерея и проверка потребления готовых пакетов |
 
 ## Совместимость
@@ -28,9 +28,9 @@ Radzen Blazor. Подключаются через NuGet и статически
 | --- | --- |
 | .NET SDK / целевая платформа | 10 / `net10.0` |
 | Radzen.Blazor | 12.0.6 |
-| Radzen.Admiral.Components | 1.2.2 |
-| Radzen.Admiral.Themes | 1.1.2 |
-| Radzen.Admiral.Icons | 1.0.3 |
+| AdmiralRadzen.Components | 1.2.2 |
+| AdmiralRadzen.Themes | 1.1.2 |
+| AdmiralRadzen.Icons | 1.0.3 |
 
 Версии заданы в файлах `.csproj`. API, примеры и ограничения описаны в
 [справочнике компонентов](docs/components.md).
@@ -81,13 +81,16 @@ dotnet run --project samples/AdmiralConsumerSmoke/AdmiralConsumerSmoke.csproj `
 
 ## Подключение к существующему проекту
 
-Добавьте локальный NuGet-источник, затем пакет:
+Установите пакет из NuGet.org. При разработке этого репозитория вместо
+публичного источника можно использовать локальный каталог `artifacts/packages/admiral`:
 
 ```xml
-<PackageReference Include="Radzen.Admiral.Components" Version="1.2.2" />
+<PackageReference Include="AdmiralRadzen.Components" Version="1.2.2" />
 ```
 
-Он транзитивно подключает Radzen, тему и иконки. Дальнейшие шаги —
+Он транзитивно подключает Radzen, тему и иконки. Имена NuGet-пакетов —
+`AdmiralRadzen.*`; пространства имён C# и адреса статических ресурсов
+`_content/Radzen.Admiral.*` сохраняются для совместимости. Дальнейшие шаги —
 [регистрация сервисов, тема, скрипты и разметка](docs/radzen-integration.md).
 Тему и иконки можно использовать отдельно, без Admiral-обёрток.
 

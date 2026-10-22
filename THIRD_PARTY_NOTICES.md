@@ -6,11 +6,11 @@
 
 | Материал | Использование | Источник | Лицензия |
 | --- | --- | --- | --- |
-| Radzen.Blazor | Зависимость `Radzen.Admiral.Components` | [Radzen Blazor](https://github.com/radzenhq/radzen-blazor) | MIT; Radzen Ltd |
-| AdmiralDS Icons | SVG в `Radzen.Admiral.Icons` | [AdmiralDS/icons](https://github.com/AdmiralDS/icons) | MIT; AdmiralDS team |
-| Source Sans 3 | Шрифты в `Radzen.Admiral.Themes` | [Adobe Source Sans](https://github.com/adobe-fonts/source-sans) | SIL OFL 1.1; Adobe; Reserved Font Name `Source` |
-| Noto Sans SC/KR | CJK-шрифты в `Radzen.Admiral.Themes` | [Google Fonts SC](https://github.com/google/fonts/tree/main/ofl/notosanssc), [KR](https://github.com/google/fonts/tree/main/ofl/notosanskr) | SIL OFL 1.1; Adobe; Reserved Font Name `Source` |
-| Material Symbols Outlined | Шрифт иконок в `Radzen.Admiral.Themes` | [Google Material Design Icons](https://github.com/google/material-design-icons) | Apache 2.0 |
+| Radzen.Blazor | Зависимость `AdmiralRadzen.Components` | [Radzen Blazor](https://github.com/radzenhq/radzen-blazor) | MIT; Radzen Ltd |
+| AdmiralDS Icons | SVG в `AdmiralRadzen.Icons` | [AdmiralDS/icons](https://github.com/AdmiralDS/icons) | MIT; AdmiralDS team |
+| Source Sans 3 | Шрифты в `AdmiralRadzen.Themes` | [Adobe Source Sans](https://github.com/adobe-fonts/source-sans) | SIL OFL 1.1; Adobe; Reserved Font Name `Source` |
+| Noto Sans SC/KR | CJK-шрифты в `AdmiralRadzen.Themes` | [Google Fonts SC](https://github.com/google/fonts/tree/main/ofl/notosanssc), [KR](https://github.com/google/fonts/tree/main/ofl/notosanskr) | SIL OFL 1.1; Adobe; Reserved Font Name `Source` |
+| Material Symbols Outlined | Шрифт иконок в `AdmiralRadzen.Themes` | [Google Material Design Icons](https://github.com/google/material-design-icons) | Apache 2.0 |
 
 MIT-лицензия SVG не предоставляет прав на изображённые товарные знаки и не
 означает официальной аффилиации с их правообладателями. AdmiralRadzen —

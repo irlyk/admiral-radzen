@@ -58,6 +58,6 @@ jobs:
         run: |
           set -euo pipefail
           source=https://api.nuget.org/v3/index.json
-          dotnet nuget push artifacts/packages/admiral/Radzen.Admiral.Icons.1.0.3.nupkg --api-key "$NUGET_API_KEY" --source "$source"
-          dotnet nuget push artifacts/packages/admiral/Radzen.Admiral.Themes.1.1.2.nupkg --api-key "$NUGET_API_KEY" --source "$source"
-          dotnet nuget push artifacts/packages/admiral/Radzen.Admiral.Components.1.2.2.nupkg --api-key "$NUGET_API_KEY" --source "$source"
+          dotnet nuget push artifacts/packages/admiral/AdmiralRadzen.Icons.1.0.3.nupkg --api-key "$NUGET_API_KEY" --source "$source"
+          dotnet nuget push artifacts/packages/admiral/AdmiralRadzen.Themes.1.1.2.nupkg --api-key "$NUGET_API_KEY" --source "$source"
+          dotnet nuget push artifacts/packages/admiral/AdmiralRadzen.Components.1.2.2.nupkg --api-key "$NUGET_API_KEY" --source "$source"

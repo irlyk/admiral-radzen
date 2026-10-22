@@ -3,7 +3,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <PackageId>Radzen.Admiral.Components</PackageId>
+    <PackageId>AdmiralRadzen.Components</PackageId>
+    <StaticWebAssetBasePath>_content/Radzen.Admiral.Components</StaticWebAssetBasePath>
     <AssemblyName>Radzen.Admiral.Components</AssemblyName>
     <RootNamespace>Radzen.Admiral.Components</RootNamespace>
     <Title>Radzen Admiral Components</Title>

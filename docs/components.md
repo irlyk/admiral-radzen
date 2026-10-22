@@ -7,11 +7,11 @@
 ## Подключение
 
 ```xml
-<PackageReference Include="Radzen.Admiral.Components" Version="1.2.2" />
+<PackageReference Include="AdmiralRadzen.Components" Version="1.2.2" />
 ```
 
-Пакет уже зависит от `Radzen.Blazor`, `Radzen.Admiral.Icons` и
-`Radzen.Admiral.Themes`. Подключение темы, скриптов и сервисов описано в
+Пакет уже зависит от `Radzen.Blazor`, `AdmiralRadzen.Icons` и
+`AdmiralRadzen.Themes`. Подключение темы, скриптов и сервисов описано в
 [корневом README](radzen-integration.md).
 
 Ветка 1.2 использует Radzen 12.0.6 и тему 1.1.x. Минимальная версия Radzen

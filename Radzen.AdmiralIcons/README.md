@@ -1,4 +1,4 @@
-# Radzen.Admiral.Icons
+# AdmiralRadzen.Icons
 
 Полный набор SVG-иконок Admiral Design System и адаптер для стандартных
 компонентов Radzen Blazor. Пакет не встраивает все SVG в начальный bundle:
@@ -13,7 +13,7 @@
 Добавьте пакет:
 
 ```xml
-<PackageReference Include="Radzen.Admiral.Icons" Version="1.0.3" />
+<PackageReference Include="AdmiralRadzen.Icons" Version="1.0.3" />
 ```
 
 В `<head>` host-страницы подключите стили и сразу после них адаптер:

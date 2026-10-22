@@ -104,7 +104,7 @@
 По умолчанию используется размер M с кнопками 40 px, класс
 `admiral-pagination-two--s` включает размер S с кнопками 32 px. Составные
 `PaginationOne` и `PaginationSimple` предоставлены отдельными компонентами в
-пакете `Radzen.Admiral.Components`.
+пакете `AdmiralRadzen.Components`.
 
 ## RadioButton, SegmentedControl и ContentSwitcher
 

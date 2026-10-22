@@ -5,9 +5,9 @@ import { spawnSync } from 'node:child_process';
 
 const root = resolve(import.meta.dirname, '../..');
 const packages = [
-  ['Radzen.Admiral.Icons', 'Radzen.AdmiralIcons'],
-  ['Radzen.Admiral.Themes', 'Radzen.AdmiralThemes'],
-  ['Radzen.Admiral.Components', 'Radzen.AdmiralComponents'],
+  ['AdmiralRadzen.Icons', 'Radzen.AdmiralIcons'],
+  ['AdmiralRadzen.Themes', 'Radzen.AdmiralThemes'],
+  ['AdmiralRadzen.Components', 'Radzen.AdmiralComponents'],
 ];
 const run = (command, args, options = {}) => {
   const result = spawnSync(command, args, { cwd: root, encoding: 'utf8', ...options });
@@ -52,14 +52,14 @@ for (const [id, directory] of packages) {
   assert.equal(xmlValue(nuspec, 'version'), version, `${id}: packaged version mismatch`);
   assert.ok(nuspec.includes(`<license type="expression">${licenseExpression}</license>`),
     `${id}: packaged license expression mismatch`);
-  if (id === 'Radzen.Admiral.Themes') {
+  if (id === 'AdmiralRadzen.Themes') {
     for (const name of [
       'MaterialSymbolsOutlined.woff2', 'SourceSans3VF-Upright.ttf.woff2',
       'SourceSans3VF-Italic.ttf.woff2', 'cjk/NotoSansSC-variable.woff2',
       'cjk/NotoSansKR-variable.woff2', 'cjk/OFL.txt',
     ]) assert.ok(members.includes(`staticwebassets/fonts/${name}`), `${id}: missing ${name}`);
   }
-  if (id === 'Radzen.Admiral.Icons') {
+  if (id === 'AdmiralRadzen.Icons') {
     for (const name of [
       'staticwebassets/admiral-radzen-icons.css',
       'staticwebassets/admiral-radzen-icons.js',

@@ -79,9 +79,9 @@ try {
     Invoke-DotNet @("pack", "Radzen.AdmiralThemes/Radzen.AdmiralThemes.csproj", "-c", $Configuration, "-p:TargetFramework=net10.0", "-o", $outputDirectory)
     Invoke-DotNet @("pack", "Radzen.AdmiralComponents/Radzen.AdmiralComponents.csproj", "-c", $Configuration, "-p:TargetFramework=net10.0", "-o", $outputDirectory)
 
-    $iconsPackage = Get-LatestPackage -Directory $outputDirectory -PackageId "Radzen.Admiral.Icons"
-    $themesPackage = Get-LatestPackage -Directory $outputDirectory -PackageId "Radzen.Admiral.Themes"
-    $componentsPackage = Get-LatestPackage -Directory $outputDirectory -PackageId "Radzen.Admiral.Components"
+    $iconsPackage = Get-LatestPackage -Directory $outputDirectory -PackageId "AdmiralRadzen.Icons"
+    $themesPackage = Get-LatestPackage -Directory $outputDirectory -PackageId "AdmiralRadzen.Themes"
+    $componentsPackage = Get-LatestPackage -Directory $outputDirectory -PackageId "AdmiralRadzen.Components"
 
     $sourceIconCount = @(Get-ChildItem -LiteralPath "Radzen.AdmiralIcons/icons" -Filter "*.svg" -File -Recurse).Count
     $manifestIconCount = @(Get-Content -LiteralPath "Radzen.AdmiralIcons/wwwroot/admiral-icons/icons.txt").Count

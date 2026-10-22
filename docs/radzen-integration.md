@@ -6,8 +6,9 @@
 
 ## Подключение к существующему проекту
 
-Пакеты можно получать из NuGet-источника организации или собирать локально.
-Ниже показано подключение локальной сборки.
+Для обычного приложения установите `AdmiralRadzen.Components` из NuGet.org.
+Он транзитивно подключает тему, иконки и Radzen.Blazor. Следующие два шага
+нужны только для проверки локальной сборки или внутреннего NuGet-источника.
 
 ### 1. Собрать пакеты
 
@@ -61,7 +62,7 @@ PowerShell-скрипт не требует `ripgrep`, `unzip` или Unix-ут�
 
 ```xml
 <ItemGroup>
-  <PackageReference Include="Radzen.Admiral.Components" Version="1.2.2" />
+  <PackageReference Include="AdmiralRadzen.Components" Version="1.2.2" />
 </ItemGroup>
 ```
 
@@ -231,8 +232,8 @@ Cookie-сервис сохраняет выбор темы, но начальн�
 ## Только Radzen с темой Admiral
 
 Если обёртки не нужны, подключите `Radzen.Blazor` 12.0.6,
-`Radzen.Admiral.Themes` 1.1.2 и, при необходимости,
-`Radzen.Admiral.Icons` 1.0.3. Используйте стандартную регистрацию сервисов
+`AdmiralRadzen.Themes` 1.1.2 и, при необходимости,
+`AdmiralRadzen.Icons` 1.0.3. Используйте стандартную регистрацию сервисов
 Radzen и его сервисные хосты, а не `AddAdmiralComponents`/`AdmiralServices`.
 
 Тема подключается одним статическим `<link>` из примера выше либо через

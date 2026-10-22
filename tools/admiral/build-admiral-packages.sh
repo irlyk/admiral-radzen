@@ -6,7 +6,7 @@ usage() {
 Usage: tools/admiral/build-admiral-packages.sh [--configuration Debug|Release] [--output <dir>]
 
 Runs the Admiral package pipeline:
-  1. Build and pack Radzen.Admiral.Icons, Radzen.Admiral.Themes and Radzen.Admiral.Components.
+  1. Build and pack AdmiralRadzen.Icons, AdmiralRadzen.Themes and AdmiralRadzen.Components.
   2. Verify package contents.
 USAGE
 }
@@ -81,22 +81,22 @@ dotnet pack Radzen.AdmiralIcons/Radzen.AdmiralIcons.csproj -c "$configuration" -
 dotnet pack Radzen.AdmiralThemes/Radzen.AdmiralThemes.csproj -c "$configuration" -p:TargetFramework=net10.0 -o "$package_output"
 dotnet pack Radzen.AdmiralComponents/Radzen.AdmiralComponents.csproj -c "$configuration" -p:TargetFramework=net10.0 -o "$package_output"
 
-icons_package="$(find "$output_dir" -maxdepth 1 -type f -name 'Radzen.Admiral.Icons.*.nupkg' | sort -V | tail -1)"
-themes_package="$(find "$output_dir" -maxdepth 1 -type f -name 'Radzen.Admiral.Themes.*.nupkg' | sort -V | tail -1)"
-components_package="$(find "$output_dir" -maxdepth 1 -type f -name 'Radzen.Admiral.Components.*.nupkg' | sort -V | tail -1)"
+icons_package="$(find "$output_dir" -maxdepth 1 -type f -name 'AdmiralRadzen.Icons.*.nupkg' | sort -V | tail -1)"
+themes_package="$(find "$output_dir" -maxdepth 1 -type f -name 'AdmiralRadzen.Themes.*.nupkg' | sort -V | tail -1)"
+components_package="$(find "$output_dir" -maxdepth 1 -type f -name 'AdmiralRadzen.Components.*.nupkg' | sort -V | tail -1)"
 
 if [ -z "$icons_package" ]; then
-  echo "Radzen.Admiral.Icons package was not created." >&2
+  echo "AdmiralRadzen.Icons package was not created." >&2
   exit 1
 fi
 
 if [ -z "$themes_package" ]; then
-  echo "Radzen.Admiral.Themes package was not created." >&2
+  echo "AdmiralRadzen.Themes package was not created." >&2
   exit 1
 fi
 
 if [ -z "$components_package" ]; then
-  echo "Radzen.Admiral.Components package was not created." >&2
+  echo "AdmiralRadzen.Components package was not created." >&2
   exit 1
 fi
 

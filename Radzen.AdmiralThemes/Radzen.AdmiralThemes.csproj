@@ -3,7 +3,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <PackageId>Radzen.Admiral.Themes</PackageId>
+    <PackageId>AdmiralRadzen.Themes</PackageId>
+    <StaticWebAssetBasePath>_content/Radzen.Admiral.Themes</StaticWebAssetBasePath>
     <AssemblyName>Radzen.Admiral.Themes</AssemblyName>
     <RootNamespace>Radzen.Admiral.Themes</RootNamespace>
     <Title>Radzen Admiral Themes</Title>

@@ -1,4 +1,4 @@
-# Radzen.Admiral.Themes
+# AdmiralRadzen.Themes
 
 Светлая и тёмная темы Admiral Design System для Radzen Blazor. Пакет содержит
 готовые CSS-файлы, SCSS-снимки и шрифты для иконок и CJK-текста.
@@ -8,7 +8,7 @@
 Добавьте пакет:
 
 ```xml
-<PackageReference Include="Radzen.Admiral.Themes" Version="1.1.2" />
+<PackageReference Include="AdmiralRadzen.Themes" Version="1.1.2" />
 ```
 
 Рекомендуемый вариант для Radzen Blazor 10.3.1 и новее:
@@ -20,7 +20,7 @@
 ```
 
 `PreloadIconFont="false"` обязателен: тема использует шрифты из
-`Radzen.Admiral.Themes`, а не из стандартного каталога `Radzen.Blazor`.
+`AdmiralRadzen.Themes`, а не из стандартного каталога `Radzen.Blazor`.
 
 ## Переключение светлой и тёмной темы
 

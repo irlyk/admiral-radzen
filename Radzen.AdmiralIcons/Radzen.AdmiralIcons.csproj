@@ -3,7 +3,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <PackageId>Radzen.Admiral.Icons</PackageId>
+    <PackageId>AdmiralRadzen.Icons</PackageId>
+    <StaticWebAssetBasePath>_content/Radzen.Admiral.Icons</StaticWebAssetBasePath>
     <AssemblyName>Radzen.Admiral.Icons</AssemblyName>
     <RootNamespace>Radzen.Admiral.Icons</RootNamespace>
     <Title>Radzen Admiral Icons</Title>
