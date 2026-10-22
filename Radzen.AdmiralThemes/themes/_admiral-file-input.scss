@@ -1,3 +1,5 @@
+$admiral-file-text-color: if($theme-dark, #E3E5E7, #252629);
+
 .admiral-file-input-control { box-sizing: border-box; width: 100%; min-width: 0; }
 .admiral-file-input-control__dropzone {
   position: relative;
@@ -8,7 +10,7 @@
   width: 100%;
   border: 1px dashed var(--rz-base-400);
   border-radius: var(--rz-border-radius-2);
-  color: var(--rz-text-color);
+  color: $admiral-file-text-color;
   &:is(:hover, [data-dragover="true"]):not([aria-disabled="true"]) {
     background: color-mix(in srgb, var(--rz-text-color) 5%, transparent);
   }
@@ -54,3 +56,32 @@
 .admiral-file-input-control__hint { margin-top: 8px; color: var(--rz-text-secondary-color); font-size: 14px; line-height: 20px; }
 .admiral-file-input-control__error { margin-top: 8px; color: var(--rz-danger); font-size: 14px; line-height: 20px; }
 .admiral-file-input-control__files { display: grid; gap: 8px; margin-top: 16px; }
+
+.rz-fileupload.admiral-file-input .rz-fileupload-choose.rz-button {
+  &, &:not(.rz-state-disabled):hover, &:not(.rz-state-disabled):active {
+    color: $admiral-file-text-color;
+  }
+}
+
+// FileItem dimensions and queue colours match the pinned AdmiralDS FileInput.
+.admiral-upload-file:not(.admiral-upload-file--queue) { color: $admiral-file-text-color; }
+.admiral-upload-file--xl { min-height: 56px; padding: 8px; }
+.admiral-upload-file--m {
+  min-height: 40px;
+  padding: 10px 16px;
+  .admiral-upload-file__content { display: flex; align-items: center; }
+  .admiral-upload-file__meta { margin-inline-start: 4px; }
+  > .rz-button {
+    flex-basis: 20px;
+    width: 20px;
+    min-width: 20px;
+    height: 20px;
+    min-height: 20px;
+    .rzi { font-size: 20px; }
+  }
+}
+.admiral-upload-file--queue {
+  border-color: var(--rz-base-300);
+  color: var(--rz-base-300);
+  .admiral-upload-file__type, .admiral-upload-file__meta { color: var(--rz-base-300); }
+}

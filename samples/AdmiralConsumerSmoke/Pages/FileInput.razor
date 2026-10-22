@@ -17,6 +17,7 @@
             <p><code>Accept</code>, <code>MaxFiles</code> @SmokeL["и"] <code>MaxFileSize</code> @SmokeL["проверяются в компоненте."] <code>@@bind-Files</code> @SmokeL["синхронизирует удаление, перестановку и очистку списка с нативным input. Допустимы только файлы последнего выбора этого компонента: произвольные"] <code>IBrowserFile</code> @SmokeL["другого input или ранее сохранённые файлы подставлять нельзя. Для серверных вложений используйте отдельный список."]</p>
             <p>@SmokeL["Новый выбор заменяет предыдущий, а не добавляет к нему. Blazor инвалидирует старые потоки, поэтому отклонённый выбор тоже очищает предыдущий список и вызывает"] <code>FilesSelected</code> @SmokeL["с пустым массивом. Копируйте нужные потоки до следующего выбора."] <code>RemoveAsync(file)</code> @SmokeL["сохраняет остальные потоки;"] <code>ResetAsync()</code> @SmokeL["сбрасывает input и ошибку."]</p>
             <p><code>TriggerTemplate</code> @SmokeL["получает"] <code>Func&lt;Task&gt;</code>@SmokeL[": вызовите его из Click клавиатурно доступной кнопки. Этот режим не является dropzone. Обычная поверхность поддерживает нативный drop; проверка формата выполняется после выбора. Сервер обязан повторно проверить файлы независимо от клиентских ограничений."]</p>
+            <p><code>AdmiralUploadStatus</code> @SmokeL["показывает карточку XL или компактную строку M через Dimension. Иконка XL выбирается по расширению файла; её можно переопределить параметром Icon. Состояния Idle, Loading, Complete и Error задаются приложением."]</p>
             <ApiReference Title="@SmokeL["Управление выбором и методы"]" Rows="@SelectionRows" />
             <CopyableRazorExample Code="@TriggerCode" Title="@SmokeL["Razor · произвольная кнопка выбора"]" />
         </section>
@@ -60,7 +61,7 @@
                         <ChildContent>
                         @foreach (var file in files)
                         {
-                            <AdmiralUploadStatus @key="file" FileName="@file.Name" Meta="@($"{file.Size / 1024.0:0.#} KB")"
+                            <AdmiralUploadStatus @key="file" FileName="@file.Name" Meta="@($"{file.Size / 1024.0:0.#} KB")" Dimension="@dimension"
                                                  State="@state" Progress="@progress" ErrorText="Тестовая ошибка загрузки"
                                                  ActionAriaLabel="@SmokeL["Удалить файл"]" Disabled="@(disabled || skeleton)" ActionClicked="@(() => RemoveFile(file))" />
                         }
