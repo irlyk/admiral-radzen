@@ -1,0 +1,26 @@
+<svg viewBox="0 0 39.0709 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="39.070942" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_217" width="28.000000" height="20.000000" x="5.535471" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="5.535471" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="5.535471" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Brunei Darussalam" width="28.000000" height="28.000000" x="5.535471" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="5.535471" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="5.535471" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_217)">
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="5.535471" y="4.000000" fill="rgb(247,226,80)" />
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="5.535471" y="4.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<g id="Rectangle 2 Copy 4 + Rectangle 2 Copy 4">
+			<path id="Rectangle 2 Copy 4" d="M0 4L38.6667 4L38.6667 0L0 0L0 4Z" fill="rgb(255,255,255)" fill-rule="evenodd" transform="matrix(0.939693,0.34202,-0.34202,0.939693,2.73615,3.62885)" />
+			<path id="Rectangle 2 Copy 4" d="M38.6667 4L38.6667 0L0 0L0 4L38.6667 4Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" transform="matrix(0.939693,0.34202,-0.34202,0.939693,2.73615,3.62885)" />
+			<path id="Rectangle 2 Copy 4" d="M0 4L38.6667 4L38.6667 0L0 0L0 4Z" fill="rgb(38,38,38)" fill-rule="evenodd" transform="matrix(0.939693,0.34202,-0.34202,0.939693,1.36805,7.38757)" />
+			<path id="Rectangle 2 Copy 4" d="M38.6667 4L38.6667 0L0 0L0 4L38.6667 4Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" transform="matrix(0.939693,0.34202,-0.34202,0.939693,1.36805,7.38757)" />
+		</g>
+	</g>
+</svg>

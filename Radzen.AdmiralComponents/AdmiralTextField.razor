@@ -1,0 +1,41 @@
+<AdmiralInputField Label="@Label" AdditionalLabel="@AdditionalLabel" ExtraText="@ExtraText"
+                   For="@Id" Required="@Required" Size="@Size" Status="@Status" Class="@Class">
+    <AdmiralTextInput Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"
+                      Name="@Name" Id="@Id" Placeholder="@Placeholder" Size="@Size" Status="@Status"
+                      IconStart="@IconStart" IconEnd="@IconEnd" DisplayClearIcon="@DisplayClearIcon"
+                      Password="@Password" Disabled="@Disabled" ReadOnly="@ReadOnly" Loading="@Loading"
+                      Skeleton="@Skeleton" Immediate="@Immediate" Trim="@Trim" MaxLength="@MaxLength"
+                      ClearAriaLabel="@ClearAriaLabel" ShowPasswordAriaLabel="@ShowPasswordAriaLabel"
+                      HidePasswordAriaLabel="@HidePasswordAriaLabel" @attributes="AdditionalAttributes" />
+</AdmiralInputField>
+
+@code {
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+    [Parameter] public System.Linq.Expressions.Expression<Func<string?>>? ValueExpression { get; set; }
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public string? AdditionalLabel { get; set; }
+    [Parameter] public string? ExtraText { get; set; }
+    [Parameter] public string? Name { get; set; }
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public string? Placeholder { get; set; }
+    [Parameter] public bool Required { get; set; }
+    [Parameter] public AdmiralInputSize Size { get; set; } = AdmiralInputSize.Medium;
+    [Parameter] public AdmiralInputStatus Status { get; set; }
+    [Parameter] public string? IconStart { get; set; }
+    [Parameter] public string? IconEnd { get; set; }
+    [Parameter] public bool DisplayClearIcon { get; set; }
+    [Parameter] public bool Password { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool ReadOnly { get; set; }
+    [Parameter] public bool Loading { get; set; }
+    [Parameter] public bool Skeleton { get; set; }
+    [Parameter] public bool Immediate { get; set; } = true;
+    [Parameter] public bool Trim { get; set; }
+    [Parameter] public long? MaxLength { get; set; }
+    [Parameter] public string ClearAriaLabel { get; set; } = "Clear value";
+    [Parameter] public string ShowPasswordAriaLabel { get; set; } = "Show password";
+    [Parameter] public string HidePasswordAriaLabel { get; set; } = "Hide password";
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+}

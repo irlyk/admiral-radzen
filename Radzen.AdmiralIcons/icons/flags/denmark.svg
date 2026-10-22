@@ -1,0 +1,20 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_179" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="27.500000" height="19.500000" x="0.250000" y="4.250000" rx="2.750000" stroke="rgb(245,245,245)" stroke-width="0.500000" />
+		</g>
+	</mask>
+	<rect id="Denmark" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="27.500000" height="19.500000" x="0.250000" y="4.250000" rx="2.750000" stroke="rgb(214,216,221)" stroke-width="0.500000" />
+	<g mask="url(#mask_179)">
+		<path id="Combined Shape" d="M28 6C28 4.89543 27.1046 4 26 4L12 4L12 12L28 12L28 6ZM28 16L12 16L12 24L26 24C27.1046 24 28 23.1046 28 22L28 16ZM8 24L8 16L0 16L0 22C0 23.1046 0.89543 24 2 24L8 24ZM0 12L8 12L8 4L2 4C0.89543 4 0 4.89543 0 6L0 12Z" fill="rgb(239,38,77)" fill-rule="evenodd" />
+		<path id="Combined Shape" d="M28 6C28 4.89543 27.1046 4 26 4L12 4L12 12L28 12L28 6ZM28 16L12 16L12 24L26 24C27.1046 24 28 23.1046 28 22L28 16ZM8 24L8 16L0 16L0 22C0 23.1046 0.89543 24 2 24L8 24ZM0 12L8 12L8 4L2 4C0.89543 4 0 4.89543 0 6L0 12Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	</g>
+</svg>

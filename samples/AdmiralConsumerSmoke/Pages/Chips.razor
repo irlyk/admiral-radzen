@@ -1,0 +1,92 @@
+@page "/components/chips"
+<PageTitle>Admiral Chips</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Chips" Description="Outlined and filled chips with selection, icons, badges, removal, disabled and read-only states."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-chips--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@T("Использование и ограничения", "Usage and limitations")</h2>
+            <p>@T("Selected имеет тип bool?: null обозначает неопределённое состояние, а @bind-Selected показывает изменение выбора. Close — отдельное действие удаления, его видимость управляется наличием обработчика. ReadOnly разрешает просмотр, но блокирует выбор и удаление; Disabled исключает оба действия.", "Selected is bool?: null represents an indeterminate state, and @bind-Selected reports selection changes. Close is a separate removal action whose handler enables the close control. ReadOnly allows viewing but blocks selection and removal; Disabled blocks both actions.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralChip" Rows="@ApiRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenChip + Admiral theme</h2>
+            <p>@T("Прямой RadzenChip предоставляет Selected, Click и Close со своими типами событий. Тема оформляет его, но не добавляет связку SelectedChanged, ReadOnly, Badge и содержимое AdmiralChip. Управляйте выбором и удалением в приложении.", "Direct RadzenChip offers Selected, Click and Close with its own event types. The theme styles it but does not add SelectedChanged binding, ReadOnly, Badge or AdmiralChip content. Manage selection and removal in application state.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <RadzenChip Text="Filter" Variant="Variant.Outlined" Size="ChipSize.Small" Disabled="@directDisabled" Selected="@directSelected" Click="@(_ => ToggleDirect())" />
+                <output aria-live="polite">@T("Нажатия Radzen", "Radzen clicks"): @directClicks</output>
+            </div><div class="admiral-component-controls"><label class="admiral-component-controls__check"><input type="checkbox" @bind="directDisabled" /> Disabled</label></div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@T("Интерактивный пример", "Interactive playground")</h2>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <AdmiralChip Text="Filter" Appearance="@appearance" Dimension="@dimension" Selected="@selected" SelectedChanged="@OnSelectedChanged" Disabled="@disabled" ReadOnly="@readOnly" />
+                @if (showRemovable) { <AdmiralChip Text="Removable" Close="@(_ => RemoveChip())" /> }
+                else { <AdmiralTextButton Text="Restore chip" Click="@(_ => showRemovable = true)" /> }
+                <output aria-live="polite">@T("Выбран", "Selected"): @selected · @T("Последнее событие", "Last event"): @lastEvent</output>
+            </div><div class="admiral-component-controls">
+                <label><span>@SmokeL["Dimension"]</span><select @bind="dimension">@foreach (var value in Enum.GetValues<AdmiralChipDimension>()) { <option value="@value">@value</option> }</select></label>
+                <label><span>@SmokeL["Appearance"]</span><select @bind="appearance">@foreach (var value in Enum.GetValues<AdmiralChipAppearance>()) { <option value="@value">@value</option> }</select></label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="readOnly" /> ReadOnly</label>
+            </div></div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+        <section class="admiral-component-page__section"><h2>@T("Варианты и содержимое", "Variants and content")</h2><div class="admiral-component-row">
+            <AdmiralChip Text="Outlined" /><AdmiralChip Text="Filled" Appearance="AdmiralChipAppearance.Filled" /><AdmiralChip Text="Small" Dimension="AdmiralChipDimension.S" />
+            <AdmiralChip Text="Business" IconStart="admiral:category/bank-outline" /><AdmiralChip Text="Messages" Badge="8" Appearance="AdmiralChipAppearance.Filled" />
+            <AdmiralChip Text="A very long chip label that is truncated" Tooltip="A very long chip label that is truncated" />
+            <AdmiralChip Text="Selected disabled" Selected="true" Disabled="true" /><AdmiralChip Text="Read only" ReadOnly="true" />
+        </div></section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private AdmiralChipAppearance appearance;
+    private AdmiralChipDimension dimension;
+    private bool? selected = false;
+    private bool disabled, readOnly, directDisabled, directSelected, showRemovable = true;
+    private int directClicks;
+    private string lastEvent = "—";
+    private void OnSelectedChanged(bool? value) { selected = value; lastEvent = $"SelectedChanged: {value}"; }
+    private void RemoveChip() { showRemovable = false; lastEvent = "Close"; }
+    private void ToggleDirect() { directSelected = !directSelected; directClicks++; }
+    private static readonly IReadOnlyList<ApiReference.Entry> ApiRows = [
+        new("Text / ChildContent", "string? / null; RenderFragment? / null", "Label or custom content."),
+        new("Appearance / Dimension", "Outlined / M", "Outlined or Filled; M or S."),
+        new("Selected / SelectedChanged", "bool? / null; EventCallback<bool?>", "Selection state and its change event."),
+        new("Click / Close", "EventCallback<MouseEventArgs>", "Main activation and separate removal action."),
+        new("Disabled / ReadOnly", "bool / false", "Block selection and removal."),
+        new("IconStart / IconEnd / Badge / Tooltip", "optional / null", "Content decoration and long-label hint.")];
+    private const string AdmiralCode = """
+        <AdmiralChip Text="Filter" Selected="@selected" SelectedChanged="@OnSelectedChanged" />
+        @if (visible) { <AdmiralChip Text="Removable" Close="@(_ => visible = false)" /> }
+        <output aria-live="polite">Selected: @selected</output>
+        @code {
+            private bool? selected = false;
+            private bool visible = true;
+            private void OnSelectedChanged(bool? value) => selected = value;
+        }
+        """;
+    private const string DirectCode = """
+        <RadzenChip Text="Filter" Variant="Variant.Outlined" Size="ChipSize.Small"
+            Selected="@selected" Click="@(_ => Toggle())" />
+        <output aria-live="polite">Clicks: @clicks</output>
+        @code {
+            private bool selected;
+            private int clicks;
+            private void Toggle() { selected = !selected; clicks++; }
+        }
+        """;
+}

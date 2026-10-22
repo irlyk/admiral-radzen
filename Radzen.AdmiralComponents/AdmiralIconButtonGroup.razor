@@ -1,0 +1,16 @@
+<div class="@CssClass" role="group" aria-label="@AriaLabel"
+     data-dimension="@Dimension.ToString().ToLowerInvariant()"
+     @attributes="AdditionalAttributes">
+    <CascadingValue Value="this" IsFixed="true">@ChildContent</CascadingValue>
+</div>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public AdmiralButtonDimension Dimension { get; set; } = AdmiralButtonDimension.Xl;
+    [Parameter] public string? AriaLabel { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => string.Join(' ', new[] { "admiral-icon-button-group", Class }
+        .Where(value => !string.IsNullOrWhiteSpace(value)));
+}

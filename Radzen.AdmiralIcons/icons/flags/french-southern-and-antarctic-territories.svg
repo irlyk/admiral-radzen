@@ -1,0 +1,33 @@
+<svg viewBox="0 0 28.5 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.500000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_263" width="28.000000" height="20.000000" x="0.500000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.500000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.500000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="French Southern And Antarctic Territories" width="28.000000" height="28.000000" x="0.500000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.500000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.500000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_263)">
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="0.500000" y="4.000000" fill="rgb(8,59,154)" />
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="0.500000" y="4.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M0.5 15L15.5 15L15.5 4L0.5 4L0.5 15Z" fill="rgb(8,59,154)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M15.5 15L15.5 4L0.5 4L0.5 15L15.5 15Z" fill-rule="evenodd" stroke="rgb(255,255,255)" stroke-width="1.000000" />
+		<path id="Rectangle 3" d="M0.5 15L5.5 15L5.5 4L0.5 4L0.5 15Z" fill="rgb(8,59,154)" fill-rule="evenodd" />
+		<path id="Rectangle 4" d="M5.5 15L10.5 15L10.5 4L5.5 4L5.5 15Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Rectangle 5" d="M10.5 15L15.5 15L15.5 4L10.5 4L10.5 15Z" fill="rgb(244,70,83)" fill-rule="evenodd" />
+		<g id="Group 22">
+			<path id="Star 121" d="M18.2542 15.6379L18.9697 15.6379L18.3909 16.0584L18.612 16.7389L18.0331 16.3184L17.4543 16.7389L17.6754 16.0584L17.0965 15.6379L17.812 15.6379L18.0331 14.9574L18.2542 15.6379Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+			<path id="Star 122" d="M25.5855 15.6379L26.301 15.6379L25.7221 16.0584L25.9432 16.7389L25.3644 16.3184L24.7855 16.7389L25.0066 16.0584L24.4278 15.6379L25.1433 15.6379L25.3644 14.9574L25.5855 15.6379Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+			<path id="Star 123" d="M23.8895 20.179L24.605 20.179L24.0261 20.5995L24.2472 21.28L23.6684 20.8594L23.0895 21.28L23.3106 20.5995L22.7318 20.179L23.4473 20.179L23.6684 19.4985L23.8895 20.179Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+			<path id="Star 124" d="M19.8955 20.179L20.611 20.179L20.0322 20.5995L20.2533 21.28L19.6744 20.8594L19.0956 21.28L19.3167 20.5995L18.7378 20.179L19.4533 20.179L19.6744 19.4985L19.8955 20.179Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+			<path id="Star 125" d="M21.8651 21.7109L22.5806 21.7109L22.0017 22.1314L22.2228 22.8119L21.644 22.3914L21.0651 22.8119L21.2862 22.1314L20.7074 21.7109L21.4229 21.7109L21.644 21.0304L21.8651 21.7109Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+			<path id="Union" d="M20.4951 18.541L21.6987 20.4286L22.9024 18.541L23.9145 18.541L24.0787 18.8419L25.1182 18.8419L23.4495 16.1884L22.2185 18.1033L22.2185 16.3526L22.9571 16.3526L23.5042 15.4772L22.2185 15.4772L22.2185 14.9301L23.8598 14.9301L24.4343 14L18.9632 14L19.5376 14.9301L21.179 14.9301L21.179 15.4772L19.8932 15.4772L20.4404 16.3526L21.179 16.3526L21.179 18.1033L19.948 16.1884L18.2793 18.8419L19.3188 18.8419L19.4829 18.541L20.4951 18.541ZM20.3036 17.9119L19.9753 17.3647L19.647 17.9119L20.3036 17.9119ZM23.0939 17.9119L23.4221 17.3647L23.7504 17.9119L23.0939 17.9119Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		</g>
+	</g>
+</svg>

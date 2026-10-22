@@ -1,0 +1,57 @@
+<div @ref="root" class="@CssClass" data-open="@(open ? "true" : "false")" @attributes="AdditionalAttributes">
+    <div class="admiral-global-search__control" role="search">
+        @if (!string.IsNullOrEmpty(Prefix))
+        {
+            <span class="admiral-global-search__prefix">@Prefix</span>
+        }
+        <input @ref="input" class="admiral-global-search__input" type="search" role="combobox" aria-autocomplete="list" aria-haspopup="listbox"
+               value="@query" placeholder="@Placeholder"
+               aria-label="@AriaLabel" aria-expanded="@(open ? "true" : "false")"
+               aria-controls="@(open ? ResultsId : null)" aria-activedescendant="@ActiveDescendant"
+               @onfocus="Open" @oninput="HandleInput" />
+        @if (!string.IsNullOrEmpty(query))
+        {
+            <button class="admiral-global-search__clear" type="button" aria-label="@ClearAriaLabel"
+                    @onclick="Clear">
+                <RadzenIcon Icon="admiral:service/close-outline" />
+            </button>
+        }
+        <button class="admiral-global-search__submit" type="button" aria-label="@SubmitAriaLabel"
+                @onclick="Submit">
+            <RadzenIcon Icon="admiral:system/search-outline" />
+        </button>
+    </div>
+    @if (open)
+    {
+        <div class="admiral-global-search__drop" id="@ResultsId" role="listbox" aria-label="@AriaLabel">
+            @if (Results.Count == 0)
+            {
+                <div class="admiral-global-search__empty">@EmptyText</div>
+            }
+            else
+            {
+                @for (var index = 0; index < Results.Count; index++)
+                {
+                    var item = Results[index];
+                    var itemIndex = index;
+                    var icon = item.Icon ?? (string.IsNullOrEmpty(query)
+                        ? "admiral:system/time-outline"
+                        : "admiral:system/search-outline");
+                    <button @key="item.Id"
+                            class="admiral-global-search__option @(activeIndex == index ? "admiral-global-search__option--active" : null)"
+                            id="@OptionId(index)" type="button" role="option" tabindex="-1"
+                            aria-selected="@(activeIndex == index ? "true" : "false")"
+                            @onmouseenter="@(() => activeIndex = itemIndex)"
+                            @onclick="@(() => Select(item))">
+                        <RadzenIcon @key="icon" Icon="@icon" />
+                        <span class="admiral-global-search__option-text">@item.Title</span>
+                        @if (!string.IsNullOrEmpty(item.Meta))
+                        {
+                            <span class="admiral-global-search__option-meta">@item.Meta</span>
+                        }
+                    </button>
+                }
+            }
+        </div>
+    }
+</div>

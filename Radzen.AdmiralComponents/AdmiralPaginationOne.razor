@@ -1,0 +1,41 @@
+<nav class="@CssClass" aria-label="@AriaLabel" @attributes="AdditionalAttributes">
+    @if (Simple)
+    {
+        <span class="admiral-pagination-one__range">@ItemRangeText</span>
+        @SideButtons
+    }
+    else
+    {
+        <div class="admiral-pagination-one__part admiral-pagination-one__page-size">
+            <span>@ItemsPerPageText</span>
+            <RadzenDropDown TValue="int" Data="@PageSizeOptions" Value="@PageSize"
+                            class="admiral-pagination-one__select" PopupStyle="@SelectPopupStyle"
+                            Change="@OnPageSizeSelected" Disabled="@PageSizeSelectDisabled"
+                            aria-label="@PageSizeAriaLabel" />
+            <AdmiralDivider Orientation="AdmiralDividerOrientation.Vertical"
+                            Size="AdmiralDividerSize.Small" Length="1.5rem" />
+            <span class="admiral-pagination-one__range">@ItemRangeText</span>
+        </div>
+        <div class="admiral-pagination-one__part admiral-pagination-one__page">
+            <AdmiralDivider Orientation="AdmiralDividerOrientation.Vertical"
+                            Size="AdmiralDividerSize.Small" Length="1.5rem" />
+            <RadzenDropDown TValue="int" Data="@PageOptions" Value="@EffectivePage"
+                            class="admiral-pagination-one__select" PopupStyle="@SelectPopupStyle"
+                            Change="@OnPageSelected" Disabled="@PageSelectDisabled"
+                            aria-label="@PageAriaLabel" />
+            <span class="admiral-pagination-one__total">@PageRangeText</span>
+            @SideButtons
+        </div>
+    }
+</nav>
+
+@code {
+    private RenderFragment SideButtons => @<div class="admiral-pagination-one__buttons">
+        <RadzenButton Icon="admiral:system/chevron-left-outline" Size="@ButtonDimension"
+                      Variant="Variant.Flat" Disabled="@(EffectivePage <= 1)" Click="PreviousPage"
+                      class="admiral-pagination-one__button" aria-label="@PreviousPageAriaLabel" />
+        <RadzenButton Icon="admiral:system/chevron-right-outline" Size="@ButtonDimension"
+                      Variant="Variant.Flat" Disabled="@(EffectivePage >= TotalPages)" Click="NextPage"
+                      class="admiral-pagination-one__button" aria-label="@NextPageAriaLabel" />
+    </div>;
+}

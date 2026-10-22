@@ -1,0 +1,45 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+		<g id="pixso_custom_effect_18">
+			<effect x="0.000000" y="0.000000" visibility="visible" fill="rgb(0,0,0)" fill-opacity="0.0599999987" effectType="dropShadow" showShadowBehind="1" stdDeviation="0" radius="0" />
+			<effect x="0.000000" y="1.000000" visibility="hidden" fill="rgb(255,216.88,100.278)" fill-opacity="1" effectType="innerShadow" showShadowBehind="1" stdDeviation="0" radius="0" />
+		</g>
+		<filter id="filter_18" width="14.000000" height="20.000000" x="8.666656" y="4.000000" filterUnits="userSpaceOnUse" customEffect="url(#pixso_custom_effect_18)" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix" />
+			<feOffset dx="0.000000" dy="0.000000" in="SourceAlpha" />
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0 " />
+			<feBlend result="effect_dropShadow_1" in2="BackgroundImageFix" mode="normal" />
+			<feBlend result="shape" in="SourceGraphic" in2="effect_dropShadow_1" mode="normal" />
+		</filter>
+	</defs>
+	<mask id="mask_209" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Bosnia and Herzegovina" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_209)">
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="0.000000" y="4.000000" fill="rgb(11,54,178)" />
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="0.000000" y="4.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<g filter="url(#filter_18)">
+			<path id="Rectangle 2" d="M22.6666 24L22.6666 4L8.66663 4L22.6666 24Z" fill="rgb(255,208,69)" fill-rule="evenodd" />
+			<path id="Rectangle 2" d="M22.6666 4L8.66663 4L22.6666 24L22.6666 4Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+		<path id="Star 2" d="M17.3333 22.6667L16.3905 22.9428L16.6667 22L16.3905 21.0572L17.3333 21.3334L18.2761 21.0572L18 22L18.2761 22.9428L17.3333 22.6667Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Star 2" d="M16.3905 22.9428L16.6667 22L16.3905 21.0572L17.3333 21.3334L18.2761 21.0572L18 22L18.2761 22.9428L17.3333 22.6667L16.3905 22.9428Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Star 2" d="M14.6667 18.6667L13.7239 18.9428L14 18L13.7239 17.0572L14.6667 17.3334L15.6095 17.0572L15.3334 18L15.6095 18.9428L14.6667 18.6667Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Star 2" d="M13.7239 18.9428L14 18L13.7239 17.0572L14.6667 17.3334L15.6095 17.0572L15.3334 18L15.6095 18.9428L14.6667 18.6667L13.7239 18.9428Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Star 2" d="M12 14.6667L11.0571 14.9428L11.3333 14L11.0571 13.0572L12 13.3334L12.9428 13.0572L12.6666 14L12.9428 14.9428L12 14.6667Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Star 2" d="M11.0571 14.9428L11.3333 14L11.0571 13.0572L12 13.3334L12.9428 13.0572L12.6666 14L12.9428 14.9428L12 14.6667L11.0571 14.9428Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Star 2" d="M9.33333 10.6667L8.39052 10.9428L8.66667 10L8.39052 9.05721L9.33333 9.33335L10.2761 9.05721L10 10L10.2761 10.9428L9.33333 10.6667Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Star 2" d="M8.39052 10.9428L8.66667 10L8.39052 9.05721L9.33333 9.33335L10.2761 9.05721L10 10L10.2761 10.9428L9.33333 10.6667L8.39052 10.9428Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Star 2" d="M6.66671 6.66669L5.7239 6.94283L6.00004 6.00002L5.7239 5.05721L6.66671 5.33335L7.60952 5.05721L7.33337 6.00002L7.60952 6.94283L6.66671 6.66669Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Star 2" d="M5.7239 6.94283L6.00004 6.00002L5.7239 5.05721L6.66671 5.33335L7.60952 5.05721L7.33337 6.00002L7.60952 6.94283L6.66671 6.66669L5.7239 6.94283Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	</g>
+</svg>

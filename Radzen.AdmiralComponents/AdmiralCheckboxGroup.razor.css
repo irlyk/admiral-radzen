@@ -1,0 +1,15 @@
+.admiral-checkbox-group {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    width: fit-content;
+    max-width: 100%;
+    color: var(--rz-text-color);
+    font-size: 1rem;
+    line-height: 1.25rem;
+}
+
+.admiral-checkbox-group--s { gap: .75rem; font-size: .875rem; line-height: 1rem; }
+.admiral-checkbox-group--disabled { color: var(--rz-text-disabled-color); }
+.admiral-checkbox-group__label { user-select: none; }

@@ -1,0 +1,3 @@
+button.admiral-tag--clickable:hover:not(:disabled) {
+    background: var(--admiral-tag-hover-background, color-mix(in srgb, var(--admiral-tag-background) 80%, var(--rz-text-color)));
+}

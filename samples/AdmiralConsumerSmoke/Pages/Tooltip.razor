@@ -1,0 +1,79 @@
+@page "/components/tooltip"
+@inject TooltipService Tooltips
+<PageTitle>Admiral Tooltip</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Tooltip" Description="Markup-first tooltip trigger with M/S dimensions, four positions, delay and custom content."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-tooltip--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@T("Использование и ограничения", "Usage and limitations")</h2>
+            <p>@T("Tooltip открывается при наведении или фокусе дочернего элемента и закрывается после ухода/потери фокуса; Escape тоже закрывает его. Delay по умолчанию 1500 мс, но при фокусе показ немедленный. Focusable добавляет tabindex=0 обёртке, что полезно для некликабельного текста, но у кнопки уже есть собственный фокус. Компонент не предоставляет callback открытия.", "Tooltip opens on hover or child focus and closes on leave/blur; Escape also closes it. Delay defaults to 1500 ms, while keyboard focus opens immediately. Focusable adds tabindex=0 to the wrapper for plain text, but a button is already focusable. There is no open-state callback.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralTooltip" Rows="@ApiRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>TooltipService + RadzenButton</h2>
+            <p>@T("Прямой Radzen вызывает TooltipService.Open для нужной кнопки. Приложение само связывает наведение, фокус, закрытие и Escape; AdmiralTooltip делает это в обёртке и принимает RenderFragment Content.", "Direct Radzen calls TooltipService.Open for the target button. The application wires hover, focus, close and Escape itself; AdmiralTooltip handles these in its wrapper and accepts RenderFragment Content.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <span @ref="directTarget" @onmouseenter="ShowDirect" @onfocusin="ShowDirect" @onmouseleave="HideDirect" @onfocusout="HideDirect"><RadzenButton Text="Hover or focus" /></span>
+                <span>@T("Подсказка появится рядом с кнопкой.", "The tooltip opens beside the button.")</span>
+            </div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section"><h2>@T("Интерактивный пример", "Interactive playground")</h2>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <AdmiralTooltip Text="Helpful details" Position="@position" Dimension="@dimension" Delay="@delay"><AdmiralButton Text="Hover or focus" /></AdmiralTooltip>
+            </div><div class="admiral-component-controls">
+                <label><span>@SmokeL["Position"]</span><select @bind="position">@foreach (var value in Enum.GetValues<AdmiralTooltipPosition>()) { <option value="@value">@value</option> }</select></label>
+                <label><span>@SmokeL["Dimension"]</span><select @bind="dimension">@foreach (var value in Enum.GetValues<AdmiralTooltipDimension>()) { <option value="@value">@value</option> }</select></label>
+                <label><span>Delay (ms)</span><input type="number" min="0" max="3000" step="100" @bind="delay" /></label>
+            </div></div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+        <section class="admiral-component-page__section"><h2>@T("Позиции и содержимое", "Positions and content")</h2><div class="admiral-component-row">
+            @foreach (var value in Enum.GetValues<AdmiralTooltipPosition>()) { <AdmiralTooltip Text="@($"{value} tooltip")" Position="@value" Delay="150"><AdmiralButton Text="@value.ToString()" /></AdmiralTooltip> }
+            <AdmiralTooltip Delay="150"><ChildContent><AdmiralButton Text="Custom content" /></ChildContent><Content><strong>Custom tooltip</strong><br />RenderFragment content</Content></AdmiralTooltip>
+            <AdmiralTooltip Text="Focusable text" Focusable="true" Delay="150"><span>Plain text target</span></AdmiralTooltip>
+        </div></section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private AdmiralTooltipPosition position = AdmiralTooltipPosition.Bottom;
+    private AdmiralTooltipDimension dimension;
+    private int delay = 150;
+    private ElementReference directTarget;
+    private void ShowDirect() => Tooltips.Open(directTarget, "Helpful details", new TooltipOptions { Position = TooltipPosition.Bottom, Delay = 150 });
+    private void HideDirect() => Tooltips.Close();
+    private static readonly IReadOnlyList<ApiReference.Entry> ApiRows = [
+        new("ChildContent / Text / Content", "RenderFragment? / null; string? / null; RenderFragment? / null", "Trigger and tooltip body."),
+        new("Position / Dimension", "Bottom / M", "Top, Right, Bottom, Left; M or S."),
+        new("Delay / Duration", "1500 ms / null", "Hover delay and optional auto-close time; focus opens immediately."),
+        new("Focusable", "bool / false", "Adds tabindex to a plain-text trigger wrapper.")];
+    private const string AdmiralCode = """
+        <AdmiralTooltip Text="Helpful details" Position="AdmiralTooltipPosition.Bottom" Delay="150">
+            <AdmiralButton Text="Hover or focus" />
+        </AdmiralTooltip>
+        """;
+    private const string DirectCode = """
+        @inject TooltipService Tooltips
+        <span @ref="target" @onmouseenter="Show" @onfocusin="Show"
+              @onmouseleave="Hide" @onfocusout="Hide">
+            <RadzenButton Text="Hover or focus" />
+        </span>
+        @code {
+            private ElementReference target;
+            private void Show() => Tooltips.Open(target, "Helpful details");
+            private void Hide() => Tooltips.Close();
+        }
+        """;
+}

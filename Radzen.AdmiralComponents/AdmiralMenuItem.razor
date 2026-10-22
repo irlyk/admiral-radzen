@@ -1,0 +1,58 @@
+@using Radzen.Admiral.Components.Internal
+
+@if (DividerBefore)
+{
+    <div class="admiral-menu-item__divider" role="separator"></div>
+}
+<button type="button" class="@CssClass" role="@(Checkable ? "menuitemcheckbox" : "menuitem")"
+        aria-checked="@(Checkable ? (Checked ? "true" : "false") : null)" disabled="@Disabled" @onclick="InvokeAsync"
+        @attributes="AdditionalAttributes">
+    @if (Checkable)
+    {
+        <span class="admiral-menu-item__check" aria-hidden="true">
+            @if (Checked) { <AdmiralIcon Icon="admiral:service/check-outline" Size="AdmiralIconSize.Medium" /> }
+        </span>
+    }
+    else if (!string.IsNullOrWhiteSpace(Icon))
+    {
+        <AdmiralIcon Icon="@Icon" Size="@IconSize" aria-hidden="true" />
+    }
+    <span class="admiral-menu-item__content">
+        <span class="admiral-menu-item__text">
+            @if (ChildContent is not null) { @ChildContent } else { @Text }
+        </span>
+        @if (!string.IsNullOrWhiteSpace(Description)) { <span class="admiral-menu-item__description">@Description</span> }
+    </span>
+    @if (!string.IsNullOrWhiteSpace(Shortcut)) { <span class="admiral-menu-item__shortcut">@Shortcut</span> }
+</button>
+
+@code {
+    [CascadingParameter] internal AdmiralMenuContext? Menu { get; set; }
+    [Parameter] public string Text { get; set; } = string.Empty;
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? Description { get; set; }
+    [Parameter] public string? Icon { get; set; }
+    /// <summary>Leading icon size. Defaults to Large (24px).</summary>
+    [Parameter] public AdmiralIconSize IconSize { get; set; } = AdmiralIconSize.Large;
+    [Parameter] public string? Shortcut { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool Selected { get; set; }
+    [Parameter] public bool Checkable { get; set; }
+    [Parameter] public bool Checked { get; set; }
+    [Parameter] public EventCallback<bool> CheckedChanged { get; set; }
+    [Parameter] public bool DividerBefore { get; set; }
+    [Parameter] public bool KeepOpen { get; set; }
+    [Parameter] public EventCallback Click { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private async Task InvokeAsync()
+    {
+        if (Disabled) return;
+        if (Checkable) { Checked = !Checked; await CheckedChanged.InvokeAsync(Checked); }
+        await Click.InvokeAsync();
+        if (!KeepOpen && Menu is not null) await Menu.CloseAsync();
+    }
+
+    private string CssClass => string.Join(' ', new[] { "admiral-menu-item", Selected ? "admiral-menu-item--selected" : null, Class }.Where(x => !string.IsNullOrWhiteSpace(x)));
+}

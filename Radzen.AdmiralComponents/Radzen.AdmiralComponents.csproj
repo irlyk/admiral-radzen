@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PackageId>Radzen.Admiral.Components</PackageId>
+    <AssemblyName>Radzen.Admiral.Components</AssemblyName>
+    <RootNamespace>Radzen.Admiral.Components</RootNamespace>
+    <Title>Radzen Admiral Components</Title>
+    <Description>Reusable Admiral Design System compositions for Radzen Blazor.</Description>
+    <IsPackable>true</IsPackable>
+    <Version>1.2.2</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Authors>irlyk</Authors>
+    <Copyright>Copyright (c) 2026 irlyk</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/irlyk/admiral-radzen</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/irlyk/admiral-radzen.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RadzenBlazorVersion Condition="'$(RadzenBlazorVersion)' == ''">12.0.6</RadzenBlazorVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Radzen.Blazor" Version="$(RadzenBlazorVersion)" />
+    <ProjectReference Include="../Radzen.AdmiralIcons/Radzen.AdmiralIcons.csproj" />
+    <ProjectReference Include="../Radzen.AdmiralThemes/Radzen.AdmiralThemes.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="README.md" Pack="true" PackagePath="\" />
+    <Content Include="../THIRD_PARTY_NOTICES.md" Pack="true" PackagePath="THIRD_PARTY_NOTICES.md" />
+    <Content Include="../LICENSE" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

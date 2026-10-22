@@ -1,0 +1,98 @@
+@page "/components/slider"
+
+<PageTitle>Admiral Slider / Range</PageTitle>
+
+<div class="admiral-component-page slider-gallery">
+    <AdmiralGalleryPageHeader Title="Slider / Range" Description="Один или два ползунка, размеры XL/M, отметки, подсказка значения и состояния."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-slider--docs" />
+    <p><AdmiralLink Path="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-range--docs"
+                    Target="_blank" Text="@SmokeL["Отдельный референс Range в Admiral"]" /></p>
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral" />
+        <ApiReference Title="AdmiralNumericSlider" Rows="@NumericRows" />
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Behavior and compatibility"]</h2>
+            <p>@SmokeL["AdmiralNumericSlider поддерживает decimal, положительный дробный Step, локализованные отметки и MarkTemplate. AdmiralSlider сохраняется как совместимый целочисленный адаптер с прежними Value/Values и событиями."]</p>
+            <p>@SmokeL["AnyStep=true соответствует step=\"any\": pointer-значения не округляются к Step. Стрелки сохраняют шаг Step, Home/End выбирают границы, PageUp/Down — десять шагов; Tab остаётся нативным. Это расширение доступности: оригинальный React Slider с any не меняется от стрелок, а React Range не задаёт полной клавиатурной модели. Фиксированный шаг выравнивается относительно Min для совместимости нашей библиотеки, а не относительно нуля, как в React."]</p>
+            <p>@SmokeL["Маркеры Range могут совпадать и пересекаться. При пересечении нижний и верхний меняются ролями, а pointer/keyboard focus следует за перемещаемым маркером. ValuesChanged всегда возвращает отсортированную пару. Клик по треку выбирает ближайший маркер; при совпадении направление клика позволяет раздвинуть диапазон."]</p>
+            <p>@SmokeL["DragEnded вызывается ровно один раз после отпускания pointer, в том числе при клике по треку, после финального ValueChanged/ValuesChanged. Pointercancel или потеря capture дают Cancelled=true с последним значением; клавиатура и отметки не вызывают DragEnded. Смена Min/Max/Step/AnyStep/Range или блокировка отменяют устаревший жест без callback завершения. JS отвечает за геометрию и отзывчивое preview; изменения отправляются последовательно, без server round-trip на каждый пиксель."]</p>
+            <p>@SmokeL["HandleAttributes / MinHandleAttributes / MaxHandleAttributes дают title, data-* и дополнительные HTML-атрибуты вместо React props-config функций. Встроенные role, tabindex, style, data-handle и value ARIA защищены от переопределения. Произвольные React DOM-обработчики не переносятся. Размеры XL/M соответствуют Range M/S по геометрии маркера."]</p>
+            <p>@SmokeL["Изменение bound Value/Values также отменяет устаревший жест. Если нужно сбросить к тому же уже опубликованному значению, сначала вызовите CancelInteractionAsync(): одинаковые параметры сами по себе не сообщают компоненту о намерении сброса. Метод не вызывает DragEnded."]</p>
+            <p>@SmokeL["Max должен быть больше Min, Step — положительным. Значения ограничиваются границами; диапазон сортируется. Изменение параметров само по себе не вызывает callback. Точность текста задаётся ValueFormat, Culture=null использует CurrentCulture. Базовые отметки — границы, дополнительные фильтруются и сортируются. Подсказки видны при hover/focus/нажатии; активный второй маркер диапазона сам по себе не показывает подсказку."]</p>
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenSlider + Admiral theme</h2>
+            <p>@SmokeL["Независимый decimal-пример без Admiral-обёрток. Тема задаёт трек и маркеры. admiral-slider--medium включает 16px; без него — 20px. Форматирование, отметки, свободные значения и пересечение маркеров добавляет Admiral-обёртка, не CSS. У прямого Radzen остаются ограничения: step=any округляется на сервере, Range не пересекается и не совпадает."]</p>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <div class="slider-playground__sample">
+                        <RadzenSlider TValue="decimal" @bind-Value="radzenValue" Min="0" Max="10" Step="0.25" Disabled="@radzenDisabled" HandleLabel="Прямой Radzen" Style="width:100%" class="@(radzenSmall ? "admiral-slider--medium" : null)" />
+                    </div>
+                    <span class="admiral-component-page__result">@SmokeL["Значение:"] @radzenValue</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="radzenDisabled" /> Disabled Radzen</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="radzenSmall" /> M Radzen</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@ThemeCode" Title="@SmokeL["Razor · прямой Radzen API"]" />
+            <ApiReference Title="@SmokeL["RadzenSlider + тема"]" Rows="@RadzenRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <div class="slider-playground__sample">
+                    <AdmiralNumericSlider @ref="sliderControl" Value="@value" ValueChanged="OnValueChanged" Values="@rangeValues" ValuesChanged="OnValuesChanged" Range="@range" Dimension="@dimension"
+                                   Min="0" Max="10" Step="0.25m" AnyStep="@anyStep" DragEnded="OnDragEnded" Marks="@marks" ShowMarks="@showMarks"
+                                   HandleAttributes="@HandleData" MinHandleAttributes="@LowerData" MaxHandleAttributes="@UpperData"
+                                   Culture="@culture" ValueFormat="0.##" MarkTemplate="@(customMarks ? CurrencyMark : null)"
+                                   ShowTooltip="@showTooltip" Disabled="@disabled" Skeleton="@skeleton" AriaLabel="@SmokeL["Тестовый ползунок"]"
+                                   MinHandleAriaLabel="@SmokeL["Нижняя граница"]" MaxHandleAriaLabel="@SmokeL["Верхняя граница"]" />
+                    </div>
+                    <span class="admiral-component-page__result" data-slider-result data-changes="@changes" data-drag-ends="@dragEnds"
+                          data-last-cancelled="@lastCancelled.ToString().ToLowerInvariant()" data-completion-matched="@completionMatched.ToString().ToLowerInvariant()"
+                          aria-live="polite">@SmokeL["Значение:"] @(range ? string.Join("–", rangeValues) : value) · @SmokeL["Изменений:"] @changes · @SmokeL["Завершений:"] @dragEnds · @SmokeL["Отменён:"] @lastCancelled</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Dimension"]</span><select @bind="dimension"><option value="Xl">XL</option><option value="M">M</option></select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="range" /> Range</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="anyStep" /> AnyStep</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="showMarks" /> Marks</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="showTooltip" /> Tooltip</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="skeleton" /> Skeleton</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="customMarks" /> MarkTemplate</label>
+                    <label><span>@SmokeL["Mark culture"]</span><select aria-label="Локаль отметок" @bind="cultureName"><option>ru-RU</option><option>en-US</option></select></label>
+                    <AdmiralButton Text="@SmokeL["Совместить маркеры"]" Appearance="AdmiralButtonAppearance.Secondary" Click="CoincideAsync" />
+                    <AdmiralButton Text="@SmokeL["Сбросить значение"]" Appearance="AdmiralButtonAppearance.Secondary" Click="ResetValueAsync" />
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Compatibility: integer AdmiralSlider"]</h2>
+            <AdmiralSlider @bind-Value="legacyValue" Min="0" Max="100" Step="5" Marks="@legacyMarks" AriaLabel="@SmokeL["Целочисленный ползунок"]" />
+            <p>@SmokeL["Значение:"] @legacyValue</p>
+        </section>
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Offset minimum and off-step bound"]</h2>
+            <p>@SmokeL["Шаг 0,2 отсчитывается от −2,1. Home/End достигают обеих границ, включая Max=3,05 вне сетки шага."]</p>
+            <AdmiralNumericSlider @bind-Value="offsetValue" Min="-2.1m" Max="3.05m" Step="0.2m" AriaLabel="@SmokeL["Смещённый диапазон"]" />
+            <p>@SmokeL["Значение:"] @offsetValue</p>
+            <details class="component-doc-code"><summary>@SmokeL["Razor · смещённые границы"]</summary><pre><code>&lt;AdmiralNumericSlider @@bind-Value="value" Min="-2.1m" Max="3.05m" Step="0.2m" /&gt;</code></pre></details>
+        </section>
+    }
+</div>
+
+@code {
+    private RenderFragment<decimal> CurrencyMark => mark => @<span>@mark.ToString("0.##", culture) ₽</span>;
+}

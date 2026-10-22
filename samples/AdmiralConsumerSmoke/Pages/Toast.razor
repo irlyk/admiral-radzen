@@ -1,0 +1,162 @@
+@page "/components/toast"
+@implements IDisposable
+@inject AdmiralToastService Toasts
+@inject NotificationService RadzenNotifications
+
+<PageTitle>Admiral Toast</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Toast" Description="Всплывающие уведомления со стеком, размещением и временем показа."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-toast--docs" />
+
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Setup"]</h2>
+            <p><code>AddAdmiralComponents()</code> @SmokeL["регистрирует"] <code>AdmiralToastService</code>@SmokeL[". Разместите один"] <code>AdmiralToastHost</code> @SmokeL["до основного layout, затем внедрите сервис в любую страницу и вызовите"] <code>Show</code>@SmokeL[". Положение и ширину можно задать у host либо менять через сервис. Сервис возвращает идентификатор для"] <code>Remove</code>; <code>@SmokeL["Clear"]</code> @SmokeL["закрывает все сообщения."]</p>
+            <p>@SmokeL["Без"] <code>AutoDeleteTime</code> @SmokeL["уведомление остаётся до ручного закрытия."] <code>ShowProgress</code> @SmokeL["действует только вместе с положительным временем автозакрытия. Новые уведомления добавляются сверху."]</p>
+            <ApiReference Title="AdmiralToastOptions" Rows="@OptionsRows" />
+            <ApiReference Title="AdmiralToastService" Rows="@ServiceRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenNotification + Admiral theme</h2>
+            <p>@SmokeL["Прямой Radzen API остаётся доступным через"] <code>NotificationService</code> @SmokeL["и уже подключённый"] <code>RadzenComponents</code>@SmokeL[". У него собственные настройки размещения и длительности; прогресс-индикатор Admiral здесь не появляется."]</p>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <RadzenButton Text="Radzen Info" Icon="admiral:service/info-outline" Click="@(() => ShowRadzen(NotificationSeverity.Info))" />
+                    <RadzenButton Text="Radzen Warning" Icon="admiral:service/error-outline" ButtonStyle="ButtonStyle.Warning" Click="@(() => ShowRadzen(NotificationSeverity.Warning))" />
+                </div>
+            </div>
+            <CopyableRazorExample Code="@ThemeCode" Title="@SmokeL["Razor · прямой Radzen API"]" />
+            <ApiReference Title="@SmokeL["Параметры Radzen NotificationMessage"]" Rows="@RadzenRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <AdmiralButton Text="Info" Dimension="AdmiralButtonDimension.M" Click="@(_ => Add(AdmiralNotificationStatus.Info))" />
+                    <AdmiralButton Text="@SmokeL["Success"]" Dimension="AdmiralButtonDimension.M" Click="@(_ => Add(AdmiralNotificationStatus.Success))" />
+                    <AdmiralButton Text="@SmokeL["Warning"]" Dimension="AdmiralButtonDimension.M" Click="@(_ => Add(AdmiralNotificationStatus.Warning))" />
+                    <AdmiralButton Text="Error" Dimension="AdmiralButtonDimension.M" Click="@(_ => Add(AdmiralNotificationStatus.Error))" />
+                    <AdmiralButton Text="@SmokeL["Закрыть все"]" Dimension="AdmiralButtonDimension.M" Appearance="AdmiralButtonAppearance.Secondary" Click="@(_ => Toasts.Clear())" />
+                    <span class="admiral-component-page__result" aria-live="polite">@SmokeL["Активных сообщений:"] @Toasts.Entries.Count</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Position"]</span><select @bind="position"><option value="TopRight">@SmokeL["Top right"]</option><option value="BottomRight">@SmokeL["Bottom right"]</option><option value="BottomLeft">@SmokeL["Bottom left"]</option></select></label>
+                    <label><span>@SmokeL["Width"]</span><select @bind="width"><option value="384px">384 px</option><option value="320px">320 px</option><option value="480px">480 px</option></select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="autoDelete" /> AutoDeleteTime: 5 s</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="showProgress" /> Progress</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="displayIcon" /> @SmokeL["Status icon"]</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private AdmiralToastPosition position { get => Toasts.Position; set => Toasts.Position = value; }
+    private string width { get => Toasts.Width; set => Toasts.Width = value; }
+    private bool autoDelete = true, showProgress = true, displayIcon = true;
+    private int sequence;
+
+    protected override void OnInitialized() => Toasts.Changed += Refresh;
+    private void Refresh() => _ = InvokeAsync(StateHasChanged);
+    public void Dispose() => Toasts.Changed -= Refresh;
+
+    private void Add(AdmiralNotificationStatus status)
+    {
+        sequence++;
+        Toasts.Show(new AdmiralToastOptions
+        {
+            Title = $"{status} · сообщение {sequence}",
+            Message = "Это пример уведомления с оформлением Admiral.",
+            Status = status,
+            DisplayStatusIcon = displayIcon,
+            ShowProgress = showProgress,
+            AutoDeleteTime = autoDelete ? TimeSpan.FromSeconds(5) : null
+        });
+    }
+
+    private void ShowRadzen(NotificationSeverity severity) => RadzenNotifications.Notify(new NotificationMessage
+    {
+        Severity = severity,
+        Summary = severity.ToString(),
+        Detail = "Пример прямого Radzen API с темой Admiral.",
+        Duration = 5000
+    });
+
+    private const string AdmiralCode = """
+        @inject AdmiralToastService Toasts
+
+        @* Разместите один AdmiralToastHost в MainLayout.razor.
+           Зарегистрируйте AddAdmiralComponents() в Program.cs. *@
+        <AdmiralButton Text="Сохранить" Click="@(_ => ShowSaved())" />
+        <span role="status">Показано сообщений: @shown</span>
+
+        @code {
+            private int shown;
+            private void ShowSaved()
+            {
+                Toasts.Show(new AdmiralToastOptions {
+                    Title = "Готово", Message = "Изменения сохранены",
+                    Status = AdmiralNotificationStatus.Success,
+                    AutoDeleteTime = TimeSpan.FromSeconds(5), ShowProgress = true
+                });
+                shown++;
+            }
+        }
+        """;
+    private const string ThemeCode = """
+        @inject NotificationService Notifications
+
+        @* Разместите RadzenComponents в layout и зарегистрируйте NotificationService. *@
+        <RadzenButton Text="Уведомить" Click="@(_ => ShowInfo())" />
+        <span role="status">Показано сообщений: @shown</span>
+
+        @code {
+            private int shown;
+            private void ShowInfo()
+            {
+                Notifications.Notify(new NotificationMessage {
+                    Severity = NotificationSeverity.Info,
+                    Summary = "Информация", Detail = "Сообщение",
+                    Duration = 5000
+                });
+                shown++;
+            }
+        }
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> OptionsRows =
+    [
+        new("Title / Message", "string?", "Заголовок и содержимое уведомления."),
+        new("Status", "AdmiralNotificationStatus", "Info, Success, Warning или Error; по умолчанию Info."),
+        new("DisplayStatusIcon", "bool", "Показывает семантическую иконку; по умолчанию true."),
+        new("AutoDeleteTime", "TimeSpan?", "Автозакрытие после положительного интервала; по умолчанию null."),
+        new("ShowProgress", "bool", "Полоска обратного отсчёта; по умолчанию false."),
+        new("Actions", "RenderFragment?", "Дополнительные действия внутри карточки.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> ServiceRows =
+    [
+        new("Show(options)", "Guid", "Добавить сообщение в начало стека; возвращает его ID."),
+        new("Remove(id)", "bool", "Удалить одно сообщение и отменить его таймер."),
+        new("Clear()", "void", "Удалить все активные сообщения."),
+        new("Entries / Changed", "IReadOnlyList / event", "Текущее состояние стека и событие обновления."),
+        new("Position / Width", "AdmiralToastPosition / string", "Положение и ширина host, если они не зафиксированы его параметрами.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> RadzenRows =
+    [
+        new("Severity", "NotificationSeverity", "Семантический тип уведомления."),
+        new("Summary / Detail", "string", "Заголовок и текст."),
+        new("Duration", "double", "Время показа в миллисекундах.")
+    ];
+}

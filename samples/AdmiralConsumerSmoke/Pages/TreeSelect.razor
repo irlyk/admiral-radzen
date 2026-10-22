@@ -1,0 +1,210 @@
+@page "/components/tree-select"
+
+<PageTitle>Admiral TreeSelect</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="TreeSelect" Description="Выбор из вложенных пунктов в поле: одиночный и множественный режимы, поиск и выбранные значения."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-input-treeselect--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        <ApiReference Title="TreeSelect · selection and panels" Rows="@SelectionRows" />
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Behavior"]</h2>
+            <p><code>Items</code> @SmokeL["принимает дерево с уникальными строковыми"] <code>Id</code>@SmokeL[". В одиночном режиме связывайте"] <code>Value</code>@SmokeL[", в множественном —"] <code>Values</code>@SmokeL[". Выбор родителя отмечает его доступных потомков; поиск раскрывает подходящие ветви."]</p>
+            <p>@SmokeL["Enter, Space, ↑/↓ открывают список. ↑/↓ и Home/End выбирают активную строку; → раскрывает ветку или переходит к ребёнку, ← сворачивает её или возвращает к родителю. Enter/Space подтверждают выбор, Escape закрывает список и возвращает фокус. Disabled-ветви пропускаются."]</p>
+            <p>@SmokeL["В поиске ↑/↓ перемещают активную строку без потери фокуса ввода; Enter выбирает её. Home/End, ←/→ и пробел продолжают редактировать текст. Tab не перебирает каждый пункт: он проходит по контролам поля и выходит из popup. Клик снаружи закрывает список без перехвата фокуса."]</p>
+            <p>@SmokeL["ReadOnly-поле, как в React Admiral, не раскрывается. ReadOnly-узел можно прочитать и раскрыть, но нельзя изменить; каскад не меняет его потомков. В множественном режиме состояние родителей нормализуется после выбора ребёнка, частичный выбор объявляется как"] <code>aria-checked="mixed"</code>.</p>
+            <p><code>ShowCheckedStrategy</code> @SmokeL["управляет только чипами:"] <code>All</code> @SmokeL["показывает все выбранные узлы,"] <code>Child</code> @SmokeL["— выбранные листья,"] <code>Parent</code> @SmokeL["— выбранных родителей вместо их потомков. Порядок соответствует дереву; неизвестные Id не отображаются. Изменение стратегии не вызывает"] <code>ValuesChanged</code> @SmokeL["и не меняет каскадный выбор. В одиночном режиме параметр не используется."]</p>
+            <p>@SmokeL["Для совместимости по умолчанию используется"] <code>Parent</code>@SmokeL["; в React Admiral —"] <code>SHOW_ALL</code>@SmokeL[". В Parent учитывается выбранный Id родителя, а не только набор его листьев: передавайте полный результат"] <code>ValuesChanged</code>@SmokeL[", чтобы сохранить нормализованное состояние дерева."]</p>
+            <p><code>Loading</code> @SmokeL["показывает spinner, закрывает popup и блокирует выбор, очистку и удаление чипов, сохраняя значения."] <code>Skeleton</code> @SmokeL["заменяет содержимое поля неинтерактивной заглушкой;"] <code>LoadingAriaLabel</code> @SmokeL["задаёт локализованную подпись загрузки."]</p>
+            <p>@SmokeL["Кнопка удаления чипа снимает выбор узла и доступных потомков, пересчитывает родителей и вызывает"] <code>ValuesChanged</code>@SmokeL[". Disabled/ReadOnly-ветви и заблокированное поле не редактируются."] <code>RemoveChipAriaLabel</code> @SmokeL["— локализованный префикс названия кнопки, к которому добавляется текст узла. После удаления фокус возвращается на поле; Enter/Space на кнопке работают нативно."]</p>
+            <p><code>MinRowCount</code> @SmokeL["и"] <code>MaxRowCount</code> @SmokeL["принимают положительные числа или"] <code>null</code> @SmokeL["(без ограничения); минимум не может превышать максимум. Они работают только в Multiple. Строка чипов — 24px, промежуток — 4px. При открытии поля максимум снимается. Отличие от React: закрытое поле прокручивает чипы, а не заменяет скрытые чипы счётчиком +N. Это сохраняет доступ к каждой кнопке удаления через Tab."]</p>
+            <p><code>TopPanelTemplate</code> @SmokeL["и"] <code>BottomPanelTemplate</code> @SmokeL["— произвольные Razor-фрагменты над и под деревом вне его прокрутки. Управление фокусом внутри панелей остаётся у их контролов; Enter/Space не выбирают узел дерева, Escape закрывает popup. Разметку, подписи и локализацию панелей задаёт приложение."]</p>
+            <p>@SmokeL["Устаревший SelectTree в React-библиотеке показывает отдельное дерево. Здесь реализуется актуальное поле TreeSelect с сохраняемой совместимостью нашей иерархии: ←/→ соответствуют RadzenTree, тогда как React TreeSelect показывает плоский список с отступами. Виртуализация не является требованием паритета: публичный React TreeSelect её не подключает."] <code>CloseAriaLabel</code> @SmokeL["сохранён для совместимости и не используется."]</p>
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenTree + Admiral theme</h2>
+            <p>@SmokeL["Прямой"] <code>RadzenTree</code> @SmokeL["получает оформление от темы и позволяет выбирать узлы, но сам по себе не является выпадающим полем и не формирует чипы. Для этого используйте Admiral-обёртку."]</p>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview" style="display:block;width:100%">
+                    <RadzenTree class="admiral-tree" @bind-Value="radzenValue" @bind-CheckedValues="radzenChecked" AllowCheckBoxes="@radzenMultiple" AllowCheckChildren="true" AllowCheckParents="true">
+                        <RadzenTreeItem Text="@SmokeL["Финансы"]" Value="@("finance")" Expanded="true">
+                            <RadzenTreeItem Text="@SmokeL["Платежи"]" Value="@("payments")" />
+                            <RadzenTreeItem Text="@SmokeL["Отчеты"]" Value="@("reports")" />
+                        </RadzenTreeItem>
+                        <RadzenTreeItem Text="@SmokeL["Документы"]" Value="@("documents")" Expanded="true">
+                            <RadzenTreeItem Text="@SmokeL["Акты"]" Value="@("acts")" />
+                            <RadzenTreeItem Text="@SmokeL["Выписки"]" Value="@("statements")" />
+                        </RadzenTreeItem>
+                    </RadzenTree>
+                    <p class="admiral-component-page__result">@SmokeL["Выбранный узел:"] @radzenValue</p>
+                </div>
+                <div class="admiral-component-controls"><label class="admiral-component-controls__check"><input type="checkbox" @bind="radzenMultiple" /> @SmokeL["Checkboxes"]</label></div>
+            </div>
+            <CopyableRazorExample Code="@ThemeCode" Title="@SmokeL["Razor · прямой Radzen API"]" />
+            <ApiReference Title="@SmokeL["RadzenTree + тема"]" Rows="@RadzenRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview" style="display:block;width:100%;max-width:480px;min-height:320px">
+                    <AdmiralTreeSelect Items="@items" Size="@size" Multiple="@multiple" Searchable="@searchable" ShowCheckedStrategy="@strategy"
+                                       Disabled="@disabled" ReadOnly="@readOnly" AllowClear="@allowClear" Loading="@loading" Skeleton="@skeleton"
+                                       MinRowCount="@minRows" MaxRowCount="@maxRows"
+                                       TopPanelTemplate="@(showPanels ? TopPanel : null)" BottomPanelTemplate="@(showPanels ? BottomPanel : null)"
+                                       Placeholder="@SmokeL["Выберите раздел"]" SearchPlaceholder="@SmokeL["Поиск раздела"]"
+                                       @bind-Value="selectedId" @bind-Values:get="selectedIds" @bind-Values:set="SetValues" />
+                    <p class="admiral-component-page__result" aria-live="polite">@SmokeL["Выбрано:"] @(multiple ? string.Join(", ", selectedIds.Select(LabelOf)) : selectedId is null ? "—" : LabelOf(selectedId))</p>
+                    <p data-tree-events>@T("Изменений", "Changes"): @changeCount · @panelResult</p>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Size"]</span><select @bind="size">@foreach (var value in Enum.GetValues<AdmiralInputSize>()) { <option value="@value">@value</option> }</select></label>
+                    <label><span>ShowCheckedStrategy</span><select @bind="strategy">@foreach (var value in Enum.GetValues<AdmiralTreeSelectCheckedStrategy>()) { <option value="@value">@value</option> }</select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="multiple" /> Multiple</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="searchable" /> @SmokeL["Search"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="allowClear" /> @SmokeL["Clear"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="readOnly" /> @SmokeL["Read-only"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="loading" /> Loading</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="skeleton" /> Skeleton</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="showPanels" /> @SmokeL["Panels"]</label>
+                    <label><span>MinRowCount</span><input type="number" min="1" max="5" @bind="MinRows" /></label>
+                    <label><span>MaxRowCount</span><input type="number" min="1" max="5" @bind="MaxRows" /></label>
+                    <AdmiralButton Text="@SmokeL["Выбрать доступные"]" Dimension="AdmiralButtonDimension.S" Click="@(_ => SelectAvailable())" />
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+    }
+</div>
+
+@code {
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private string tab = ComponentDocTabs.Admiral;
+    private AdmiralInputSize size = AdmiralInputSize.Medium;
+    private AdmiralTreeSelectCheckedStrategy strategy = AdmiralTreeSelectCheckedStrategy.Parent;
+    private bool multiple = true, searchable = true, allowClear = true, disabled, readOnly, radzenMultiple;
+    private bool loading, skeleton, showPanels;
+    private int? minRows, maxRows;
+    private int? MinRows
+    {
+        get => minRows;
+        set
+        {
+            minRows = value.HasValue ? Math.Clamp(value.Value, 1, 5) : null;
+            if (maxRows < minRows)
+            {
+                maxRows = minRows;
+            }
+        }
+    }
+    private int? MaxRows
+    {
+        get => maxRows;
+        set
+        {
+            maxRows = value.HasValue ? Math.Clamp(value.Value, 1, 5) : null;
+            if (minRows > maxRows)
+            {
+                minRows = maxRows;
+            }
+        }
+    }
+    private int changeCount;
+    private string panelResult = T("Панели не использованы", "Panels not used");
+    private void SetValues(IReadOnlyCollection<string> values)
+    {
+        selectedIds = values;
+        changeCount++;
+    }
+    private void SelectAvailable() => selectedIds = ["finance", "payments", "incoming", "outgoing", "reports", "documents", "acts", "statements"];
+    private RenderFragment TopPanel => @<span>@T("Выбор разделов приложения", "Choose application sections")</span>;
+    private RenderFragment BottomPanel => @<AdmiralButton Text="@T("Действие панели", "Panel action")" Dimension="AdmiralButtonDimension.S" Click="@(_ => panelResult = T("Действие панели выполнено", "Panel action completed"))" />;
+    private string? selectedId;
+    private object? radzenValue;
+    private IEnumerable<object> radzenChecked = [];
+    private IReadOnlyCollection<string> selectedIds = ["incoming"];
+    private readonly IReadOnlyList<AdmiralTreeSelectItem> items =
+    [
+        new() { Id = "finance", Text = T("Финансы", "Finance"), Children =
+        [
+            new() { Id = "payments", Text = T("Платежи", "Payments"), Children =
+            [
+                new() { Id = "incoming", Text = T("Входящие", "Incoming") },
+                new() { Id = "outgoing", Text = T("Исходящие", "Outgoing") }
+            ] },
+            new() { Id = "reports", Text = T("Отчёты", "Reports") }
+        ] },
+        new() { Id = "documents", Text = T("Документы", "Documents"), Children =
+        [
+            new() { Id = "acts", Text = T("Акты", "Acts") },
+            new() { Id = "statements", Text = T("Выписки", "Statements") },
+            new() { Id = "archive", Text = T("Архив (недоступен)", "Archive (disabled)"), Disabled = true, Children =
+            [ new() { Id = "archive-2025", Text = T("Архив 2025", "Archive 2025") } ] },
+            new() { Id = "policies", Text = T("Регламент (только чтение)", "Policies (read only)"), ReadOnly = true }
+        ] }
+    ];
+    private static string LabelOf(string id) => id switch
+    {
+        "finance" => T("Финансы", "Finance"), "payments" => T("Платежи", "Payments"),
+        "incoming" => T("Входящие", "Incoming"), "outgoing" => T("Исходящие", "Outgoing"),
+        "reports" => T("Отчёты", "Reports"), "documents" => T("Документы", "Documents"),
+        "acts" => T("Акты", "Acts"), "statements" => T("Выписки", "Statements"),
+        _ => id
+    };
+
+    private const string AdmiralCode = """
+        <AdmiralTreeSelect Items="sections" Multiple="true" Searchable="true"
+                           ShowCheckedStrategy="AdmiralTreeSelectCheckedStrategy.Child"
+                           MinRowCount="1" MaxRowCount="2" Loading="loading"
+                           @bind-Values="selectedIds">
+            <TopPanelTemplate>Доступные разделы</TopPanelTemplate>
+            <BottomPanelTemplate>Изменения сохраняются после выбора.</BottomPanelTemplate>
+        </AdmiralTreeSelect>
+        <span role="status">Selected: @string.Join(", ", selectedIds)</span>
+        @code {
+            bool loading;
+            IReadOnlyCollection<string> selectedIds = [];
+            IReadOnlyList<AdmiralTreeSelectItem> sections = [
+                new() { Id = "finance", Text = "Финансы", Children = [
+                    new() { Id = "payments", Text = "Платежи" }
+                ] }
+            ];
+        }
+        """;
+    private string ThemeCode => $$"""
+        <RadzenTree class="admiral-tree" @bind-Value="selectedId" AllowCheckBoxes="true">
+            <RadzenTreeItem Text="{{T("Финансы", "Finance")}}" Value="@("finance")">
+                <RadzenTreeItem Text="{{T("Платежи", "Payments")}}" Value="@("payments")" />
+            </RadzenTreeItem>
+        </RadzenTree>
+        <span role="status">{{T("Выбрано", "Selected")}}: @selectedId</span>
+        @code { private object? selectedId; }
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> SelectionRows =
+    [
+        new("Value / ValueChanged", "string? / EventCallback<string?>", "Single selection and its callback; use when Multiple=false."),
+        new("Values / ValuesChanged", "IReadOnlyCollection<string> / EventCallback<IReadOnlyCollection<string>>", "Multi-selection and normalized Id set; use when Multiple=true."),
+        new("ShowCheckedStrategy", "AdmiralTreeSelectCheckedStrategy; Parent", "Controls displayed chips only. Changing it does not alter Values or emit ValuesChanged."),
+        new("Multiple / Searchable / AllowClear", "bool; false / true / true", "Mode, search and clearing controls."),
+        new("Loading / Skeleton / Disabled / ReadOnly", "bool; false", "Loading and skeleton block interaction; Disabled or ReadOnly prevent selection changes."),
+        new("MinRowCount / MaxRowCount", "int?; null", "Optional chip row bounds in multiple mode; positive values, with minimum not exceeding maximum."),
+        new("TopPanelTemplate / BottomPanelTemplate", "RenderFragment?; null", "Application-owned markup above and below the scrollable tree; the component does not manage custom control focus."),
+        new("DismissPopup / HandlePopupKey", "Task / Task", "Public JS interop bridge methods for popup dismissal and keyboard handling; normal consumers should use field interaction rather than call them directly.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> RadzenRows =
+    [
+        new("Value / ValueChanged", "object / EventCallback", "Выбор узла RadzenTree."),
+        new("AllowCheckBoxes", "bool", "Включает флажки для множественного выбора."),
+        new("AllowCheckChildren / AllowCheckParents", "bool", "Каскадное состояние дочерних и родительских узлов."),
+        new("class", "string", "admiral-tree активирует оформление из темы.")
+    ];
+}

@@ -1,0 +1,201 @@
+// Drawer geometry and motion follow Admiral Drawer / DrawerTitle / DrawerContent.
+body:has(.admiral-drawer-backdrop--modal) {
+  overflow: hidden;
+}
+
+.admiral-drawer-backdrop {
+  position: fixed;
+  z-index: calc(var(--rz-dialog-zindex, 1000) - 1);
+  inset: 0;
+  background-color: var(--rz-dialog-mask-background-color);
+  transition: background-color 0.3s cubic-bezier(0, 0, 0.2, 1);
+
+  &--nonmodal,
+  &--closing {
+    background-color: transparent;
+    pointer-events: none;
+  }
+}
+
+.admiral-drawer {
+  position: fixed;
+  z-index: var(--rz-dialog-zindex, 1000);
+  inset-block: 0;
+  right: 0;
+  left: auto;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: var(--admiral-drawer-width, 30rem);
+  max-width: calc(100% - 1rem);
+  padding-block: 1.25rem;
+  overflow: hidden;
+  color: var(--rz-text-title-color);
+  background-color: var(--admiral-background-primary);
+  box-shadow: var(--rz-shadow-7);
+  pointer-events: auto;
+  animation: rz-admiral-drawer-in-end 0.3s cubic-bezier(0, 0, 0.2, 1);
+
+  &--left {
+    left: 0;
+    right: auto;
+    animation-name: rz-admiral-drawer-in-start;
+  }
+
+  &--secondary {
+    background-color: var(--admiral-background-secondary);
+  }
+
+  &--closing {
+    pointer-events: none;
+    animation-name: rz-admiral-drawer-out-end;
+    animation-fill-mode: forwards;
+  }
+
+  &--left.admiral-drawer--closing {
+    animation-name: rz-admiral-drawer-out-start;
+  }
+}
+
+.admiral-drawer__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0 1.5rem 0.5rem;
+}
+
+.admiral-drawer__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  margin: 0;
+}
+
+.admiral-drawer__close {
+  flex: 0 0 auto;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--admiral-radius-small, var(--rz-border-radius));
+  color: var(--rz-text-secondary-color);
+  background: transparent;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -0.25rem;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  &:hover::before {
+    background: if($theme-dark, rgba($rz-white, 0.06), rgba($rz-black, 0.05));
+  }
+
+  &:active::before {
+    background: if($theme-dark, rgba($rz-white, 0.12), rgba($rz-black, 0.12));
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--rz-primary);
+    outline-offset: 2px;
+  }
+
+  &:focus-visible::before {
+    background: transparent;
+  }
+
+  > * {
+    pointer-events: none;
+  }
+}
+
+.admiral-drawer__content {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 0.5rem 1.5rem;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.admiral-drawer__actions {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 1.5rem 0.25rem;
+}
+
+@mixin admiral-drawer-mobile {
+  width: calc(100% - 1rem);
+
+  .admiral-drawer__header,
+  .admiral-drawer__content {
+    padding-inline: 1rem;
+  }
+
+  .admiral-drawer__title {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+  }
+
+  .admiral-drawer__actions {
+    flex-direction: column-reverse;
+    padding: 1rem 1rem 0.25rem;
+  }
+
+  .admiral-drawer__actions > .rz-button {
+    width: 100%;
+  }
+}
+
+.admiral-drawer--mobile {
+  @include admiral-drawer-mobile;
+}
+
+@media (max-width: 575.98px) {
+  .admiral-drawer {
+    @include admiral-drawer-mobile;
+  }
+}
+
+@keyframes rz-admiral-drawer-in-end {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes rz-admiral-drawer-in-start {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes rz-admiral-drawer-out-end {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+@keyframes rz-admiral-drawer-out-start {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admiral-drawer {
+    animation: none;
+  }
+
+  .admiral-drawer--closing {
+    visibility: hidden;
+  }
+
+  .admiral-drawer-backdrop {
+    transition: none;
+  }
+}

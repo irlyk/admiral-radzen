@@ -1,0 +1,112 @@
+@page "/components/drawer"
+
+<PageTitle>Admiral Drawer</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Drawer"
+        Description="Боковая панель для просмотра и редактирования: слева или справа, с затемнением или без блокировки страницы."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-drawer--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Использование"]</h2>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralDrawer" Rows="@AdmiralRows" />
+            <h2>@SmokeL["Focus and dismissal"]</h2>
+            <p>@SmokeL["При открытии фокус получает первый доступный элемент. Tab и Shift+Tab остаются внутри панели; при закрытии фокус возвращается на кнопку открытия. PreventFocusRestore отключает возврат. Без Backdrop страницу можно прокручивать и нажимать её элементы; Escape обрабатывается только внутри Drawer."]</p>
+            <p>@SmokeL["Open — управляемое состояние. Крестик, Escape и подложка вызывают OpenChanged(false), затем Closed. Программная смена Open не вызывает Closed. Обновите состояние в обработчике или используйте bind. На время 300-мс анимации закрытия содержимое становится inert и недоступно клавиатуре. При prefers-reduced-motion движение отключено."]</p>
+            <h2>@SmokeL["Differences from React Admiral"]</h2>
+            <p>@SmokeL["CloseOnEscape и CloseOnBackdropClick по умолчанию true для совместимости с прежним Blazor API; в React они false. Ниже 576 px автоматически используется компактная геометрия. Mobile включает её на любой ширине и, как в React, открывает панель справа."]</p>
+            <p>@SmokeL["ChildContent и Actions заменяют композицию DrawerContent и DrawerButtonPanel. React-параметры container, overlayCssMixin и closeButtonPropsConfig не перенесены: панель фиксируется относительно окна, дополнительные атрибуты и Class передаются на dialog. Тема управляет геометрией и состояниями."]</p>
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["RadzenSidebar + тема"]</h2>
+            <p>@SmokeL["Это независимый пример RadzenSidebar с классами пакета Themes. Responsive=false и явный Style отключают геометрию навигационного sidebar. Закрытие и подложку задаёт разметка приложения; CSS не добавляет управление фокусом и анимацию удаления DOM, которые есть у AdmiralDrawer."]</p>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <RadzenButton Text="@SmokeL["Открыть Radzen-панель"]" Click="@(() => themeOpen = true)" />
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Radzen side"]</span><select aria-label="Сторона Radzen" @bind="themePosition"><option value="@SidebarPosition.Right">@SmokeL["Справа"]</option><option value="@SidebarPosition.Left">@SmokeL["Слева"]</option></select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="themeBackdrop" /> @SmokeL["Затемнение Radzen-примера"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="themeSecondary" /> @SmokeL["Вторичная поверхность Radzen-примера"]</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@ThemeCode" Title="@SmokeL["Razor · Radzen + тема"]" />
+            <ApiReference Title="@SmokeL["Radzen и классы темы"]" Rows="@ThemeRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <AdmiralButton Text="@SmokeL["Открыть Drawer"]" Dimension="AdmiralButtonDimension.M" Click="@(() => open = true)" />
+                    <AdmiralText Typography="AdmiralTypography.Caption1" role="status">@SmokeL["Запросов закрытия:"] @closeCount · @lastAction</AdmiralText>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Side"]</span><select aria-label="Сторона" @bind="position">@foreach (var value in Enum.GetValues<AdmiralDrawerPosition>()) { <option value="@value">@value</option> }</select></label>
+                    <label><span>@SmokeL["Surface"]</span><select aria-label="Поверхность" @bind="appearance">@foreach (var value in Enum.GetValues<AdmiralDrawerAppearance>()) { <option value="@value">@value</option> }</select></label>
+                    <label><span>@SmokeL["Width"]</span><select aria-label="Ширина" @bind="width"><option value="24rem">384 px</option><option value="30rem">480 px</option><option value="40rem">640 px</option></select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="backdrop" /> @SmokeL["Затемнение"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="mobile" /> @SmokeL["Мобильная композиция"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="showClose" /> @SmokeL["Кнопка закрытия"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="closeOnEscape" /> @SmokeL["Закрытие по Escape"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="closeOnBackdrop" /> @SmokeL["Закрытие по подложке"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="preventFocusRestore" /> @SmokeL["Не возвращать фокус"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="longContent" /> @SmokeL["Длинное содержимое"]</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@PlaygroundCode" Title="@SmokeL["Razor · текущие настройки"]" />
+        </section>
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Admiral scenarios"]</h2>
+            <p>@SmokeL["Проверьте обе стороны, поверхности и ширины; панель без подложки; обязательное действие без крестика, Escape и закрытия по фону; мобильную композицию; прокрутку длинного содержимого при неподвижных заголовке и действиях."]</p>
+            <AdmiralButton Text="@SmokeL["Проверить доступность фоновой страницы"]" Appearance="AdmiralButtonAppearance.Secondary"
+                           Dimension="AdmiralButtonDimension.M" Click="@(() => backgroundClicks++)" />
+            <p role="status">@SmokeL["Нажатий на фоновую страницу:"] @backgroundClicks</p>
+        </section>
+    }
+</div>
+
+<AdmiralDrawer @bind-Open="open" Title="@SmokeL["Редактирование записи"]" Position="@position"
+               Appearance="@appearance" Width="@width" Mobile="@mobile" Backdrop="@backdrop"
+               ShowClose="@showClose" CloseOnEscape="@closeOnEscape" CloseOnBackdropClick="@closeOnBackdrop"
+               PreventFocusRestore="@preventFocusRestore" CloseAriaLabel="@SmokeL["Закрыть Drawer"]" Closed="OnCloseRequested">
+    <ChildContent>
+        <AdmiralTextField Label="@SmokeL["Название записи"]" @bind-Value="recordName" />
+        @for (var index = 0; index < (longContent ? 24 : 2); index++)
+        {
+            <p>Строка @(index + 1). Содержимое прокручивается независимо от заголовка и панели действий. Длинные значения не должны выходить за границы Drawer.</p>
+        }
+    </ChildContent>
+    <Actions>
+        <AdmiralButton Text="@SmokeL["Сохранить"]" Dimension="AdmiralButtonDimension.M" Click="Save" />
+        <AdmiralButton Text="@SmokeL["Отмена"]" Appearance="AdmiralButtonAppearance.Secondary" Dimension="AdmiralButtonDimension.M" Click="@(() => open = false)" />
+    </Actions>
+</AdmiralDrawer>
+
+@if (themeOpen)
+{
+    <div class="@ThemeBackdropClass" @onclick="@(() => themeOpen = false)">
+        <RadzenSidebar Expanded="true" Responsive="false" Position="@(themeLeft ? SidebarPosition.Left : SidebarPosition.Right)"
+                       class="@ThemeDrawerClass" Style="@ThemeDrawerStyle"
+                       role="dialog" aria-modal="@(themeBackdrop ? "true" : "false")" aria-labelledby="theme-drawer-title"
+                       @onclick:stopPropagation="true">
+            <div class="admiral-drawer__header">
+                <RadzenText TextStyle="TextStyle.H5" TagName="TagName.H2" id="theme-drawer-title" class="admiral-drawer__title">@SmokeL["Radzen-панель"]</RadzenText>
+                <button type="button" class="admiral-drawer__close" aria-label="Закрыть Radzen-панель" @onclick="@(() => themeOpen = false)">
+                    <RadzenIcon Icon="admiral:service/close-outline" Style="width:24px;height:24px;font-size:24px" />
+                </button>
+            </div>
+            <div class="admiral-drawer__content"><p>@SmokeL["RadzenSidebar и стили темы. Здесь нет компонентов Admiral."]</p></div>
+            <div class="admiral-drawer__actions"><RadzenButton Text="@SmokeL["Готово"]" Click="@(() => themeOpen = false)" /></div>
+        </RadzenSidebar>
+    </div>
+}

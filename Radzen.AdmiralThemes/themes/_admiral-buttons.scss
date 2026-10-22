@@ -1,0 +1,479 @@
+$theme-dark: false !default;
+
+$admiral-button-primary-60: if($theme-dark, #3984FF, #0062FF);
+$admiral-button-primary-70: if($theme-dark, #5290FF, #0046E2);
+$admiral-button-primary-80: if($theme-dark, #689FFF, #0132B0);
+$admiral-button-neutral-10: if($theme-dark, #252627, #EAEBEC);
+$admiral-button-neutral-30: if($theme-dark, #515357, #B2B5B8);
+$admiral-button-neutral-50: if($theme-dark, #82868B, #74767B);
+$admiral-button-neutral-90: if($theme-dark, #E3E5E7, #252629);
+$admiral-button-hover: if($theme-dark, rgba(#FFFFFF, 0.06), rgba(#000000, 0.05));
+$admiral-button-press: if($theme-dark, rgba(#FFFFFF, 0.12), rgba(#000000, 0.12));
+$admiral-button-neutral-8: if($theme-dark, rgba(#FFFFFF, 0.08), rgba(#000000, 0.08));
+$admiral-button-neutral-12: if($theme-dark, rgba(#FFFFFF, 0.12), rgba(#000000, 0.12));
+$admiral-button-neutral-16: if($theme-dark, rgba(#FFFFFF, 0.16), rgba(#000000, 0.16));
+$admiral-button-danger-60: if($theme-dark, #EA3C3C, #D92020);
+$admiral-button-danger-70: if($theme-dark, #F55F5F, #BA1717);
+$admiral-button-danger-80: if($theme-dark, #FA7979, #981111);
+$admiral-button-success-50: if($theme-dark, #16913F, #1BA049);
+$admiral-button-success-60: if($theme-dark, #1FA951, #128238);
+$admiral-button-success-70: if($theme-dark, #2FC063, #0B682A);
+$admiral-button-neutral-00: if($theme-dark, #1B1C1D, #FFFFFF);
+$admiral-button-neutral-20: if($theme-dark, #3B3C3E, #D7D8DA);
+$admiral-button-elevated: if($theme-dark, #202122, #FFFFFF);
+$admiral-button-error: if($theme-dark, #EA3C3C, #D92020);
+$admiral-button-warning: if($theme-dark, #EF5018, #FF5C22);
+
+.rz-button.admiral-button {
+  position: relative;
+  border: var(--rz-border-width) solid transparent;
+  background-image: none;
+  // Radzen's outlined-variant selector is more specific and otherwise adds an
+  // inset ring on top of the real border, making Admiral buttons look 2px wide.
+  box-shadow: none !important;
+
+  &:focus-visible {
+    outline: 0.125rem solid $admiral-button-primary-60;
+    outline-offset: 0.125rem;
+  }
+
+  &.admiral-button--primary {
+    border-color: $admiral-button-primary-60;
+    background-color: $admiral-button-primary-60;
+    color: #FFFFFF;
+
+    &:not(.rz-state-disabled):hover {
+      border-color: $admiral-button-primary-70;
+      background-color: $admiral-button-primary-70;
+    }
+
+    &:not(.rz-state-disabled):active {
+      border-color: $admiral-button-primary-80;
+      background-color: $admiral-button-primary-80;
+    }
+  }
+
+  &.admiral-button--secondary {
+    border-color: $admiral-button-primary-60;
+    background-color: transparent;
+    color: $admiral-button-primary-60;
+
+    &:not(.rz-state-disabled):hover { background-color: $admiral-button-hover; }
+    &:not(.rz-state-disabled):active { background-color: $admiral-button-press; }
+  }
+
+  &.admiral-button--tertiary {
+    border-color: transparent;
+    background-color: $admiral-button-neutral-8;
+    color: $admiral-button-neutral-90;
+
+    .rzi { color: $admiral-button-neutral-50; }
+    &:not(.rz-state-disabled):hover { background-color: $admiral-button-neutral-12; }
+    &:not(.rz-state-disabled):active { background-color: $admiral-button-neutral-16; }
+  }
+
+  &.admiral-button--ghost {
+    border-color: transparent;
+    background-color: transparent;
+    color: $admiral-button-primary-60;
+
+    &:not(.rz-state-disabled):hover { background-color: $admiral-button-hover; }
+    &:not(.rz-state-disabled):active { background-color: $admiral-button-press; }
+  }
+
+  &.admiral-button--danger {
+    border-color: $admiral-button-danger-60;
+    background-color: $admiral-button-danger-60;
+    color: #FFFFFF;
+
+    &:not(.rz-state-disabled):hover {
+      border-color: $admiral-button-danger-70;
+      background-color: $admiral-button-danger-70;
+    }
+
+    &:not(.rz-state-disabled):active {
+      border-color: $admiral-button-danger-80;
+      background-color: $admiral-button-danger-80;
+    }
+  }
+
+  &.admiral-button--success {
+    border-color: $admiral-button-success-50;
+    background-color: $admiral-button-success-50;
+    color: #FFFFFF;
+
+    &:not(.rz-state-disabled):hover {
+      border-color: $admiral-button-success-60;
+      background-color: $admiral-button-success-60;
+    }
+
+    &:not(.rz-state-disabled):active {
+      border-color: $admiral-button-success-70;
+      background-color: $admiral-button-success-70;
+    }
+  }
+
+  &.admiral-button--white {
+    border-color: #FFFFFF;
+    background-color: transparent;
+    // Radzen emits its variant color rules after custom additions in the
+    // generated bundle. White is a static-on-dark Admiral appearance and must
+    // therefore win the cascade in both themes.
+    color: #FFFFFF !important;
+
+    .rzi,
+    .admiral-icon { color: #FFFFFF !important; }
+
+    &:not(.rz-state-disabled):hover { background-color: rgba(#FFFFFF, 0.06); }
+    &:not(.rz-state-disabled):active { background-color: rgba(#FFFFFF, 0.12); }
+  }
+
+  &.rz-state-disabled {
+    border-color: $admiral-button-neutral-10;
+    background-color: $admiral-button-neutral-10;
+    color: $admiral-button-neutral-30;
+    cursor: not-allowed;
+
+    .rzi { color: $admiral-button-neutral-30; }
+
+    &.admiral-button--secondary {
+      border-color: $admiral-button-neutral-30;
+      background-color: transparent;
+    }
+
+    &.admiral-button--ghost {
+      border-color: transparent;
+      background-color: transparent;
+    }
+
+    &.admiral-button--tertiary {
+      border-color: transparent;
+      background-color: $admiral-button-neutral-8;
+    }
+
+    &.admiral-button--white {
+      border-color: #515357;
+      background-color: transparent;
+      color: #515357 !important;
+
+      .rzi,
+      .admiral-icon { color: #515357 !important; }
+    }
+  }
+}
+
+.rz-button.rz-button-icon-only.admiral-icon-button {
+  border: 0;
+  background-color: transparent;
+  background-image: none;
+  color: $admiral-button-neutral-50 !important;
+
+  &.admiral-icon-button--primary { color: $admiral-button-primary-60 !important; }
+  &.admiral-icon-button--secondary { color: $admiral-button-neutral-50 !important; }
+  &.admiral-icon-button--danger {
+    color: $admiral-button-danger-60 !important;
+
+    &:not(.rz-state-disabled):hover { color: $admiral-button-danger-70 !important; }
+    &:not(.rz-state-disabled):active { color: $admiral-button-danger-80 !important; }
+  }
+
+  .rzi,
+  .admiral-icon { color: currentColor !important; }
+
+  &:not(.rz-state-disabled):hover {
+    background-color: $admiral-button-hover;
+  }
+
+  &:not(.rz-state-disabled):active {
+    background-color: $admiral-button-press;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $admiral-button-primary-60;
+    outline-offset: 0.125rem;
+  }
+
+  &.rz-state-disabled {
+    background-color: transparent;
+    color: $admiral-button-neutral-30 !important;
+    cursor: not-allowed;
+  }
+}
+
+.rz-button.rz-variant-text.admiral-text-button {
+  width: auto;
+  min-width: 0;
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: $admiral-button-primary-60;
+
+  &.admiral-text-button--secondary {
+    color: $admiral-button-neutral-90;
+
+    .rzi { color: $admiral-button-neutral-50; }
+  }
+
+  &:not(.rz-state-disabled):hover {
+    background: transparent;
+    color: $admiral-button-primary-70;
+
+    .rzi { color: $admiral-button-primary-70; }
+  }
+
+  &:not(.rz-state-disabled):active {
+    background: transparent;
+    color: $admiral-button-primary-80;
+
+    .rzi { color: $admiral-button-primary-80; }
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $admiral-button-primary-60;
+    outline-offset: 0.125rem;
+  }
+
+  &.rz-state-disabled {
+    background: transparent;
+    color: $admiral-button-neutral-30;
+    cursor: not-allowed;
+
+    .rzi { color: $admiral-button-neutral-30; }
+  }
+
+  &.rz-button-xs {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+
+    .rzi {
+      width: 1.25rem;
+      height: 1.25rem;
+      font-size: 1.25rem;
+      line-height: 1.25rem;
+    }
+  }
+}
+
+.admiral-text-button__content,
+.admiral-button__content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.admiral-text-button__content .admiral-icon,
+.admiral-button__content .admiral-icon,
+.admiral-button__badge { flex: 0 0 auto; }
+
+.rz-button.admiral-button--skeleton .admiral-button__content,
+.rz-button.admiral-text-button--skeleton .admiral-text-button__content {
+  visibility: hidden;
+}
+
+.rz-button.admiral-button--loading {
+  pointer-events: none;
+
+  .admiral-button__content { visibility: hidden; }
+}
+
+.admiral-button__spinner {
+  position: absolute;
+  z-index: 1;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  display: inline-flex;
+  transform: translate(-50%, -50%);
+}
+
+.admiral-button-group,
+.admiral-icon-button-group {
+  display: inline-flex;
+  max-width: 100%;
+  white-space: nowrap;
+
+  > .rz-button:first-child {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  > .rz-button:last-child {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+
+  > .rz-button:not(:first-child):not(:last-child) {
+    border-radius: 0;
+  }
+
+  > .rz-button:focus-visible {
+    z-index: 1;
+  }
+}
+
+.admiral-button-group--primary,
+.admiral-button-group--tertiary {
+  gap: 0.0625rem;
+}
+
+.admiral-button-group--secondary > .rz-button:not(:first-child),
+.admiral-icon-button-group > .rz-button:not(:first-child) {
+  margin-inline-start: -0.0625rem;
+}
+
+.admiral-icon-button-group > .rz-button.rz-button-icon-only {
+  border: 0.0625rem solid $admiral-button-neutral-20;
+}
+
+.admiral-floating-button {
+  position: relative;
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  outline: 0;
+  background: transparent;
+  box-shadow: var(--rz-shadow-8);
+  appearance: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  &.admiral-floating-button--xl {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  &.admiral-floating-button--fixed {
+    position: fixed;
+    z-index: 1000;
+    inset-inline-end: 1.75rem;
+    inset-block-end: 1.75rem;
+  }
+
+  &.admiral-floating-button--mobile {
+    inset-inline-end: 1rem;
+    inset-block-end: 1rem;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $admiral-button-primary-60;
+    outline-offset: 0.125rem;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.admiral-floating-button__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  border-radius: 50%;
+  background: $admiral-button-primary-60;
+  color: #FFFFFF;
+
+  .admiral-floating-button--xl & {
+    padding: 1rem;
+  }
+
+  .admiral-floating-button--primary:not(:disabled):hover & {
+    background: $admiral-button-primary-70;
+  }
+
+  .admiral-floating-button--primary:not(:disabled):active & {
+    background: $admiral-button-primary-80;
+  }
+
+  .admiral-floating-button--secondary & {
+    background: $admiral-button-elevated;
+    color: $admiral-button-primary-60;
+  }
+
+  .admiral-floating-button--secondary:not(:disabled):hover & {
+    background: $admiral-button-hover;
+  }
+
+  .admiral-floating-button--secondary:not(:disabled):active & {
+    background: $admiral-button-press;
+  }
+
+  .admiral-floating-button:disabled & {
+    background: $admiral-button-neutral-10;
+    color: $admiral-button-neutral-30;
+  }
+
+  .admiral-floating-button--secondary:disabled & {
+    background: $admiral-button-elevated;
+  }
+
+  .rzi,
+  .rz-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: currentColor;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+  }
+}
+
+.admiral-floating-button__badge {
+  position: absolute;
+  inset-block-start: -0.1875rem;
+  inset-inline-end: -0.1875rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding-inline: 0.25rem;
+  border: 0.0625rem solid $admiral-button-neutral-00;
+  border-radius: 0.625rem;
+  background: $admiral-button-primary-60;
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  pointer-events: none;
+
+  .admiral-floating-button--xl & {
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding-inline: 0.3125rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  &.admiral-floating-button__badge--dot {
+    inset-block-start: 0.0625rem;
+    inset-inline-end: 0.0625rem;
+    min-width: 0.625rem;
+    width: 0.625rem;
+    height: 0.625rem;
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  .admiral-floating-button--xl &.admiral-floating-button__badge--dot {
+    inset-block-start: 0.1875rem;
+    inset-inline-end: 0.1875rem;
+    min-width: 0.75rem;
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  &.admiral-floating-button__badge--error { background: $admiral-button-error; }
+  &.admiral-floating-button__badge--success { background: $admiral-button-success-50; }
+  &.admiral-floating-button__badge--warning { background: $admiral-button-warning; }
+}

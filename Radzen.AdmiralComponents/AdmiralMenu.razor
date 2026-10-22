@@ -1,0 +1,15 @@
+<span class="admiral-menu-root" @attributes="AdditionalAttributes">
+    <span class="@TriggerCssClass" @ref="anchor" @onclick="ToggleAsync">
+        @Trigger
+    </span>
+    @if (Open)
+    {
+        <div id="@popupId" class="@PopupCssClass">
+            <CascadingValue Value="@context">
+                <div class="@MenuCssClass" role="menu" aria-label="@AriaLabel">
+                    @ChildContent
+                </div>
+            </CascadingValue>
+        </div>
+    }
+</span>

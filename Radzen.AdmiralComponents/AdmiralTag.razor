@@ -1,0 +1,84 @@
+@if (Click.HasDelegate)
+{
+    <button type="button" class="@CssClass" style="@CssStyle" title="@Tooltip" disabled="@Disabled"
+            @onclick="Click" @attributes="AdditionalAttributes">
+        @TagContent
+    </button>
+}
+else
+{
+    <span class="@CssClass" style="@CssStyle" title="@Tooltip" @attributes="AdditionalAttributes">
+        @TagContent
+    </span>
+}
+
+@code {
+    [Parameter] public string? Text { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public AdmiralTagKind Kind { get; set; }
+    [Parameter] public AdmiralTagSize Size { get; set; }
+    [Parameter] public bool StatusViaBackground { get; set; }
+    [Parameter] public bool IsBorderHidden { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public string? Icon { get; set; }
+    [Parameter] public string? Width { get; set; }
+    [Parameter] public string? CustomBackground { get; set; }
+    [Parameter] public string? CustomBorder { get; set; }
+    [Parameter] public string? CustomHoverBackground { get; set; }
+    [Parameter] public string? Tooltip { get; set; }
+    [Parameter] public string? Style { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> Click { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private RenderFragment TagContent => builder =>
+    {
+        var sequence = 0;
+        if (StatusViaBackground && !string.IsNullOrWhiteSpace(Icon))
+        {
+            builder.OpenComponent<RadzenIcon>(sequence++);
+            builder.AddAttribute(sequence++, nameof(RadzenIcon.Icon), Icon);
+            builder.AddAttribute(sequence++, "class", "admiral-tag__icon");
+            builder.CloseComponent();
+        }
+        else if (!StatusViaBackground && Kind != AdmiralTagKind.Neutral)
+        {
+            builder.OpenElement(sequence++, "span");
+            builder.AddAttribute(sequence++, "class", "admiral-tag__dot");
+            builder.CloseElement();
+        }
+
+        builder.OpenElement(sequence++, "span");
+        builder.AddAttribute(sequence++, "class", "admiral-tag__text");
+        if (ChildContent is not null)
+        {
+            builder.AddContent(sequence++, ChildContent);
+        }
+        else
+        {
+            builder.AddContent(sequence++, Text);
+        }
+        builder.CloseElement();
+    };
+
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-tag",
+        $"admiral-tag--{Kind.ToString().ToLowerInvariant()}",
+        Size == AdmiralTagSize.Small ? "admiral-tag--s" : null,
+        StatusViaBackground ? "admiral-tag--background" : null,
+        IsBorderHidden ? "admiral-tag--borderless" : null,
+        Click.HasDelegate ? "admiral-tag--clickable" : null,
+        Disabled ? "admiral-tag--disabled" : null,
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+
+    private string CssStyle => string.Join(';', new[]
+    {
+        string.IsNullOrWhiteSpace(Width) ? null : $"width:{Width}",
+        string.IsNullOrWhiteSpace(CustomBackground) ? null : $"--admiral-tag-{(StatusViaBackground ? "background" : "status")}:{CustomBackground}",
+        IsBorderHidden || string.IsNullOrWhiteSpace(CustomBorder) ? null : $"--admiral-tag-border:{CustomBorder}",
+        string.IsNullOrWhiteSpace(CustomHoverBackground) ? null : $"--admiral-tag-hover-background:{CustomHoverBackground}",
+        Style
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

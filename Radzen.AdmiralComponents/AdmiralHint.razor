@@ -1,0 +1,29 @@
+@implements IAsyncDisposable
+@using Radzen.Admiral.Components.Internal
+
+<span @ref="anchor" class="admiral-hint-anchor">
+    @if (TriggerContent is not null)
+    {
+        @TriggerContent
+    }
+    else if (TriggerAppearance is not null)
+    {
+        <AdmiralButton Text="@TriggerText" IconStart="@TriggerIcon" Disabled="@Disabled"
+                       Appearance="@TriggerAppearance.Value" Dimension="AdmiralButtonDimension.M"
+                       Class="@Class" @attributes="AdditionalAttributes" />
+    }
+    else
+    {
+        <RadzenButton Text="@TriggerText" Icon="@TriggerIcon" ButtonStyle="@TriggerButtonStyle"
+                      Variant="@TriggerVariant" Disabled="@Disabled" class="@Class"
+                      @attributes="AdditionalAttributes" />
+    }
+</span>
+@if (Open && !Disabled)
+{
+    <div @ref="popupElement" id="@popupId" class="@PopupClass" popover="manual" tabindex="-1">
+        <AdmiralHintContent TitleId="@TitleId" Title="@Title" CloseAriaLabel="@CloseAriaLabel"
+                            ShowClose="@(VisibilityTrigger == AdmiralHintTrigger.Click)"
+                            Closed="@(() => SetOpenAsync(false))">@ChildContent</AdmiralHintContent>
+    </div>
+}

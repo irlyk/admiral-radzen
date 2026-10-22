@@ -1,0 +1,25 @@
+<div class="@CssClass" style="@CssStyle" @attributes="AdditionalAttributes">@ChildContent</div>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? Width { get; set; }
+    [Parameter] public string? Height { get; set; }
+    [Parameter] public string? MaxWidth { get; set; }
+    [Parameter] public string? MaxHeight { get; set; }
+    [Parameter] public bool Horizontal { get; set; } = true;
+    [Parameter] public bool Vertical { get; set; } = true;
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => string.Join(' ', new[] { "admiral-scroll-container", Class }.Where(value => !string.IsNullOrWhiteSpace(value)));
+    private string CssStyle => string.Join(' ', new[]
+    {
+        string.IsNullOrWhiteSpace(Width) ? null : $"width:{Width};",
+        string.IsNullOrWhiteSpace(Height) ? null : $"height:{Height};",
+        string.IsNullOrWhiteSpace(MaxWidth) ? null : $"max-width:{MaxWidth};",
+        string.IsNullOrWhiteSpace(MaxHeight) ? null : $"max-height:{MaxHeight};",
+        $"overflow-x:{(Horizontal ? "auto" : "hidden")};",
+        $"overflow-y:{(Vertical ? "auto" : "hidden")};", Style
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

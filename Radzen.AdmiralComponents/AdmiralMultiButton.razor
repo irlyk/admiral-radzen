@@ -1,0 +1,26 @@
+<span class="admiral-multi-button">
+    <AdmiralButton Text="@Text" IconStart="@IconStart" Appearance="@Appearance"
+                   Dimension="@Dimension" Disabled="@Disabled" Loading="@Loading" Click="Click" />
+    <AdmiralMenu AriaLabel="@MenuAriaLabel" Class="@MenuClass">
+        <Trigger>
+            <AdmiralIconButton Icon="admiral:system/chevron-down-outline" AriaLabel="@MenuAriaLabel"
+                               Appearance="@IconAppearance" Dimension="@Dimension" Disabled="@Disabled" />
+        </Trigger>
+        <ChildContent>@ChildContent</ChildContent>
+    </AdmiralMenu>
+</span>
+
+@code {
+    [Parameter] public string Text { get; set; } = "Action";
+    [Parameter] public string? IconStart { get; set; }
+    [Parameter] public AdmiralButtonAppearance Appearance { get; set; }
+    [Parameter] public AdmiralButtonDimension Dimension { get; set; } = AdmiralButtonDimension.Xl;
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool Loading { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> Click { get; set; }
+    [Parameter] public string MenuAriaLabel { get; set; } = "More actions";
+    [Parameter] public string? MenuClass { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    private AdmiralIconButtonAppearance IconAppearance => Appearance == AdmiralButtonAppearance.Secondary
+        ? AdmiralIconButtonAppearance.Secondary : AdmiralIconButtonAppearance.Primary;
+}

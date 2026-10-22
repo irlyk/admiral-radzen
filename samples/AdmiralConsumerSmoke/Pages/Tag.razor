@@ -1,0 +1,118 @@
+@page "/components/tag"
+
+<PageTitle>Admiral Tag</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Tag" Description="Статусная метка: размеры, цвет точки или фона, иконка и действие."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-tag--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        <ApiReference Title="AdmiralTag" Rows="@AdmiralRows" />
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Behavior"]</h2>
+            <p>@SmokeL["Без Click метка отображается как текст; с Click — как кнопка с клавиатурным фокусом. Иконка появляется только при StatusViaBackground. Если текст ограничен параметром Width, Tooltip можно использовать для полной подписи."]</p>
+            <p>@SmokeL["CustomBackground задаёт цвет точки или фона в зависимости от StatusViaBackground. CustomBorder и CustomHoverBackground нужны для фонового интерактивного варианта. Для произвольной стилизации доступен Style."]</p>
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenBadge + Admiral theme</h2>
+            <p>@SmokeL["Прямой RadzenBadge получает цвета темы и подходит для простой семантической метки. Он не поддерживает модель Tag: цветную точку, два размера M/S, настраиваемую обводку или Click на самой метке."]</p>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <RadzenBadge Text="@SmokeL["Успешно"]" BadgeStyle="@radzenStyle" />
+                    <RadzenBadge Text="@SmokeL["Нейтрально"]" BadgeStyle="BadgeStyle.Light" />
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>BadgeStyle</span><select @bind="radzenStyle"><option value="Success">@SmokeL["Success"]</option><option value="Primary">Primary</option><option value="Danger">Danger</option><option value="Warning">@SmokeL["Warning"]</option><option value="Info">Info</option></select></label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@ThemeCode" Title="@SmokeL["Razor · прямой Radzen API"]" />
+            <ApiReference Title="@SmokeL["RadzenBadge + тема"]" Rows="@RadzenRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <AdmiralTag Text="@SmokeL["Длинный статус для проверки обрезки"]" Kind="@kind" Size="@size"
+                        StatusViaBackground="@statusViaBackground" IsBorderHidden="@borderless" Icon="@(showIcon ? "admiral:service/check-outline" : null)"
+                        Width="@width" Tooltip="Длинный статус для проверки обрезки"
+                        CustomBackground="@(customColors ? "color-mix(in srgb, var(--rz-base-background-color) 92%, var(--rz-success))" : null)" CustomBorder="@(customColors ? "var(--rz-success)" : null)"
+                        CustomHoverBackground="@(customColors ? "color-mix(in srgb, var(--rz-base-background-color) 80%, var(--rz-success))" : null)" Disabled="@disabled" Click="@(interactive ? EventCallback.Factory.Create<Microsoft.AspNetCore.Components.Web.MouseEventArgs>(this, OnTagClick) : default)" />
+                    <span class="admiral-component-page__result" aria-live="polite">@SmokeL["Нажатий:"] @clickCount</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>Kind</span><select @bind="kind">@foreach (var item in Enum.GetValues<AdmiralTagKind>()) { <option value="@item">@item</option> }</select></label>
+                    <label><span>@SmokeL["Size"]</span><select @bind="size"><option value="Medium">M</option><option value="Small">S</option></select></label>
+                    <label><span>@SmokeL["Width"]</span><select @bind="width"><option value="">Auto</option><option value="130px">130 px</option><option value="220px">220 px</option></select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="statusViaBackground" /> @SmokeL["Фон"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="borderless" /> @SmokeL["Без границы"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="showIcon" /> @SmokeL["Иконка"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="customColors" /> @SmokeL["Свои цвета"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="interactive" /> Click</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Statuses and sizes"]</h2>
+            <div class="admiral-component-row">
+                @foreach (var item in Enum.GetValues<AdmiralTagKind>())
+                {
+                    <AdmiralTag Text="@item.ToString()" Kind="@item" />
+                    <AdmiralTag Text="@item.ToString()" Kind="@item" StatusViaBackground="true" Size="AdmiralTagSize.Small" />
+                }
+            </div>
+        </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private AdmiralTagKind kind = AdmiralTagKind.Success;
+    private AdmiralTagSize size = AdmiralTagSize.Medium;
+    private BadgeStyle radzenStyle = BadgeStyle.Success;
+    private string? width = "220px";
+    private bool statusViaBackground, borderless, showIcon, customColors, interactive = true, disabled;
+    private int clickCount;
+    private void OnTagClick() => clickCount++;
+
+    private const string AdmiralCode = """
+        <AdmiralTag Text="Выполнено" Kind="AdmiralTagKind.Success" />
+        <AdmiralTag Text="Подробнее" Kind="AdmiralTagKind.Primary"
+                    StatusViaBackground="true" Icon="admiral:service/check-outline"
+                    Size="AdmiralTagSize.Small" Click="OpenDetails" />
+        <span role="status">Нажатий: @clicks</span>
+
+        @code {
+            private int clicks;
+            private void OpenDetails() => clicks++;
+        }
+        """;
+    private const string ThemeCode = """
+        <RadzenBadge Text="Выполнено" BadgeStyle="BadgeStyle.Success" />
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> RadzenRows =
+    [
+        new("Text", "string", "Текст метки."),
+        new("BadgeStyle", "BadgeStyle", "Семантический цвет из Admiral theme."),
+        new("Shade", "Shade", "Оттенок Radzen; не эквивалентен StatusViaBackground.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> AdmiralRows =
+    [
+        new("Text / ChildContent", "string? / RenderFragment?", "Содержимое метки; дочерний шаблон позволяет задать разметку."),
+        new("Kind / Size", "AdmiralTagKind / AdmiralTagSize", "По умолчанию Neutral / Medium; размер также Small."),
+        new("StatusViaBackground / IsBorderHidden", "bool / false", "Фоновый вариант и скрытие границы."),
+        new("Icon / Width / Tooltip", "string? / null", "Иконка фонового варианта, CSS ширина и подсказка для полного текста."),
+        new("CustomBackground / CustomBorder / CustomHoverBackground", "string? / null", "Пользовательские CSS цвета, прежде всего для фонового варианта."),
+        new("Click / Disabled", "EventCallback<MouseEventArgs> / bool", "Нажатие делает метку интерактивной; Disabled блокирует действие.")
+    ];
+}

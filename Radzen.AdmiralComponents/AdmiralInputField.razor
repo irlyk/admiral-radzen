@@ -1,0 +1,57 @@
+<div class="@CssClass"
+     data-status="@StatusName"
+     @attributes="AdditionalAttributes">
+    @if (!string.IsNullOrWhiteSpace(Label) || !string.IsNullOrWhiteSpace(AdditionalLabel))
+    {
+        <div class="admiral-input-field__label-row">
+            <label class="admiral-input-field__label" id="@LabelId" for="@For" @onclick="HandleLabelClickAsync">
+                @Label
+                @if (Required)
+                {
+                    <span class="admiral-input-field__required" aria-hidden="true"> *</span>
+                }
+            </label>
+            @if (!string.IsNullOrWhiteSpace(AdditionalLabel))
+            {
+                <span class="admiral-input-field__additional-label">@AdditionalLabel</span>
+            }
+        </div>
+    }
+    <div class="admiral-input-field__control">@ChildContent</div>
+    @if (!string.IsNullOrWhiteSpace(ExtraText))
+    {
+        <div class="admiral-input-field__extra-text">@ExtraText</div>
+    }
+</div>
+
+@code {
+    internal Func<Task>? LabelFocusFallback { get; set; }
+
+    [Parameter, EditorRequired] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public string? AdditionalLabel { get; set; }
+    [Parameter] public string? ExtraText { get; set; }
+    [Parameter] public string? For { get; set; }
+    [Parameter] public bool Required { get; set; }
+    [Parameter] public AdmiralInputSize Size { get; set; } = AdmiralInputSize.Medium;
+    [Parameter] public AdmiralInputStatus Status { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string StatusName => Status.ToString().ToLowerInvariant();
+    private string? LabelId => string.IsNullOrWhiteSpace(For) ? null : $"{For}-label";
+    private Task HandleLabelClickAsync() => LabelFocusFallback?.Invoke() ?? Task.CompletedTask;
+
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-input-field",
+        Size switch
+        {
+            AdmiralInputSize.Small => "admiral-input-field--s",
+            AdmiralInputSize.ExtraLarge => "admiral-input-field--xl",
+            _ => "admiral-input-field--m"
+        },
+        Status == AdmiralInputStatus.Default ? null : $"admiral-input-field--{StatusName}",
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

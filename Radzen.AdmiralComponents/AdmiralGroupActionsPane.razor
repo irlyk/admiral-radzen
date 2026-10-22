@@ -1,0 +1,70 @@
+<div class="@CssClass" @attributes="AdditionalAttributes">
+    @if (!searchOpen)
+    {
+        <div class="admiral-group-actions-pane__actions">
+            @foreach (var item in Actions)
+            {
+                @if (item.DividerBefore)
+                {
+                    <span class="admiral-group-actions-pane__divider" aria-hidden="true"></span>
+                }
+                <RadzenButton @key="item.Id" Text="@item.Text" Icon="@item.Icon"
+                              Variant="Variant.Text" ButtonStyle="ButtonStyle.Primary"
+                              Size="@ActionButtonSize" Disabled="@item.Disabled"
+                              aria-label="@item.AriaLabel" Click="@(_ => InvokeAction(item))" />
+            }
+        </div>
+    }
+    else
+    {
+        <div class="admiral-group-actions-pane__search">
+            <RadzenIcon Icon="admiral:system/search-outline" />
+            <input @ref="searchInput" value="@SearchValue" placeholder="@SearchPlaceholder" aria-label="@SearchAriaLabel"
+                   @oninput="HandleSearchInput" @onkeydown="SearchKeyDown" />
+            <button type="button" aria-label="@CloseSearchAriaLabel" @onclick="CloseSearch">
+                <RadzenIcon Icon="close" />
+            </button>
+        </div>
+    }
+    <div class="admiral-group-actions-pane__tools">
+        @if (!searchOpen)
+        {
+            <RadzenButton @ref="searchTrigger" class="admiral-group-actions-pane__icon" Icon="admiral:system/search-outline"
+                          Variant="Variant.Text" ButtonStyle="ButtonStyle.Base" Size="@ToolButtonSize"
+                          aria-label="@OpenSearchAriaLabel" Click="OpenSearch" />
+        }
+        @if (Columns.Count > 0)
+        {
+            <span class="admiral-group-actions-pane__popup-trigger">
+                <span class="admiral-group-actions-pane__popup-anchor" @ref="columnsTrigger">
+                    <RadzenButton class="admiral-group-actions-pane__icon" Icon="admiral:redact/columns-outline"
+                                  Variant="Variant.Text" ButtonStyle="ButtonStyle.Base" Size="@ToolButtonSize"
+                                  aria-label="@ConfigureColumnsAriaLabel"
+                                  aria-haspopup="dialog"
+                                  aria-expanded="@(columnsOpen ? "true" : "false")"
+                                  Click="ToggleColumns" />
+                </span>
+            </span>
+        }
+        @if (ShowSettings)
+        {
+            <RadzenButton class="admiral-group-actions-pane__icon" Icon="admiral:system/settings-outline"
+                          Variant="Variant.Text" ButtonStyle="ButtonStyle.Base" Size="@ToolButtonSize"
+                          aria-label="@SettingsAriaLabel" Click="@(_ => SettingsClicked.InvokeAsync())" />
+        }
+    </div>
+</div>
+
+<RadzenPopup @ref="columnsPopup" Lazy="true" CloseOnClickOutside="true"
+       Open="OnColumnsOpened" Close="OnColumnsClosed"
+       class="admiral-group-actions-pane__popup" role="dialog" aria-label="@VisibleColumnsAriaLabel">
+    <div class="admiral-group-actions-pane__menu" role="group" aria-label="@VisibleColumnsAriaLabel">
+        @foreach (var column in Columns)
+        {
+            <label @key="column.Id">
+                <RadzenCheckBox TValue="bool" Value="@column.Visible" Disabled="@column.Disabled"
+                                Change="@((bool value) => ChangeColumn(column, value))" />@column.Text
+            </label>
+        }
+    </div>
+</RadzenPopup>

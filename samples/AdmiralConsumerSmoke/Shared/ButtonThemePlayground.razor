@@ -1,0 +1,50 @@
+<section class="admiral-component-page__section">
+    <h2>RadzenButton + Admiral theme</h2>
+    <p>@SmokeL["Прямой RadzenButton: оформление даёт пакет темы, иконки — пакет Icons. Размеры ExtraSmall / Small / Medium / Large соответствуют S / M / L / XL (32 / 40 / 48 / 56 px)."]</p>
+    <div class="admiral-component-playground">
+        <div class="admiral-component-playground__preview">
+            <RadzenButton Text="@text" Size="@size" Variant="@variant" ButtonStyle="@appearance"
+                          Disabled="@disabled" IsBusy="@busy" BusyText="@text"
+                          Icon="@(icon ? "admiral:system/star-solid" : null)" Click="@(() => clicks++)" />
+            <span role="status">@SmokeL["Нажатий:"] @clicks</span>
+        </div>
+        <div class="admiral-component-controls">
+            <label>Text<input @bind="text" /></label>
+            <label>@SmokeL["Size"]<select @bind="size">@foreach (var value in Enum.GetValues<ButtonSize>()) { <option value="@value">@value</option> }</select></label>
+            <label>Variant<select @bind="variant">@foreach (var value in Enum.GetValues<Variant>()) { <option value="@value">@value</option> }</select></label>
+            <label>ButtonStyle<select @bind="appearance">@foreach (var value in Enum.GetValues<ButtonStyle>()) { <option value="@value">@value</option> }</select></label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="icon" /> Icon</label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="busy" /> IsBusy</label>
+        </div>
+    </div>
+    <CopyableRazorExample Code="@Code" Title="@SmokeL["Razor · текущая конфигурация"]" />
+    <p>@SmokeL["Для базовой кнопки дополнительные классы не нужны. IsBusy — штатное поведение Radzen, оно отличается от Loading в AdmiralButton. BadgeCount, Skeleton, IconEnd и DisplayAsDisabled — возможности обёртки; одной темой они не добавляются."]</p>
+    <ApiReference Title="@SmokeL["RadzenButton — параметры playground"]" Rows="@Rows" />
+</section>
+@code {
+    private string text = "Сохранить";
+    private ButtonSize size = ButtonSize.Small;
+    private Variant variant = Variant.Filled;
+    private ButtonStyle appearance = ButtonStyle.Primary;
+    private bool icon = true, disabled, busy;
+    private int clicks;
+    private string Code => $"""
+        <RadzenButton Text="{System.Net.WebUtility.HtmlEncode(text)}" Size="ButtonSize.{size}"
+            Variant="Variant.{variant}" ButtonStyle="ButtonStyle.{appearance}"
+            Icon="{(icon ? "admiral:system/star-solid" : "")}"
+            Disabled="{disabled.ToString().ToLowerInvariant()}" IsBusy="{busy.ToString().ToLowerInvariant()}"
+            BusyText="{System.Net.WebUtility.HtmlEncode(text)}" Click="OnClick" />
+        <output aria-live="polite">Clicks: @clickCount</output>
+        """ + "\n@code { private int clickCount; private void OnClick() => clickCount++; }";
+    private static readonly ApiReference.Entry[] Rows = [
+        new("Text / Icon", "string", "Подпись и имя иконки. Для Admiral используйте префикс admiral:."),
+        new("Size", "ButtonSize / Medium", "Высота кнопки; Small соответствует Admiral M, а не S."),
+        new("Variant", "Variant / Filled", "Filled, Flat, Outlined, Text — способ отображения фона и границы."),
+        new("ButtonStyle", "ButtonStyle / Primary", "Семантическая палитра кнопки."),
+        new("Disabled / IsBusy", "bool / false", "Отключение взаимодействия / штатный индикатор ожидания Radzen."),
+        new("BusyText", "string", "Подпись во время IsBusy; задайте исходный текст, если его нужно сохранить."),
+        new("Click", "EventCallback<MouseEventArgs>", "Обработчик нажатия."),
+        new("class / Style / aria-label", "HTML / CSS", "Дополнительное оформление и доступное имя кнопки.")
+    ];
+}

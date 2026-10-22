@@ -1,0 +1,44 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<mask id="mask_159" width="22.666666" height="14.666667" x="2.666687" y="6.666626" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="22.666666" height="14.666667" x="2.666687" y="6.666626" fill="rgb(7,155,119)" />
+			<rect id="Mask" width="22.666666" height="14.666667" x="2.666687" y="6.666626" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+		<linearGradient id="paint_linear_57" x1="10.666687" x2="10.666687" y1="10.666626" y2="17.333292" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(226.12,28.0375,48.0565)" offset="0" stop-opacity="1" />
+			<stop stop-color="rgb(206,18,37)" offset="1" stop-opacity="1" />
+		</linearGradient>
+	</defs>
+	<mask id="mask_158" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Grenada" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_158)">
+		<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" fill="rgb(228,34,53)" />
+		<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<g id="Rectangle 1128">
+			<rect id="Mask" width="22.666666" height="14.666667" x="2.666687" y="6.666626" fill="rgb(7,155,119)" />
+			<rect id="Mask" width="22.666666" height="14.666667" x="2.666687" y="6.666626" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+			<g mask="url(#mask_159)">
+				<path id="Oval 180" d="M4.39316 14.1318C4.77066 14.7359 5.31264 15.1347 5.81744 15.237C6.09535 15.2934 5.58652 14.0189 5.80825 13.8803C5.99745 13.7621 6.90771 14.822 6.98741 14.6008C7.17081 14.0921 7.06262 13.3716 6.65462 12.7187C6.06929 11.7819 6.04644 12.4002 4.46405 11.7291C4.6295 12.6888 3.80782 13.1951 4.39316 14.1318Z" fill="rgb(255,217,56)" fill-rule="evenodd" />
+				<path id="Oval 180" d="M5.81744 15.237C6.09535 15.2934 5.58652 14.0189 5.80825 13.8803C5.99745 13.7621 6.90771 14.822 6.98741 14.6008C7.17081 14.0921 7.06262 13.3716 6.65462 12.7187C6.06929 11.7819 6.04644 12.4002 4.46405 11.7291C4.6295 12.6888 3.80782 13.1951 4.39316 14.1318C4.77066 14.7359 5.31264 15.1347 5.81744 15.237Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+				<path id="Rectangle 1129" d="M14 14L25.3334 6.66663L2.66669 6.66663L14 14ZM14 14L2.66669 21.3333L25.3334 21.3333L14 14Z" fill="rgb(255,217,59)" fill-rule="evenodd" />
+				<path id="Rectangle 1129" d="M14 14L25.3334 6.66663L2.66669 6.66663L14 14ZM14 14L2.66669 21.3333L25.3334 21.3333L14 14Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+				<path id="Oval 179" d="M14 17.3333C15.841 17.3333 17.3334 15.8409 17.3334 14C17.3334 12.159 15.841 10.6666 14 10.6666C12.1591 10.6666 10.6667 12.159 10.6667 14C10.6667 15.8409 12.1591 17.3333 14 17.3333Z" fill="url(#paint_linear_57)" fill-rule="evenodd" />
+				<path id="Oval 179" d="M17.3334 14C17.3334 12.159 15.841 10.6666 14 10.6666C12.1591 10.6666 10.6667 12.159 10.6667 14C10.6667 15.8409 12.1591 17.3333 14 17.3333C15.841 17.3333 17.3334 15.8409 17.3334 14Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+				<path id="Star 96" d="M14 15.0284L12.4326 16.1574L13.0219 14.3178L11.4638 13.1759L13.3955 13.168L14 11.3333L14.6045 13.168L16.5361 13.1759L14.978 14.3178L15.5674 16.1574L14 15.0284Z" fill="rgb(255,217,56)" fill-rule="evenodd" />
+				<path id="Star 96" d="M12.4326 16.1574L13.0219 14.3178L11.4638 13.1759L13.3955 13.168L14 11.3333L14.6045 13.168L16.5361 13.1759L14.978 14.3178L15.5674 16.1574L14 15.0284L12.4326 16.1574Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+			</g>
+		</g>
+	</g>
+</svg>

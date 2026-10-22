@@ -1,0 +1,58 @@
+@page "/components/link"
+<PageTitle>Admiral Link</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Link" Description="Primary and secondary links in M and S dimensions, with icons and disabled state."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-link--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section"><h2>@T("Использование и ограничения", "Usage and limitations")</h2>
+            <p>@T("Link выполняет навигацию по Path. Внутренние пути использует NavLinkMatch, Target управляет новым окном. Click сообщает активацию, но не заменяет переход; Disabled подавляет событие и переход. Для действия без адреса используйте TextButton.", "Link navigates to Path. Internal paths use NavLinkMatch, and Target controls a new window. Click reports activation but does not replace navigation; Disabled suppresses the event and navigation. Use TextButton for an action without a destination.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" /><ApiReference Title="AdmiralLink" Rows="@ApiRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section"><h2>RadzenLink + Admiral theme</h2>
+            <p>@T("Прямой RadzenLink оформляется темой и принимает Path, Text, Icon, Target и Disabled. Раздельные IconStart/IconEnd, Appearance и Dimension — параметры AdmiralLink; тема сама их не добавляет.", "Direct RadzenLink receives theme styling and accepts Path, Text, Icon, Target and Disabled. Separate IconStart/IconEnd, Appearance and Dimension are AdmiralLink parameters; the theme does not add them.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><RadzenLink Path="#link-demo-target" Text="Details" Icon="admiral:system/arrow-right-outline" Disabled="@directDisabled" @onclick="@(() => directClicks++)" /><output aria-live="polite">@T("Нажатия Radzen", "Radzen clicks"): @directClicks</output></div><div class="admiral-component-controls"><label class="admiral-component-controls__check"><input type="checkbox" @bind="directDisabled" /> Disabled</label></div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section"><h2>@T("Интерактивный пример", "Interactive playground")</h2>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><AdmiralLink Path="#link-demo-target" Text="Details" IconEnd="admiral:system/arrow-right-outline" Appearance="@appearance" Dimension="@dimension" Disabled="@disabled" Click="@(_ => clicks++)" /><output aria-live="polite">@T("Нажатия", "Clicks"): @clicks</output></div><div class="admiral-component-controls"><label><span>@SmokeL["Appearance"]</span><select @bind="appearance">@foreach (var value in Enum.GetValues<AdmiralLinkAppearance>()) { <option value="@value">@value</option> }</select></label><label><span>@SmokeL["Dimension"]</span><select @bind="dimension">@foreach (var value in Enum.GetValues<AdmiralLinkDimension>()) { <option value="@value">@value</option> }</select></label><label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label></div></div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+        <section class="admiral-component-page__section" id="link-demo-target"><h2>@T("Варианты", "Variants")</h2><div class="admiral-component-row"><AdmiralLink Path="#link-demo-target" Text="Primary M" /><AdmiralLink Path="#link-demo-target" Text="Secondary M" Appearance="AdmiralLinkAppearance.Secondary" /><AdmiralLink Path="#link-demo-target" Text="Primary S" Dimension="AdmiralLinkDimension.S" /><AdmiralLink Path="#link-demo-target" Text="Disabled" Disabled="true" /></div></section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private AdmiralLinkAppearance appearance;
+    private AdmiralLinkDimension dimension;
+    private bool disabled, directDisabled;
+    private int clicks, directClicks;
+    private static readonly IReadOnlyList<ApiReference.Entry> ApiRows = [
+        new("Text / ChildContent / Path", "string? / null; RenderFragment? / null; string / empty", "Label or content and destination."),
+        new("Target / Match", "string? / null; NavLinkMatch.Prefix", "New-window target and internal route matching."),
+        new("Appearance / Dimension", "Primary / M", "Primary or Secondary; M or S."),
+        new("IconStart / IconEnd", "string? / null", "Admiral icons before or after label."),
+        new("Disabled / Click", "bool / false; EventCallback<MouseEventArgs>", "Suppress navigation or observe activation.")];
+    private const string AdmiralCode = """
+        <AdmiralLink Path="#details" Text="Details" IconEnd="admiral:system/arrow-right-outline"
+            Click="@(_ => clicks++)" />
+        <output aria-live="polite">Clicks: @clicks</output>
+        <div id="details">Details target</div>
+        @code { private int clicks; }
+        """;
+    private const string DirectCode = """
+        <RadzenLink Path="#details" Text="Details" Icon="admiral:system/arrow-right-outline"
+            @onclick="@(() => clicks++)" />
+        <output aria-live="polite">Clicks: @clicks</output>
+        <div id="details">Details target</div>
+        @code { private int clicks; }
+        """;
+}

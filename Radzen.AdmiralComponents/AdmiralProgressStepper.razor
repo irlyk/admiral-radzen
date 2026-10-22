@@ -1,0 +1,77 @@
+<div class="@CssClass" @attributes="AdditionalAttributes">
+    <div class="admiral-progress-stepper__header" aria-hidden="true">
+        <span>@CurrentStep</span>
+        <small>@CounterText</small>
+    </div>
+    <div class="admiral-progress-stepper__track">
+        <div class="admiral-progress-stepper__value"
+             style="width: @Percent%"
+             role="progressbar"
+             tabindex="0"
+             aria-valuemin="1"
+             aria-valuemax="@StepCount"
+             aria-valuenow="@(CurrentIndex + 1)"
+             aria-valuetext="@AriaValueText"></div>
+    </div>
+    @if (HasNextStep && !string.IsNullOrEmpty(NextStepText))
+    {
+        <div class="admiral-progress-stepper__next">@NextStepText</div>
+    }
+    @if (ShowActions)
+    {
+        <div class="admiral-progress-stepper__actions">
+            <RadzenButton Text="@PreviousText" Variant="Variant.Outlined"
+                          Disabled="@(CurrentIndex == 0)" Click="Previous" />
+            <RadzenButton Text="@NextText" Disabled="@(!HasNextStep)" Click="Next" />
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<string> Steps { get; set; } = [];
+    [Parameter] public int SelectedIndex { get; set; }
+    [Parameter] public EventCallback<int> SelectedIndexChanged { get; set; }
+    [Parameter] public bool Mobile { get; set; }
+    [Parameter] public bool ShowActions { get; set; }
+    [Parameter] public string CounterFormat { get; set; } = "Step {0} of {1}";
+    [Parameter] public string NextStepFormat { get; set; } = "Next: {0}";
+    [Parameter] public string PreviousText { get; set; } = "Previous";
+    [Parameter] public string NextText { get; set; } = "Next";
+    [Parameter] public string AriaValueFormat { get; set; } = "Step {0}: {1}";
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private int StepCount => Steps.Count;
+    private int CurrentIndex => StepCount == 0 ? 0 : Math.Clamp(SelectedIndex, 0, StepCount - 1);
+    private string CurrentStep => StepCount == 0 ? string.Empty : Steps[CurrentIndex];
+    private bool HasNextStep => StepCount > 0 && CurrentIndex + 1 < StepCount;
+    private int Percent => StepCount == 0 ? 0 : (int)Math.Round((CurrentIndex + 1d) / StepCount * 100d);
+    private string CounterText => string.Format(System.Globalization.CultureInfo.CurrentCulture, CounterFormat, CurrentIndex + 1, StepCount);
+    private string? NextStepText => HasNextStep
+        ? string.Format(System.Globalization.CultureInfo.CurrentCulture, NextStepFormat, Steps[CurrentIndex + 1].ToLower(System.Globalization.CultureInfo.CurrentCulture))
+        : null;
+    private string AriaValueText => string.Format(System.Globalization.CultureInfo.CurrentCulture, AriaValueFormat, CurrentIndex + 1, CurrentStep);
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-progress-stepper",
+        Mobile ? "admiral-progress-stepper--mobile" : null,
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+
+    private Task Previous() => SetIndex(CurrentIndex - 1);
+    private Task Next() => SetIndex(CurrentIndex + 1);
+
+    private async Task SetIndex(int value)
+    {
+        if (StepCount == 0)
+        {
+            return;
+        }
+
+        var nextIndex = Math.Clamp(value, 0, StepCount - 1);
+        if (nextIndex != CurrentIndex)
+        {
+            await SelectedIndexChanged.InvokeAsync(nextIndex);
+        }
+    }
+}

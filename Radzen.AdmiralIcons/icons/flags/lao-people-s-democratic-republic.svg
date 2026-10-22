@@ -1,0 +1,26 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_116" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Lao People's Democratic Republic" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_116)">
+		<path id="Rectangle 2 Copy 4" d="M0 18.6666L28 18.6666L28 9.33331L0 9.33331L0 18.6666Z" fill="rgb(7,58,136)" fill-rule="evenodd" />
+		<path id="Rectangle 2 Copy 4" d="M28 18.6666L28 9.33331L0 9.33331L0 18.6666L28 18.6666Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M0 9.33333L28 9.33333L28 4L0 4L0 9.33333Z" fill="rgb(226,39,62)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 9.33333L28 4L0 4L0 9.33333L28 9.33333Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M0 24L28 24L28 18.6667L0 18.6667L0 24Z" fill="rgb(226,39,62)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 24L28 18.6667L0 18.6667L0 24L28 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Oval 12" d="M14 17.3334C15.841 17.3334 17.3334 15.841 17.3334 14C17.3334 12.1591 15.841 10.6667 14 10.6667C12.1591 10.6667 10.6667 12.1591 10.6667 14C10.6667 15.841 12.1591 17.3334 14 17.3334Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Oval 12" d="M17.3334 14C17.3334 12.1591 15.841 10.6667 14 10.6667C12.1591 10.6667 10.6667 12.1591 10.6667 14C10.6667 15.841 12.1591 17.3334 14 17.3334C15.841 17.3334 17.3334 15.841 17.3334 14Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	</g>
+</svg>

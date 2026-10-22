@@ -1,0 +1,79 @@
+<RadzenButton class="@CssClass"
+              Size="@RadzenSize"
+              Variant="Variant.Text"
+              ButtonType="@RadzenButtonType"
+              Disabled="@(Disabled || Loading || Skeleton)"
+              Click="@Click"
+              aria-busy="@(Loading ? "true" : null)"
+              @attributes="AdditionalAttributes">
+    @if (Loading)
+    {
+        <AdmiralSpinner Size="@SpinnerSize" AriaLabel="Loading" />
+    }
+    else
+    {
+    <span class="admiral-text-button__content">
+        @if (!string.IsNullOrWhiteSpace(IconStart))
+        {
+            <AdmiralIcon Icon="@IconStart" Size="@ContentIconSize" aria-hidden="true" />
+        }
+        <span class="admiral-text-button__text">
+            @if (ChildContent is not null)
+            {
+                @ChildContent
+            }
+            else
+            {
+                @Text
+            }
+        </span>
+        @if (!string.IsNullOrWhiteSpace(IconEnd))
+        {
+            <AdmiralIcon Icon="@IconEnd" Size="@ContentIconSize" aria-hidden="true" />
+        }
+    </span>
+    }
+</RadzenButton>
+
+@code {
+    [Parameter] public string? Text { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? IconStart { get; set; }
+    [Parameter] public string? IconEnd { get; set; }
+    [Parameter] public AdmiralTextButtonAppearance Appearance { get; set; }
+    [Parameter] public AdmiralTextButtonDimension Dimension { get; set; } = AdmiralTextButtonDimension.M;
+    [Parameter] public AdmiralButtonType Type { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool Loading { get; set; }
+    [Parameter] public bool Skeleton { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> Click { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private ButtonSize RadzenSize => Dimension == AdmiralTextButtonDimension.S
+        ? ButtonSize.ExtraSmall
+        : ButtonSize.Small;
+
+    private ButtonType RadzenButtonType => Type switch
+    {
+        AdmiralButtonType.Submit => ButtonType.Submit,
+        AdmiralButtonType.Reset => ButtonType.Reset,
+        _ => ButtonType.Button
+    };
+
+    private AdmiralIconSize ContentIconSize => Dimension == AdmiralTextButtonDimension.S
+        ? AdmiralIconSize.Medium
+        : AdmiralIconSize.Large;
+
+    private AdmiralSpinnerSize SpinnerSize => Dimension == AdmiralTextButtonDimension.S
+        ? AdmiralSpinnerSize.MediumSmall
+        : AdmiralSpinnerSize.Medium;
+
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-text-button",
+        Appearance == AdmiralTextButtonAppearance.Secondary ? "admiral-text-button--secondary" : null,
+        Skeleton ? "rz-skeleton admiral-text-button--skeleton" : null,
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

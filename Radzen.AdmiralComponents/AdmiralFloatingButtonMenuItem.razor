@@ -1,0 +1,18 @@
+@using Radzen.Admiral.Components.Internal
+
+<AdmiralFloatingButton Icon="@Icon" AriaLabel="@AriaLabel"
+                       Size="@(MenuContext?.Size ?? AdmiralFloatingButtonSize.Medium)"
+                       Appearance="AdmiralFloatingButtonAppearance.Secondary"
+                       Fixed="false" Disabled="@Disabled" Click="@Click"
+                       Class="@Class" Style="@Style" @attributes="AdditionalAttributes" />
+
+@code {
+    [CascadingParameter] internal AdmiralFloatingButtonMenuContext? MenuContext { get; set; }
+    [Parameter, EditorRequired] public string Icon { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string AriaLabel { get; set; } = string.Empty;
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> Click { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+}

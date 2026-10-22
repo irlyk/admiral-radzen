@@ -1,0 +1,56 @@
+<div class="@CssClass"
+     role="@(State == AdmiralUploadState.Error ? "alert" : "status")"
+     aria-live="polite"
+     @attributes="AdditionalAttributes">
+    <RadzenIcon Icon="@Icon" class="admiral-upload-file__type" />
+    <div class="admiral-upload-file__content">
+        <div class="admiral-upload-file__name">@FileName</div>
+        @if (!string.IsNullOrEmpty(Meta))
+        {
+            <div class="admiral-upload-file__meta">@Meta</div>
+        }
+        @if (State == AdmiralUploadState.Error && !string.IsNullOrEmpty(ErrorText))
+        {
+            <div class="admiral-upload-file__error">@ErrorText</div>
+        }
+        @if (State == AdmiralUploadState.Loading)
+        {
+            <RadzenProgressBar Value="@ClampedProgress" ShowValue="false"
+                               class="admiral-upload-file__progress" />
+        }
+    </div>
+    @if (ShowAction)
+    {
+        <RadzenButton Icon="@ActionIcon" Variant="Variant.Text" ButtonStyle="ButtonStyle.Base"
+                      Size="ButtonSize.Small" aria-label="@ActionAriaLabel" Disabled="@Disabled"
+                      Click="@(_ => ActionClicked.InvokeAsync())" />
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string FileName { get; set; } = string.Empty;
+    [Parameter] public string? Meta { get; set; }
+    [Parameter] public string? ErrorText { get; set; }
+    [Parameter] public string Icon { get; set; } = "admiral:documents/description-outline";
+    [Parameter] public AdmiralUploadState State { get; set; }
+    [Parameter] public double Progress { get; set; }
+    [Parameter] public bool ShowAction { get; set; } = true;
+    /// <summary>Disables the file action without changing its upload state.</summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+    [Parameter] public string ActionIcon { get; set; } = "admiral:service/close-outline";
+    [Parameter] public string ActionAriaLabel { get; set; } = "Remove file";
+    [Parameter] public EventCallback ActionClicked { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private double ClampedProgress => Math.Clamp(Progress, 0, 100);
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-upload-file",
+        State == AdmiralUploadState.Loading ? "admiral-upload-file--loading" : null,
+        State == AdmiralUploadState.Complete ? "admiral-upload-file--complete" : null,
+        State == AdmiralUploadState.Error ? "admiral-upload-file--error" : null,
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

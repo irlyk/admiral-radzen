@@ -1,0 +1,103 @@
+@page "/components/input-field"
+
+<PageTitle>Admiral InputField</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="InputField"
+        Description="@Description"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-form-field-inputfield--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenTextBox + Admiral theme</h2>
+            <p>@T("Тема оформляет RadzenTextBox. Метку, описание, связь с полем и текст ошибки приложение добавляет само: CSS не создаёт композицию InputField.", "The theme styles RadzenTextBox, while the application supplies the label, description, association and validation text. InputField's label and state composition is not added to Radzen by CSS.")</p>
+            <p>@T("Подключите CSS темы admiral-base.css или admiral-dark-base.css. Прямой RadzenTextBox использует rz-textbox; обёртка добавляет admiral-input-field.", "Load the packaged admiral-base.css or admiral-dark-base.css theme. Direct RadzenTextBox uses rz-textbox; the optional wrapper adds admiral-input-field.")</p>
+            <div class="admiral-component-playground" data-testid="input-field-radzen-demo">
+                <div class="admiral-component-playground__preview">
+                    <label for="input-field-direct">@T("Имя", "Name")</label>
+                    <RadzenTextBox id="input-field-direct" @bind-Value="directValue" Disabled="@disabled" Placeholder="@SmokeL["Enter value"]" />
+                    <span class="admiral-component-page__result" role="status">@SmokeL["Value"]: @directValue</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> @SmokeL["Disabled"]</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · Radzen API" />
+            <ApiReference Title="RadzenTextBox" Rows="@DirectRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Usage"]</h2>
+            <p>@T("InputField отвечает за представление. Значением и событиями изменения управляет компонент в ChildContent. Required показывает маркер обязательного поля; валидацию реализует приложение.", "InputField is a presentation wrapper. It does not own a value or raise value-change events: the component placed in ChildContent does. Required renders a visual marker; validation must be supplied by the application.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralInputField" Rows="@AdmiralRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground" data-testid="input-field-admiral-demo">
+                <div class="admiral-component-playground__preview">
+                    <AdmiralInputField Label="@T("Имя", "Name")" For="input-field-admiral" Size="@size" Status="@status"
+                                       Required="@required" ExtraText="@T("Значением управляет вложенное поле", "Value is handled by the child input")">
+                        <RadzenTextBox id="input-field-admiral" @bind-Value="value" Disabled="@disabled" Placeholder="@SmokeL["Enter value"]" />
+                    </AdmiralInputField>
+                    <span class="admiral-component-page__result" role="status">@SmokeL["Value"]: @value</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Size"]</span><select @bind="size">@foreach (var option in Enum.GetValues<AdmiralInputSize>()) { <option value="@option">@option</option> }</select></label>
+                    <label><span>@SmokeL["Status"]</span><select @bind="status">@foreach (var option in Enum.GetValues<AdmiralInputStatus>()) { <option value="@option">@option</option> }</select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="required" /> @T("Обязательно", "Required")</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> @SmokeL["Disabled"]</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <p><a href="/components/text-input">@T("Поле с готовой композицией показано на странице TextInput / TextField.", "For a text input with built-in field composition, see TextInput / TextField.")</a></p>
+        </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private string T(string ru, string en) => IsRussian ? ru : en;
+    private bool IsRussian => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru";
+    private string Description => IsRussian ? "Обёртка для метки, дополнительного текста и состояния произвольного поля ввода." : "Composition wrapper for an input label, supporting text and visual status.";
+    private string? value, directValue;
+    private AdmiralInputSize size = AdmiralInputSize.Medium;
+    private AdmiralInputStatus status;
+    private bool required, disabled;
+
+    private const string AdmiralCode = """
+        <AdmiralInputField Label="Name" For="name" Size="AdmiralInputSize.Medium"
+                           ExtraText="Enter your name" Required="true">
+            <RadzenTextBox id="name" @bind-Value="name" />
+        </AdmiralInputField>
+        <span role="status">Value: @name</span>
+        @code { private string? name; }
+        """;
+    private const string DirectCode = """
+        <label for="name">Name</label>
+        <RadzenTextBox id="name" @bind-Value="name" />
+        <small>Enter your name</small>
+        <span role="status">Value: @name</span>
+        @code { private string? name; }
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> AdmiralRows =
+    [
+        new("ChildContent", "RenderFragment?; null", "The wrapped control; it owns value and events."),
+        new("Label / AdditionalLabel / ExtraText", "string?; null", "Main label, inline secondary label and helper text."),
+        new("For", "string?; null", "Matches the child control ID to associate the label."),
+        new("Required", "bool; false", "Displays an asterisk; does not validate the child control."),
+        new("Size", "AdmiralInputSize; Medium", "Small, Medium or ExtraLarge field geometry."),
+        new("Status", "AdmiralInputStatus; Default", "Visual validation state; application supplies validation behavior.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> DirectRows =
+    [
+        new("Value / ValueChanged", "string? / EventCallback<string?>", "Value and callback of the direct RadzenTextBox."),
+        new("Disabled / Placeholder", "bool / string?", "Interaction state and prompt on the inner control.")
+    ];
+}

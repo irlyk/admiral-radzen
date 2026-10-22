@@ -1,0 +1,57 @@
+@using Radzen.Admiral.Components.Internal
+
+<label class="@CssClass" style="@Style" @attributes="AdditionalAttributes">
+    <RadzenCheckBox TValue="bool?" Value="@DisplayValue" Change="@OnChange" TriState="@Indeterminate"
+                    Disabled="@EffectiveDisabled" ReadOnly="@ReadOnly"
+                    aria-labelledby="@(HasLabel ? labelId : null)"
+                    aria-describedby="@(!string.IsNullOrWhiteSpace(ExtraText) ? hintId : null)"
+                    InputAttributes="@InputAttributes" />
+    <span class="admiral-checkbox-field__text">
+        <span id="@labelId">@if (ChildContent is not null) { @ChildContent } else { @Text }</span>
+        @if (!string.IsNullOrWhiteSpace(ExtraText))
+        {
+            <span id="@hintId" class="admiral-checkbox-field__hint">@ExtraText</span>
+        }
+    </span>
+</label>
+
+@code {
+    private readonly string labelId = $"admiral-checkbox-label-{Guid.NewGuid():N}";
+    private readonly string hintId = $"admiral-checkbox-hint-{Guid.NewGuid():N}";
+    private bool HasLabel => ChildContent is not null || !string.IsNullOrWhiteSpace(Text);
+    [CascadingParameter] internal AdmiralCheckboxGroupContext? GroupContext { get; set; }
+    [Parameter] public bool? Value { get; set; }
+    [Parameter] public EventCallback<bool?> ValueChanged { get; set; }
+    [Parameter] public EventCallback<bool?> Change { get; set; }
+    [Parameter] public string? Text { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? ExtraText { get; set; }
+    [Parameter] public AdmiralCheckboxDimension? Dimension { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool ReadOnly { get; set; }
+    [Parameter] public bool Error { get; set; }
+    [Parameter] public bool Indeterminate { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+    [Parameter] public IReadOnlyDictionary<string, object>? InputAttributes { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private bool? DisplayValue => Indeterminate ? null : Value;
+    private AdmiralCheckboxDimension EffectiveDimension => Dimension ?? GroupContext?.Dimension ?? AdmiralCheckboxDimension.M;
+    private bool EffectiveDisabled => Disabled || GroupContext?.Disabled == true;
+    private async Task OnChange(bool? value)
+    {
+        await ValueChanged.InvokeAsync(value);
+        await Change.InvokeAsync(value);
+    }
+
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-checkbox-field",
+        EffectiveDimension == AdmiralCheckboxDimension.S ? "admiral-checkbox-field--s" : "admiral-checkbox-field--m",
+        EffectiveDisabled ? "admiral-checkbox-field--disabled" : null,
+        ReadOnly ? "admiral-checkbox-field--readonly" : null,
+        Error ? "admiral-checkbox-field--error" : null,
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

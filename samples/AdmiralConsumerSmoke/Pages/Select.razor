@@ -1,0 +1,176 @@
+@page "/components/select"
+
+<PageTitle>Admiral Select</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Select / SelectField"
+        Description="@T("Выбор одного или нескольких значений: Select без метки и SelectField с меткой, подсказкой и статусом.", "Choose one or more values: Select is the bare control; SelectField adds a label, help text and status.")"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-input-select-%D1%80%D0%B5%D0%B6%D0%B8%D0%BC-select--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Theme)
+    {
+        <ThemeComponentPlayground Component="Select" />
+        <ComponentDocNotes Title="@SmokeL["Direct Radzen differences"]">
+            <p>@SmokeL["RadzenDropDown uses TextProperty and ValueProperty for complex items; AdmiralSelect uses typed TextSelector and ValueSelector. The theme styles RadzenDropDown but does not add Admiral's typed grouping, data provider, loading/error/retry experience, or SelectField's external label."]</p>
+        </ComponentDocNotes>
+    }
+    else if (tab == ComponentDocTabs.Api)
+    {
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · AdmiralSelectField" />
+        <CopyableRazorExample Code="@MultipleCode" Title="Razor · multiple selection" />
+        <ApiReference Title="Select / SelectField behavior" Rows="@UsageRows" />
+        <ComponentDocNotes Title="@SmokeL["Behavior and limits"]">
+            <p>@T("Value/ValueChanged используются для одиночного выбора; при Multiple=true применяйте Values/ValuesChanged. Одиночный Select поддерживает DataProvider и группы через AdmiralDropDown. Множественный Select использует RadzenDropDown и локальный Data; асинхронная загрузка и группировка в этом режиме не реализованы. Chips меняет только отображение выбранных значений.", "Use Value/ValueChanged for one value and Values/ValuesChanged when Multiple=true. Single Select supports DataProvider and groups through AdmiralDropDown. Multiple Select uses RadzenDropDown and local Data; asynchronous loading and grouping are not implemented in that mode. Chips changes selected-value presentation only.")</p>
+            <p>@T("SelectField не принимает DataProvider, LoadFailed, InputAttributes или настройки виртуализации Select. Если они нужны, используйте AdmiralSelect напрямую. Disabled и ReadOnly блокируют изменение выбора; Loading и Skeleton — состояния отображения. SelectField использует текст метки как доступное имя поля; нажатие на метку переводит фокус в combobox. Для Select без метки задайте доступное имя через InputAttributes.", "SelectField does not expose Select's DataProvider, LoadFailed, InputAttributes or virtualization settings. Use AdmiralSelect directly for these features. Disabled and ReadOnly prevent selection changes; Loading and Skeleton are display states. SelectField uses its label text as the control’s accessible name; clicking the label focuses the combobox. Give an unlabelled Select an accessible name through InputAttributes.")</p>
+            <p>@T("На низком viewport список вариантов ограничивается по высоте и прокручивается; это сохраняет поле видимым при масштабе браузера. Если резко уменьшить окно при уже открытом popup, Radzen может оставить его за пределами нового viewport: закройте список Escape и откройте снова.", "In a short viewport the options list is height-limited and scrollable so the field stays visible under browser zoom. If the window is sharply resized while the popup is open, Radzen may leave it outside the new viewport; close it with Escape and reopen it.")</p>
+            <p>@T("Escape закрывает список Admiral Select и возвращает фокус на поле. Enter и Space открывают список; ArrowDown из закрытого поля пока не открывает его. Прямой RadzenDropDown может потерять фокус после Escape.", "Escape closes the Admiral Select list and restores focus to the field. Enter and Space open it; ArrowDown does not currently open it from the closed field. Direct RadzenDropDown may lose focus after Escape.")</p>
+        </ComponentDocNotes>
+    }
+    else
+    {
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Playground"]</AdmiralText>
+        <div class="admiral-component-playground">
+            <div class="admiral-component-playground__preview">
+                @if (playgroundMultiple)
+                {
+                    <AdmiralSelectField TValue="string" TItem="City" Label="@SmokeL["Cities"]" Data="cities" TextSelector="CityText" ValueSelector="CityValue" Size="@playgroundSize" Status="@playgroundStatus" Multiple="true" Chips="@playgroundChips" AllowFiltering="@playgroundSearch" AllowClear="@playgroundClear" Loading="@playgroundLoading" Disabled="@playgroundDisabled" Skeleton="@playgroundSkeleton" Values="@playgroundCities" ValuesChanged="@OnPlaygroundCitiesChanged" />
+                }
+                else
+                {
+                    <AdmiralSelectField TValue="string" TItem="City" Label="@SmokeL["City"]" Data="cities" TextSelector="CityText" ValueSelector="CityValue" Size="@playgroundSize" Status="@playgroundStatus" AllowFiltering="@playgroundSearch" AllowClear="@playgroundClear" Loading="@playgroundLoading" Disabled="@playgroundDisabled" Skeleton="@playgroundSkeleton" Value="@playgroundCity" ValueChanged="@OnPlaygroundCityChanged" />
+                }
+                <span class="admiral-component-page__result" role="status">@SmokeL["Value"]: @(playgroundMultiple ? string.Join(", ", playgroundCities ?? []) : playgroundCity) · @SmokeL["Changes"]: @playgroundChanges</span>
+            </div>
+            <div class="admiral-component-controls">
+                <label><span>@SmokeL["Size"]</span><select @bind="playgroundSize">@foreach (var item in Enum.GetValues<AdmiralInputSize>()) { <option value="@item">@item</option> }</select></label>
+                <label><span>@SmokeL["Status"]</span><select @bind="playgroundStatus">@foreach (var item in Enum.GetValues<AdmiralInputStatus>()) { <option value="@item">@item</option> }</select></label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundMultiple" /> Multiple</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundChips" /> Chips</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundSearch" /> @SmokeL["Search"]</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundClear" /> @SmokeL["Clear"]</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundLoading" /> Loading</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundDisabled" /> Disabled</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundSkeleton" /> Skeleton</label>
+            </div>
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Dimensions"]</AdmiralText>
+        <div class="admiral-input-gallery__grid">
+            <AdmiralSelectField TValue="string" TItem="City" Label="@SmokeL["Small"]" AdditionalLabel="S · 32 px"
+                                Size="AdmiralInputSize.Small" Data="cities" TextSelector="CityText" ValueSelector="CityValue"
+                                @bind-Value="smallCity" />
+            <AdmiralSelectField TValue="string" TItem="City" Label="@SmokeL["Medium"]" AdditionalLabel="M · 40 px"
+                                Data="cities" TextSelector="CityText" ValueSelector="CityValue" @bind-Value="city" />
+            <AdmiralSelectField TValue="string" TItem="City" Label="@SmokeL["Extra large"]" AdditionalLabel="XL · 56 px"
+                                Size="AdmiralInputSize.ExtraLarge" Data="cities" TextSelector="CityText" ValueSelector="CityValue"
+                                @bind-Value="largeCity" />
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Content and states"]</AdmiralText>
+        <div class="admiral-input-gallery__grid">
+            <AdmiralSelectField TValue="string" TItem="City" Label="@SmokeL["Searchable city"]" AllowFiltering="true" AllowClear="true"
+                                FilterPlaceholder="Search city" Placeholder="@SmokeL["Choose city"]" Data="cities"
+                                TextSelector="CityText" ValueSelector="CityValue" @bind-Value="searchCity" />
+            <AdmiralSelectField TValue="string" TItem="City" Label="@SmokeL["Grouped"]" Data="cities"
+                                TextSelector="CityText" ValueSelector="CityValue" GroupSelector="CityGroup" @bind-Value="groupedCity">
+                <ItemTemplate Context="item"><strong>@item.Code</strong> · @item.Name</ItemTemplate>
+                <SelectedTemplate Context="item"><strong>@item.Code</strong> · @item.Name</SelectedTemplate>
+            </AdmiralSelectField>
+            <AdmiralSelectField TValue="string" TItem="City" Label="@SmokeL["Custom selected value"]" Data="cities"
+                                TextSelector="CityText" ValueSelector="CityValue" @bind-Value="customCity">
+                <SelectedTemplate Context="item"><AdmiralBadge Text="@item.Code" /> @item.Name</SelectedTemplate>
+                <ItemTemplate Context="item"><strong>@item.Code</strong> · @item.Name</ItemTemplate>
+            </AdmiralSelectField>
+            <AdmiralSelectField TValue="string" TItem="City" Label="@SmokeL["Multiple with custom values"]"
+                                Data="cities" TextSelector="CityText" ValueSelector="CityValue"
+                                Multiple="true" Chips="true" AllowFiltering="true" @bind-Values="selectedCities">
+                <SelectedTemplate Context="item">@item.Code · @item.Name</SelectedTemplate>
+                <ItemTemplate Context="item"><strong>@item.Code</strong> · @item.Name</ItemTemplate>
+            </AdmiralSelectField>
+            <AdmiralSelectField TValue="string" TItem="City" Label="Loading" Loading="true" Data="cities"
+                                TextSelector="CityText" ValueSelector="CityValue" Value="@("MOW")" />
+            <AdmiralSelectField TValue="string" TItem="City" Label="Error" Status="AdmiralInputStatus.Error"
+                                ExtraText="@SmokeL["Select a city"]" Data="cities" TextSelector="CityText" ValueSelector="CityValue" />
+            <AdmiralSelectField TValue="string" TItem="City" Label="Disabled" Disabled="true" Data="cities"
+                                TextSelector="CityText" ValueSelector="CityValue" Value="@("MOW")" />
+            <AdmiralSelectField TValue="string" TItem="City" Label="Skeleton" Skeleton="true" Data="cities"
+                                TextSelector="CityText" ValueSelector="CityValue" />
+        </div>
+    </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private const string AdmiralCode = """
+        <AdmiralSelectField TValue="string" TItem="City" Label="City"
+                            Data="@cities" TextSelector="@(city => city.Name)"
+                            ValueSelector="@(city => city.Code)"
+                            AllowFiltering="true" AllowClear="true"
+                            Value="@city" ValueChanged="OnCityChanged" />
+        <span role="status">City: @city</span>
+        @code {
+            private record City(string Code, string Name);
+            private City[] cities = [new("MOW", "Moscow"), new("KZN", "Kazan")];
+            private string? city;
+            private void OnCityChanged(string? value) => city = value;
+        }
+        """;
+    private const string MultipleCode = """
+        <AdmiralSelectField TValue="string" TItem="City" Label="Cities"
+                            Data="@cities" TextSelector="@(city => city.Name)"
+                            ValueSelector="@(city => city.Code)"
+                            Multiple="true" Chips="true"
+                            Values="@selectedCities" ValuesChanged="OnCitiesChanged" />
+        <span role="status">Selected: @string.Join(", ", selectedCities)</span>
+        @code {
+            private record City(string Code, string Name);
+            private City[] cities = [new("MOW", "Moscow"), new("KZN", "Kazan")];
+            private IEnumerable<string> selectedCities = ["MOW"];
+            private void OnCitiesChanged(IEnumerable<string>? values) => selectedCities = values ?? [];
+        }
+        """;
+    private string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private IReadOnlyList<ApiReference.Entry> UsageRows =>
+    [
+        new("Data / TextSelector / ValueSelector", "IEnumerable<TItem>? / Func<TItem, string>? / Func<TItem, TValue?>?", T("Локальные элементы и типизированное отображение текста и значения.", "Local items and typed text/value mapping.")),
+        new("Value / ValueChanged", "TValue? / EventCallback<TValue?>", T("Одиночный выбор; callback вызывается при изменении значения.", "Single selection; callback runs when the value changes.")),
+        new("Multiple / Values / ValuesChanged", "false / IEnumerable<TValue>? / EventCallback<IEnumerable<TValue>?>", T("Множественный выбор использует отдельную коллекцию и callback.", "Multiple selection uses a separate collection and callback.")),
+        new("AllowFiltering / AllowClear / Chips", "false / false / false", T("Поиск, очистка и вид выбранных значений. Chips применяется при Multiple=true.", "Filtering, clearing and selected-value display. Chips applies when Multiple=true.")),
+        new("DataProvider / LoadFailed", "Func<AdmiralDropDownQuery, CancellationToken, Task<AdmiralDropDownResult<TItem>>>? / EventCallback<Exception>", T("Только AdmiralSelect в одиночном режиме; SelectField не предоставляет эти параметры.", "AdmiralSelect single mode only; SelectField does not expose these parameters.")),
+        new("Size / Status / Loading / Disabled / ReadOnly / Skeleton", "Medium / Default / false / false / false / false", T("Размер, статус, загрузка, блокировка изменения и заглушка.", "Size, status, loading, change prevention and skeleton."))
+    ];
+    private string? playgroundCity = "MOW";
+    private IEnumerable<string>? playgroundCities = ["MOW", "KZN"];
+    private int playgroundChanges;
+    private void OnPlaygroundCityChanged(string? next) { playgroundCity = next; playgroundChanges++; }
+    private void OnPlaygroundCitiesChanged(IEnumerable<string>? next) { playgroundCities = next; playgroundChanges++; }
+    private AdmiralInputSize playgroundSize = AdmiralInputSize.Medium;
+    private AdmiralInputStatus playgroundStatus;
+    private bool playgroundMultiple;
+    private bool playgroundChips = true;
+    private bool playgroundSearch = true;
+    private bool playgroundClear = true;
+    private bool playgroundLoading;
+    private bool playgroundDisabled;
+    private bool playgroundSkeleton;
+    private string? smallCity = "KZN";
+    private string? city = "MOW";
+    private string? largeCity;
+    private string? searchCity;
+    private string? groupedCity = "LED";
+    private string? customCity = "ALA";
+    private IEnumerable<string>? selectedCities = ["MOW", "KZN"];
+
+    private readonly City[] cities =
+    [
+        new("MOW", "Москва", "Россия"), new("LED", "Санкт-Петербург", "Россия"),
+        new("KZN", "Казань", "Россия"), new("MSQ", "Минск", "Беларусь"),
+        new("ALA", "Алматы", "Казахстан")
+    ];
+
+    private static string CityText(City item) => item.Name;
+    private static string CityValue(City item) => item.Code;
+    private static string CityGroup(City item) => item.Country;
+    private sealed record City(string Code, string Name, string Country);
+}

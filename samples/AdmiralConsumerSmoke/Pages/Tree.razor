@@ -1,0 +1,147 @@
+@page "/components/tree"
+@using Radzen.Admiral.Components.Models
+
+<PageTitle>Admiral Tree</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Tree" Description="Иерархия с выбором, checkbox-ами, отключёнными ветками и навигацией с клавиатуры."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-tree--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        <ApiReference Title="@SmokeL["Состояния и модель"]" Rows="@ModelRows" />
+        <p>@SmokeL["ValueChanged reports the selected Id; CheckedValuesChanged and ExpandedValuesChanged report complete Id collections. ItemTemplate only replaces label content and does not define an item action."]</p>
+        <h2>@SmokeL["Behavior"]</h2>
+        <p>@SmokeL["Id уникален во всей иерархии. Модель не мутируется: выбранный узел, checked и expanded передаются отдельными коллекциями. Без callbacks параметры служат начальными значениями; их последующие изменения также применяются. С callbacks родитель владеет состоянием — используйте bind."]</p>
+        <p>@SmokeL["Клик по строке, Enter/Space выбирают её и, если AllowCheckBoxes=true, переключают checkbox. Стрелка раскрытия не выбирает и не отмечает строку. CheckStrictly=true отключает каскад; иначе переключение затрагивает доступных потомков и нормализует родителей. Disabled отключает всю ветку, включая потомков. Отключённые ветки не меняются при каскаде и исключены из расчёта доступных родителей — это намеренное отличие от React, где disabled проверяется отдельно для каждого узла."]</p>
+        <p>@SmokeL["Tab входит в дерево один раз и выходит дальше; ↑/↓ — соседний доступный видимый узел; → — раскрыть или перейти к ребёнку; ← — свернуть или перейти к родителю; Home/End — первый/последний. Буква/цифра ищет следующий узел с такой первой буквой. Фокус отделён от выбора. Сворачивание родителя с выбранным ребёнком разрешено, выбор сохраняется. Все-disabled/пустое дерево остаётся доступно для чтения, но не меняет состояние."]</p>
+        <p>@SmokeL["React Tree использует собственные render-функции и не задаёт полную клавиатурную модель; здесь ItemTemplate настраивает только неинтерактивную подпись, а клавиатура следует tree-поведению Radzen/WAI-ARIA. Внешнее принудительное hover-состояние React не переносится: hover принадлежит указателю, keyboard focus — отдельная видимая рамка. Дерево не виртуализировано, как и React Tree. Для больших данных загружайте иерархию в приложении."]</p>
+        <p>@SmokeL["В обёртке нет Radzen-типов. Она использует RadzenCheckBox и общую тему, но управляет строками самостоятельно: RadzenTreeItem не предоставляет disabled API, а перехват кликов через CSS не блокировал бы клавиатурный выбор."]</p>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>Radzen + Admiral theme</h2>
+            <p>@SmokeL["Прямой RadzenTree получает размеры, отступы и цвета через admiral-tree / admiral-tree--small. Checkable=false отключает checkbox, но не выбор или раскрытие узла: это не аналог Disabled."]</p>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <RadzenTree @bind-Value="radzenValue" @bind-CheckedValues="radzenChecked" AllowCheckBoxes="@themeChecks"
+                        AllowCheckChildren="true" AllowCheckParents="true" class="@(themeSmall ? "admiral-tree admiral-tree--small" : "admiral-tree")">
+                        <RadzenTreeItem Text="@SmokeL["Документы"]" Value="@("docs")" Expanded="true">
+                            <RadzenTreeItem Text="@SmokeL["Отчёты"]" Value="@("reports")" Expanded="true">
+                                <RadzenTreeItem Text="@SmokeL["Текущий месяц"]" Value="@("month")" />
+                            </RadzenTreeItem>
+                            <RadzenTreeItem Text="@SmokeL["Архив · Checkable=false"]" Value="@("archive")" Checkable="false" />
+                        </RadzenTreeItem>
+                    </RadzenTree>
+                    <output aria-live="polite">Value: @radzenValue · Checked: @string.Join(", ", radzenChecked)</output>
+                </div>
+                <div class="admiral-component-controls">
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="themeSmall" /> @SmokeL["Small"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="themeChecks" /> AllowCheckBoxes</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@ThemeCode" Title="@SmokeL["Razor · прямой Radzen"]" />
+            <ApiReference Title="@SmokeL["Прямой Radzen API"]" Rows="@ThemeRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <AdmiralTree Items="@(empty ? EmptyItems : Items)" @bind-Value="selected" @bind-CheckedValues="checkedIds"
+                        @bind-ExpandedValues="expandedIds" Size="@size" Disabled="@disabled" AllowCheckBoxes="@checks"
+                        CheckStrictly="@strict" AriaLabel="@SmokeL["Документы компании"]" ItemTemplate="@(template ? LabelTemplate : null)" />
+                    <output class="tree-demo-result" aria-live="polite">Value: @selected · Checked: @string.Join(", ", checkedIds) · Expanded: @string.Join(", ", expandedIds)</output>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Size"]</span><select @bind="size"><option value="Medium">M · 40px</option><option value="Small">S · 32px</option></select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="checks" /> AllowCheckBoxes</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="strict" /> CheckStrictly</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="template" /> ItemTemplate</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="empty" /> @SmokeL["Empty"]</label>
+                    <AdmiralButton Text="@SmokeL["Сбросить"]" Appearance="AdmiralButtonAppearance.Secondary" Click="Reset" />
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Local state · without bind"]</h2>
+            <p>@SmokeL["ExpandedValues задаёт начальное раскрытие; дальнейшие выбор и раскрытие хранятся внутри компонента. Изменение playground не сбрасывает это дерево."]</p>
+            <AdmiralTree Items="@Items" ExpandedValues="@InitialExpanded" AriaLabel="@SmokeL["Локальное состояние"]" />
+            <details class="component-doc-code"><summary>@SmokeL["Razor · локальное состояние"]</summary><pre><code>&lt;AdmiralTree Items="@@items" ExpandedValues="@@initialExpanded" AriaLabel="@SmokeL["Документы"]" /&gt;</code></pre></details>
+        </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private AdmiralTreeSize size;
+    private bool checks = true, strict, disabled, template, empty, themeSmall, themeChecks;
+    private string? selected;
+    private IReadOnlyCollection<string> checkedIds = [], expandedIds = ["docs", "reports", "locked"];
+    private object? radzenValue;
+    private IEnumerable<object> radzenChecked = [];
+    private static readonly IReadOnlyList<AdmiralTreeItem> EmptyItems = [];
+    private static readonly IReadOnlyCollection<string> InitialExpanded = ["docs", "reports"];
+    private static readonly IReadOnlyList<AdmiralTreeItem> Items =
+    [
+        new("docs", "Документы") { Icon = "admiral:documents/copy-outline", Children = [
+            new("reports", "Отчёты") { Children = [new("month", "Текущий месяц"), new("year", "Годовой отчёт")] },
+            new("archive", "Архив") { Disabled = true },
+            new("notes", "Примечания к документам с длинным названием для проверки переноса текста")
+        ] },
+        new("locked", "Закрытая ветка") { Disabled = true, Children = [new("locked-child", "Наследует Disabled")] },
+        new("settings", "Настройки") { Icon = "admiral:system/settings-outline" }
+    ];
+    private RenderFragment<AdmiralTreeItem> LabelTemplate => item => @<span>@item.Text <small>· @item.Id</small></span>;
+    private void Reset() { selected = null; checkedIds = []; expandedIds = ["docs", "reports", "locked"]; }
+    private const string AdmiralCode = """
+        <AdmiralTree Items="@items" @bind-Value="selected" @bind-CheckedValues="checkedIds"
+                     @bind-ExpandedValues="expandedIds" AllowCheckBoxes="true"
+                     Size="AdmiralTreeSize.Medium" AriaLabel="Документы" />
+        <span role="status">Selected: @selected · Checked: @string.Join(", ", checkedIds)</span>
+        @code {
+            IReadOnlyList<AdmiralTreeItem> items = [
+                new("docs", "Документы") { Children = [
+                    new("reports", "Отчёты"), new("archive", "Архив") { Disabled = true }] }];
+            string? selected;
+            IReadOnlyCollection<string> checkedIds = [], expandedIds = ["docs"];
+        }
+        """;
+    private const string ThemeCode = """
+        <RadzenTree class="admiral-tree admiral-tree--small" @bind-Value="selected"
+                    AllowCheckBoxes="true" AllowCheckChildren="true" AllowCheckParents="true"
+                    @bind-CheckedValues="checkedValues">
+            <RadzenTreeItem Text="Документы" Value="@("docs")" Expanded="true">
+                <RadzenTreeItem Text="Отчёты" Value="@("reports")" />
+                <RadzenTreeItem Text="Архив" Value="@("archive")" Checkable="false" />
+            </RadzenTreeItem>
+        </RadzenTree>
+        <span role="status">Selected: @selected · Checked: @string.Join(", ", checkedValues)</span>
+        @code {
+            private object? selected;
+            private IEnumerable<object> checkedValues = [];
+        }
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> ModelRows =
+    [
+        new("AdmiralTreeItem", "Id, Text / обязательные", "Уникальный Id и локализованная подпись; Icon=null, Disabled=false, Children=[]."),
+        new("Value / ValueChanged", "string? / null", "Выбор строки независимо от focus и checked."),
+        new("CheckedValues / CheckedValuesChanged", "IReadOnlyCollection<string> / []", "Полный набор checked Id, включая родителей. Начальный checked родитель сам по себе не отмечает детей."),
+        new("ExpandedValues / ExpandedValuesChanged", "IReadOnlyCollection<string> / []", "Раскрытые ветки; selected child не блокирует сворачивание родителя."),
+        new("Size / Disabled / AllowCheckBoxes / CheckStrictly", "Medium / false / true / false", "Размер, блокировка всего дерева, checkbox-ы и независимый выбор."),
+        new("ItemTemplate", "RenderFragment<AdmiralTreeItem>? / null", "Только неинтерактивная подпись; геометрия, aria и события остаются в обёртке."),
+        new("AriaLabel / ExpandAriaLabel / CollapseAriaLabel / EmptyText", "string", "Локализуемые подписи дерева, раскрытия, сворачивания и пустого состояния.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> ThemeRows =
+    [
+        new("admiral-tree / admiral-tree--small", "CSS classes", "Тематизированный RadzenTree, M/S и отступы по уровням."),
+        new("Value / CheckedValues", "Radzen API", "Управляемое выбранное значение и отметки checkbox-ов."),
+        new("AllowCheckBoxes / AllowCheckChildren / AllowCheckParents", "bool", "Режим checkbox-ов и каскад Radzen."),
+        new("Expanded / Checkable", "RadzenTreeItem", "Раскрытие и возможность отметить checkbox; полноценного Disabled нет.")
+    ];
+}

@@ -1,0 +1,81 @@
+@page "/components/skeleton"
+
+<PageTitle>Admiral Skeleton Primitives</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="PseudoText / PseudoIcon"
+        Description="The exported Admiral skeleton primitives used inside loading buttons and other controls."
+        SourceUrl="https://github.com/AdmiralDS/react-ui/tree/main/src/components/skeleton"
+        SourceLabel="Open the official Admiral source" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section"><h2>@T("Использование и ограничения", "Usage and limitations")</h2>
+            <p>@T("PseudoText и PseudoIcon — декоративные заглушки для состояния загрузки; они не сообщают о завершении и не вызывают событий. Сопоставляйте Dimension и Appearance с будущим контролом. Сообщайте состояние загрузки доступным текстом в родительском регионе.", "PseudoText and PseudoIcon are decorative loading placeholders; they neither report completion nor emit events. Match Dimension and Appearance to the future control. Expose loading state with accessible text in the parent region.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" /><ApiReference Title="AdmiralPseudoText / AdmiralPseudoIcon" Rows="@ApiRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section"><h2>RadzenSkeleton + Admiral theme</h2>
+            <p>@T("Прямой RadzenSkeleton управляет Width и Height, тема задаёт цвета и анимацию. Он не принимает Admiral Dimension и Appearance; сопоставьте геометрию вручную.", "Direct RadzenSkeleton controls Width and Height, and the theme supplies color and animation. It has no Admiral Dimension or Appearance; match geometry manually.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><RadzenSkeleton Width="12rem" Height="1.5rem" /><RadzenSkeleton Width="2rem" Height="2rem" /></div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
+        </section>
+    }
+    else
+    {
+    <section class="admiral-component-page__section"><h2>@T("Интерактивный пример", "Interactive playground")</h2>
+        <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><AdmiralPseudoIcon Dimension="@dimension" Appearance="@appearance" /><AdmiralPseudoText Dimension="@dimension" Appearance="@appearance" /></div><div class="admiral-component-controls"><label><span>@SmokeL["Dimension"]</span><select @bind="dimension">@foreach (var value in Enum.GetValues<AdmiralButtonDimension>()) { <option value="@value">@value</option> }</select></label><label><span>@SmokeL["Appearance"]</span><select @bind="appearance">@foreach (var value in Enum.GetValues<AdmiralButtonAppearance>()) { <option value="@value">@value</option> }</select></label></div></div>
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Dimensions"]</AdmiralText>
+        <div class="admiral-component-row">
+            <AdmiralPseudoIcon Dimension="AdmiralButtonDimension.M" />
+            <AdmiralPseudoText Dimension="AdmiralButtonDimension.M" />
+            <AdmiralPseudoIcon Dimension="AdmiralButtonDimension.S" />
+            <AdmiralPseudoText Dimension="AdmiralButtonDimension.S" />
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Button appearances"]</AdmiralText>
+        <div class="admiral-component-row">
+            @foreach (var appearance in Enum.GetValues<AdmiralButtonAppearance>())
+            {
+                <span class="admiral-component-labelled-control">
+                    <span class="admiral-component-row">
+                        <AdmiralPseudoIcon Appearance="@appearance" />
+                        <AdmiralPseudoText Appearance="@appearance" />
+                    </span>
+                    <span>@appearance</span>
+                </span>
+            }
+        </div>
+    </section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private AdmiralButtonDimension dimension = AdmiralButtonDimension.M;
+    private AdmiralButtonAppearance appearance;
+    private static readonly IReadOnlyList<ApiReference.Entry> ApiRows = [
+        new("Dimension", "AdmiralButtonDimension / M", "S, M, L or Xl geometry."),
+        new("Appearance", "AdmiralButtonAppearance / Primary", "Match the future control appearance."),
+        new("Class", "string? / null", "Additional CSS class.")];
+    private const string AdmiralCode = """
+        <div role="status" aria-label="Loading actions">
+            <AdmiralPseudoIcon Dimension="AdmiralButtonDimension.M" />
+            <AdmiralPseudoText Dimension="AdmiralButtonDimension.M" />
+        </div>
+        """;
+    private const string DirectCode = """
+        <div role="status" aria-label="Loading actions">
+            <RadzenSkeleton Width="2rem" Height="2rem" />
+            <RadzenSkeleton Width="12rem" Height="1.5rem" />
+        </div>
+        """;
+}

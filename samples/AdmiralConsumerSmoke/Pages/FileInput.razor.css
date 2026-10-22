@@ -1,0 +1,7 @@
+.file-input-gallery { container-type: inline-size; }
+.file-input-playground__sample { width: 100%; min-width: 0; }
+.file-input-playground__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.admiral-component-playground__preview { min-width: 0; }
+@container (max-width: 48rem) {
+    .admiral-component-playground { grid-template-columns: minmax(0, 1fr); }
+}

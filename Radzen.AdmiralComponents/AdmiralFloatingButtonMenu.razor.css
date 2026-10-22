@@ -1,0 +1,40 @@
+.admiral-floating-button-menu {
+    position: relative;
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 2.5rem;
+}
+
+.admiral-floating-button-menu--xl { width: 3.5rem; }
+.admiral-floating-button-menu--fixed { position: fixed; inset-inline-end: 1.75rem; inset-block-end: 1.75rem; }
+.admiral-floating-button-menu--mobile.admiral-floating-button-menu--fixed { inset-inline-end: 1rem; inset-block-end: 1rem; }
+.admiral-floating-button-menu__backdrop { position: fixed; z-index: 1099; inset: 0; padding: 0; border: 0; background: transparent; cursor: default; }
+.admiral-floating-button-menu__items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .75rem;
+    margin-block-end: -.5rem;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(1.25rem);
+    transition: margin-block-end 200ms cubic-bezier(.4, 0, 1, 1), opacity 200ms cubic-bezier(.4, 0, 1, 1), transform 200ms cubic-bezier(.4, 0, 1, 1), visibility 200ms;
+}
+
+.admiral-floating-button-menu--xl .admiral-floating-button-menu__items { gap: 1rem; }
+.admiral-floating-button-menu--open .admiral-floating-button-menu__items {
+    margin-block-end: .75rem;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition-timing-function: cubic-bezier(0, 0, .2, 1);
+}
+.admiral-floating-button-menu--open.admiral-floating-button-menu--xl .admiral-floating-button-menu__items { margin-block-end: 1rem; }
+
+@media (prefers-reduced-motion: reduce) {
+    .admiral-floating-button-menu__items { transition: none; }
+}

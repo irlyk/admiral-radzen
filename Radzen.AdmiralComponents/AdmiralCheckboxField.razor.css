@@ -1,0 +1,21 @@
+.admiral-checkbox-field {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: .5rem;
+    max-width: 100%;
+    color: var(--rz-text-color);
+    font-size: 1rem;
+    line-height: 1.25rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.admiral-checkbox-field--s { font-size: .875rem; line-height: 1rem; }
+.admiral-checkbox-field--disabled { color: var(--rz-text-disabled-color); cursor: not-allowed; }
+.admiral-checkbox-field--readonly { cursor: default; }
+.admiral-checkbox-field__text { display: flex; flex-direction: column; gap: .375rem; min-width: 0; margin-block: .125rem; }
+.admiral-checkbox-field__hint { color: var(--rz-text-secondary-color); font-size: .875rem; line-height: 1rem; }
+.admiral-checkbox-field--disabled .admiral-checkbox-field__hint { color: var(--rz-text-disabled-color); }
+.admiral-checkbox-field--error ::deep .rz-chkbox-box { border-color: var(--rz-danger); }
+.admiral-checkbox-field--s ::deep .rz-chkbox,
+.admiral-checkbox-field--s ::deep .rz-chkbox-box { width: 1rem; height: 1rem; min-width: 1rem; min-height: 1rem; }

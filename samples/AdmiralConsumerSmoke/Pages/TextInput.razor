@@ -1,0 +1,147 @@
+@page "/components/text-input"
+
+<PageTitle>Admiral TextInput</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="TextInput / TextField"
+        Description="Text input and labelled field with Admiral dimensions, semantic states, icons and built-in actions."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-input-textinput--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Theme)
+    {
+        <ThemeComponentPlayground Component="TextInput" />
+        <ComponentDocNotes Title="@SmokeL["Direct Radzen differences"]">
+            <p>@SmokeL["RadzenTextBox and RadzenFormField receive Admiral theme colors and geometry, but the theme does not add the AdmiralTextInput clear action, password visibility button, loading spinner, or external AdmiralTextField label and helper text. Wire those behaviors explicitly when using Radzen directly."]</p>
+        </ComponentDocNotes>
+    }
+    else if (tab == ComponentDocTabs.Api)
+    {
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · AdmiralTextField" />
+        <ApiReference Title="TextInput / TextField behavior" Rows="@UsageRows" />
+        <ComponentDocNotes Title="@SmokeL["Behavior and limits"]">
+            <p>@SmokeL["ValueChanged reports edits and the built-in clear action; the password visibility button only changes presentation. ReadOnly keeps text selectable but disables clear/password actions. Status=Error adds aria-invalid, while validation rules and messages remain the application's responsibility."]</p>
+        </ComponentDocNotes>
+    }
+    else
+    {
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Playground"]</AdmiralText>
+        <div class="admiral-component-playground">
+            <div class="admiral-component-playground__preview">
+                <AdmiralTextField Label="@SmokeL["Text input"]" Placeholder="@SmokeL["Enter value"]" Size="@playgroundSize" Status="@playgroundStatus"
+                                  IconStart="@(playgroundSearch ? "admiral:system/search-outline" : null)"
+                                  DisplayClearIcon="@playgroundClear" Password="@playgroundPassword" Loading="@playgroundLoading"
+                                  Disabled="@playgroundDisabled" ReadOnly="@playgroundReadOnly" Skeleton="@playgroundSkeleton"
+                                  Value="@playgroundValue" ValueChanged="@OnPlaygroundValueChanged" />
+                <span class="admiral-component-page__result" role="status">@SmokeL["Value"]: @playgroundValue · @SmokeL["Changes"]: @playgroundChanges</span>
+            </div>
+            <div class="admiral-component-controls">
+                <label><span>@SmokeL["Size"]</span><select @bind="playgroundSize">@foreach (var item in Enum.GetValues<AdmiralInputSize>()) { <option value="@item">@item</option> }</select></label>
+                <label><span>@SmokeL["Status"]</span><select @bind="playgroundStatus">@foreach (var item in Enum.GetValues<AdmiralInputStatus>()) { <option value="@item">@item</option> }</select></label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundSearch" /> @SmokeL["Search icon"]</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundClear" /> @SmokeL["Clear"]</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundPassword" /> @SmokeL["Password"]</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundLoading" /> Loading</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundDisabled" /> Disabled</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundReadOnly" /> @SmokeL["Read only"]</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundSkeleton" /> Skeleton</label>
+            </div>
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Dimensions"]</AdmiralText>
+        <div class="admiral-input-gallery__grid">
+            <AdmiralTextField Label="@SmokeL["Small"]" AdditionalLabel="S · 32 px" Placeholder="@SmokeL["Enter value"]"
+                              Size="AdmiralInputSize.Small" @bind-Value="smallValue" />
+            <AdmiralTextField Label="@SmokeL["Medium"]" AdditionalLabel="M · 40 px" Placeholder="@SmokeL["Enter value"]"
+                              @bind-Value="mediumValue" />
+            <AdmiralTextField Label="@SmokeL["Extra large"]" AdditionalLabel="XL · 56 px" Placeholder="@SmokeL["Enter value"]"
+                              Size="AdmiralInputSize.ExtraLarge" @bind-Value="extraLargeValue" />
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Content and actions"]</AdmiralText>
+        <div class="admiral-input-gallery__grid">
+            <AdmiralTextField Label="@SmokeL["Search"]" ExtraText="@SmokeL["Leading icon and clear action"]" Placeholder="@SmokeL["Search by name"]"
+                              IconStart="admiral:system/search-outline" DisplayClearIcon="true"
+                              @bind-Value="searchValue" />
+            <AdmiralTextField Label="@SmokeL["Account"]" ExtraText="@SmokeL["Trailing contextual icon"]" Placeholder="@SmokeL["Account number"]"
+                              IconEnd="admiral:finance/card-outline" @bind-Value="accountValue" />
+            <AdmiralTextField Label="@SmokeL["Password"]" ExtraText="@SmokeL["Show or hide the entered value"]" Password="true"
+                              DisplayClearIcon="true" @bind-Value="passwordValue" />
+            <AdmiralTextField Label="@SmokeL["Limited value"]" AdditionalLabel="@($"{limitedValue?.Length ?? 0}/20")"
+                              MaxLength="20" @bind-Value="limitedValue" />
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["States"]</AdmiralText>
+        <div class="admiral-input-gallery__grid">
+            <AdmiralTextField Label="@SmokeL["Required field"]" Required="true" Placeholder="@SmokeL["Required value"]"
+                              ExtraText="@SmokeL["Helper text is displayed below"]" @bind-Value="requiredValue" />
+            <AdmiralTextField Label="@SmokeL["Validation error"]" Status="AdmiralInputStatus.Error" Value="A"
+                              ExtraText="@SmokeL["Enter at least three characters"]" />
+            <AdmiralTextField Label="@SmokeL["Successful validation"]" Status="AdmiralInputStatus.Success" Value="Verified"
+                              ExtraText="@SmokeL["The value has been verified"]" />
+            <AdmiralTextField Label="Disabled" Value="Editing is unavailable" Disabled="true" />
+            <AdmiralTextField Label="@SmokeL["Read only"]" Value="ADM-1042" ReadOnly="true"
+                              ExtraText="@SmokeL["The value can be selected and copied"]" />
+            <AdmiralTextField Label="Loading" Value="Searching…" Loading="true" />
+            <AdmiralTextField Label="Skeleton" Skeleton="true" />
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Input without field"]</AdmiralText>
+        <AdmiralTextInput Placeholder="@SmokeL["Standalone TextInput"]" IconStart="admiral:system/edit-outline"
+                          DisplayClearIcon="true" @bind-Value="standaloneValue" />
+    </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private const string AdmiralCode = """
+        <AdmiralTextField Label="Search" Placeholder="Enter a name"
+                          IconStart="admiral:system/search-outline"
+                          DisplayClearIcon="true" Value="@search"
+                          ValueChanged="OnSearchChanged" />
+        <span role="status">Search: @search</span>
+        @code {
+            private string? search;
+            private void OnSearchChanged(string? value) => search = value;
+        }
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> UsageRows =
+    [
+        new("Value / ValueChanged", "string? / EventCallback<string?>", "Input edits and clear action report the new value; supports @bind-Value."),
+        new("Size / Status", "Medium / Default", "S, M, XL geometry and default, success, error appearance."),
+        new("DisplayClearIcon / Password", "false / false", "Optional clear and visibility actions; visibility does not change Value."),
+        new("Immediate / Trim / MaxLength", "true / false / null", "Input event timing, whitespace handling and maximum length."),
+        new("Disabled / ReadOnly / Loading / Skeleton", "false", "Interaction and loading states; consumers own validation rules.")
+    ];
+    private string? playgroundValue = "Admiral";
+    private int playgroundChanges;
+    private void OnPlaygroundValueChanged(string? next) { playgroundValue = next; playgroundChanges++; }
+    private AdmiralInputSize playgroundSize = AdmiralInputSize.Medium;
+    private AdmiralInputStatus playgroundStatus;
+    private bool playgroundSearch = true;
+    private bool playgroundClear = true;
+    private bool playgroundPassword;
+    private bool playgroundLoading;
+    private bool playgroundDisabled;
+    private bool playgroundReadOnly;
+    private bool playgroundSkeleton;
+    private string? smallValue;
+    private string? mediumValue = "Admiral";
+    private string? extraLargeValue;
+    private string? searchValue = "Payment";
+    private string? accountValue;
+    private string? passwordValue = "secret";
+    private string? limitedValue;
+    private string? requiredValue;
+    private string? standaloneValue;
+}

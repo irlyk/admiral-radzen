@@ -1,0 +1,96 @@
+@page "/components/scroll-container"
+
+<PageTitle>Admiral ScrollContainer</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="ScrollContainer"
+        Description="Container with native vertical and horizontal scrolling styled with Admiral geometry and theme colors."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-scrollcontainer--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section"><h2>@T("Использование и ограничения", "Usage and limitations")</h2>
+            <p>@T("ScrollContainer использует нативную прокрутку браузера. Height или MaxHeight нужны для вертикального переполнения; Width или MaxWidth — для горизонтального. Horizontal и Vertical по умолчанию true и управляют overflow-x/y. Компонент не посылает события прокрутки; если нужен scroll callback, добавьте обработчик в дочернее содержимое или собственный контейнер.", "ScrollContainer uses native browser scrolling. Height or MaxHeight is needed for vertical overflow; Width or MaxWidth for horizontal overflow. Horizontal and Vertical default to true and control overflow-x/y. The component emits no scroll callback; use a child handler or custom container if one is required.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" /><ApiReference Title="AdmiralScrollContainer" Rows="@ApiRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section"><h2>HTML overflow + Admiral theme</h2>
+            <p>@T("Прямой HTML div с классом admiral-scroll-container и overflow:auto использует стиль темы. Размер и оси прокрутки задайте CSS; тема не добавляет параметры Height/Horizontal как API.", "A direct HTML div with admiral-scroll-container and overflow:auto uses theme styling. Set dimensions and axes in CSS; the theme does not add Height/Horizontal parameters as an API.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><div class="admiral-scroll-container" style="height:8rem;overflow:auto"><div style="width:32rem">@foreach (var item in Enumerable.Range(1, 10)) { <p>Scrollable item @item</p> }</div></div></div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="HTML · direct theme" />
+        </section>
+    }
+    else
+    {
+    <section class="admiral-component-page__section"><h2>@T("Интерактивный пример", "Interactive playground")</h2>
+        <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><AdmiralScrollContainer Height="@($"{height}rem")" MaxWidth="32rem" Horizontal="@horizontal" Vertical="@vertical"><div style="width:32rem">@foreach (var item in Enumerable.Range(1, 12)) { <p>Scrollable item @item</p> }</div></AdmiralScrollContainer></div><div class="admiral-component-controls"><label><span>@SmokeL["Height, rem"]</span><input type="number" min="4" max="20" @bind="height" /></label><label class="admiral-component-controls__check"><input type="checkbox" @bind="horizontal" /> @SmokeL["Horizontal"]</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="vertical" /> Vertical</label></div></div>
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Vertical scrolling"]</AdmiralText>
+        <AdmiralScrollContainer Height="12rem" Horizontal="false" Class="admiral-scroll-demo">
+            <div class="admiral-scroll-demo__items">
+                @foreach (var item in Enumerable.Range(1, 10))
+                {
+                    <div class="admiral-scroll-demo__item">Scrollable item @item</div>
+                }
+            </div>
+        </AdmiralScrollContainer>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Horizontal scrolling"]</AdmiralText>
+        <AdmiralScrollContainer MaxWidth="32rem" Vertical="false" Class="admiral-scroll-demo">
+            <div class="admiral-scroll-demo__wide">
+                @foreach (var item in Enumerable.Range(1, 5))
+                {
+                    <div class="admiral-scroll-demo__item">Column @item</div>
+                }
+            </div>
+        </AdmiralScrollContainer>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Both axes"]</AdmiralText>
+        <AdmiralScrollContainer Height="12rem" MaxWidth="32rem" Class="admiral-scroll-demo">
+            <div class="admiral-scroll-demo__wide">
+                @foreach (var column in Enumerable.Range(1, 5))
+                {
+                    <div class="admiral-scroll-demo__items">
+                        @foreach (var row in Enumerable.Range(1, 6))
+                        {
+                            <div class="admiral-scroll-demo__item">@column / @row</div>
+                        }
+                    </div>
+                }
+            </div>
+        </AdmiralScrollContainer>
+    </section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private int height = 8;
+    private bool horizontal = true, vertical = true;
+    private static readonly IReadOnlyList<ApiReference.Entry> ApiRows = [
+        new("ChildContent", "RenderFragment? / null", "Scrollable content."),
+        new("Width / Height / MaxWidth / MaxHeight", "string? / null", "CSS dimensions for overflow viewport."),
+        new("Horizontal / Vertical", "bool / true", "Enable native overflow-x / overflow-y."),
+        new("Class / Style", "string? / null", "Additional CSS class and inline style.")];
+    private const string AdmiralCode = """
+        <AdmiralScrollContainer Height="8rem" MaxWidth="32rem" Horizontal="true" Vertical="true">
+            <div style="width:40rem">
+                @foreach (var item in Enumerable.Range(1, 12)) { <p>Scrollable item @item</p> }
+            </div>
+        </AdmiralScrollContainer>
+        """;
+    private const string DirectCode = """
+        <div class="admiral-scroll-container" style="height:8rem;max-width:32rem;overflow:auto">
+            <div style="width:40rem">Scrollable content</div>
+        </div>
+        """;
+}

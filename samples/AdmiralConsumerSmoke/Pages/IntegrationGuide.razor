@@ -1,0 +1,119 @@
+@page "/guide/integration"
+
+<PageTitle>AdmiralRadzen integration</PageTitle>
+
+<main class="admiral-component-page">
+    <header>
+        <h1>@T("Подключение AdmiralRadzen", "Integrating AdmiralRadzen")</h1>
+        <p>@T("Пакеты, тема, иконки и оболочка приложения. Это руководство относится к инфраструктуре пакета, а не к компоненту React Storybook.", "Packages, theme, icons and application shell. This guide covers package infrastructure rather than a React Storybook component.")</p>
+    </header>
+
+    <section class="admiral-component-page__section">
+        <h2>@T("Пакеты и сервисы", "Packages and services")</h2>
+        <p>@T("Добавьте Radzen.Blazor, Radzen.Admiral.Icons, Radzen.Admiral.Themes и Radzen.Admiral.Components через PackageReference. Примеры Program.cs и host page ниже рассчитаны на серверный Blazor с AddServerSideBlazor и _Host.cshtml, как в smoke. В другом шаблоне приложения используйте его модель регистрации и размещения ресурсов. Начальную тему и сохранение настройки определяет приложение.", "Add Radzen.Blazor, Radzen.Admiral.Icons, Radzen.Admiral.Themes and Radzen.Admiral.Components through PackageReference. The Program.cs and host-page examples below target server-side Blazor with AddServerSideBlazor and _Host.cshtml, as used by the smoke app. For another app template, use its service registration and asset host. The app chooses the initial theme and persists user preference.")</p>
+        <CopyableRazorExample Code="@ServicesCode" Title="Program.cs" />
+        <p>@T("Параметры cookies и локализации зависят от приложения. Пример сохранения темы при смене языка реализован в smoke Program.cs.", "Cookie and localization settings belong to the host. The smoke Program.cs demonstrates preserving the theme during language changes.")</p>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <h2>@T("CSS и иконки", "CSS and icons")</h2>
+        <p>@T("Для фиксированной темы подключите CSS напрямую. Для переключения используйте AdmiralTheme или RadzenTheme с CssPath пакета и именами admiral / admiral-dark. При предварительной отрисовке прочитайте сохранённую тему из cookie, а переключение выполняйте через ThemeService. Иконки загружаются лениво через адаптер; host подключает CSS и JS один раз.", "For a fixed theme, link the packaged CSS directly. For runtime switching use AdmiralTheme or RadzenTheme with the package CssPath and theme names admiral / admiral-dark. Read the saved theme cookie during prerendering and switch through ThemeService. The icon adapter lazy-loads assets; the host includes its CSS and JS once.")</p>
+        <CopyableRazorExample Code="@AssetsCode" Title="Host page · HTML" />
+        <CopyableRazorExample Code="@ThemeCode" Title="App.razor · Razor" />
+        <CopyableRazorExample Code="@SwitchCode" Title="MainLayout.razor · theme control" />
+        <ApiReference Title="AdmiralTheme" Rows="@ThemeRows" />
+        <p>@T("Предварительно загружайте только часто используемые иконки. Подробный каталог доступен на странице иконок.", "Preload only frequently used icons. The icon catalog is available on the icons page.") <a href="/icons">@T("Иконки", "Icons")</a></p>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <h2>@T("Оболочка и прямой Radzen", "Shell and direct Radzen")</h2>
+        <p>@T("AdmiralLayout принимает области Header, SideMenu и Content. AdmiralLayoutHeader и AdmiralSideMenu обеспечивают навигационную оболочку. Их интерактивный пример сохранён на маршруте регрессии.", "AdmiralLayout accepts Header, SideMenu and Content regions. AdmiralLayoutHeader and AdmiralSideMenu provide the navigation shell. Their interactive example remains on the regression route.")</p>
+        <CopyableRazorExample Code="@LayoutCode" Title="MainLayout.razor · Razor" />
+        <ApiReference Title="AdmiralLayout / AdmiralLayoutHeader / AdmiralSideMenu" Rows="@LayoutRows" />
+        <p>@T("Прямые компоненты Radzen можно использовать с той же темой и иконками. Их API и поведение остаются Radzen; CSS не добавляет возможности обёрток Admiral.", "Direct Radzen components use the same theme and icons. Their API and behavior remain Radzen's; CSS does not add Admiral wrapper features.")</p>
+        <CopyableRazorExample Code="@RadzenCode" Title="Razor · direct Radzen" />
+        <p><a href="/regression/layout">@T("Открыть пример layout", "Open the layout example")</a></p>
+    </section>
+</main>
+
+@code {
+    private static bool IsRussian => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru";
+    private static string T(string ru, string en) => IsRussian ? ru : en;
+    private const string ServicesCode = """
+        using Radzen.Admiral.Components;
+
+        builder.Services.AddRazorPages();
+        builder.Services.AddServerSideBlazor();
+        builder.Services.AddHttpContextAccessor();
+        builder.Services.AddAdmiralComponents(options =>
+            options.ThemeCookieName = "RadzenAdmiralTheme");
+        """;
+    private const string AssetsCode = """
+        <!-- Fixed-theme host: choose one stylesheet. -->
+        <link href="_content/Radzen.Admiral.Themes/css/admiral-dark-base.css" rel="stylesheet" />
+        <link href="_content/Radzen.Admiral.Icons/admiral-radzen-icons.css" rel="stylesheet" />
+        <script src="_content/Radzen.Admiral.Icons/admiral-radzen-icons.js"></script>
+        <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+        """;
+    private const string ThemeCode = """
+        @using Microsoft.AspNetCore.Http
+        @using Radzen.Admiral.Components
+        @using Radzen.Admiral.Components.Models
+        @inject IHttpContextAccessor HttpContextAccessor
+
+        @* Use this instead of a fixed theme CSS link when switching themes. *@
+        <AdmiralTheme Mode="@InitialThemeMode" />
+        @code {
+            private AdmiralThemeMode InitialThemeMode =>
+                HttpContextAccessor.HttpContext?.Request.Cookies["RadzenAdmiralTheme"] == "admiral"
+                    ? AdmiralThemeMode.Light : AdmiralThemeMode.Dark;
+        }
+        @* Equivalent direct RadzenTheme configuration:
+           <RadzenTheme Theme="admiral-dark"
+                        CssPath="_content/Radzen.Admiral.Themes/css" /> *@
+        """;
+    private const string SwitchCode = """
+        @using Radzen
+        @using Radzen.Blazor
+        @inject ThemeService ThemeService
+
+        <RadzenToggleButton Value="@(ThemeService.Theme == "admiral")"
+                            Change="ChangeTheme" AriaLabel="Switch color theme" />
+        @code {
+            private void ChangeTheme(bool light) =>
+                ThemeService.SetTheme(light ? "admiral" : "admiral-dark");
+        }
+        """;
+    private const string LayoutCode = """
+        @using Microsoft.AspNetCore.Components
+        @using Radzen.Admiral.Components
+        @inherits LayoutComponentBase
+
+        <AdmiralServices />
+        <AdmiralLayout>
+            <Header><AdmiralLayoutHeader><Brand>My app</Brand></AdmiralLayoutHeader></Header>
+            <SideMenu><AdmiralSideMenu><AdmiralSideMenuItem Text="Home" Href="/" /></AdmiralSideMenu></SideMenu>
+            <Content>@Body</Content>
+        </AdmiralLayout>
+        """;
+    private const string RadzenCode = """
+        @using Radzen.Blazor
+        <RadzenButton Text="Search" Icon="admiral:system/search-outline" />
+        <RadzenTextBox Placeholder="Search" />
+        """;
+    private IReadOnlyList<ApiReference.Entry> ThemeRows =>
+    [
+        new("Mode", "AdmiralThemeMode; Light", T("Light выбирает admiral, Dark — admiral-dark через CSS пакета.", "Light renders admiral; Dark renders admiral-dark through packaged CSS.")),
+        new("Wcag", "bool; false", T("Передаёт настройку WCAG внутреннему RadzenTheme.", "Forwards RadzenTheme's WCAG mode setting.")),
+        new("Events", "—", T("AdmiralTheme отображает тему. Переключением управляет ThemeService приложения.", "AdmiralTheme is presentational. Theme changes are managed by the host ThemeService."))
+    ];
+    private IReadOnlyList<ApiReference.Entry> LayoutRows =>
+    [
+        new("Header / SideMenu / Content", "RenderFragment?; null", T("Области AdmiralLayout.", "Regions rendered by AdmiralLayout.")),
+        new("SideMenuWidth / SideMenuState", "AdmiralSideMenuWidth; Small / AdmiralSideMenuState; Expanded", T("Ширина и текущее состояние меню на большом экране.", "Desktop menu geometry and current state.")),
+        new("SideMenuStateChanged / MenuOpenChanged", "EventCallback<AdmiralSideMenuState> / EventCallback<bool>", T("События состояния меню и мобильной панели.", "Navigation callbacks for desktop and overlay state.")),
+        new("Brand / Actions", "RenderFragment?; null", T("Области бренда и действий AdmiralLayoutHeader.", "AdmiralLayoutHeader slots for branding and header actions.")),
+        new("AriaLabel / CloseAriaLabel", "string; Main navigation / Close navigation", T("Доступные имена AdmiralSideMenu.", "AdmiralSideMenu accessible names.")),
+        new("Text / Href / ChildContent", "string? / string? / RenderFragment?", T("Подпись, путь и дочерние пункты AdmiralSideMenuItem.", "AdmiralSideMenuItem label, route and nested items."))
+    ];
+}

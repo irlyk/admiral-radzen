@@ -1,0 +1,17 @@
+<span class="@CssClass" role="status" aria-label="@AriaLabel" @attributes="AdditionalAttributes"></span>
+
+@code {
+    [Parameter] public AdmiralBadgeDotAppearance Appearance { get; set; }
+    [Parameter] public AdmiralBadgeDotDimension Dimension { get; set; } = AdmiralBadgeDotDimension.M;
+    [Parameter] public string? AriaLabel { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-badge-dot",
+        Dimension == AdmiralBadgeDotDimension.M ? null : $"admiral-badge-dot--{Dimension.ToString().ToLowerInvariant()}",
+        Appearance == AdmiralBadgeDotAppearance.Neutral ? null : $"admiral-badge-dot--{Appearance.ToString().ToLowerInvariant()}",
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

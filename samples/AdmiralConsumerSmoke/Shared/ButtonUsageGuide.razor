@@ -1,0 +1,55 @@
+<section class="admiral-component-page__section">
+    <h2>@SmokeL["Использование Button"]</h2>
+    <p>@SmokeL["Подключите CSS темы и адаптер иконок в host-странице приложения. Для AdmiralButton дополнительно нужен пакет Radzen.Admiral.Components и пространство имён Radzen.Admiral.Components.Models."]</p>
+    <CopyableRazorExample Code="@Setup" Title="@SmokeL["Theme and icon assets"]" />
+    <CopyableRazorExample Code="@Example" Title="Razor · Admiral API" />
+    <ApiReference Title="@SmokeL["AdmiralButton — параметры, шаблоны и событие"]" Rows="@Rows" />
+    <p>@SmokeL["Disabled, Loading и Skeleton нативно отключают кнопку: Click, Submit и Reset не выполняются. DisplayAsDisabled меняет только вид: событие продолжает работать. В AdmiralButtonGroup размер и appearance берутся из группы. White предназначен для тёмного фона."]</p>
+    <p>@SmokeL["Style и aria-* передаются как дополнительные атрибуты. Для CSS-классов используйте Class. Для кнопки без текста обязательно задайте aria-label."]</p>
+</section>
+@code {
+    private const string Setup = """
+        <link href="_content/Radzen.Admiral.Themes/css/admiral-base.css" rel="stylesheet" />
+        <link href="_content/Radzen.Admiral.Icons/admiral-radzen-icons.css" rel="stylesheet" />
+        <script src="_content/Radzen.Admiral.Icons/admiral-radzen-icons.js"></script>
+        """;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private string Example => $$"""
+        @using Radzen.Admiral.Components
+        @using Radzen.Admiral.Components.Models
+
+        <AdmiralButton Text="{{T("Сохранить", "Save")}}" Dimension="AdmiralButtonDimension.M"
+                       IconStart="admiral:system/check-outline"
+                       Loading="saving" Click="SaveAsync" />
+        <p role="status">@message</p>
+
+        @code {
+            private bool saving;
+            private string message = "";
+            private async Task SaveAsync()
+            {
+                saving = true;
+                try { await Task.Delay(800); message = "{{T("Сохранено", "Saved")}}"; }
+                finally { saving = false; }
+            }
+        }
+        """;
+    private static readonly ApiReference.Entry[] Rows = [
+        new("Text", "string? / null", "Текст кнопки."),
+        new("ChildContent", "RenderFragment? / null", "Содержимое вместо Text."),
+        new("Appearance", "AdmiralButtonAppearance / Primary", "Primary, Secondary, Tertiary, Ghost, White, Danger, Success."),
+        new("Dimension", "AdmiralButtonDimension / Xl", "S = 32, M = 40, L = 48, Xl = 56 px."),
+        new("Type", "AdmiralButtonType / Button", "HTML-поведение: Button, Submit или Reset."),
+        new("IconStart / IconEnd", "string? / null", "Иконка перед / после текста, например admiral:system/star-solid."),
+        new("IconStartContent / IconEndContent", "RenderFragment? / null", "Произвольное содержимое иконки; имеет приоритет над её строковым именем."),
+        new("Disabled", "bool / false", "Нативно отключает кнопку; блокирует Click, Submit и Reset."),
+        new("DisplayAsDisabled", "bool / false", "Только визуальное отключение, Click остаётся активен."),
+        new("DisplayAsSquare", "bool / false", "Квадратная кнопка без видимого текста и badge. Text задаёт доступное имя; если Text пуст, задайте aria-label."),
+        new("Loading", "bool / false", "Спиннер вместо содержимого с сохранением геометрии; кнопка нативно отключена, Click, Submit и Reset блокируются."),
+        new("Skeleton", "bool / false", "Состояние skeleton; кнопка нативно отключена, Click, Submit и Reset блокируются."),
+        new("BadgeCount", "int? / null", "Число для Primary, Secondary, Tertiary, Ghost. Не выводится у квадратной кнопки."),
+        new("Click", "EventCallback<MouseEventArgs>", "Событие клика; поддерживает синхронный и async обработчик."),
+        new("Class", "string? / null", "Дополнительный CSS-класс."),
+        new("AdditionalAttributes", "IReadOnlyDictionary<string, object>?", "Нераспознанные атрибуты передаются внутренней кнопке: style, id, aria-label, data-*.")
+    ];
+}

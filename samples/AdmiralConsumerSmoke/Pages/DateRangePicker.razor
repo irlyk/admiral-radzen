@@ -1,0 +1,104 @@
+@page "/components/date-range-picker"
+
+<PageTitle>Admiral DateRangePicker</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="DateRangePicker"
+        Description="@Description"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-input-dateinput--docs"
+        SourceLabel="@SourceLabel" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenDatePicker + Admiral theme</h2>
+            <p>@T("RadzenDatePicker поддерживает выбор нескольких дат, но не добавляет разбор начала и конца периода или проверку диапазона. Эти правила приложение реализует само.", "RadzenDatePicker supports multiple date selection, but does not add AdmiralDateRangePicker's start/end parsing or range validation. The application must implement those rules itself.")</p>
+            <p>@T("Подключите CSS темы admiral-base.css или admiral-dark-base.css. RadzenDatePicker использует классы rz-datepicker, а обёртка периода — admiral-date-range-picker.", "Load the packaged admiral-base.css or admiral-dark-base.css theme; RadzenDatePicker uses its native rz-datepicker classes. The Admiral range wrapper has its own admiral-date-range-picker class.")</p>
+            <div class="admiral-component-playground" data-testid="date-range-radzen-demo">
+                <div class="admiral-component-playground__preview">
+                    <RadzenDatePicker TValue="IEnumerable<DateTime>" Multiple="true" @bind-Value="directDates" DateFormat="dd.MM.yyyy" />
+                    <span class="admiral-component-page__result" role="status">@T("Выбрано дат", "Selected dates"): @directDates.Count()</span>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · Radzen API" />
+            <ApiReference Title="RadzenDatePicker" Rows="@DirectRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Usage"]</h2>
+            <p>@T("Период задаётся Start и End. Некорректно введённые даты сохраняют последний допустимый период и помечают поле как ошибочное; отдельного события валидации нет.", "The selected period is represented by Start and End. Invalid typed dates keep the last valid period and mark the input invalid; no validation event is exposed.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralDateRangePicker" Rows="@AdmiralRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground" data-testid="date-range-admiral-demo">
+                <div class="admiral-component-playground__preview">
+                    <AdmiralDateRangePicker Start="@start" StartChanged="OnStartChanged" End="@end" EndChanged="OnEndChanged"
+                                            AllowInput="@allowInput" Disabled="@disabled" ShowButtonBar="@showButtonBar"
+                                            AriaLabel="@T("Диапазон дат", "Date range")" />
+                    <span class="admiral-component-page__result" role="status">
+                        @T("Начало", "Start"): @(start?.ToString("dd.MM.yyyy") ?? "—") · @T("Конец", "End"): @(end?.ToString("dd.MM.yyyy") ?? "—") · @SmokeL["Changes"]: @changes
+                    </span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="allowInput" /> @T("Разрешить ввод", "Allow input")</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="showButtonBar" /> @T("Панель действий", "Button bar")</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> @SmokeL["Disabled"]</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private string T(string ru, string en) => IsRussian ? ru : en;
+    private bool IsRussian => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru";
+    private string Description => IsRussian ? "Выбор начала и конца периода через календарь или ввод дат." : "Choose the start and end of a period with a calendar or typed dates.";
+    private string SourceLabel => IsRussian ? "Admiral DateInput · близкий пример" : "Admiral DateInput · related reference";
+    private DateTime? start = new(2026, 10, 1), end = new(2026, 10, 7);
+    private IEnumerable<DateTime> directDates = [];
+    private bool allowInput = true, showButtonBar = true, disabled;
+    private int changes;
+    private void OnStartChanged(DateTime? value) { start = value; changes++; }
+    private void OnEndChanged(DateTime? value) { end = value; changes++; }
+
+    private const string AdmiralCode = """
+        <AdmiralDateRangePicker Start="start" StartChanged="OnStartChanged"
+                                End="end" EndChanged="OnEndChanged"
+                                DateFormat="dd.MM.yyyy" AllowInput="true" />
+        <span role="status">Range: @start?.ToString("dd.MM.yyyy") — @end?.ToString("dd.MM.yyyy")</span>
+        @code {
+            private DateTime? start;
+            private DateTime? end;
+            private void OnStartChanged(DateTime? value) => start = value;
+            private void OnEndChanged(DateTime? value) => end = value;
+        }
+        """;
+    private const string DirectCode = """
+        <RadzenDatePicker TValue="IEnumerable<DateTime>" Multiple="true"
+                          @bind-Value="selectedDates" DateFormat="dd.MM.yyyy" />
+        <span role="status">Selected dates: @selectedDates.Count()</span>
+        @code { private IEnumerable<DateTime> selectedDates = []; }
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> AdmiralRows =
+    [
+        new("Start / StartChanged; End / EndChanged", "DateTime? / EventCallback<DateTime?>; null", "Start and end of the selected range; callbacks fire when a valid range changes."),
+        new("Min / Max", "DateTime?; null", "Bounds used for calendar and typed value validation."),
+        new("DateFormat / Separator", "string; dd.MM.yyyy / —", "Exact format and separator used to display and parse typed dates."),
+        new("AllowInput / Disabled / ShowButtonBar", "bool; true / false / true", "Enable typing, disable interaction and show calendar actions."),
+        new("AriaLabel / ToggleAriaLabel / PopupAriaLabel", "string", "Accessible names for input, calendar toggle and popup.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> DirectRows =
+    [
+        new("Value / ValueChanged", "IEnumerable<DateTime> / EventCallback", "Selected dates; the application interprets them as a range if needed."),
+        new("Multiple / DateFormat", "bool / string", "Enable multiple dates and specify display format.")
+    ];
+}

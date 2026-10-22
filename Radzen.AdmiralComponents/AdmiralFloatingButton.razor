@@ -1,0 +1,56 @@
+<button @ref="element" type="button"
+        class="@CssClass"
+        style="@Style"
+        disabled="@Disabled"
+        aria-label="@AriaLabel"
+        @onclick="Click"
+        @attributes="AdditionalAttributes">
+    <span class="admiral-floating-button__content">
+        <RadzenIcon Icon="@Icon" aria-hidden="true" />
+    </span>
+    @if (!Disabled && BadgeDot)
+    {
+        <span class="@BadgeCssClass" aria-hidden="true"></span>
+    }
+    else if (!Disabled && BadgeCount.HasValue)
+    {
+        <span class="@BadgeCssClass" aria-hidden="true">@BadgeCount</span>
+    }
+</button>
+
+@code {
+    private ElementReference element;
+    internal ValueTask FocusAsync() => element.FocusAsync(preventScroll: true);
+
+    [Parameter, EditorRequired] public string Icon { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string AriaLabel { get; set; } = string.Empty;
+    [Parameter] public AdmiralFloatingButtonSize Size { get; set; } = AdmiralFloatingButtonSize.Medium;
+    [Parameter] public AdmiralFloatingButtonAppearance Appearance { get; set; }
+    [Parameter] public int? BadgeCount { get; set; }
+    [Parameter] public bool BadgeDot { get; set; }
+    [Parameter] public AdmiralFloatingButtonBadgeAppearance BadgeAppearance { get; set; }
+    [Parameter] public bool Fixed { get; set; } = true;
+    [Parameter] public bool Mobile { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> Click { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-floating-button",
+        Size == AdmiralFloatingButtonSize.Xl ? "admiral-floating-button--xl" : "admiral-floating-button--m",
+        Appearance == AdmiralFloatingButtonAppearance.Secondary ? "admiral-floating-button--secondary" : "admiral-floating-button--primary",
+        Fixed ? "admiral-floating-button--fixed" : "admiral-floating-button--inline",
+        Mobile ? "admiral-floating-button--mobile" : null,
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+
+    private string BadgeCssClass => string.Join(' ', new[]
+    {
+        "admiral-floating-button__badge",
+        BadgeDot ? "admiral-floating-button__badge--dot" : null,
+        $"admiral-floating-button__badge--{BadgeAppearance.ToString().ToLowerInvariant()}"
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

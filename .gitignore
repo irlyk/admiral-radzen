@@ -1,0 +1,26 @@
+bin/
+obj/
+artifacts/
+node_modules/
+experiments/
+
+Radzen.AdmiralIcons/wwwroot/admiral-icons/
+samples/AdmiralDocs/wwwroot/css/site.css
+
+.DS_Store
+*.user
+*.suo
+*.userosscache
+
+# Local credentials, logs, and browser artifacts
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+*.key
+*.pem
+*.log
+playwright-report/
+test-results/
+coverage/

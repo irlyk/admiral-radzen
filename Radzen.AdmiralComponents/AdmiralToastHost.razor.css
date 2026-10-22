@@ -1,0 +1,14 @@
+.admiral-toast-host { position: fixed; z-index: 2000; display: flex; flex-direction: column; width: min(var(--admiral-toast-width), calc(100vw - 32px)); max-height: calc(100vh - 32px); gap: 16px; pointer-events: none; }
+.admiral-toast-host--topright { top: 16px; right: 16px; }
+.admiral-toast-host--bottomright { bottom: 16px; right: 16px; }
+.admiral-toast-host--bottomleft { bottom: 16px; left: 16px; }
+.admiral-toast-host__entry { position: relative; flex: none; overflow: hidden; border-radius: var(--rz-border-radius-2); pointer-events: auto; animation: admiral-toast-enter .35s ease-out both; }
+.admiral-toast-host--bottomleft .admiral-toast-host__entry { animation-name: admiral-toast-enter-left; }
+.admiral-toast-host__progress { position: absolute; inset: auto auto 0 0; width: 100%; height: 4px; background: var(--rz-primary); animation-name: admiral-toast-progress; animation-timing-function: linear; animation-fill-mode: forwards; }
+.admiral-toast-host__progress--success { background: var(--rz-success); }
+.admiral-toast-host__progress--warning { background: var(--rz-warning); }
+.admiral-toast-host__progress--error { background: var(--rz-danger); }
+@keyframes admiral-toast-progress { to { width: 0; } }
+@keyframes admiral-toast-enter { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes admiral-toast-enter-left { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .admiral-toast-host__entry { animation: none; } }

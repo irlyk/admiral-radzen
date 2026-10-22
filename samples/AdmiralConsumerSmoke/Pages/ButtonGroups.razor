@@ -1,0 +1,81 @@
+@page "/components/button-groups"
+<PageTitle>Admiral Button Groups</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="ButtonGroup / IconButtonGroup" Description="Joined button groups with group-level appearance and dimension settings."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-buttongroup--docs" />
+    <p><a href="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-iconbuttongroup--docs" target="_blank" rel="noreferrer">@T("Официальный пример IconButtonGroup", "Official IconButtonGroup story")</a></p>
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@T("Использование и ограничения", "Usage and limitations")</h2>
+            <p>@T("Группы задают общую геометрию и aria-label, а действия и события остаются у дочерних AdmiralButton или AdmiralIconButton. Указывайте отдельный AriaLabel каждой кнопке с одной иконкой. Disabled и Loading задаются дочернему действию, не группе.", "Groups set shared geometry and an aria-label; actions and events remain on child AdmiralButton or AdmiralIconButton controls. Give every icon-only child its own AriaLabel. Disabled and Loading are child states, not group states.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralButtonGroup" Rows="@GroupRows" /><ApiReference Title="AdmiralIconButtonGroup" Rows="@IconGroupRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenStack + RadzenButton</h2>
+            <p>@T("Прямой RadzenStack с Gap=0 ставит кнопки рядом и получает стили темы, но не реализует автоматически единый контур, общую размерность и семантику AdmiralButtonGroup. Если они необходимы, добавьте соответствующую разметку и CSS приложения.", "A direct RadzenStack with Gap=0 places themed buttons together, but it does not automatically provide the joined border, shared dimensions or AdmiralButtonGroup semantics. Add application markup and CSS if those are required.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <RadzenStack Orientation="Orientation.Horizontal" Gap="0" role="group" aria-label="Document actions"><RadzenButton Text="Create" Size="ButtonSize.Small" Click="@(_ => directResult = "Create")" /><RadzenButton Text="Copy" Size="ButtonSize.Small" Click="@(_ => directResult = "Copy")" /></RadzenStack>
+                <output aria-live="polite">@T("Последнее действие Radzen", "Last Radzen action"): @directResult</output>
+            </div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@T("Интерактивный пример", "Interactive playground")</h2>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <AdmiralButtonGroup Appearance="@appearance" Dimension="@dimension" AriaLabel="Document actions"><AdmiralButton Text="Create" Click="@(_ => result = "Create")" /><AdmiralButton Text="Copy" Click="@(_ => result = "Copy")" /><AdmiralButton Text="Archive" Disabled="@disabled" Click="@(_ => result = "Archive")" /></AdmiralButtonGroup>
+                <AdmiralIconButtonGroup Dimension="@dimension" AriaLabel="Icon actions"><AdmiralIconButton Icon="admiral:system/print-outline" AriaLabel="Print" Click="@(_ => result = "Print")" /><AdmiralIconButton Icon="admiral:system/edit-outline" AriaLabel="Edit" Click="@(_ => result = "Edit")" /></AdmiralIconButtonGroup>
+                <output aria-live="polite">@T("Последнее действие", "Last action"): @result</output>
+            </div><div class="admiral-component-controls">
+                <label><span>@SmokeL["Dimension"]</span><select @bind="dimension">@foreach (var value in Enum.GetValues<AdmiralButtonDimension>()) { <option value="@value">@value</option> }</select></label>
+                <label><span>@SmokeL["Appearance"]</span><select @bind="appearance">@foreach (var value in Enum.GetValues<AdmiralButtonGroupAppearance>()) { <option value="@value">@value</option> }</select></label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> @T("Архив недоступен", "Disable Archive")</label>
+            </div></div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+        <section class="admiral-component-page__section"><h2>@T("Размеры и состояния", "Dimensions and states")</h2><div class="admiral-button-group-gallery">
+            @foreach (var value in Enum.GetValues<AdmiralButtonDimension>()) { <AdmiralButtonGroup Dimension="@value" AriaLabel="Example actions"><AdmiralButton Text="Create" Click="@(_ => result = "Create")" /><AdmiralButton Text="Loading" Loading="true" /><AdmiralButton Text="Disabled" Disabled="true" /></AdmiralButtonGroup> }
+        </div></section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private AdmiralButtonDimension dimension = AdmiralButtonDimension.M;
+    private AdmiralButtonGroupAppearance appearance;
+    private bool disabled = true;
+    private string result = "—", directResult = "—";
+    private static readonly IReadOnlyList<ApiReference.Entry> GroupRows = [
+        new("ChildContent", "RenderFragment? / null", "AdmiralButton children."),
+        new("Appearance", "AdmiralButtonGroupAppearance / Primary", "Shared group appearance."),
+        new("Dimension", "AdmiralButtonDimension / Xl", "Shared S, M, L or Xl size."),
+        new("AriaLabel", "string? / null", "Accessible name for the group.")];
+    private static readonly IReadOnlyList<ApiReference.Entry> IconGroupRows = [
+        new("ChildContent", "RenderFragment? / null", "AdmiralIconButton children, each with AriaLabel."),
+        new("Dimension", "AdmiralButtonDimension / Xl", "Shared S, M, L or Xl size."),
+        new("AriaLabel", "string? / null", "Accessible name for the group.")];
+    private const string AdmiralCode = """
+        <AdmiralButtonGroup Dimension="AdmiralButtonDimension.M" AriaLabel="Document actions">
+            <AdmiralButton Text="Create" Click="@(_ => result = "Create")" />
+            <AdmiralButton Text="Copy" Click="@(_ => result = "Copy")" />
+        </AdmiralButtonGroup>
+        <output aria-live="polite">Last action: @result</output>
+        @code { private string result = "—"; }
+        """;
+    private const string DirectCode = """
+        <RadzenStack Orientation="Orientation.Horizontal" Gap="0" role="group" aria-label="Document actions">
+            <RadzenButton Text="Create" Size="ButtonSize.Small" Click="@(_ => result = "Create")" />
+            <RadzenButton Text="Copy" Size="ButtonSize.Small" Click="@(_ => result = "Copy")" />
+        </RadzenStack>
+        <output aria-live="polite">Last action: @result</output>
+        @code { private string result = "—"; }
+        """;
+}

@@ -1,0 +1,24 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_84" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="27.500000" height="19.500000" x="0.250000" y="4.250000" rx="2.750000" stroke="rgb(245,245,245)" stroke-width="0.500000" />
+		</g>
+	</mask>
+	<rect id="Oman" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="27.500000" height="19.500000" x="0.250000" y="4.250000" rx="2.750000" stroke="rgb(214,216,221)" stroke-width="0.500000" />
+	<g mask="url(#mask_84)">
+		<path id="Rectangle 2" d="M0 24L28 24L28 17.3333L0 17.3333L0 24Z" fill="rgb(19,142,22)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 24L28 17.3333L0 17.3333L0 24L28 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M0 24L9.33333 24L9.33333 17.3333L28 17.3333L28 10.6667L9.33333 10.6667L9.33333 4L0 4L0 24Z" fill="rgb(237,43,53)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M9.33333 24L9.33333 17.3333L28 17.3333L28 10.6667L9.33333 10.6667L9.33333 4L0 4L0 24L9.33333 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Star 32" d="M4.66667 8.71174L3.50964 10.4026L4.11019 8.44375L2.06686 8.59337L3.97275 7.8416L2.58178 6.33734L4.35785 7.35871L4.66667 5.33331L4.97549 7.35871L6.75155 6.33734L5.36058 7.8416L7.26647 8.59337L5.22314 8.44375L5.82369 10.4026L4.66667 8.71174Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Star 32" d="M3.50964 10.4026L4.11019 8.44375L2.06686 8.59337L3.97275 7.8416L2.58178 6.33734L4.35785 7.35871L4.66667 5.33331L4.97549 7.35871L6.75155 6.33734L5.36058 7.8416L7.26647 8.59337L5.22314 8.44375L5.82369 10.4026L4.66667 8.71174L3.50964 10.4026Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	</g>
+</svg>

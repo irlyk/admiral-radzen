@@ -1,0 +1,40 @@
+@implements IAsyncDisposable
+
+@if (rendered)
+{
+    <div class="@BackdropClass" @onclick="HandleBackdropClick">
+        <aside @ref="drawerElement"
+               class="@CssClass"
+               style="@DrawerStyle"
+               role="dialog"
+               aria-modal="@(Backdrop ? "true" : "false")"
+               aria-labelledby="@TitleId"
+               aria-hidden="@(!Open ? "true" : null)"
+               inert="@(!Open)"
+               tabindex="-1"
+               @onclick:stopPropagation="true"
+               @onkeydown="HandleKeyDown"
+               @attributes="AdditionalAttributes">
+            <header class="admiral-drawer__header">
+                <AdmiralText Typography="@(Mobile ? AdmiralTypography.HeaderH6 : AdmiralTypography.HeaderH5)"
+                             Tag="AdmiralTextTag.H2" id="@TitleId"
+                             Class="admiral-drawer__title">@Title</AdmiralText>
+                @if (ShowClose)
+                {
+                    <button type="button" class="admiral-drawer__close" aria-label="@CloseAriaLabel" @onclick="CloseAsync">
+                        <AdmiralIcon Icon="admiral:service/close-outline" />
+                    </button>
+                }
+            </header>
+            <div class="admiral-drawer__content">
+                @ChildContent
+            </div>
+            @if (Actions is not null)
+            {
+                <footer class="admiral-drawer__actions">
+                    @Actions
+                </footer>
+            }
+        </aside>
+    </div>
+}

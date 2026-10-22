@@ -1,0 +1,30 @@
+<div class="@CssClass"
+     role="progressbar"
+     aria-valuemin="0"
+     aria-valuemax="100"
+     aria-valuenow="@AriaValueNow"
+     aria-label="@AriaLabel"
+     @attributes="AdditionalAttributes">
+    <span class="admiral-progress-header__value"
+          style="width: @ProgressWidth"></span>
+</div>
+
+@code {
+    [Parameter] public double Value { get; set; }
+    [Parameter] public AdmiralProgressHeaderAppearance Appearance { get; set; }
+    [Parameter] public bool Inline { get; set; }
+    [Parameter] public string? AriaLabel { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private double ClampedValue => double.IsFinite(Value) ? Math.Clamp(Value, 0, 100) : 0;
+    private string AriaValueNow => ClampedValue.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture);
+    private string ProgressWidth => $"{AriaValueNow}%";
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-progress-header",
+        Appearance == AdmiralProgressHeaderAppearance.Error ? "admiral-progress-header--error" : null,
+        Inline ? "admiral-progress-header--inline" : null,
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

@@ -1,0 +1,35 @@
+@inject IJSRuntime JS
+
+<section class="docs-code-example" aria-label="@Title">
+    <div class="docs-code-example__header">
+        <h3>@Title</h3>
+        <button type="button" @onclick="CopyAsync" aria-label="@CopyLabel">@ButtonLabel</button>
+    </div>
+    <pre><code>@Code</code></pre>
+    <span class="docs-visually-hidden" role="status" aria-live="polite">@status</span>
+</section>
+
+@code {
+    [Parameter, EditorRequired] public string Code { get; set; } = string.Empty;
+    [Parameter] public string Title { get; set; } = "Razor";
+    private string status = string.Empty;
+    private bool copied;
+    private bool IsRussian => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru";
+    private string CopyLabel => IsRussian ? "Скопировать код Razor" : "Copy Razor code";
+    private string ButtonLabel => copied ? (IsRussian ? "Скопировано" : "Copied") : (IsRussian ? "Копировать" : "Copy");
+
+    private async Task CopyAsync()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("navigator.clipboard.writeText", Code);
+            copied = true;
+            status = IsRussian ? "Код Razor скопирован" : "Razor code copied";
+        }
+        catch (JSException)
+        {
+            copied = false;
+            status = IsRussian ? "Не удалось скопировать код" : "Could not copy code";
+        }
+    }
+}

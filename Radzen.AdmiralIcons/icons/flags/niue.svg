@@ -1,0 +1,55 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_277" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask Copy" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(254,221,0)" />
+			<rect id="Mask Copy" width="27.500000" height="19.500000" x="0.250000" y="4.250000" rx="2.750000" stroke="rgb(245,245,245)" stroke-opacity="0" stroke-width="0.500000" />
+		</g>
+	</mask>
+	<rect id="Niue" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" transform="matrix(-1,-6.12324e-17,6.12324e-17,-1,28,28)" />
+	<path id="Vector" d="M23.3333 0L0 0L0 23.3333L23.3333 23.3333L23.3333 0Z" opacity="0" fill="rgb(96,96,96)" fill-rule="evenodd" transform="matrix(-1,-6.12324e-17,6.12324e-17,-1,25.6667,25.6667)" />
+	<rect id="Mask Copy" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask Copy" width="27.500000" height="19.500000" x="0.250000" y="4.250000" rx="2.750000" stroke="rgb(245,245,245)" stroke-width="0.500000" />
+	<g id="Mask group" mask="url(#mask_277)">
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(254,221,0)" />
+		<rect id="Mask Copy" width="27.500000" height="19.500000" x="0.250000" y="4.250000" rx="2.750000" stroke="rgb(245,245,245)" stroke-opacity="0" stroke-width="0.500000" />
+		<rect id="Mask Copy" width="12.662109" height="10.000000" x="0.000000" y="4.000000" fill="rgb(1,33,105)" />
+		<rect id="Mask Copy" width="12.162109" height="9.500000" x="0.250000" y="4.250000" stroke="rgb(245,245,245)" stroke-opacity="0" stroke-width="0.500000" />
+		<g id="Group 1321316401">
+			<path id="Rectangle 240649359" d="M4.88942 0L4.88942 1.13512L0.994651 5.30269L0.000215953 5.30269L4.88942 0Z" fill="rgb(200,16,46)" fill-rule="nonzero" transform="matrix(-4.37114e-08,-1,-1,4.37114e-08,12.6646,8.88922)" />
+			<path id="Rectangle 240649362" d="M4.88942 0L4.88942 1.13512L0.994651 5.30269L0.000215953 5.30269L4.88942 0Z" fill="rgb(200,16,46)" fill-rule="nonzero" transform="matrix(4.37114e-08,1,1,-4.37114e-08,0,9.11188)" />
+			<path id="Rectangle 240649361" d="M4.97114 0L4.97114 1.13512L0.994435 5.33003L0 5.33003L4.97114 0Z" fill="rgb(255,255,255)" fill-rule="nonzero" transform="matrix(-4.37114e-08,-1,-1,4.37114e-08,11.5454,8.97028)" />
+			<path id="Rectangle 240649363" d="M4.97114 0L4.97114 1.13512L0.994435 5.33003L0 5.33003L4.97114 0Z" fill="rgb(255,255,255)" fill-rule="nonzero" transform="matrix(4.37114e-08,1,1,-4.37114e-08,1.11914,9.03082)" />
+			<path id="Rectangle 240649360" d="M4.84895 0L0.994289 4.16757L-0.00014556 4.16757L3.85451 0L4.84895 0Z" fill="rgb(255,255,255)" fill-rule="nonzero" transform="matrix(-4.37114e-08,-1,-1,4.37114e-08,12.6597,8.84821)" />
+			<path id="Rectangle 240649364" d="M4.84895 0L0.994289 4.16757L-0.00014556 4.16757L3.85451 0L4.84895 0Z" fill="rgb(255,255,255)" fill-rule="nonzero" transform="matrix(4.37114e-08,1,1,-4.37114e-08,0.00488281,9.15289)" />
+			<path id="Rectangle 240649360" d="M3.67752 0L4.67753 0L1 5.30266L0 5.30266L3.67752 0Z" fill="rgb(255,255,255)" fill-rule="nonzero" transform="matrix(-4.37114e-08,1,-1,-4.37114e-08,12.6646,8.31989)" />
+			<path id="Rectangle 240649362" d="M3.67752 0L4.67753 0L1 5.30266L0 5.30266L3.67752 0Z" fill="rgb(255,255,255)" fill-rule="nonzero" transform="matrix(4.37114e-08,-1,1,4.37114e-08,0,9.68121)" />
+			<path id="Rectangle 240649359" d="M3.67752 0L4.67753 0L1 5.30266L0 5.30266L3.67752 0Z" fill="rgb(200,16,46)" fill-rule="nonzero" transform="matrix(-4.37114e-08,1,-1,-4.37114e-08,12.6646,9.31989)" />
+			<path id="Rectangle 240649363" d="M3.67752 0L4.67753 0L1 5.30266L0 5.30266L3.67752 0Z" fill="rgb(200,16,46)" fill-rule="nonzero" transform="matrix(4.37114e-08,-1,1,4.37114e-08,0,8.68121)" />
+			<path id="Rectangle 240649361" d="M3.67752 0L3.67752 1.44192L1 5.30266L0 5.30266L3.67752 0Z" fill="rgb(255,255,255)" fill-rule="nonzero" transform="matrix(-4.37114e-08,1,-1,-4.37114e-08,12.6646,10.3238)" />
+			<path id="Rectangle 240649364" d="M3.67752 0L3.67752 1.44192L1 5.30266L0 5.30266L3.67752 0Z" fill="rgb(255,255,255)" fill-rule="nonzero" transform="matrix(4.37114e-08,-1,1,4.37114e-08,0,7.67731)" />
+			<rect id="Rectangle 240649357" width="1.000000" height="10.000385" x="7.332031" y="4.000000" fill="rgb(255,255,255)" />
+			<rect id="Rectangle 240649365" width="1.000000" height="10.000385" x="7.332031" y="4.000000" fill="rgb(255,255,255)" />
+			<rect id="Rectangle 240649358" width="1.000000" height="10.000385" x="4.332031" y="4.000000" fill="rgb(255,255,255)" />
+			<rect id="Rectangle 240649366" width="1.000000" height="10.000385" x="4.332031" y="4.000000" fill="rgb(255,255,255)" />
+			<rect id="Rectangle 240649354" width="2.000000" height="12.664551" x="0.000000" y="0.000000" fill="rgb(217,217,217)" transform="matrix(-4.37114e-08,1,-1,-4.37114e-08,12.6646,8)" />
+			<rect id="Rectangle 240649367" width="2.000000" height="12.664551" x="0.000000" y="0.000000" fill="rgb(200,16,46)" transform="matrix(-4.37114e-08,1,-1,-4.37114e-08,12.6646,8)" />
+			<rect id="Rectangle 240649355" width="1.000000" height="12.664551" x="0.000000" y="0.000000" fill="rgb(255,255,255)" transform="matrix(-4.37114e-08,1,-1,-4.37114e-08,12.6646,10)" />
+			<rect id="Rectangle 240649368" width="1.000000" height="12.664551" x="0.000000" y="0.000000" fill="rgb(255,255,255)" transform="matrix(-4.37114e-08,1,-1,-4.37114e-08,12.6646,10)" />
+			<rect id="Rectangle 240649356" width="1.000000" height="12.664551" x="0.000000" y="0.000000" fill="rgb(255,255,255)" transform="matrix(-4.37114e-08,1,-1,-4.37114e-08,12.6646,7)" />
+			<rect id="Rectangle 240649369" width="1.000000" height="12.664551" x="0.000000" y="0.000000" fill="rgb(255,255,255)" transform="matrix(-4.37114e-08,1,-1,-4.37114e-08,12.6646,7)" />
+			<rect id="Rectangle 240649353" width="2.000000" height="10.000000" x="5.332031" y="4.000000" fill="rgb(217,217,217)" />
+			<rect id="Rectangle 240649370" width="2.000000" height="10.000000" x="5.332031" y="4.000000" fill="rgb(200,16,46)" />
+		</g>
+	</g>
+	<circle id="Ellipse 2957" cx="6.33911133" cy="9.07739258" r="1.59545898" fill="rgb(1,33,105)" />
+	<circle id="Ellipse 2958" cx="6.33911133" cy="9.07788086" r="0.902099609" fill="rgb(254,221,0)" />
+	<circle id="Ellipse 2959" cx="6.33911133" cy="5.93237305" r="0.644287109" fill="rgb(254,221,0)" />
+	<circle id="Ellipse 2961" cx="0.644287109" cy="0.644287109" r="0.644287109" fill="rgb(254,221,0)" transform="matrix(-4.37114e-08,1,-1,-4.37114e-08,10.1296,8.43433)" />
+	<circle id="Ellipse 2960" cx="6.33911133" cy="12.2243652" r="0.644287109" fill="rgb(254,221,0)" />
+	<circle id="Ellipse 2962" cx="0.644287109" cy="0.644287109" r="0.644287109" fill="rgb(254,221,0)" transform="matrix(-4.37114e-08,1,-1,-4.37114e-08,3.83765,8.43433)" />
+</svg>

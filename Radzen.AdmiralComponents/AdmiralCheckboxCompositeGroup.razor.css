@@ -1,0 +1,12 @@
+.admiral-checkbox-composite-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    width: fit-content;
+    max-width: 100%;
+}
+
+.admiral-checkbox-composite-group--s { gap: .75rem; }
+.admiral-checkbox-composite-group > ::deep .admiral-checkbox-group { padding-inline-start: 2rem; }
+.admiral-checkbox-composite-group--s > ::deep .admiral-checkbox-group { padding-inline-start: 1.75rem; }

@@ -1,0 +1,26 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_124" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Cambodia" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_124)">
+		<path id="Rectangle 2" d="M0 9.33333L28 9.33333L28 4L0 4L0 9.33333Z" fill="rgb(15,62,182)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 9.33333L28 4L0 4L0 9.33333L28 9.33333Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M0 24L28 24L28 18.6667L0 18.6667L0 24Z" fill="rgb(15,62,182)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 24L28 18.6667L0 18.6667L0 24L28 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M0 18.6666L28 18.6666L28 9.33331L0 9.33331L0 18.6666Z" fill="rgb(237,26,60)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 18.6666L28 9.33331L0 9.33331L0 18.6666L28 18.6666Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 621" d="M12 12.7272L13.3333 12.7272L13.3333 12C13.3333 11.6318 13.6318 11.3333 14 11.3333C14.3682 11.3333 14.6667 11.6318 14.6667 12L14.6667 12.7272L16 12.7272L16 14L12 14L12 12.7272ZM9.99999 14L9.99999 12.6666C9.99999 12.2985 10.2985 12 10.6667 12C11.0348 12 11.3333 12.2985 11.3333 12.6666L11.3333 14L9.99999 14ZM16.6667 14L18 14L18 12.6666C18 12.2985 17.7015 12 17.3333 12C16.9651 12 16.6667 12.2985 16.6667 12.6666L16.6667 14ZM11.3333 14.6666L9.99999 14.6666L8.66666 17.3333L11.3333 17.3333L11.3333 14.6666ZM16 17.3333L16 14.6666L12 14.6666L12 17.3333L16 17.3333ZM18 14.6666L16.6667 14.6666L16.6667 17.3333L19.3333 17.3333L18 14.6666Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Rectangle 621" d="M12 12.7272L13.3333 12.7272L13.3333 12C13.3333 11.6318 13.6318 11.3333 14 11.3333C14.3682 11.3333 14.6667 11.6318 14.6667 12L14.6667 12.7272L16 12.7272L16 14L12 14L12 12.7272ZM9.99999 14L9.99999 12.6666C9.99999 12.2985 10.2985 12 10.6667 12C11.0348 12 11.3333 12.2985 11.3333 12.6666L11.3333 14L9.99999 14ZM16.6667 14L18 14L18 12.6666C18 12.2985 17.7015 12 17.3333 12C16.9651 12 16.6667 12.2985 16.6667 12.6666L16.6667 14ZM11.3333 14.6666L9.99999 14.6666L8.66666 17.3333L11.3333 17.3333L11.3333 14.6666ZM16 17.3333L16 14.6666L12 14.6666L12 17.3333L16 17.3333ZM18 14.6666L16.6667 14.6666L16.6667 17.3333L19.3333 17.3333L18 14.6666Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	</g>
+</svg>

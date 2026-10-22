@@ -1,0 +1,26 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_55" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Senegal" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_55)">
+		<rect id="Mask" width="14.666667" height="20.000000" x="13.333313" y="4.000000" fill="rgb(241,54,66)" />
+		<rect id="Mask" width="14.666667" height="20.000000" x="13.333313" y="4.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M0 24L9.33333 24L9.33333 4L0 4L0 24Z" fill="rgb(23,160,82)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M9.33333 24L9.33333 4L0 4L0 24L9.33333 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2 Copy" d="M9.33331 24L18.6666 24L18.6666 4L9.33331 4L9.33331 24Z" fill="rgb(255,241,102)" fill-rule="evenodd" />
+		<path id="Rectangle 2 Copy" d="M18.6666 24L18.6666 4L9.33331 4L9.33331 24L18.6666 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Star 33" d="M14 15.3666L12.0407 16.6967L12.7002 14.4223L10.8298 12.9699L13.1967 12.8943L14 10.6666L14.8033 12.8943L17.1702 12.9699L15.2998 14.4223L15.9593 16.6967L14 15.3666Z" fill="rgb(23,160,82)" fill-rule="evenodd" />
+		<path id="Star 33" d="M12.0407 16.6967L12.7002 14.4223L10.8298 12.9699L13.1967 12.8943L14 10.6666L14.8033 12.8943L17.1702 12.9699L15.2998 14.4223L15.9593 16.6967L14 15.3666L12.0407 16.6967Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	</g>
+</svg>

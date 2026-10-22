@@ -1,0 +1,80 @@
+<section class="admiral-component-page__section">
+    <h2>@ComponentDocsCatalog.RadzenEquivalent(Component) + Admiral theme</h2>
+    <p>@SmokeL["Этот playground использует прямые Radzen-компоненты и CSS пакета Radzen.Admiral.Themes. Возможности Admiral-обёрток сюда не подмешиваются."]</p>
+    <div class="admiral-component-playground">
+        <div class="admiral-component-playground__preview">
+            @switch (Component)
+            {
+                case "Badge" or "Pills": <RadzenBadge Text="@text" BadgeStyle="@badgeStyle" /> break;
+                case "ButtonGroups": <RadzenStack Orientation="Orientation.Horizontal" Gap="0"><RadzenButton Text="@SmokeL["Первое"]" Size="@buttonSize" /><RadzenButton Text="@SmokeL["Второе"]" Size="@buttonSize" ButtonStyle="ButtonStyle.Light" /></RadzenStack> break;
+                case "Chips": <RadzenButton Text="@text" Icon="admiral:system/close-outline" Size="@buttonSize" Variant="Variant.Outlined" Disabled="@disabled" /> break;
+                case "IconButton": <RadzenButton Icon="admiral:system/star-solid" aria-label="Действие" Size="@buttonSize" Variant="@variant" ButtonStyle="@buttonStyle" Disabled="@disabled" IsBusy="@loading" /> break;
+                case "TextButton": <RadzenButton Text="@text" Icon="admiral:system/star-solid" Size="@buttonSize" Variant="Variant.Text" ButtonStyle="@buttonStyle" Disabled="@disabled" IsBusy="@loading" /> break;
+                case "Link": <RadzenLink Path="#theme-playground" Text="@text" Icon="admiral:system/arrow-right-outline" /> break;
+                case "Lists": <ol class="admiral-text admiral-text--body1long"><li>@text</li><li>@SmokeL["Второй пункт"]</li></ol> break;
+                case "Menu": <RadzenSplitButton Text="@text" Icon="admiral:system/more-horizontal-outline" Click="@HandleMenuClick"><RadzenSplitButtonItem Text="@SmokeL["Редактировать"]" Value="edit" /><RadzenSplitButtonItem Text="@SmokeL["Удалить"]" Value="delete" /></RadzenSplitButton> break;
+                case "NumberInput": <RadzenNumeric TValue="decimal?" @bind-Value="number" Min="0" Max="1000" Step="1" ShowUpDown="true" Disabled="@disabled" class="@InputClass" /> break;
+                case "PhoneNumberInput": <RadzenStack Orientation="Orientation.Horizontal" Gap=".5rem"><RadzenDropDown TValue="string" Data="@Countries" @bind-Value="country" class="@InputClass" /><RadzenTextBox @bind-Value="value" Placeholder="+7 999 999-99-99" Disabled="@disabled" class="@InputClass" /></RadzenStack> break;
+                case "ScrollContainer": <div class="admiral-scroll-container" style="height:10rem;overflow:auto"><div style="width:@(horizontal ? "60rem" : "auto")">@foreach (var i in Enumerable.Range(1, 12)) { <p>@T("Строка", "Row") @i</p> }</div></div> break;
+                case "Select": <RadzenDropDown TValue="string" Data="@Cities" @bind-Value="value" AllowFiltering="@filtering" AllowClear="true" Multiple="@multiple" Disabled="@disabled" class="@InputClass" /> break;
+                case "Skeleton": <RadzenSkeleton Width="12rem" Height="1.5rem" /> break;
+                case "Stepper": <RadzenSteps @bind-SelectedIndex="step"><Steps><RadzenStepsItem Text="@SmokeL["Данные"]" /><RadzenStepsItem Text="@SmokeL["Проверка"]" /><RadzenStepsItem Text="@SmokeL["Готово"]" /></Steps></RadzenSteps> break;
+                case "TextInput": <RadzenFormField Text="@SmokeL["Подпись"]" class="@InputClass"><ChildContent><RadzenTextBox @bind-Value="value" Placeholder="@SmokeL["Введите значение"]" Disabled="@disabled" /></ChildContent></RadzenFormField> break;
+                case "Tooltip": <RadzenButton Text="@text" title="@T("Подсказка Radzen / браузера", "Radzen / browser tooltip")" /> break;
+                case "Typography": <RadzenText TextStyle="@textStyle" TagName="TagName.P">@text</RadzenText> break;
+            }
+            @if (!string.IsNullOrEmpty(result)) { <span role="status">@result</span> }
+        </div>
+        <div class="admiral-component-controls">
+            @if (Component is not "Skeleton" and not "Stepper" and not "ScrollContainer" and not "NumberInput") { <label><span>@SmokeL["Text / Value"]</span><input @bind="text" /></label> }
+            @if (Component is "ButtonGroups" or "Chips" or "IconButton" or "TextButton") { <label><span>@SmokeL["Size"]</span><select @bind="buttonSize">@EnumOptions(typeof(ButtonSize))</select></label> }
+            @if (Component == "IconButton") { <label><span>Variant</span><select @bind="variant">@EnumOptions(typeof(Variant))</select></label> }
+            @if (Component is "IconButton" or "TextButton") { <label><span>ButtonStyle</span><select @bind="buttonStyle">@EnumOptions(typeof(ButtonStyle))</select></label><label class="admiral-component-controls__check"><input type="checkbox" @bind="loading" /> IsBusy</label> }
+            @if (Component is "Badge" or "Pills") { <label><span>BadgeStyle</span><select @bind="badgeStyle">@EnumOptions(typeof(BadgeStyle))</select></label> }
+            @if (Component is "NumberInput" or "TextInput" or "PhoneNumberInput" or "Select" or "Chips" or "IconButton" or "TextButton") { <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> @SmokeL["Disabled"]</label> }
+            @if (Component is "NumberInput" or "TextInput" or "PhoneNumberInput" or "Select") { <label><span>@SmokeL["Размер темы"]</span><select @bind="inputSize"><option>s</option><option>m</option><option>xl</option></select></label> }
+            @if (Component == "Select") { <label class="admiral-component-controls__check"><input type="checkbox" @bind="filtering" /> AllowFiltering</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="multiple" /> Multiple</label> }
+            @if (Component == "NumberInput") { <label><span>Value</span><input type="number" @bind="number" /></label> }
+            @if (Component == "ScrollContainer") { <label class="admiral-component-controls__check"><input type="checkbox" @bind="horizontal" /> @SmokeL["Horizontal"]</label> }
+            @if (Component == "Stepper") { <label><span>SelectedIndex</span><input type="number" min="0" max="2" @bind="step" /></label> }
+            @if (Component == "Typography") { <label><span>TextStyle</span><select @bind="textStyle">@EnumOptions(typeof(TextStyle))</select></label> }
+        </div>
+    </div>
+    <p>@ThemeNotes</p>
+    <CopyableRazorExample Code="@ComponentDocsCatalog.ThemeExample(Component)" Title="@SmokeL["Razor · прямой Radzen API"]" />
+    <ApiReference Title="@SmokeL["Параметры playground Radzen + тема"]" Rows="@ThemeRows" />
+</section>
+
+@code {
+    [Parameter, EditorRequired] public string Component { get; set; } = string.Empty;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private string text = T("Пример", "Example"), value = T("Москва", "Moscow"), country = "RUS", inputSize = "m", result = string.Empty;
+    private bool disabled, loading, filtering = true, multiple, horizontal; private decimal? number = 100; private int step;
+    private ButtonSize buttonSize = ButtonSize.Small; private Variant variant = Variant.Filled; private ButtonStyle buttonStyle = ButtonStyle.Primary; private BadgeStyle badgeStyle = BadgeStyle.Info; private TextStyle textStyle = TextStyle.Body1;
+    private string[] Cities => [T("Москва", "Moscow"), T("Санкт-Петербург", "Saint Petersburg"), T("Казань", "Kazan")]; private static readonly string[] Countries = ["RUS", "GBR", "USA"];
+    private string InputClass => $"admiral-input--{inputSize}";
+    private string ThemeNotes => Component switch {
+        "Lists" or "ScrollContainer" => T("У Radzen нет отдельной обёртки этого типа: используются семантическая HTML-разметка и токены/классы Admiral theme.", "Radzen has no standalone wrapper of this type; use semantic HTML and Admiral theme tokens/classes."),
+        "PhoneNumberInput" => T("Radzen не предоставляет единый phone input с флагами: композиция dropdown + textbox не повторяет форматирование и ValueMode AdmiralPhoneNumberInput.", "Radzen has no combined phone input with flags; dropdown + textbox does not reproduce AdmiralPhoneNumberInput formatting or ValueMode."),
+        "Chips" => T("Тема стилизует Radzen, но не добавляет контракт Selected/Close/Badge AdmiralChip.", "The theme styles Radzen controls but does not add AdmiralChip Selected/Close/Badge contracts."),
+        "Tooltip" => T("В приложении используйте TooltipService или RadzenTooltip; CSS темы оформляет popup, а позицию и задержку задаёт API Radzen.", "Use TooltipService or RadzenTooltip; the theme styles the popup while Radzen controls position and delay."),
+        _ => T("Параметры поведения принадлежат Radzen. Admiral theme отвечает за токены, размеры и состояния.", "Behavior parameters belong to Radzen. Admiral theme supplies tokens, sizes and states.") };
+    private IReadOnlyList<ApiReference.Entry> ThemeRows => Component switch
+    {
+        "NumberInput" => [new("Value / ValueChanged", "TValue / callback", T("Значение RadzenNumeric и двустороннее связывание.", "RadzenNumeric value and two-way binding.")), new("Min / Max / Step", "decimal?", T("Ограничения и шаг числа.", "Numeric bounds and increment.")), new("ShowUpDown", "bool", T("Показывает штатные кнопки увеличения и уменьшения.", "Shows built-in increment and decrement buttons.")), new("class", "admiral-input--s|m|xl", T("Размер поля, определённый Admiral theme.", "Input size supplied by Admiral theme."))],
+        "Select" => [new("Data / Value", "IEnumerable / TValue", T("Элементы и выбранное значение RadzenDropDown.", "RadzenDropDown items and selected value.")), new("TextProperty / ValueProperty", "string", T("Поля подписи и значения сложной модели.", "Label and value fields for an object model.")), new("Multiple / Chips", "bool", T("Множественный выбор и отображение выбранных элементов.", "Multiple selection and selected-item display.")), new("AllowFiltering / AllowClear", "bool", T("Поиск в popup и очистка.", "Popup filtering and clearing.")), new("class", "admiral-input--s|m|xl", T("Размер селекта в Admiral theme.", "Select size supplied by Admiral theme."))],
+        "TextInput" or "PhoneNumberInput" => [new("Value / ValueChanged", "string / callback", T("Текст и двустороннее связывание.", "Text value and two-way binding.")), new("Placeholder", "string", T("Подсказка пустого RadzenTextBox.", "Hint for an empty RadzenTextBox.")), new("Disabled / ReadOnly", "bool", T("Недоступное состояние и только чтение.", "Disabled and read-only states.")), new("class", "admiral-input--s|m|xl", T("Размер поля в Admiral theme.", "Input size supplied by Admiral theme."))],
+        "IconButton" or "TextButton" or "ButtonGroups" or "Chips" => [new("Text / Icon", "string", "Подпись и Admiral-иконка RadzenButton."), new("Size", "ButtonSize", "Штатный размер Radzen, оформленный темой."), new("Variant / ButtonStyle", "enum", "Вариант поверхности и семантическая палитра."), new("Disabled / IsBusy", "bool", "Недоступное состояние и индикатор загрузки Radzen."), new("Click", "EventCallback<MouseEventArgs>", "Основное действие кнопки.")],
+        "Badge" or "Pills" => [new("Text", "string", "Содержимое RadzenBadge."), new("BadgeStyle", "BadgeStyle", "Семантический цвет, оформленный темой."), new("Pill", "bool", "Скруглённая форма штатного badge.")],
+        "Menu" => [new("Text / Icon", "string", "Кнопка открытия меню."), new("RadzenSplitButtonItem", "child content", "Пункты с Text, Value, Icon и Disabled."), new("Click", "EventCallback<RadzenSplitButtonItem>", "Основное действие или выбранный пункт.")],
+        "Stepper" => [new("SelectedIndex / SelectedIndexChanged", "int / callback", "Активный шаг и двустороннее связывание."), new("RadzenStepsItem", "child content", "Шаги с Text, Icon и Disabled.")],
+        "Typography" => [new("TextStyle", "TextStyle", "Типографический токен Radzen, сопоставленный с Admiral theme."), new("TagName", "TagName", "Семантический HTML-тег."), new("ChildContent", "RenderFragment", "Текст или разметка.")],
+        "Skeleton" => [new("Width / Height", "string", "Геометрия RadzenSkeleton."), new("Shape", "SkeletonShape", "Форма skeleton."), new("Animation", "SkeletonAnimation", "Тип анимации.")],
+        "Link" => [new("Path / Target", "string", "Адрес и окно перехода."), new("Text / Icon", "string", "Подпись и иконка."), new("Disabled", "bool", "Недоступное состояние.")],
+        "Tooltip" => [new("TooltipService.Open", "method", "Открывает подсказку для ElementReference."), new("TooltipOptions", "options", "Position, Delay, Duration и CssClass popup."), new("TooltipService.Close", "method", "Закрывает текущую подсказку.")],
+        "Lists" or "ScrollContainer" => [new("class", "theme class", "Подключает типографику или оформление scrollbar."), new("style / CSS variables", "CSS", "Размер области прокрутки и направление задаются обычным CSS."), new("семантическая разметка", "HTML", "ol/ul/li или контейнер остаются нативными элементами.")],
+        _ => []
+    };
+    private void HandleMenuClick(RadzenSplitButtonItem? item) => result = item?.Text ?? T("Основное действие", "Main action");
+    private static RenderFragment EnumOptions(Type type) => builder => { var seq = 0; foreach (var item in Enum.GetValues(type)) { builder.OpenElement(seq++, "option"); builder.AddAttribute(seq++, "value", item); builder.AddContent(seq++, item); builder.CloseElement(); } };
+}

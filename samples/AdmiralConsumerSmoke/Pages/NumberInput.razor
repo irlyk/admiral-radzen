@@ -1,0 +1,124 @@
+@page "/components/number-input"
+
+<PageTitle>Admiral NumberInput</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="NumberInput / NumberInputField"
+        Description="Numeric input with constraints, precision, formatting and increment controls."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-input-numberinput--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Theme)
+    {
+        <ThemeComponentPlayground Component="NumberInput" />
+        <ComponentDocNotes Title="@SmokeL["Direct Radzen differences"]">
+            <p>@SmokeL["RadzenNumeric provides Value, Min, Max, Step, Format and ShowUpDown directly. The Admiral theme styles it, but does not add the NumberInput clear button, TextBefore/TextAfter formatting aliases, external field label, or status helper text."]</p>
+        </ComponentDocNotes>
+    }
+    else if (tab == ComponentDocTabs.Api)
+    {
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · AdmiralNumberInputField" />
+        <ApiReference Title="NumberInput / NumberInputField behavior" Rows="@UsageRows" />
+        <ComponentDocNotes Title="@SmokeL["Behavior and limits"]">
+            <p>@SmokeL["Use a nullable TValue when the clear action must report an empty value. Precision and text decorations build a Radzen numeric format unless Format is supplied explicitly; TextBefore/TextAfter take precedence over Prefix/Suffix. Application code must validate business rules and persist changes."]</p>
+        </ComponentDocNotes>
+    }
+    else
+    {
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Playground"]</AdmiralText>
+        <div class="admiral-component-playground">
+            <div class="admiral-component-playground__preview"><AdmiralNumberInputField TValue="decimal?" Label="@SmokeL["Amount"]" Size="@playgroundSize" Status="@playgroundStatus" TextBefore="@playgroundBefore" TextAfter="@playgroundAfter" DisplayPlusMinusIcons="@playgroundSteppers" DisplayClearIcon="@playgroundClear" Disabled="@playgroundDisabled" ReadOnly="@playgroundReadOnly" Skeleton="@playgroundSkeleton" Value="@playgroundValue" ValueChanged="@OnPlaygroundValueChanged" /><span class="admiral-component-page__result" role="status">@SmokeL["Value"]: @playgroundValue · @SmokeL["Changes"]: @playgroundChanges</span></div>
+            <div class="admiral-component-controls">
+                <label><span>@SmokeL["Size"]</span><select @bind="playgroundSize">@foreach (var item in Enum.GetValues<AdmiralInputSize>()) { <option value="@item">@item</option> }</select></label>
+                <label><span>@SmokeL["Status"]</span><select @bind="playgroundStatus">@foreach (var item in Enum.GetValues<AdmiralInputStatus>()) { <option value="@item">@item</option> }</select></label>
+                <label><span>@SmokeL["Text before"]</span><input @bind="playgroundBefore" /></label><label><span>@SmokeL["Text after"]</span><input @bind="playgroundAfter" /></label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundSteppers" /> @SmokeL["Plus/minus"]</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundClear" /> @SmokeL["Clear"]</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundDisabled" /> Disabled</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundReadOnly" /> @SmokeL["Read only"]</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundSkeleton" /> Skeleton</label>
+            </div>
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Dimensions"]</AdmiralText>
+        <div class="admiral-input-gallery__grid">
+            <AdmiralNumberInputField TValue="decimal?" Label="@SmokeL["Small"]" AdditionalLabel="S · 32 px"
+                                     Size="AdmiralInputSize.Small" @bind-Value="smallValue" />
+            <AdmiralNumberInputField TValue="decimal?" Label="@SmokeL["Medium"]" AdditionalLabel="M · 40 px"
+                                     @bind-Value="mediumValue" />
+            <AdmiralNumberInputField TValue="decimal?" Label="@SmokeL["Extra large"]" AdditionalLabel="XL · 56 px"
+                                     Size="AdmiralInputSize.ExtraLarge" @bind-Value="largeValue" />
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Formatting and constraints"]</AdmiralText>
+        <div class="admiral-input-gallery__grid">
+            <AdmiralNumberInputField TValue="decimal?" Label="@SmokeL["Amount"]" Prefix="₽ " Precision="2" Step="100"
+                                     Min="0" Max="1000000" DisplayClearIcon="true" @bind-Value="amount" />
+            <AdmiralNumberInputField TValue="decimal?" Label="@SmokeL["Rate"]" Suffix=" %" Precision="2" Step="0.25"
+                                     Min="0" Max="100" Alignment="AdmiralNumberInputAlignment.Right" @bind-Value="rate" />
+            <AdmiralNumberInputField TValue="int?" Label="@SmokeL["Without step buttons"]" Precision="0"
+                                     DisplayPlusMinusIcons="false" Placeholder="@SmokeL["Enter integer"]" @bind-Value="integerValue" />
+            <AdmiralNumberInputField TValue="decimal?" Label="@SmokeL["Text before and after"]" TextBefore="От " TextAfter=" ₽"
+                                     Precision="0" Step="500" @bind-Value="amountWithText" />
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["States"]</AdmiralText>
+        <div class="admiral-input-gallery__grid">
+            <AdmiralNumberInputField TValue="decimal?" Label="Error" Status="AdmiralInputStatus.Error"
+                                     ExtraText="@SmokeL["Value is outside the allowed range"]" Value="-20" />
+            <AdmiralNumberInputField TValue="decimal?" Label="@SmokeL["Success"]" Status="AdmiralInputStatus.Success" Value="1250" />
+            <AdmiralNumberInputField TValue="decimal?" Label="Disabled" Disabled="true" Value="1250" />
+            <AdmiralNumberInputField TValue="decimal?" Label="@SmokeL["Read only"]" ReadOnly="true" Value="1250" />
+            <AdmiralNumberInputField TValue="decimal?" Label="Skeleton" Skeleton="true" />
+        </div>
+    </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private const string AdmiralCode = """
+        <AdmiralNumberInputField TValue="decimal?" Label="Amount"
+                                 Min="0" Max="1000000" Step="100"
+                                 Precision="2" TextAfter=" ₽"
+                                 DisplayClearIcon="true"
+                                 Value="@amount" ValueChanged="OnAmountChanged" />
+        <span role="status">Amount: @amount</span>
+        @code {
+            private decimal? amount;
+            private void OnAmountChanged(decimal? value) => amount = value;
+        }
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> UsageRows =
+    [
+        new("TValue / Value / ValueChanged", "numeric type / TValue? / EventCallback<TValue?>", "Supports numeric binding; use nullable TValue for clear-to-empty."),
+        new("Min / Max / Step", "decimal? / decimal? / string = 1", "Numeric bounds and increment size passed to RadzenNumeric."),
+        new("Precision / Format", "int = 2 / string?", "Generated numeric format or explicit Radzen format override."),
+        new("TextBefore / TextAfter / Prefix / Suffix", "string?", "Decorations included in the generated format; TextBefore/After win when both forms are set."),
+        new("DisplayPlusMinusIcons / DisplayClearIcon", "true / false", "Increment buttons and optional clear action."),
+        new("Size / Status / Disabled / ReadOnly / Skeleton", "Medium / Default / false", "Admiral geometry and visual states; validation is supplied by the app.")
+    ];
+    private decimal? playgroundValue = 5000;
+    private int playgroundChanges;
+    private void OnPlaygroundValueChanged(decimal? next) { playgroundValue = next; playgroundChanges++; }
+    private AdmiralInputSize playgroundSize = AdmiralInputSize.Medium;
+    private AdmiralInputStatus playgroundStatus;
+    private string? playgroundBefore = "От ";
+    private string? playgroundAfter = " ₽";
+    private bool playgroundSteppers = true;
+    private bool playgroundClear = true;
+    private bool playgroundDisabled;
+    private bool playgroundReadOnly;
+    private bool playgroundSkeleton;
+    private decimal? smallValue = 10;
+    private decimal? mediumValue = 250;
+    private decimal? largeValue = 1000;
+    private decimal? amount = 12500;
+    private decimal? rate = 12.5m;
+    private int? integerValue;
+    private decimal? amountWithText = 5000;
+}

@@ -1,0 +1,49 @@
+<svg viewBox="0 0 31.5353 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="31.535332" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+		<linearGradient id="paint_linear_40" x1="2.77365112" x2="2.77365112" y1="4" y2="24" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(28.8062,189.529,79.182)" offset="0" stop-opacity="1" />
+			<stop stop-color="rgb(21,155,63)" offset="1" stop-opacity="1" />
+		</linearGradient>
+		<g id="pixso_custom_effect_4">
+			<effect x="0.000000" y="0.000000" visibility="visible" fill="rgb(0,0,0)" fill-opacity="0.0599999987" effectType="dropShadow" showShadowBehind="1" stdDeviation="0" radius="0" />
+			<effect x="0.000000" y="1.000000" visibility="hidden" fill="rgb(255,216.88,100.278)" fill-opacity="1" effectType="innerShadow" showShadowBehind="1" stdDeviation="0" radius="0" />
+		</g>
+		<filter id="filter_4" width="28.000000" height="20.000000" x="2.773651" y="4.000000" filterUnits="userSpaceOnUse" customEffect="url(#pixso_custom_effect_4)" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix" />
+			<feOffset dx="0.000000" dy="0.000000" in="SourceAlpha" />
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0 " />
+			<feBlend result="effect_dropShadow_1" in2="BackgroundImageFix" mode="normal" />
+			<feBlend result="shape" in="SourceGraphic" in2="effect_dropShadow_1" mode="normal" />
+		</filter>
+		<linearGradient id="paint_linear_41" x1="2.77365112" x2="2.77365112" y1="4" y2="24" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(6.42017,95.6495,212.419)" offset="0" stop-opacity="1" />
+			<stop stop-color="rgb(0,81,187)" offset="1" stop-opacity="1" />
+		</linearGradient>
+	</defs>
+	<mask id="mask_53" width="28.000000" height="20.000000" x="2.773651" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="2.773651" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="2.773651" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Solomon Islands" width="28.000000" height="28.000000" x="2.773651" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="2.773651" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="2.773651" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_53)">
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="2.773651" y="4.000000" fill="url(#paint_linear_40)" />
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="2.773651" y="4.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<g filter="url(#filter_4)">
+			<path id="Rectangle 253" d="M2.77365 4L30.7737 4L2.77365 24L2.77365 4Z" fill="url(#paint_linear_41)" fill-rule="evenodd" />
+			<path id="Rectangle 253" d="M30.7737 4L2.77365 24L2.77365 4L30.7737 4Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+		<path id="Rectangle 253" d="M0 0L28 20L0 20L0 0Z" fill="rgb(44,116,66)" fill-rule="evenodd" transform="matrix(-1,0,0,1,30.7737,4)" />
+		<path id="Rectangle 253" d="M28 20L0 20L0 0L28 20Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" transform="matrix(-1,0,0,1,30.7737,4)" />
+		<rect id="Rectangle 2" width="36.775467" height="1.872501" x="0.000000" y="0.000000" fill="rgb(255,214,70)" transform="matrix(0.829038,-0.559193,0.559193,0.829038,-3.05176e-05,23.7057)" />
+		<rect id="Rectangle 2" width="36.775467" height="1.872501" x="0.000000" y="0.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" transform="matrix(0.829038,-0.559193,0.559193,0.829038,-3.05176e-05,23.7057)" />
+		<path id="Star 2" d="M4.98112 7.25756L4.79402 8.3484L5.77366 7.83337L6.7533 8.3484L6.56621 7.25756L7.35876 6.48501L6.26348 6.32586L5.77366 5.33337L5.28384 6.32586L4.18857 6.48501L4.98112 7.25756ZM11.6478 7.25756L11.4607 8.3484L12.4403 7.83337L13.42 8.3484L13.2329 7.25756L14.0254 6.48501L12.9302 6.32586L12.4403 5.33337L11.9505 6.32586L10.8552 6.48501L11.6478 7.25756ZM8.12735 10.3484L8.31445 9.25756L7.5219 8.48501L8.61717 8.32586L9.107 7.33337L9.59682 8.32586L10.6921 8.48501L9.89954 9.25756L10.0866 10.3484L9.107 9.83337L8.12735 10.3484ZM4.79402 12.3484L4.98112 11.2576L4.18857 10.485L5.28384 10.3259L5.77366 9.33337L6.26348 10.3259L7.35876 10.485L6.56621 11.2576L6.7533 12.3484L5.77366 11.8334L4.79402 12.3484ZM11.4607 12.3484L11.6478 11.2576L10.8552 10.485L11.9505 10.3259L12.4403 9.33337L12.9302 10.3259L14.0254 10.485L13.2329 11.2576L13.42 12.3484L12.4403 11.8334L11.4607 12.3484Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Star 2" d="M4.98112 7.25756L4.79402 8.3484L5.77366 7.83337L6.7533 8.3484L6.56621 7.25756L7.35876 6.48501L6.26348 6.32586L5.77366 5.33337L5.28384 6.32586L4.18857 6.48501L4.98112 7.25756ZM11.6478 7.25756L11.4607 8.3484L12.4403 7.83337L13.42 8.3484L13.2329 7.25756L14.0254 6.48501L12.9302 6.32586L12.4403 5.33337L11.9505 6.32586L10.8552 6.48501L11.6478 7.25756ZM8.12735 10.3484L8.31445 9.25756L7.5219 8.48501L8.61717 8.32586L9.107 7.33337L9.59682 8.32586L10.6921 8.48501L9.89954 9.25756L10.0866 10.3484L9.107 9.83337L8.12735 10.3484ZM4.79402 12.3484L4.98112 11.2576L4.18857 10.485L5.28384 10.3259L5.77366 9.33337L6.26348 10.3259L7.35876 10.485L6.56621 11.2576L6.7533 12.3484L5.77366 11.8334L4.79402 12.3484ZM11.4607 12.3484L11.6478 11.2576L10.8552 10.485L11.9505 10.3259L12.4403 9.33337L12.9302 10.3259L14.0254 10.485L13.2329 11.2576L13.42 12.3484L12.4403 11.8334L11.4607 12.3484Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	</g>
+</svg>

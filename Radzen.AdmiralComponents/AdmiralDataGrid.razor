@@ -1,0 +1,164 @@
+@typeparam TItem where TItem : notnull
+
+<div @ref="rootElement" class="@RootCssClass" style="@Style" @attributes="RootAttributes">
+    @if (ShowToolbar)
+    {
+        <AdmiralGroupActionsPane Size="@ToolbarSize"
+                                 Actions="@ToolbarActions"
+                                 ActionClicked="ToolbarActionClicked"
+                                 Columns="@paneColumns"
+                                 ColumnsChanged="HandleColumnsChanged"
+                                 SearchValue="@searchValue"
+                                 SearchValueChanged="HandleSearchChanged"
+                                 ShowSettings="@ShowSettings"
+                                 SettingsClicked="SettingsClicked"
+                                 SearchPlaceholder="@Text.Search"
+                                 SearchAriaLabel="@Text.Search"
+                                 OpenSearchAriaLabel="@Text.OpenSearch"
+                                 CloseSearchAriaLabel="@Text.CloseSearch"
+                                 ConfigureColumnsAriaLabel="@Text.ConfigureColumns"
+                                 VisibleColumnsAriaLabel="@Text.VisibleColumns"
+                                 SettingsAriaLabel="@Text.Settings" />
+    }
+
+    <RadzenDataGrid @ref="grid" Data="@FilteredItems" TItem="TItem" @attributes="EffectiveGridAttributes"
+                    Count="@EffectiveCount" LoadData="@LoadData" IsLoading="@IsLoading"
+                    AllowPaging="@HasPaging" PageSize="@effectivePageSize" Page="HandleGridPage"
+                    AllowSorting="@AllowSorting" AllowMultiColumnSorting="@AllowMultiColumnSorting"
+                    ShowMultiColumnSortingIndex="@AllowMultiColumnSorting"
+                    AllowFiltering="@AllowFiltering" FilterMode="@FilterMode"
+                    FilterPopupRenderMode="PopupRenderMode.OnDemand"
+                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                    Filter="HandleGridFilter" FilterCleared="HandleGridFilter"
+                    AllowColumnResize="@AllowColumnResize" AllowColumnReorder="@AllowColumnReorder"
+                    ColumnReordering="@ColumnReordering" ColumnReordered="@ColumnReordered" ColumnResized="@ColumnResized"
+                    AllowGrouping="@AllowGrouping" GroupPanelText="@(GroupPanelText ?? Text.GroupPanel)"
+                    Group="Group"
+                    AllowVirtualization="@AllowVirtualization" VirtualizationOverscanCount="@VirtualizationOverscanCount"
+                    AllowColumnPicking="@AllowColumnPicking" AllowPickAllColumns="@AllowPickAllColumns"
+                    ColumnsPickerAllowFiltering="@ColumnsPickerAllowFiltering"
+                    ShowCellDataAsTooltip="@ShowCellDataAsTooltip" ShowColumnTitleAsTooltip="@ShowColumnTitleAsTooltip"
+                    HideGroupedColumn="@HideGroupedColumn" GroupFootersAlwaysVisible="@GroupFootersAlwaysVisible"
+                    AllowAlternatingRows="@AllowAlternatingRows" GridLines="@GridLines"
+                    PagerHorizontalAlign="HorizontalAlign.Center" Responsive="@Responsive"
+                    RowRender="HandleRowRender" RowClick="RowClick" Template="@EffectiveDetailTemplate"
+                    RowSelect="@RowSelect" RowDeselect="@RowDeselect" RowDoubleClick="@RowDoubleClick"
+                    RowExpand="@RowExpand" RowCollapse="@RowCollapse"
+                    RowEdit="@RowEdit" RowUpdate="@RowUpdate" RowCreate="@RowCreate"
+                    ShowExpandColumn="@ShowExpandColumn" ExpandMode="@ExpandMode"
+                    ShowExpandAll="@ShowExpandAll" ShowGroupExpandColumn="@ShowGroupExpandColumn"
+                    AllGroupsExpanded="@AllGroupsExpanded" AllGroupsExpandedChanged="@AllGroupsExpandedChanged"
+                    AllowRowSelectOnRowClick="@AllowRowSelectOnRowClick" SelectionMode="@SelectionMode"
+                    Value="@Value" ValueChanged="ValueChanged"
+                    ShowHeader="@ShowHeader" ShowEmptyMessage="@ShowEmptyMessage"
+                    EmptyTemplate="@EmptyTemplate" EditTemplate="@EditTemplate"
+                    HeaderTemplate="@HeaderTemplate" FooterTemplate="@FooterTemplate"
+                    EditMode="@EditMode" KeyProperty="@KeyProperty"
+                    FilterDelay="@FilterDelay" FilterAsYouType="@FilterAsYouType"
+                    FilterDateFormat="@FilterDateFormat" AllowFilterDateInput="@AllowFilterDateInput"
+                    ColumnWidth="@ColumnWidth" GotoFirstPageOnSort="@GotoFirstPageOnSort"
+                    PageSizeChanged="@PageSizeChanged"
+                    FilterText="@Text.Filter" EnumFilterSelectText="@Text.Select" EnumNullFilterText="@Text.NoValue"
+                    ApplyFilterText="@Text.Apply" ClearFilterText="@Text.Clear"
+                    AndOperatorText="@Text.And" OrOperatorText="@Text.Or"
+                    EqualsText="@Text.EqualsOperator" NotEqualsText="@Text.NotEquals"
+                    LessThanText="@Text.LessThan" LessThanOrEqualsText="@Text.LessThanOrEquals"
+                    GreaterThanText="@Text.GreaterThan" GreaterThanOrEqualsText="@Text.GreaterThanOrEquals"
+                    StartsWithText="@Text.StartsWith" EndsWithText="@Text.EndsWith"
+                    ContainsText="@Text.Contains" DoesNotContainText="@Text.DoesNotContain"
+                    InText="@Text.In" NotInText="@Text.NotIn"
+                    IsNullText="@Text.IsNull" IsNotNullText="@Text.IsNotNull"
+                    IsEmptyText="@Text.IsEmpty" IsNotEmptyText="@Text.IsNotEmpty" CustomText="@Text.Custom"
+                    EmptyText="@Text.NoRecords"
+                    RemoveGroupAriaLabel="@Text.RemoveGroup"
+                    LogicalOperatorAriaLabel="@Text.LogicalOperatorAriaLabel"
+                    FilterOperatorAriaLabel="@Text.FilterOperatorAriaLabel"
+                    SecondFilterOperatorAriaLabel="@Text.SecondFilterOperatorAriaLabel"
+                    FilterValueAriaLabel="@Text.FilterValueAriaLabel"
+                    SecondFilterValueAriaLabel="@Text.SecondFilterValueAriaLabel"
+                    ExpandAllTitle="@Text.ExpandAll" CollapseAllTitle="@Text.CollapseAll"
+                    FirstPageTitle="@Text.FirstPage" FirstPageAriaLabel="@Text.FirstPage"
+                    PrevPageTitle="@Text.PreviousPage" PrevPageAriaLabel="@Text.PreviousPage"
+                    NextPageTitle="@Text.NextPage" NextPageAriaLabel="@Text.NextPage"
+                    LastPageTitle="@Text.LastPage" LastPageAriaLabel="@Text.LastPage"
+                    PageTitleFormat="@Text.PageFormat" PageAriaLabelFormat="@Text.GoToPageFormat"
+                    class="@GridCssClass" Style="@GridStyle">
+        <Columns>
+            @if (AllowRowReorder)
+            {
+                <RadzenDataGridColumn TItem="TItem" Width="3rem" MinWidth="3rem"
+                                      Sortable="false" Filterable="false" Resizable="false" Reorderable="false"
+                                      TextAlign="TextAlign.Center">
+                    <Template Context="item">
+                        <span class="admiral-data-grid__row-drag-handle"
+                              draggable="true" data-admiral-row-drag-handle
+                              role="button" tabindex="0" title="@RowReorderAriaLabel"
+                              aria-label="@RowReorderAriaLabel"
+                              @onkeydown="args => HandleRowReorderKeyDown(args, item)">
+                            <span class="admiral-data-grid__row-drag-icon" aria-hidden="true"></span>
+                        </span>
+                    </Template>
+                </RadzenDataGridColumn>
+            }
+            @foreach (var column in Columns)
+            {
+                <RadzenDataGridColumn @key="column.Id" TItem="TItem"
+                                      Property="@column.Property" Title="@column.Title"
+                                      Width="@column.Width" MinWidth="@(column.MinWidth ?? string.Empty)"
+                                      FormatString="@column.FormatString" TextAlign="@column.TextAlign"
+                                      Visible="@IsColumnVisible(column.Id)"
+                                      Sortable="@column.Sortable" Filterable="@column.Filterable"
+                                      Resizable="@column.Resizable" Reorderable="@column.Reorderable"
+                                      Template="@column.Template" HeaderTemplate="@column.HeaderTemplate" />
+            }
+            @ColumnContent
+            @if (RowActions.Count > 0 || Actions is not null)
+            {
+                <RadzenDataGridColumn TItem="TItem" Width="@ActionColumnWidth" MinWidth="@ActionColumnWidth"
+                                      Sortable="false" Filterable="false" Resizable="false" Reorderable="false"
+                                      TextAlign="TextAlign.Center">
+                    <Template Context="item">
+                        <div class="admiral-data-grid__row-actions" role="group" aria-label="@Text.Actions">
+                            @foreach (var action in RowActions)
+                            {
+                                @if (action.DividerBefore)
+                                {
+                                    <span class="admiral-data-grid__action-divider" aria-hidden="true"></span>
+                                }
+                                <RadzenButton @key="action.Id"
+                                              class="@(string.IsNullOrWhiteSpace(action.Text) ? "admiral-icon-button" : "admiral-text-button")"
+                                              Text="@action.Text" Icon="@action.Icon"
+                                              Variant="Variant.Text" ButtonStyle="ButtonStyle.Primary"
+                                              Size="@RowActionButtonSize" Disabled="@(action.IsDisabled?.Invoke(item) == true)"
+                                              aria-label="@GetActionAriaLabel(action, item)"
+                                              Click="@(_ => InvokeRowAction(action, item))" />
+                            }
+                            @if (Actions is not null)
+                            {
+                                <CascadingValue Name="AdmiralDataGridRowItem" Value="item">
+                                    <CascadingValue Name="AdmiralDataGridRowActionSize" Value="RowActionButtonSize">
+                                        @Actions(item)
+                                    </CascadingValue>
+                                </CascadingValue>
+                            }
+                        </div>
+                    </Template>
+                </RadzenDataGridColumn>
+            }
+        </Columns>
+    </RadzenDataGrid>
+
+    @if (UsesPaginationOne)
+    {
+        <div class="admiral-data-grid__pagination-one">
+            <AdmiralPaginationOne Page="@currentPage" PageChanged="ChangeExternalPage"
+                                  PageSize="@effectivePageSize" PageSizeChanged="ChangeExternalPageSize"
+                                  TotalItems="@externalCount" PageSizeOptions="@PageSizeOptions"
+                                  Size="@PaginationSize" Simple="@(Pagination == AdmiralDataGridPagination.PaginationOneSimple)"
+                                  ItemsPerPageText="@Text.ItemsPerPage" ItemRangeFormat="@Text.ItemRangeFormat"
+                                  PageRangeFormat="@Text.PageRangeFormat"
+                                  PreviousPageAriaLabel="@Text.PreviousPage" NextPageAriaLabel="@Text.NextPage"
+                                  PageSelectAriaLabelFormat="@Text.PageFormat" PageSizeAriaLabel="@Text.ItemsPerPage" />
+        </div>
+    }
+</div>

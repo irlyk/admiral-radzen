@@ -1,0 +1,85 @@
+<section class="admiral-component-page__section">
+    <h2>RadzenDataGrid + Admiral theme</h2>
+    <p>@SmokeL["Only RadzenDataGrid and RadzenDataGridColumn. All shown classes ship with the theme. Paging and column selection are native Radzen features, without AdmiralGroupActionsPane."]</p>
+    <div class="admiral-component-playground admiral-table-playground">
+        <div class="admiral-component-playground__preview admiral-table-playground__preview">
+            <RadzenDataGrid @key="pageSize" TItem="DemoRow" Data="@Rows" class="@CssClass"
+                            AllowPaging="@paging" PageSize="@pageSize" AllowSorting="@sorting"
+                            AllowFiltering="@filtering" AllowColumnResize="@resize" AllowColumnReorder="@reorder"
+                            AllowGrouping="@grouping" AllowColumnPicking="@picking"
+                            AllowAlternatingRows="@zebra" GridLines="@lines" RowClick="@(args => selected = args.Data?.Name ?? "—")"
+                            FilterText="@SmokeL["Filter"]" ApplyFilterText="@SmokeL["Apply"]" ClearFilterText="@SmokeL["Clear"]"
+                            GroupPanelText="@SmokeL["Drag a column header here"]">
+                <Columns>
+                    <RadzenDataGridColumn TItem="DemoRow" Property="Id" Title="ID" Width="5rem" />
+                    <RadzenDataGridColumn TItem="DemoRow" Property="Name" Title="@SmokeL["Beneficiary"]" />
+                    <RadzenDataGridColumn TItem="DemoRow" Property="Purpose" Title="@SmokeL["Detailed payment purpose"]" />
+                    <RadzenDataGridColumn TItem="DemoRow" Property="Amount" Title="@SmokeL["Amount"]" FormatString="{0:N2}" TextAlign="TextAlign.Right" Width="8rem" />
+                </Columns>
+            </RadzenDataGrid>
+            <span role="status">@SmokeL["Last row clicked"]: @selected</span>
+        </div>
+        <div class="admiral-component-controls">
+            <label>@SmokeL["Dimension"]<select @bind="size"><option>s</option><option>m</option><option>l</option><option>xl</option></select></label>
+            <label>@SmokeL["Grid lines"]<select @bind="lines">@foreach (var item in Enum.GetValues<DataGridGridLines>()) { <option value="@item">@item</option> }</select></label>
+            <label>@SmokeL["Page size"]<select @bind="pageSize"><option>3</option><option>5</option><option>10</option></select></label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="grey" /> @SmokeL["Grey header"]</label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="noBorder" /> @SmokeL["No outer border"]</label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="wrap" /> @SmokeL["Wrap headers and cells"]</label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="zebra" /> @SmokeL["Alternating rows"]</label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="paging" /> @SmokeL["Pagination"]</label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="sorting" /> @SmokeL["Sorting"]</label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="filtering" /> @SmokeL["Filtering"]</label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="resize" /> @SmokeL["Column resize"]</label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="reorder" /> @SmokeL["Column reorder"]</label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="grouping" /> @SmokeL["Grouping"]</label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="picking" /> @SmokeL["Column selection"]</label>
+        </div>
+    </div>
+    <CopyableRazorExample Code="@Code" Title="@PlaygroundCodeTitle" />
+    <ApiReference Title="@SmokeL["Классы темы для RadzenDataGrid"]" Rows="@Classes" />
+</section>
+@code {
+    private string PlaygroundCodeTitle => $"Razor · {SmokeL["Current playground configuration"]}";
+    private string size = "m", selected = "—";
+    private bool grey, noBorder, wrap = true, zebra, paging = true, sorting = true, filtering, resize, reorder, grouping, picking;
+    private int pageSize = 3;
+    private DataGridGridLines lines = DataGridGridLines.Horizontal;
+    private string CssClass => $"admiral-table--{size}" + (size == "s" ? " admiral-pagination-two--s" : "") + (grey ? " admiral-table--grey-header" : "") + (noBorder ? " admiral-table--no-border" : "") + (wrap ? " admiral-table--wrap-header admiral-table--wrap-cells" : "");
+    private static readonly DemoRow[] Rows = Enumerable.Range(1, 12).Select(i => new DemoRow(i, $"Получатель {i}", "Оплата услуг по договору с длинным описанием для проверки переноса текста", 1200m * i)).ToArray();
+    private sealed record DemoRow(int Id, string Name, string Purpose, decimal Amount);
+    private string Code => $$"""
+        @using Radzen
+        @using Radzen.Blazor
+
+        <RadzenDataGrid TItem="DemoRow" Data="@rows" class="{{CssClass}}"
+            AllowPaging="{{paging.ToString().ToLowerInvariant()}}" PageSize="{{pageSize}}" AllowSorting="{{sorting.ToString().ToLowerInvariant()}}"
+            AllowFiltering="{{filtering.ToString().ToLowerInvariant()}}" AllowColumnResize="{{resize.ToString().ToLowerInvariant()}}" AllowColumnReorder="{{reorder.ToString().ToLowerInvariant()}}"
+            AllowGrouping="{{grouping.ToString().ToLowerInvariant()}}" AllowColumnPicking="{{picking.ToString().ToLowerInvariant()}}"
+            AllowAlternatingRows="{{zebra.ToString().ToLowerInvariant()}}" GridLines="DataGridGridLines.{{lines}}">
+            <Columns>
+                <RadzenDataGridColumn TItem="DemoRow" Property="Id" Title="ID" Width="5rem" />
+                <RadzenDataGridColumn TItem="DemoRow" Property="Name" Title="Получатель платежа" />
+                <RadzenDataGridColumn TItem="DemoRow" Property="Purpose" Title="Подробное назначение платежа" />
+                <RadzenDataGridColumn TItem="DemoRow" Property="Amount" Title="Сумма" FormatString="{0:N2}" Width="8rem" TextAlign="TextAlign.Right" />
+            </Columns>
+        </RadzenDataGrid>
+        @code {
+            private record DemoRow(int Id, string Name, string Purpose, decimal Amount);
+            private DemoRow[] rows = [new(1, "Получатель", "Оплата услуг", 1200m)];
+        }
+        """;
+    private static readonly ApiReference.Entry[] Classes = [
+        new("admiral-table--s / --m / --l / --xl", "class", "Размер ячеек таблицы; выбирайте один модификатор."),
+        new("admiral-table--grey-header", "class", "Альтернативный фон заголовков, учитывающий тему."),
+        new("admiral-table--no-border", "class", "Убирает внешнюю рамку. Внутренние границы задаются GridLines."),
+        new("admiral-table--wrap-header", "class", "Перенос длинных заголовков."),
+        new("admiral-table--wrap-cells", "class", "Перенос содержимого ячеек."),
+        new("admiral-pagination-two--s", "class", "Компактная штатная пагинация (32 px). Без модификатора используется обычный размер темы; отдельных --m / --l / --xl нет."),
+        new("AllowPaging / PageSize", "bool / int", "Штатная клиентская пагинация; при LoadData данные страницы возвращает приложение."),
+        new("AllowSorting / AllowFiltering", "bool", "Штатные сортировка и фильтры Radzen. Их подписи локализуются параметрами Radzen."),
+        new("AllowColumnResize / AllowColumnReorder / AllowGrouping", "bool", "Изменение ширины, перетаскивание колонок, группировка."),
+        new("AllowColumnPicking", "bool", "Штатный выбор видимых колонок."),
+        new("AllowAlternatingRows / GridLines", "bool / DataGridGridLines", "Чередование фона строк и внутренние границы.")
+    ];
+}

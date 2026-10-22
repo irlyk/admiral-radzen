@@ -1,0 +1,12 @@
+<section class="admiral-component-page__section docs-note-section" aria-labelledby="@HeadingId">
+    <h2 id="@HeadingId">@Title</h2>
+    @ChildContent
+</section>
+
+@code {
+    [Parameter, EditorRequired] public string Title { get; set; } = string.Empty;
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    private readonly string generatedId = $"docs-note-{Guid.NewGuid():N}";
+    private string HeadingId => Id ?? generatedId;
+}

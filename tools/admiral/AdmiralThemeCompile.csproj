@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Radzen.MSBuild" Version="0.0.6" PrivateAssets="all" />
+  </ItemGroup>
+  <Target Name="CompileAdmiralThemes" AfterTargets="Build">
+    <ItemGroup>
+      <AdmiralSass Include="$(ThemeStage)/admiral-base.scss" />
+      <AdmiralSass Include="$(ThemeStage)/admiral-dark-base.scss" />
+      <AdmiralSass Include="$(ThemeStage)/admiral.scss" />
+      <AdmiralSass Include="$(ThemeStage)/admiral-dark.scss" />
+    </ItemGroup>
+    <SassCompile InputFiles="@(AdmiralSass)" OutputStyle="compressed" />
+  </Target>
+</Project>

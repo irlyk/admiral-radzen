@@ -1,0 +1,32 @@
+@mixin admiral-typography($token, $weight, $size, $height) {
+  font-family: var(--admiral-font-family, var(--rz-text-font-family));
+  font-style: normal;
+  font-weight: var(--admiral-font-weight-#{$token}, #{$weight});
+  font-size: var(--admiral-font-size-#{$token}, #{$size});
+  line-height: var(--admiral-line-height-#{$token}, #{$height});
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  text-rendering: geometricPrecision;
+}
+
+.admiral-text { margin: 0; color: var(--rz-text-color); }
+.admiral-text--headerhl1 { @include admiral-typography(Header_HL1, 550, 72px, 80px); }
+.admiral-text--headerhl2 { @include admiral-typography(Header_HL2, 550, 56px, 64px); }
+.admiral-text--headerhl3 { @include admiral-typography(Header_HL3, 550, 48px, 56px); }
+.admiral-text--headerh1 { @include admiral-typography(Header_H1, 550, 40px, 48px); }
+.admiral-text--headerh2 { @include admiral-typography(Header_H2, 550, 34px, 40px); }
+.admiral-text--headerh3 { @include admiral-typography(Header_H3, 550, 28px, 36px); }
+.admiral-text--headerh4 { @include admiral-typography(Header_H4, 550, 24px, 32px); }
+.admiral-text--headerh5 { @include admiral-typography(Header_H5, 550, 20px, 28px); }
+.admiral-text--headerh6 { @include admiral-typography(Header_H6, 550, 18px, 24px); }
+.admiral-text--subtitle1 { @include admiral-typography(Subtitle_Subtitle1, 400, 18px, 24px); }
+.admiral-text--subtitle2 { @include admiral-typography(Subtitle_Subtitle2, 550, 16px, 24px); }
+.admiral-text--subtitle3 { @include admiral-typography(Subtitle_Subtitle3, 550, 14px, 20px); }
+.admiral-text--body1long { @include admiral-typography(Body_Body1Long, 400, 16px, 24px); }
+.admiral-text--body1short { @include admiral-typography(Body_Body1Short, 400, 16px, 20px); }
+.admiral-text--body2long { @include admiral-typography(Body_Body2Long, 400, 14px, 20px); }
+.admiral-text--body2short { @include admiral-typography(Body_Body2Short, 400, 14px, 16px); }
+.admiral-text--button1 { @include admiral-typography(Button_Button1, 500, 16px, 24px); }
+.admiral-text--button2 { @include admiral-typography(Button_Button2, 500, 14px, 20px); }
+.admiral-text--caption1 { @include admiral-typography(Caption_Caption1, 400, 12px, 16px); }
+.admiral-text--caption2 { @include admiral-typography(Caption_Caption2, 400, 10px, 12px); }
+.admiral-text--skeleton { width: fit-content; border-radius: var(--rz-border-radius-1); color: transparent !important; pointer-events: none; user-select: none; }

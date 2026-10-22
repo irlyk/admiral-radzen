@@ -1,0 +1,32 @@
+<Project>
+  <PropertyGroup>
+    <AdmiralIconsSourceRoot Condition="'$(AdmiralIconsSourceRoot)' == ''">$(MSBuildThisFileDirectory)..\icons\</AdmiralIconsSourceRoot>
+    <AdmiralIconsOutputRoot Condition="'$(AdmiralIconsOutputRoot)' == ''">$(MSBuildProjectDirectory)\wwwroot\admiral-icons\</AdmiralIconsOutputRoot>
+  </PropertyGroup>
+
+  <Target Name="CopyAdmiralIcons"
+          BeforeTargets="ResolveStaticWebAssetsInputs;ProcessStaticWebAssets"
+          Condition="'@(AdmiralIcon)' != ''">
+    <ItemGroup>
+      <_AdmiralIcon Include="@(AdmiralIcon)">
+        <Source>$(AdmiralIconsSourceRoot)%(Identity).svg</Source>
+        <Destination>$(AdmiralIconsOutputRoot)%(Identity).svg</Destination>
+      </_AdmiralIcon>
+      <_AdmiralIconDestination Include="@(_AdmiralIcon->'%(Destination)')" />
+      <_MissingAdmiralIcon Include="@(_AdmiralIcon)" Condition="!Exists('%(_AdmiralIcon.Source)')" />
+      <Content Include="$(AdmiralIconsOutputRoot)**\*.svg;$(AdmiralIconsOutputRoot)icons.txt" />
+    </ItemGroup>
+
+    <Error Condition="'@(_MissingAdmiralIcon)' != ''"
+           Text="Admiral icon file not found: @(_MissingAdmiralIcon->'%(Identity)', ', ')" />
+
+    <MakeDir Directories="$(AdmiralIconsOutputRoot);@(_AdmiralIconDestination->'%(RootDir)%(Directory)')" />
+    <Copy SourceFiles="@(_AdmiralIcon->'%(Source)')"
+          DestinationFiles="@(_AdmiralIcon->'%(Destination)')"
+          SkipUnchangedFiles="true" />
+    <WriteLinesToFile File="$(AdmiralIconsOutputRoot)icons.txt"
+                      Lines="@(AdmiralIcon)"
+                      Overwrite="true"
+                      WriteOnlyWhenDifferent="true" />
+  </Target>
+</Project>

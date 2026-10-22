@@ -1,0 +1,21 @@
+<div @attributes="AdditionalAttributes" class="@CssClass" style="@CssVariables">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public int MobileSpan { get; set; } = 4;
+    [Parameter] public int TabletSpan { get; set; } = 8;
+    [Parameter] public int DesktopSpan { get; set; } = 12;
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => string.Join(' ', new[] { "admiral-grid__item", Class }
+        .Where(value => !string.IsNullOrWhiteSpace(value)));
+
+    private string CssVariables =>
+        $"--admiral-grid-mobile-span:{Math.Clamp(MobileSpan, 1, 4)};" +
+        $"--admiral-grid-tablet-span:{Math.Clamp(TabletSpan, 1, 8)};" +
+        $"--admiral-grid-desktop-span:{Math.Clamp(DesktopSpan, 1, 12)};{Style}";
+}

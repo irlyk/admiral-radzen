@@ -1,0 +1,44 @@
+<ul class="@CssClass" style="@CssStyle" role="list" data-orientation="@Orientation.ToString().ToLowerInvariant()" @attributes="AdditionalAttributes">
+    <CascadingValue Value="this">@ChildContent</CascadingValue>
+</ul>
+
+@code {
+    private int nextIndex;
+    private int currentActiveStep = -1;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public AdmiralStepperOrientation Orientation { get; set; }
+    [Parameter] public int ActiveStep { get; set; } = -1;
+    [Parameter] public EventCallback<int> ActiveStepChanged { get; set; }
+    [Parameter] public int LineClamp { get; set; } = 3;
+    [Parameter] public string? StepWidth { get; set; }
+    [Parameter] public bool HideLastStepLine { get; set; }
+    [Parameter] public bool Mobile { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        currentActiveStep = ActiveStep;
+    }
+
+    internal int CurrentActiveStep => currentActiveStep;
+    internal int ClaimIndex() => nextIndex++;
+    internal async Task SelectAsync(int index)
+    {
+        if (currentActiveStep == index) return;
+        currentActiveStep = index;
+        await ActiveStepChanged.InvokeAsync(index);
+        StateHasChanged();
+    }
+
+    private string CssClass => string.Join(' ', new[] { "admiral-stepper", Mobile ? "admiral-stepper--mobile" : null,
+        HideLastStepLine ? "admiral-stepper--hide-last" : null, Class }
+        .Where(value => !string.IsNullOrWhiteSpace(value)));
+    private string CssStyle => string.Join(' ', new[]
+    {
+        $"--admiral-stepper-line-clamp: {Math.Clamp(LineClamp, 1, 3)};",
+        string.IsNullOrWhiteSpace(StepWidth) ? null : $"--admiral-stepper-step-width: {StepWidth};", Style
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

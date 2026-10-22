@@ -1,0 +1,22 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_262" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Rectangle 2313" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(52,119,67)" />
+		</g>
+	</mask>
+	<rect id="Western Sahara" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Rectangle 2312" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Rectangle 2312" width="27.500000" height="19.500000" x="0.250000" y="4.250000" rx="2.750000" stroke="rgb(214,216,221)" stroke-width="0.500000" />
+	<g mask="url(#mask_262)">
+		<rect id="Rectangle 2310" width="28.000000" height="6.730769" x="0.000000" y="4.000000" fill="rgb(0,0,0)" />
+		<rect id="Rectangle 2311" width="28.000000" height="6.730769" x="0.000000" y="17.269287" fill="rgb(52,119,67)" />
+		<path id="Vector 1" d="M10 14L0 4L0 24L10 14Z" fill="rgb(180,42,38)" fill-rule="evenodd" />
+		<path id="Subtract" d="M17.5712 11.4278C16.3244 11.6542 15.3789 12.7456 15.3789 14.0577C15.3789 15.3699 16.3244 16.4612 17.5712 16.6877C17.4152 16.716 17.2546 16.7308 17.0904 16.7308C15.6141 16.7308 14.4174 15.534 14.4174 14.0577C14.4174 12.5814 15.6141 11.3846 17.0904 11.3846C17.2546 11.3846 17.4152 11.3994 17.5712 11.4278Z" fill="rgb(180,42,38)" fill-rule="nonzero" />
+		<path id="Star 97" d="M17.926 13.4826L19.3232 13.4826L18.1928 14.3039L18.6246 15.6327L17.4942 14.8114L16.3639 15.6327L16.7956 14.3039L15.6653 13.4826L17.0625 13.4826L17.4942 12.1538L17.926 13.4826Z" fill="rgb(180,42,38)" fill-rule="evenodd" />
+	</g>
+</svg>

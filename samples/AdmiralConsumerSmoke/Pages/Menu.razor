@@ -1,0 +1,146 @@
+@page "/components/menu"
+
+<PageTitle>Admiral Menu</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Menu / MenuButton / OverflowMenu"
+        Description="One declarative menu model shared by button, icon, text, split-button and tag triggers."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-menu--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@T("Использование и ограничения", "Usage and limitations")</h2>
+            <p>@T("MenuButton, OverflowMenu, TextButtonMenu, TagMenu и MultiButton используют одинаковые AdmiralMenuItem. Click сообщает выбранное действие; Checkable с CheckedChanged хранит состояние выбора, а KeepOpen оставляет меню открытым. Disabled блокирует пункт. У MultiButton основное действие Click независимо от выбора пункта.", "MenuButton, OverflowMenu, TextButtonMenu, TagMenu and MultiButton share AdmiralMenuItem. Click reports an action; Checkable with CheckedChanged holds checked state, and KeepOpen leaves the menu open. Disabled blocks an item. MultiButton's main Click is separate from menu-item selection.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralMenuButton" Rows="@MenuRows" /><ApiReference Title="AdmiralMenuItem" Rows="@ItemRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenSplitButton + Admiral theme</h2>
+            <p>@T("Прямой RadzenSplitButton оформляется темой, но его пункты используют RadzenSplitButtonItem и событие Click с аргументом RadzenSplitButtonItem. AdmiralMenuItem поддерживает дополнительные Checkable, CheckedChanged, KeepOpen, описание и горячую клавишу; тема не добавляет их RadzenSplitButton.", "Direct RadzenSplitButton receives theme styling, but its items use RadzenSplitButtonItem and Click receives a RadzenSplitButtonItem. AdmiralMenuItem additionally supports Checkable, CheckedChanged, KeepOpen, description and shortcut; the theme does not add those to RadzenSplitButton.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <RadzenSplitButton Text="Actions" Icon="admiral:system/more-horizontal-outline" Click="@OnDirectAction"><RadzenSplitButtonItem Text="Open" Value="open" /><RadzenSplitButtonItem Text="Delete" Value="delete" /></RadzenSplitButton>
+                <output aria-live="polite">@T("Результат Radzen", "Radzen result"): @directResult</output>
+            </div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
+        </section>
+    }
+    else
+    {
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Playground"]</AdmiralText>
+        <div class="admiral-component-playground">
+            <div class="admiral-component-playground__preview">
+                @switch (triggerType)
+                {
+                    case "Overflow":
+                        <AdmiralOverflowMenu AriaLabel="@SmokeL["More payment actions"]" Dimension="@dimension">@MenuItems</AdmiralOverflowMenu>
+                        break;
+                    case "Text":
+                        <AdmiralTextButtonMenu Text="@SmokeL["Actions"]">@MenuItems</AdmiralTextButtonMenu>
+                        break;
+                    case "Tag":
+                        <AdmiralTagMenu Text="@SmokeL["Payment status"]" Kind="AdmiralTagKind.Primary" StatusViaBackground="true">@MenuItems</AdmiralTagMenu>
+                        break;
+                    case "MultiButton":
+                        <AdmiralMultiButton Text="@SmokeL["Create payment"]" Dimension="@dimension" Click="MainAction">@MenuItems</AdmiralMultiButton>
+                        break;
+                    default:
+                        <AdmiralMenuButton Text="@SmokeL["Actions"]" Dimension="@dimension" Appearance="@appearance">@MenuItems</AdmiralMenuButton>
+                        break;
+                }
+                <span class="admiral-component-page__result" aria-live="polite">@result</span>
+            </div>
+            <div class="admiral-component-controls">
+                <label><span>@SmokeL["Trigger"]</span><select @bind="triggerType"><option>Button</option><option>Overflow</option><option>Text</option><option>Tag</option><option>MultiButton</option></select></label>
+                <label><span>@SmokeL["Dimension"]</span><select @bind="dimension">@foreach (var item in Enum.GetValues<AdmiralButtonDimension>()) { <option value="@item">@item</option> }</select></label>
+                <label><span>@SmokeL["Appearance"]</span><select @bind="appearance">@foreach (var item in Enum.GetValues<AdmiralButtonAppearance>()) { <option value="@item">@item</option> }</select></label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="menuPinned" /> @SmokeL["Keep checked item selected"]</label>
+            </div>
+        </div>
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Trigger variants"]</AdmiralText>
+        <div class="admiral-component-row">
+            <AdmiralMenuButton Text="MenuButton" Dimension="AdmiralButtonDimension.M">@CompactItems</AdmiralMenuButton>
+            <AdmiralOverflowMenu AriaLabel="@SmokeL["Overflow menu"]">@CompactItems</AdmiralOverflowMenu>
+            <AdmiralTextButtonMenu Text="TextButtonMenu">@CompactItems</AdmiralTextButtonMenu>
+            <AdmiralMultiButton Text="MultiButton" Dimension="AdmiralButtonDimension.M" Click="MainAction">@CompactItems</AdmiralMultiButton>
+            <AdmiralTagMenu Text="TagMenu" Kind="AdmiralTagKind.Success">@CompactItems</AdmiralTagMenu>
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Item content and states"]</AdmiralText>
+        <AdmiralMenuButton Text="@SmokeL["Open item examples"]" Dimension="AdmiralButtonDimension.M" MatchTriggerWidth="false">
+            <AdmiralMenuItem Text="@SmokeL["Edit payment"]" Description="Change amount and beneficiary" Icon="admiral:system/edit-outline" Shortcut="⌘E" Click="@(() => SelectAction("edit"))" />
+            <AdmiralMenuItem Text="@SmokeL["Pin in recent"]" Checkable="true" @bind-Checked="menuPinned" KeepOpen="true" />
+            <AdmiralMenuItem Text="@SmokeL["Current operation"]" Selected="true" Icon="admiral:service/check-outline" />
+            <AdmiralMenuItem Text="@SmokeL["Unavailable action"]" Disabled="true" Icon="admiral:security/lock-outline" />
+            <AdmiralMenuItem Text="@SmokeL["Delete"]" DividerBefore="true" Icon="admiral:system/delete-outline" Click="@(() => SelectAction("delete"))" />
+        </AdmiralMenuButton>
+    </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private string directResult = "—";
+    private void OnDirectAction(RadzenSplitButtonItem? item) => directResult = item?.Value?.ToString() ?? "main";
+    private static readonly IReadOnlyList<ApiReference.Entry> MenuRows = [
+        new("Text / ChildContent", "string / Menu; RenderFragment? / null", "Trigger label and AdmiralMenuItem children."),
+        new("Appearance / Dimension", "AdmiralButtonAppearance / Primary; AdmiralButtonDimension / Xl", "Trigger look and size."),
+        new("Disabled / MatchTriggerWidth", "bool / false; bool / true", "Block opening or match popup width to trigger."),
+        new("AriaLabel", "string / Menu", "Accessible name for the menu.")];
+    private static readonly IReadOnlyList<ApiReference.Entry> ItemRows = [
+        new("Text / Description / Icon / Shortcut", "string or string?", "Item content and shortcut label."),
+        new("Disabled / Selected / DividerBefore", "bool / false", "Item state and separator."),
+        new("Checkable / Checked / CheckedChanged", "bool / false; EventCallback<bool>", "Persistent check state and callback."),
+        new("KeepOpen / Click", "bool / false; EventCallback", "Keep menu open or report activation.")];
+    private const string AdmiralCode = """
+        <AdmiralMenuButton Text="Actions" Dimension="AdmiralButtonDimension.M">
+            <AdmiralMenuItem Text="Open" Click="@(() => result = "Open")" />
+            <AdmiralMenuItem Text="Pin" Checkable="true" @bind-Checked="pinned" KeepOpen="true" />
+        </AdmiralMenuButton>
+        <output aria-live="polite">@result · Pinned: @pinned</output>
+        @code { private string result = "—"; private bool pinned; }
+        """;
+    private const string DirectCode = """
+        <RadzenSplitButton Text="Actions" Icon="admiral:system/more-horizontal-outline" Click="@OnAction">
+            <RadzenSplitButtonItem Text="Open" Value="open" />
+            <RadzenSplitButtonItem Text="Delete" Value="delete" />
+        </RadzenSplitButton>
+        <output aria-live="polite">@result</output>
+        @code {
+            private string result = "—";
+            private void OnAction(RadzenSplitButtonItem? item) => result = item?.Value?.ToString() ?? "main";
+        }
+        """;
+    private string triggerType = "Button";
+    private string result = T("Выберите действие", "Choose an action");
+    private bool menuPinned;
+    private AdmiralButtonDimension dimension = AdmiralButtonDimension.M;
+    private AdmiralButtonAppearance appearance;
+
+    private RenderFragment MenuItems => @<text>
+        <AdmiralMenuItem Text="Open" Icon="admiral:system/open-in-new-outline" Click="@(() => SelectAction("open"))" />
+        <AdmiralMenuItem Text="Duplicate" Icon="admiral:documents/copy-outline" Click="@(() => SelectAction("duplicate"))" />
+        <AdmiralMenuItem Text="Pin in recent" Checkable="true" Checked="@menuPinned" CheckedChanged="@(value => menuPinned = value)" KeepOpen="true" />
+        <AdmiralMenuItem Text="Delete" Icon="admiral:system/delete-outline" DividerBefore="true" Click="@(() => SelectAction("delete"))" />
+    </text>;
+
+    private RenderFragment CompactItems => @<text>
+        <AdmiralMenuItem Text="First action" Click="@(() => SelectAction("first"))" />
+        <AdmiralMenuItem Text="Second action" Click="@(() => SelectAction("second"))" />
+    </text>;
+
+    private void SelectAction(string action) => result = $"{T("Выбрано", "Selected")}: {action}";
+    private void MainAction(MouseEventArgs _) => result = T("Основное действие", "Main action");
+}

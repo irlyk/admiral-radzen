@@ -1,0 +1,30 @@
+@implements IAsyncDisposable
+
+<div @ref="root" class="@CssClass" style="@CombinedStyle" aria-busy="@(Skeleton ? "true" : null)" @attributes="AdditionalAttributes">
+    <div class="@($"rz-slider rz-slider-horizontal admiral-slider__track {(Disabled || Skeleton ? "rz-state-disabled" : null)}")">
+        <span class="rz-slider-range" style="@FillStyle"></span>
+        @for (var index = 0; index < (Range ? 2 : 1); index++)
+        {
+            var value = Range ? endpoints[index] : currentValue;
+            <span @attributes="HandleAttributesFor(index)" class="@HandleCssClass(index)"
+                  style="@PositionStyle(index)" data-handle="@index"
+                  role="slider" tabindex="@(Disabled || Skeleton ? -1 : 0)" aria-orientation="horizontal"
+                  aria-valuemin="@Invariant(Min)" aria-valuemax="@Invariant(Max)" aria-valuenow="@Invariant(value)" aria-valuetext="@Format(value)"
+                  aria-label="@(Range ? index == 0 ? MinHandleAriaLabel : MaxHandleAriaLabel : AriaLabel)"
+                  aria-disabled="@(Disabled || Skeleton ? "true" : null)"></span>
+        }
+    </div>
+    @if (ShowMarks)
+    {
+        <div class="admiral-slider__marks">
+            @foreach (var mark in visibleMarks)
+            {
+                <button type="button" class="admiral-slider__mark" style="inset-inline-start:@(Percent(mark))%"
+                        disabled="@(Disabled || Skeleton)" @onclick="() => SelectMark(mark)">
+                    @if (MarkTemplate is not null) { @MarkTemplate(mark) }
+                    else { @Format(mark) }
+                </button>
+            }
+        </div>
+    }
+</div>

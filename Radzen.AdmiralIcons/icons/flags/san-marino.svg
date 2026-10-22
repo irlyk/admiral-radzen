@@ -1,0 +1,24 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_59" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="27.500000" height="19.500000" x="0.250000" y="4.250000" rx="2.750000" stroke="rgb(245,245,245)" stroke-width="0.500000" />
+		</g>
+	</mask>
+	<rect id="San Marino" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="27.500000" height="19.500000" x="0.250000" y="4.250000" rx="2.750000" stroke="rgb(214,216,221)" stroke-width="0.500000" />
+	<g mask="url(#mask_59)">
+		<path id="Rectangle 2" d="M0 24L28 24L28 13.3334L0 13.3334L0 24Z" fill="rgb(124,204,245)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 24L28 13.3334L0 13.3334L0 24L28 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Oval 5" d="M12.6636 15.6415C11.8682 15.18 11.3333 14.3192 11.3333 13.3334L12.6636 15.6415ZM16.6667 13.3334C16.6667 14.2779 16.1756 15.1077 15.4349 15.5815L16.6667 13.3334Z" fill="rgb(215.985,215.985,215.985)" fill-opacity="0" fill-rule="evenodd" />
+		<path id="Oval 5" d="M12.6636 15.6415C11.8682 15.18 11.3333 14.3192 11.3333 13.3334L12.6636 15.6415ZM16.6667 13.3334C16.6667 14.2779 16.1756 15.1077 15.4349 15.5815L16.6667 13.3334Z" fill-rule="evenodd" stroke="rgb(68,95,66)" stroke-linecap="round" stroke-width="1.333333" />
+		<path id="Oval 5" d="M14 14.6666C14.7364 14.6666 15.3333 13.7712 15.3333 12.6666C15.3333 11.5621 14.7364 10.6666 14 10.6666C13.2636 10.6666 12.6667 11.5621 12.6667 12.6666C12.6667 13.7712 13.2636 14.6666 14 14.6666Z" fill="rgb(216,159,61)" fill-rule="evenodd" />
+		<path id="Oval 5" d="M15.3333 12.6666C15.3333 11.5621 14.7364 10.6666 14 10.6666C13.2636 10.6666 12.6667 11.5621 12.6667 12.6666C12.6667 13.7712 13.2636 14.6666 14 14.6666C14.7364 14.6666 15.3333 13.7712 15.3333 12.6666Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	</g>
+</svg>

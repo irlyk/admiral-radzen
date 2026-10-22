@@ -1,0 +1,28 @@
+<div class="@CssClass" data-status="@StatusName">
+    <AdmiralSelect TValue="string" TItem="AdmiralPhoneCountry"
+                   @key="SelectedIso3"
+                   Value="@SelectedIso3" ValueChanged="@ChangeCountryAsync"
+                   Data="@EffectiveCountries" TextSelector="@(country => country.Name)"
+                   ValueSelector="@(country => country.Iso3)" Size="@Size" Status="@Status"
+                   AllowFiltering="@AllowCountrySearch" Disabled="@(Disabled || Loading)" ReadOnly="@ReadOnly"
+                   FilterPlaceholder="@CountrySearchPlaceholder"
+                   PopupStyle="max-height: min(18rem, calc(100dvh - 4rem)); min-width: min(18rem, calc(100vw - 1rem)); background: var(--rz-panel-background-color, var(--rz-base-background-color))">
+        <SelectedTemplate Context="country">
+            <span class="admiral-phone-input__country-value">
+                <AdmiralIcon Icon="@(SelectedCountry?.FlagIcon ?? country.FlagIcon)" Size="@FlagSize" />
+            </span>
+        </SelectedTemplate>
+        <ItemTemplate Context="country">
+            <span class="admiral-phone-input__country-option">
+                <AdmiralIcon Icon="@country.FlagIcon" Size="@FlagSize" />
+                <span class="admiral-phone-input__country-name">@country.Name</span>
+                <span class="admiral-phone-input__dial-code">@country.DialCode</span>
+            </span>
+        </ItemTemplate>
+    </AdmiralSelect>
+    <AdmiralTextInput Value="@DisplayValue" ValueChanged="@HandleValueChanged" ValueExpression="@ValueExpression"
+                      Name="@Name" Id="@Id" Placeholder="@Placeholder" Size="@Size" Status="@Status"
+                      DisplayClearIcon="@DisplayClearIcon" Disabled="@Disabled" ReadOnly="@ReadOnly"
+                      Loading="@Loading" Skeleton="@Skeleton" MaxLength="@MaxLength"
+                      @attributes="PhoneInputAttributes" />
+</div>

@@ -1,0 +1,72 @@
+.admiral-tree-view {
+  --admiral-tree-indent: 2.5rem;
+  --admiral-tree-icon: 1.5rem;
+  --admiral-tree-padding: 0.5rem;
+  width: min(100%, 48rem);
+  min-width: 0;
+  color: var(--rz-text-color);
+  font-size: 1rem;
+  line-height: 1.25rem;
+
+  &--s {
+    --admiral-tree-indent: 2.25rem;
+    --admiral-tree-icon: 1.25rem;
+    --admiral-tree-padding: 0.375rem;
+    font-size: 0.875rem;
+    line-height: 1rem;
+  }
+
+  &__row {
+    display: flex;
+    align-items: flex-start;
+    box-sizing: border-box;
+    min-height: 2.5rem;
+    padding: var(--admiral-tree-padding) 1rem;
+    padding-inline-start: calc(1rem + var(--admiral-tree-depth) * var(--admiral-tree-indent));
+    background: var(--admiral-background-primary, var(--rz-base-background-color));
+    cursor: pointer;
+    &[aria-selected='true'] { background: var(--admiral-color-Opacity_Focus, if($theme-dark, rgba($rz-white, 0.09), rgba($rz-black, 0.09))); }
+    &:not([aria-disabled='true']):hover { background: var(--admiral-color-Opacity_Hover, $admiral-button-hover); }
+    &:not([aria-disabled='true']):active { background: var(--admiral-color-Opacity_Press, $admiral-button-press); }
+    &:focus-visible { outline: var(--rz-outline-focus); outline-offset: -2px; }
+    &[aria-disabled='true'] {
+      color: var(--rz-text-disabled-color);
+      cursor: not-allowed;
+      background: var(--admiral-background-primary, var(--rz-base-background-color));
+    }
+  }
+
+  &--s &__row { min-height: 2rem; }
+  &__expand {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex: 0 0 var(--admiral-tree-icon);
+    width: var(--admiral-tree-icon);
+    height: var(--admiral-tree-icon);
+    margin-inline-end: 1rem;
+    padding: 0;
+    border: 0;
+    border-radius: var(--rz-border-radius-2);
+    color: var(--admiral-color-Neutral_Neutral50, $admiral-button-neutral-50);
+    background: transparent;
+    cursor: pointer;
+    &::before { position: absolute; inset: -6px; border-radius: 50%; content: ''; }
+    &:not(:disabled):hover::before { background: var(--admiral-color-Opacity_Hover, $admiral-button-hover); }
+    &:focus-visible { outline: var(--rz-outline-focus); outline-offset: 2px; }
+    &:disabled { color: var(--rz-text-disabled-color); cursor: not-allowed; }
+    .admiral-icon { transition: transform 0.3s; pointer-events: none; }
+  }
+  &__row[aria-expanded='true'] &__expand .admiral-icon { transform: rotate(90deg); }
+  &__checkbox { flex: none; margin-inline-end: 0.5rem; padding-top: 2px; }
+  &--s &__checkbox .rz-chkbox,
+  &--s &__checkbox .rz-chkbox-box { width: 1rem; height: 1rem; min-width: 1rem; min-height: 1rem; }
+  &__icon { flex: none; color: var(--admiral-color-Neutral_Neutral50, $admiral-button-neutral-50); margin-inline-end: 0.5rem; }
+  &__row[aria-disabled='true'] &__icon { color: inherit; }
+  &__label { padding-top: 2px; min-width: 0; overflow-wrap: anywhere; }
+  &__empty { color: var(--rz-text-secondary-color); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admiral-tree-view__expand .admiral-icon { transition: none; }
+}

@@ -1,0 +1,23 @@
+@page "/"
+
+<link data-testid="theme-link" href="@themeCss" rel="stylesheet" />
+<main>
+    <h1>Package consumer validation</h1>
+    <button type="button" data-testid="theme-toggle" @onclick="ToggleTheme">Switch theme</button>
+    <output data-testid="theme-state">@mode</output>
+    <div><AdmiralIcon Icon="admiral:system/search-outline" Size="AdmiralIconSize.Large" aria-hidden="true" /></div>
+    <RadzenButton Text="Count clicks" Click="@(_ => clicks++)" />
+    <output data-testid="button-result">Clicks: @clicks</output>
+    <RadzenTextBox @bind-Value="query" Placeholder="Search" />
+    <output data-testid="textbox-result">Query: @query</output>
+</main>
+
+@code {
+    private AdmiralThemeMode mode = AdmiralThemeMode.Light;
+    private string themeCss => mode == AdmiralThemeMode.Light
+        ? "_content/Radzen.Admiral.Themes/css/admiral-base.css"
+        : "_content/Radzen.Admiral.Themes/css/admiral-dark-base.css";
+    private int clicks;
+    private string query = string.Empty;
+    private void ToggleTheme() => mode = mode == AdmiralThemeMode.Light ? AdmiralThemeMode.Dark : AdmiralThemeMode.Light;
+}

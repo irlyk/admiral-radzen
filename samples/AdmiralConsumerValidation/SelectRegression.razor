@@ -1,0 +1,51 @@
+@page "/select-regression"
+
+<link data-testid="select-theme-link" href="@themeCss" rel="stylesheet" />
+<h1>Select package regression</h1>
+<button type="button" data-testid="select-theme-toggle" @onclick="ToggleTheme">Switch select theme</button>
+<output data-testid="select-theme">@theme</output>
+<div data-testid="select-admiral-single">
+    <AdmiralSelectField TValue="string" TItem="string" Label="Package city" Data="@cities"
+                        TextSelector="@(city => city)" ValueSelector="@(city => city)"
+                        Value="@single" ValueChanged="OnSingleChanged" AllowClear="true" AllowFiltering="true" />
+</div>
+<output data-testid="select-single-model">Value: @single · Changes: @singleChanges</output>
+<div data-testid="select-admiral-multiple">
+    <AdmiralSelect TValue="string" TItem="string" Data="@cities" TextSelector="@(city => city)"
+                   ValueSelector="@(city => city)" Multiple="true" Chips="true" AllowClear="true"
+                   Values="@multiple" ValuesChanged="OnMultipleChanged" aria-label="Package cities" />
+</div>
+<output data-testid="select-multiple-model">Values: @string.Join(",", multiple ?? []) · Changes: @multipleChanges</output>
+<output data-testid="select-callback-log">@string.Join(" | ", callbackLog)</output>
+<div data-testid="select-direct-radzen">
+    <RadzenDropDown TValue="string" Data="@cities" @bind-Value="direct" AllowFiltering="true"
+                    AllowClear="true" aria-label="Direct city" />
+</div>
+<output data-testid="select-direct-model">Value: @direct</output>
+
+@code {
+    private readonly string[] cities = ["Moscow", "Kazan", "Sochi"];
+    private string? single = "Moscow";
+    private int singleChanges;
+    private IEnumerable<string>? multiple = ["Moscow"];
+    private int multipleChanges;
+    private readonly List<string> callbackLog = [];
+    private string? direct = "Moscow";
+    private string theme = "Light";
+    private string themeCss => theme == "Light"
+        ? "_content/Radzen.Admiral.Themes/css/admiral-base.css"
+        : "_content/Radzen.Admiral.Themes/css/admiral-dark-base.css";
+    private void OnSingleChanged(string? value)
+    {
+        single = value;
+        singleChanges++;
+        callbackLog.Add($"single:{value ?? "<null>"}");
+    }
+    private void OnMultipleChanged(IEnumerable<string>? values)
+    {
+        multiple = values;
+        multipleChanges++;
+        callbackLog.Add($"multiple:{string.Join(",", values ?? [])}");
+    }
+    private void ToggleTheme() => theme = theme == "Light" ? "Dark" : "Light";
+}

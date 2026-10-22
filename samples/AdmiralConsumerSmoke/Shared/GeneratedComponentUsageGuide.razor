@@ -1,0 +1,59 @@
+@using System.Reflection
+@using Microsoft.AspNetCore.Components
+@inject IStringLocalizer<SharedResource> L
+
+<section class="admiral-component-page__section">
+    <h2>@L["Usage"] · @ComponentDocsCatalog.Title(Component)</h2>
+    <p>@L["The preferred API uses Admiral-prefixed components. Open the Radzen + theme tab for the direct Radzen API and packaged theme classes."]</p>
+    <CopyableRazorExample Code="@ComponentDocsCatalog.Example(Component)" Title="Razor · Admiral API" />
+    @foreach (var type in ComponentDocsCatalog.AdmiralTypes(Component))
+    {
+        <ApiReference Title="@type.Name" Rows="@Rows(type)" />
+    }
+    <h3>@L["Radzen + theme"]</h3>
+    <p>@L["Direct equivalent"]: <code>@L[ComponentDocsCatalog.RadzenEquivalent(Component)]</code>. @L[Component == "Divider" ? "The Divider theme provides classes for a plain HTML element; wrapper parameters must be applied manually." : "The theme changes Radzen geometry, colors and states, but does not add Admiral wrapper parameters or templates."]</p>
+    <p>@L["Both variants require"] <code>admiral-base.css</code> / <code>admiral-dark-base.css</code>. @if (Component != "Divider") { <span>@L["Icons also require"] <code>admiral-radzen-icons.css</code> / <code>admiral-radzen-icons.js</code>.</span> }</p>
+</section>
+
+@code {
+    [Parameter, EditorRequired] public string Component { get; set; } = string.Empty;
+
+    private static IReadOnlyList<ApiReference.Entry> Rows(Type type)
+    {
+        object? instance = null;
+        try { instance = Activator.CreateInstance(type); } catch { }
+
+        return type.GetProperties(BindingFlags.Instance | BindingFlags.Public)
+            .Where(property => property.GetCustomAttribute<ParameterAttribute>(true) is not null)
+            .OrderBy(property => property.MetadataToken)
+            .Select(property => new ApiReference.Entry(
+                property.Name,
+                $"{FriendlyType(property.PropertyType)} / {DefaultValue(instance, property)}",
+                ComponentDocsCatalog.Description(property.Name)))
+            .ToArray();
+    }
+
+    private static string FriendlyType(Type type)
+    {
+        if (type == typeof(string)) return "string";
+        if (type == typeof(bool)) return "bool";
+        if (type == typeof(int)) return "int";
+        if (type.IsGenericType)
+        {
+            var name = type.Name[..type.Name.IndexOf('`')];
+            return $"{name}<{string.Join(", ", type.GetGenericArguments().Select(FriendlyType))}>";
+        }
+        return type.Name;
+    }
+
+    private static string DefaultValue(object? instance, PropertyInfo property)
+    {
+        if (instance is null) return "—";
+        try
+        {
+            var value = property.GetValue(instance);
+            return value switch { null => "null", bool flag => flag ? "true" : "false", string text when text.Length == 0 => "\"\"", Enum item => item.ToString(), _ => value.ToString() ?? "—" };
+        }
+        catch { return "—"; }
+    }
+}

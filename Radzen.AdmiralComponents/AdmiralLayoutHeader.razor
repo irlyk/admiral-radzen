@@ -1,0 +1,48 @@
+@using Radzen.Admiral.Components.Internal
+
+<div class="@CssClass" @attributes="AdditionalAttributes">
+    @if (ShowNavigationControl && Layout is not null)
+    {
+        <button type="button" class="admiral-layout-header__navigation-control admiral-layout-header__navigation-control--overlay"
+                aria-label="@OpenNavigationAriaLabel" aria-controls="@Layout.SideMenuId"
+                aria-expanded="@(Layout.IsOverlayOpen() ? "true" : "false")" @onclick="Layout.ToggleOverlayAsync">
+            <AdmiralIcon Icon="@NavigationIcon" />
+        </button>
+        <button type="button" class="admiral-layout-header__navigation-control admiral-layout-header__navigation-control--desktop"
+                aria-label="@ToggleNavigationAriaLabel" aria-controls="@Layout.SideMenuId"
+                aria-expanded="@(Layout.GetSideMenuState() == AdmiralSideMenuState.Expanded ? "true" : "false")" @onclick="Layout.ToggleDesktopAsync">
+            <AdmiralIcon Icon="@NavigationIcon" />
+        </button>
+    }
+
+    @if (Brand is not null)
+    {
+        <div class="admiral-layout-header__brand">@Brand</div>
+    }
+
+    @if (ChildContent is not null)
+    {
+        <div class="admiral-layout-header__content">@ChildContent</div>
+    }
+
+    @if (Actions is not null)
+    {
+        <div class="admiral-layout-header__actions">@Actions</div>
+    }
+</div>
+
+@code {
+    [CascadingParameter] internal AdmiralLayoutContext? Layout { get; set; }
+    [Parameter] public RenderFragment? Brand { get; set; }
+    [Parameter] public RenderFragment? Actions { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public bool ShowNavigationControl { get; set; } = true;
+    [Parameter] public string NavigationIcon { get; set; } = "admiral:service/menu-outline";
+    [Parameter] public string OpenNavigationAriaLabel { get; set; } = "Open navigation";
+    [Parameter] public string ToggleNavigationAriaLabel { get; set; } = "Toggle navigation";
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => string.Join(' ', new[] { "admiral-layout-header", Class }
+        .Where(value => !string.IsNullOrWhiteSpace(value)));
+}

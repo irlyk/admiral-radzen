@@ -1,0 +1,123 @@
+@page "/components/drop-down"
+
+<PageTitle>Admiral DropDown</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="DropDown"
+        Description="@Description"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-input-select-%D1%80%D0%B5%D0%B6%D0%B8%D0%BC-select--docs"
+        SourceLabel="@SourceLabel" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenDropDown + Admiral theme</h2>
+            <p>@T("Прямой RadzenDropDown оформляется пакетной темой. Сопоставление элементов, группировку и асинхронную загрузку нужно настраивать через Radzen API; селекторы и DataProvider относятся к обёртке Admiral.", "Direct RadzenDropDown receives the packaged theme styling. Item mapping, grouping and asynchronous loading must use the Radzen API; AdmiralDropDown's selectors and DataProvider are wrapper features.")</p>
+            <p>@T("Подключите CSS темы admiral-base.css или admiral-dark-base.css. Прямой RadzenDropDown использует rz-dropdown; обёртка добавляет admiral-dropdown-shell и admiral-dropdown.", "Load the packaged admiral-base.css or admiral-dark-base.css theme. Direct RadzenDropDown uses rz-dropdown; the wrapper also adds admiral-dropdown-shell and admiral-dropdown.")</p>
+            <p>@T("После Escape из строки поиска прямой RadzenDropDown может вернуть фокус на страницу. AdmiralDropDown возвращает его на поле; это поведение обёртки, а не эффект темы.", "After Escape from the search input, direct RadzenDropDown may leave focus on the page. AdmiralDropDown restores it to the field; this is wrapper behavior, not a theme feature.")</p>
+            <div class="admiral-component-playground" data-testid="drop-down-radzen-demo">
+                <div class="admiral-component-playground__preview">
+                    <RadzenDropDown TValue="string" Data="@cities" @bind-Value="directCity" AllowFiltering="@filtering" AllowClear="@clear" Disabled="@disabled" aria-label="@T("Город", "City")" />
+                    <span class="admiral-component-page__result" role="status">@SmokeL["Value"]: @(directCity ?? "—")</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="filtering" /> @SmokeL["Search"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="clear" /> @SmokeL["Clear"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> @SmokeL["Disabled"]</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · Radzen API" />
+            <ApiReference Title="RadzenDropDown" Rows="@DirectRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Usage"]</h2>
+            <p>@T("AdmiralDropDown — типизированная обёртка над RadzenDropDown; показанный пример использует одиночный выбор. SelectField добавляет метку и статус; его примеры находятся на странице Select. DataProvider загружает данные асинхронно, а LoadFailed сообщает об ошибке загрузки. Для множественного выбора с Values/ValuesChanged используйте AdmiralSelect или AdmiralSelectField.", "AdmiralDropDown is a typed RadzenDropDown wrapper; this example uses single selection. SelectField adds a label and status; its examples remain on the Select page. DataProvider loads data asynchronously and LoadFailed reports provider errors. For multiple selection with Values/ValuesChanged, use AdmiralSelect or AdmiralSelectField.")</p>
+            <p>@T("Официальный React DropMenu — меню с произвольным trigger, а не аналог этого поля выбора. Ссылка выше ведёт к близкому примеру React Select. У React Select поиск является режимом searchSelect; AllowFiltering в Blazor — отдельный параметр. Совпадение публичного API не предполагается.", "React DropMenu is an arbitrary-trigger menu, not this selection field's counterpart. The link above points to the related React Select example. React Select uses a distinct searchSelect mode; Blazor exposes AllowFiltering. The public APIs are not identical.")</p>
+            <p>@T("В низком viewport список вариантов прокручивается, сохраняя popup в пределах экрана при увеличении масштаба. При изменении размера окна с уже открытым popup Radzen может не пересчитать его позицию; закройте его Escape и откройте снова. Это ограничение относится и к прямому RadzenDropDown.", "In a short viewport the options list scrolls, keeping the popup on screen under browser zoom. Resizing the window while a popup is open may leave Radzen’s old position; close it with Escape and reopen it. The same limitation affects direct RadzenDropDown.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralDropDown" Rows="@AdmiralRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground" data-testid="drop-down-admiral-demo">
+                <div class="admiral-component-playground__preview">
+                    <AdmiralDropDown TValue="string" TItem="string" Data="@cities" TextSelector="CityText" ValueSelector="CityValue"
+                                     Value="@city" ValueChanged="OnCityChanged" AllowFiltering="@filtering" AllowClear="@clear"
+                                     Disabled="@disabled" ReadOnly="@readOnly" Placeholder="@SmokeL["Choose city"]"
+                                     InputAttributes="@inputAttributes" />
+                    <span class="admiral-component-page__result" role="status">@SmokeL["Value"]: @(city ?? "—") · @SmokeL["Changes"]: @changes</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="filtering" /> @SmokeL["Search"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="clear" /> @SmokeL["Clear"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> @SmokeL["Disabled"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="readOnly" /> @SmokeL["Read-only"]</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ComponentDocNotes Title="@SmokeL["Behavior and limits"]">
+                <p>@T("Показанный пример использует локальный Data. Для асинхронной загрузки задайте DataProvider и обработайте LoadFailed; это отдельный сценарий, не часть прямого Radzen. ReadOnly и Disabled блокируют изменение. Для немаркированного AdmiralDropDown задайте доступное имя через InputAttributes, как в Playground.", "The example uses local Data. For asynchronous loading, provide DataProvider and handle LoadFailed; that is a separate wrapper scenario, not a direct Radzen feature. ReadOnly and Disabled prevent changes. Give an unlabelled AdmiralDropDown an accessible name through InputAttributes, as in the Playground.")</p>
+            </ComponentDocNotes>
+        </section>
+    }
+</div>
+
+@code {
+    private readonly string[] cities = ["Москва", "Самара", "Казань", "Воронеж"];
+    private readonly IReadOnlyDictionary<string, object> inputAttributes = new Dictionary<string, object> { ["aria-label"] = "City" };
+    private string tab = ComponentDocTabs.Admiral;
+    private string T(string ru, string en) => IsRussian ? ru : en;
+    private bool IsRussian => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru";
+    private string Description => IsRussian ? "Самостоятельный выпадающий список с локальными или загружаемыми вариантами." : "Standalone dropdown with local or asynchronously loaded options.";
+    private string SourceLabel => IsRussian ? "React Select · близкий пример" : "React Select · related reference";
+    private string? city, directCity;
+    private bool filtering = true, clear = true, disabled, readOnly;
+    private int changes;
+    private static string CityText(string value) => value;
+    private static string CityValue(string value) => value;
+    private void OnCityChanged(string? value) { city = value; changes++; }
+
+    private const string AdmiralCode = """
+        <AdmiralDropDown TValue="string" TItem="string" Data="cities"
+                           TextSelector="@(city => city)" ValueSelector="@(city => city)"
+                           Value="selectedCity" ValueChanged="OnCityChanged"
+                           AllowFiltering="true" AllowClear="true" />
+        <span role="status">Selected: @selectedCity</span>
+        @code {
+            private string[] cities = ["Москва", "Самара"];
+            private string? selectedCity;
+            private void OnCityChanged(string? value) => selectedCity = value;
+        }
+        """;
+    private const string DirectCode = """
+        <RadzenDropDown TValue="string" Data="cities" @bind-Value="selectedCity"
+                        AllowFiltering="true" AllowClear="true" />
+        <span role="status">Selected: @selectedCity</span>
+        @code {
+            private string[] cities = ["Москва", "Самара"];
+            private string? selectedCity;
+        }
+        """;
+    private IReadOnlyList<ApiReference.Entry> AdmiralRows =>
+    [
+        new("Value / ValueChanged", "TValue? / EventCallback<TValue?>", T("Выбранное значение и callback изменения.", "Selected value and change callback.")),
+        new("Data / TextSelector / ValueSelector", "IEnumerable<TItem>? / Func<TItem, string>? / Func<TItem, TValue?>?", T("Локальные варианты и преобразование в текст и значение.", "Local options and text/value mapping.")),
+        new("DataProvider / LoadFailed", "Func<AdmiralDropDownQuery, CancellationToken, Task<AdmiralDropDownResult<TItem>>>? / EventCallback<Exception>", T("Асинхронный источник и сообщение об ошибке. Используйте Data либо DataProvider.", "Asynchronous source and failure callback. Use Data or DataProvider.")),
+        new("GroupSelector / DisabledSelector", "Func<TItem, string?>? / Func<TItem, bool>?", T("Группа и недоступность отдельных вариантов.", "Group label and per-option disabled state.")),
+        new("ItemTemplate / SelectedTemplate", "RenderFragment<TItem>?", T("Шаблоны варианта и выбранного значения.", "Option and selected-value templates.")),
+        new("AllowFiltering / AllowClear", "bool; true / false", T("Здесь поиск включён по умолчанию; очистка — нет. У AdmiralSelect поиск по умолчанию выключен.", "Filtering is on here by default; clear is off. AdmiralSelect defaults filtering to false.")),
+        new("Multiple / Chips", "bool; false / false", T("Для множественного выбора с Values/ValuesChanged используйте AdmiralSelect.", "For multiple selection with Values/ValuesChanged, use AdmiralSelect.")),
+        new("Disabled / ReadOnly", "bool; false / false", T("Блокируют изменение через RadzenDropDown.", "Prevent changes through RadzenDropDown."))
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> DirectRows =
+    [
+        new("Value / ValueChanged / Data", "TValue / EventCallback / IEnumerable", "Selected value, callback and direct options."),
+        new("AllowFiltering / AllowClear / Disabled", "bool", "Search, clear and disabled states in the Radzen API.")
+    ];
+}

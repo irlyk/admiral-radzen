@@ -1,0 +1,144 @@
+@page "/components/image-viewer"
+@using Radzen.Admiral.Components.Models
+
+<PageTitle>Admiral ImageViewer</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="ImageViewer" Description="Миниатюры и полноэкранный просмотр с навигацией и преобразованием изображений."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-imageviewer--docs" />
+
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        <ApiReference Title="AdmiralImageViewer · state" Rows="@StateRows" />
+        <ApiReference Title="ImageViewer · public methods" Rows="@MethodRows" />
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Behavior and limitations"]</h2>
+            <p>@SmokeL["Массив"] <code>Items</code> @SmokeL["задаёт адреса и альтернативные подписи."] <code>Multiple</code> @SmokeL["показывает все миниатюры; без него — одну активную. В открытом просмотре доступны клавиши Escape, ← и →, кнопки отражения, поворота и масштаба. Управляемые состояния подключаются через"] <code>@("@bind-ActiveIndex")</code> @SmokeL["и"] <code>@("@bind-Visible")</code>.</p>
+            <p>@SmokeL["Увеличенное изображение можно перетаскивать мышью или одним пальцем; координаты ограничены краями изображения. Wheel сохраняет точку под указателем, pinch — центр жеста, пока не достигнута граница изображения. Масштаб ограничен MinScale/MaxScale. Быстрый горизонтальный touch-swipe больше 20px за время меньше 500ms перелистывает, в том числе при увеличении — как в React. Короткий/вертикальный/отменённый жест и продолжение pinch не перелистывают. На первой и последней картинке переход не зацикливается."]</p>
+            <p>@SmokeL["↑/↓ меняют масштаб, ←/→ перелистывают. Enter при фокусе на области просмотра или двойной клик переключают 1:1, F (физическая клавиша, независимо от раскладки) — вписывание и обратно, Space на области просмотра — следующее изображение. Клик по изображению фокусирует область просмотра. Enter/Space на кнопках сохраняют нативное действие кнопки; Tab остаётся внутри диалога. Ctrl/Cmd-сочетания не перехватываются."]</p>
+            <p>@SmokeL["При смене изображения и повторном открытии преобразования сбрасываются. Фиксированные MinScale/MaxScale сохраняют совместимость нашего API: в React минимальный масштаб вычисляется по изображению, максимальный по умолчанию — 10. Жесты и 1:1/F также ограничиваются этими параметрами. JS отвечает только за браузерные жесты и локальное перемещение; каждый pointermove не отправляется через Blazor Server."]</p>
+            <p>@SmokeL["Browser Fullscreen API и шаблон toolbar не входят в публичный API оригинального ImageViewer. Цвета static-on-dark, hover/press/disabled, геометрия иконок и close повторяют исходник и находятся в упакованной теме. Для toolbar добавлен видимый квадратный keyboard focus по Radzen/Admiral-токенам: в исходном React toolbar нет собственного focus-visible стиля. При prefers-reduced-motion переходы отключаются. Pinch/swipe проверяются синтетическими событиями и браузерной touch-эмуляцией, но это не проверка физического устройства."]</p>
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>Radzen + Admiral theme</h2>
+            <p>@SmokeL["У Radzen нет прямого аналога ImageViewer. Можно использовать"] <code>RadzenButton</code>, <code>RadzenIcon</code> @SmokeL["и обычный"] <code>img</code> @SmokeL["с темой, но навигацию и трансформации тогда реализует приложение."]</p>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <img src="images/image-viewer-a.svg" alt="Горный пейзаж" width="192" height="120" style="object-fit: cover; border-radius: var(--rz-border-radius)" />
+                    <RadzenButton Text="@SmokeL["Открыть изображение"]" Icon="admiral:category/gallery-outline" Click="@(() => radzenOpen = true)" />
+                    @if (radzenOpen)
+                    {
+                        <div style="position: fixed; z-index: 2100; inset: 0; display: grid; place-items: center; background: rgb(43 49 59 / 60%)" role="dialog" aria-modal="true" aria-label="Пример прямого Radzen API">
+                            <RadzenButton Text="@SmokeL["Закрыть"]" Click="@(() => radzenOpen = false)" Style="position: absolute; top: 1rem; right: 1rem" />
+                            <img src="images/image-viewer-a.svg" alt="Горный пейзаж" style="max-width: 80vw; max-height: 70vh" />
+                        </div>
+                    }
+                </div>
+            </div>
+            <CopyableRazorExample Code="@ThemeCode" Title="@SmokeL["Razor · прямой Radzen API"]" />
+            <ApiReference Title="@SmokeL["Прямой Radzen API"]" Rows="@RadzenRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <AdmiralImageViewer @ref="viewer" Items="@Images" Dimension="@dimension" Multiple="@multiple"
+                                        ShowCounter="@showCounter" ShowNavigation="@showNavigation"
+                                        MinScale="0.5" MaxScale="3" ScaleStep="0.25"
+                                        @bind-ActiveIndex="activeIndex" @bind-Visible="visible" />
+                    <span class="admiral-component-page__result" aria-live="polite">ActiveIndex: @activeIndex · Visible: @visible</span>
+                    <span class="admiral-component-page__result" role="status">@methodResult</span>
+                    <p>@SmokeL["Wheel / pinch — масштаб в точке жеста · drag — перемещение · swipe / ←→ / Space — перелистывание · ↑↓ — масштаб · Enter — 1:1 · F — вписать · Escape — закрыть."]</p>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Dimension"]</span><select @bind="dimension"><option value="Xxs">XXS</option><option value="Xs">XS</option><option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="Xl">XL</option></select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="multiple" /> Multiple</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="showCounter" /> ShowCounter</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="showNavigation" /> ShowNavigation</label>
+                    <label><span>ActiveIndex</span><input type="number" min="0" max="1" @bind="activeIndex" /></label>
+                    <AdmiralButton Text="Zoom ×2" Dimension="AdmiralButtonDimension.S" Click="ZoomFromPage" Disabled="@(!visible)" />
+                    <AdmiralButton Text="Next image" Dimension="AdmiralButtonDimension.S" Click="NextFromPage" Disabled="@(!visible)" />
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Load error"]</h2>
+            <AdmiralImageViewer Items="@BrokenImages" Dimension="AdmiralImageViewerDimension.M" />
+        </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private AdmiralImageViewerDimension dimension = AdmiralImageViewerDimension.M;
+    private bool multiple = true, showCounter = true, showNavigation = true, visible, radzenOpen;
+    private int activeIndex;
+    private AdmiralImageViewer? viewer;
+    private string methodResult = "—";
+    private async Task ZoomFromPage(MouseEventArgs _)
+    {
+        if (viewer is not null) methodResult = $"Scale: {await viewer.ZoomImage(2):0.##}";
+    }
+    private async Task NextFromPage(MouseEventArgs _)
+    {
+        if (viewer is not null) { await viewer.NavigateImage(1); methodResult = "NavigateImage(1)"; }
+    }
+    private static readonly IReadOnlyList<AdmiralImageViewerItem> Images =
+    [
+        new("images/image-viewer-a.svg", "Горный пейзаж"),
+        new("images/image-viewer-b.svg", "Городская композиция")
+    ];
+    private static readonly IReadOnlyList<AdmiralImageViewerItem> BrokenImages = [new("images/missing-viewer-image.png", "Недоступное изображение")];
+    private const string AdmiralCode = """
+        <AdmiralImageViewer Items="@images" Multiple="true" Dimension="AdmiralImageViewerDimension.M"
+                            @bind-ActiveIndex="activeIndex" @bind-Visible="visible" />
+        <span role="status">Active: @activeIndex · Open: @visible</span>
+        @code {
+            IReadOnlyList<AdmiralImageViewerItem> images = [new("images/image-viewer-a.svg", "Описание")];
+            int activeIndex;
+            bool visible;
+        }
+        """;
+    private const string ThemeCode = """
+        <img src="images/image-viewer-a.svg" alt="Описание" width="192" />
+        <RadzenButton Text="Открыть изображение" Icon="admiral:category/gallery-outline"
+                      Click="@(_ => open = true)" />
+        @if (open) {
+            <div role="dialog" aria-modal="true" aria-label="Просмотр изображения">
+                <RadzenButton Text="Закрыть" Click="@(_ => open = false)" />
+                <img src="images/image-viewer-a.svg" alt="Описание" width="480" />
+            </div>
+        }
+        <span role="status">Open: @open</span>
+        @code { private bool open; }
+        @* Radzen does not provide ImageViewer navigation or zoom. *@
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> MethodRows =
+    [
+        new("ZoomImage(factor, toggle)", "Task<double>; toggle=false", "When open and loaded, multiply the current scale by a positive finite factor; returns current scale. toggle=true switches between the requested absolute scale and 1, within MinScale/MaxScale."),
+        new("NavigateImage(direction)", "Task; direction=-1 or 1", "When open, moves to the previous or next image. Other directions are ignored; boundaries do not wrap.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> StateRows =
+    [
+        new("Items / Dimension / Multiple", "IReadOnlyList<AdmiralImageViewerItem>; [] / AdmiralImageViewerDimension; M / bool; false", "Image URL and alt text, thumbnail size and single or multiple preview."),
+        new("ActiveIndex / ActiveIndexChanged", "int; 0 / EventCallback<int>", "Controlled zero-based active image."),
+        new("Visible / VisibleChanged", "bool; false / EventCallback<bool>", "Controlled viewer visibility and close callback."),
+        new("MinScale / MaxScale / ScaleStep", "double; 0.5 / 3 / 0.25", "Zoom limits and toolbar increment."),
+        new("ShowCounter / ShowNavigation", "bool; true", "Counter and previous/next controls.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> RadzenRows =
+    [
+        new("RadzenButton.Click", "EventCallback<MouseEventArgs>", "Открывает собственный диалог приложения."),
+        new("RadzenIcon.Icon", "string", "Использует упакованные Admiral SVG через адаптер иконок."),
+        new("img", "HTML", "Само изображение и его alt; обработку ошибок добавляет приложение.")
+    ];
+}

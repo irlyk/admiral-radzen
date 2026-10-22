@@ -1,0 +1,147 @@
+@typeparam TValue
+@typeparam TItem
+
+<div class="@ShellClass">
+    @if (DataProvider is null)
+    {
+        <RadzenDropDown TValue="TValue"
+                        @ref="dropDown"
+                        Open="FocusTriggerBeforeOpenAsync"
+                        Value="@Value"
+                        ValueChanged="@ValueChanged"
+                        ValueExpression="@ValueExpression"
+                        Name="@Name"
+                        Data="@localOptions"
+                        TextProperty="@nameof(OptionView.Text)"
+                        ValueProperty="@nameof(OptionView.Value)"
+                        DisabledProperty="@nameof(OptionView.IsDisabled)"
+                        Placeholder="@Placeholder"
+                        Disabled="@Disabled"
+                        ReadOnly="@ReadOnly"
+                        AllowFiltering="@AllowFiltering"
+                        FilterDelay="@FilterDelay"
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                        FilterPlaceholder="@FilterPlaceholder"
+                        AllowClear="@AllowClear"
+                        Multiple="@Multiple"
+                        Chips="@Chips"
+                        AllowSelectAll="@AllowSelectAll"
+                        SelectAllText="@SelectAllText"
+                        SelectedItemsText="@SelectedItemsText"
+                        RemoveChipTitle="@RemoveChipTitle"
+                        ClearAriaLabel="@ClearAriaLabel"
+                        SearchAriaLabel="@SearchAriaLabel"
+                        EmptyAriaLabel="@EmptyAriaLabel"
+                        AllowVirtualization="@AllowVirtualization"
+                        PageSize="@PageSize"
+                        VirtualizationOverscanCount="@VirtualizationOverscanCount"
+                        PopupStyle="@PopupStyle"
+                        ClearSearchAfterSelection="@ClearSearchAfterSelection"
+                        ResetSelectedIndexOnFilter="true"
+                        InputAttributes="@InputAttributes"
+                        class="@DropDownClass"
+                        @attributes="AdditionalAttributes">
+            <ValueTemplate Context="context">@RenderSelectedValue((object)context)</ValueTemplate>
+            <Template Context="context">@RenderOption((object)context)</Template>
+            <EmptyTemplate>@RenderEmptyState()</EmptyTemplate>
+        </RadzenDropDown>
+    }
+    else
+    {
+        <RadzenDropDown TValue="TValue"
+                        @ref="dropDown"
+                        Open="FocusTriggerBeforeOpenAsync"
+                        Value="@Value"
+                        ValueChanged="@ValueChanged"
+                        ValueExpression="@ValueExpression"
+                        Name="@Name"
+                        Data="@asyncOptions"
+                        Count="@totalCount"
+                        LoadData="@HandleLoadDataAsync"
+                        TextProperty="@nameof(OptionView.Text)"
+                        ValueProperty="@nameof(OptionView.Value)"
+                        DisabledProperty="@nameof(OptionView.IsDisabled)"
+                        Placeholder="@Placeholder"
+                        Disabled="@Disabled"
+                        ReadOnly="@ReadOnly"
+                        AllowFiltering="@AllowFiltering"
+                        FilterDelay="@FilterDelay"
+                        FilterPlaceholder="@FilterPlaceholder"
+                        AllowClear="@AllowClear"
+                        Multiple="@Multiple"
+                        Chips="@Chips"
+                        AllowSelectAll="@AllowSelectAll"
+                        SelectAllText="@SelectAllText"
+                        SelectedItemsText="@SelectedItemsText"
+                        RemoveChipTitle="@RemoveChipTitle"
+                        ClearAriaLabel="@ClearAriaLabel"
+                        SearchAriaLabel="@SearchAriaLabel"
+                        EmptyAriaLabel="@EffectiveAsyncEmptyAriaLabel"
+                        AllowVirtualization="@AllowVirtualization"
+                        PageSize="@PageSize"
+                        VirtualizationOverscanCount="@VirtualizationOverscanCount"
+                        PopupStyle="@PopupStyle"
+                        ClearSearchAfterSelection="@ClearSearchAfterSelection"
+                        ResetSelectedIndexOnFilter="true"
+                        InputAttributes="@EffectiveAsyncInputAttributes"
+                        class="@DropDownClass"
+                        @attributes="AdditionalAttributes">
+            <ValueTemplate Context="context">@RenderSelectedValue((object)context)</ValueTemplate>
+            <Template Context="context">@RenderOption((object)context)</Template>
+            <EmptyTemplate>@RenderEmptyState()</EmptyTemplate>
+        </RadzenDropDown>
+    }
+
+    @if (isLoading)
+    {
+        <span class="admiral-dropdown__spinner" aria-hidden="true"></span>
+    }
+
+    @if (DataProvider is not null && !Multiple && Value is not null && asyncSelectedOption is not null)
+    {
+        <span class="admiral-dropdown-shell__value" aria-hidden="true">
+            @RenderSelectedValue(asyncSelectedOption)
+        </span>
+    }
+</div>
+
+@code {
+    public RenderFragment RenderSelectedValue(object context) => @<text>
+        @{ var option = (OptionView)context; }
+        @if (option.Item is not null && SelectedTemplate is not null)
+        {
+            @SelectedTemplate(option.Item)
+        }
+        else
+        {
+            <span>@option.Text</span>
+        }
+    </text>;
+
+    public RenderFragment RenderOption(object context) => @<text>
+        @{ var option = (OptionView)context; }
+        <div class="@(option.IsGroupHeader ? "admiral-dropdown-group" : "admiral-dropdown-option")">
+            @if (option.IsGroupHeader)
+            {
+                @option.GroupLabel
+            }
+            else if (option.Item is not null && ItemTemplate is not null)
+            {
+                @ItemTemplate(option.Item)
+            }
+            else
+            {
+                @option.Text
+            }
+        </div>
+    </text>;
+
+    private RenderFragment RenderEmptyState() => @<div class="@(loadError is null ? "admiral-dropdown-state" : "admiral-dropdown-state admiral-dropdown-state--error")"
+                                                     role="@(loadError is null ? "status" : "alert")">
+        <span>@(isLoading ? LoadingText : loadError is null ? EmptyText : ErrorText)</span>
+        @if (loadError is not null)
+        {
+            <button type="button" class="admiral-dropdown-state__retry" @onclick="RetryAsync" @onclick:stopPropagation="true">@RetryText</button>
+        }
+    </div>;
+}

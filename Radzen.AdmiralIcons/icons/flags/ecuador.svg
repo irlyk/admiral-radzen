@@ -1,0 +1,30 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_171" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Ecuador" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_171)">
+		<path id="Rectangle 2" d="M0 18.6667L28 18.6667L28 13.3334L0 13.3334L0 18.6667Z" fill="rgb(7,72,174)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 18.6667L28 13.3334L0 13.3334L0 18.6667L28 18.6667Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M0 24L28 24L28 18.6666L0 18.6666L0 24Z" fill="rgb(222,32,53)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 24L28 18.6666L0 18.6666L0 24L28 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M0 13.3333L28 13.3333L28 4L0 4L0 13.3333Z" fill="rgb(255,217,53)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 13.3333L28 4L0 4L0 13.3333L28 13.3333Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Oval 12" d="M12.3999 12C11.7523 12.4865 11.3333 13.2611 11.3333 14.1335C11.3333 15.6062 12.5272 16.8002 14 16.8002C15.4727 16.8002 16.6666 15.6062 16.6666 14.1335C16.6666 13.2611 16.2477 12.4865 15.6 12L14.6666 14.8002L13.3333 14.8002L12.3999 12Z" fill="rgb(255,217,53)" fill-rule="evenodd" />
+		<path id="Oval 12" d="M12.3999 12C11.7523 12.4865 11.3333 13.2611 11.3333 14.1335C11.3333 15.6062 12.5272 16.8002 14 16.8002C15.4727 16.8002 16.6666 15.6062 16.6666 14.1335C16.6666 13.2611 16.2477 12.4865 15.6 12L14.6666 14.8002L13.3333 14.8002L12.3999 12Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 483" d="M14 11.3334L14.6666 14.6667L13.3333 14.6667L14 11.3334Z" fill="rgb(95,192,220)" fill-rule="evenodd" />
+		<path id="Rectangle 483" d="M14.6666 14.6667L13.3333 14.6667L14 11.3334L14.6666 14.6667Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Line" d="M17.3334 10L15.3334 9.33337L14 10.6667L12.6667 9.33337L10.6667 10" opacity="0.660000026" fill="rgb(215.985,215.985,215.985)" fill-opacity="0" fill-rule="evenodd" />
+		<path id="Line" d="M17.3334 10L15.3334 9.33337L14 10.6667L12.6667 9.33337L10.6667 10" opacity="0.660000026" fill-rule="evenodd" stroke="rgb(63,40,33)" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.666667" />
+	</g>
+</svg>

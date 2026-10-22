@@ -1,0 +1,208 @@
+@page "/components/file-input"
+@using Microsoft.AspNetCore.Components.Forms
+
+<PageTitle>Admiral FileInput</PageTitle>
+
+<div class="admiral-component-page file-input-gallery">
+    <AdmiralGalleryPageHeader Title="FileInput" Description="Выбор файлов XL/M, ограничения формата и размера, список выбранных файлов и статусы отправки."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-input-fileinput--docs" />
+
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <ApiReference Title="AdmiralFileInput · parameters and templates" Rows="@ParameterRows" />
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["API integration"]</h2>
+            <p><code>FilesSelected</code> @SmokeL["возвращает файлы браузера. Компонент не отправляет их сам: приложение читает поток"] <code>IBrowserFile.OpenReadStream(maxAllowedSize)</code> @SmokeL["и вызывает своё API. Состояние загрузки приложение передаёт через"] <code>ChildContent</code> @SmokeL["и"] <code>AdmiralUploadStatus</code>@SmokeL["; без шаблона выбранные файлы показываются в состоянии ожидания."]</p>
+            <p><code>Accept</code>, <code>MaxFiles</code> @SmokeL["и"] <code>MaxFileSize</code> @SmokeL["проверяются в компоненте."] <code>@@bind-Files</code> @SmokeL["синхронизирует удаление, перестановку и очистку списка с нативным input. Допустимы только файлы последнего выбора этого компонента: произвольные"] <code>IBrowserFile</code> @SmokeL["другого input или ранее сохранённые файлы подставлять нельзя. Для серверных вложений используйте отдельный список."]</p>
+            <p>@SmokeL["Новый выбор заменяет предыдущий, а не добавляет к нему. Blazor инвалидирует старые потоки, поэтому отклонённый выбор тоже очищает предыдущий список и вызывает"] <code>FilesSelected</code> @SmokeL["с пустым массивом. Копируйте нужные потоки до следующего выбора."] <code>RemoveAsync(file)</code> @SmokeL["сохраняет остальные потоки;"] <code>ResetAsync()</code> @SmokeL["сбрасывает input и ошибку."]</p>
+            <p><code>TriggerTemplate</code> @SmokeL["получает"] <code>Func&lt;Task&gt;</code>@SmokeL[": вызовите его из Click клавиатурно доступной кнопки. Этот режим не является dropzone. Обычная поверхность поддерживает нативный drop; проверка формата выполняется после выбора. Сервер обязан повторно проверить файлы независимо от клиентских ограничений."]</p>
+            <ApiReference Title="@SmokeL["Управление выбором и методы"]" Rows="@SelectionRows" />
+            <CopyableRazorExample Code="@TriggerCode" Title="@SmokeL["Razor · произвольная кнопка выбора"]" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenUpload + Admiral theme</h2>
+            <p>@SmokeL["Прямой"] <code>RadzenUpload</code> @SmokeL["использует классы"] <code>admiral-file-input admiral-file-input--xl|--m</code>@SmokeL[". В отличие от Admiral-обёртки он сам отправляет multipart на"] <code>Url</code> @SmokeL["и отдаёт Radzen-события прогресса и завершения."]</p>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <div class="file-input-playground__sample">
+                    <RadzenUpload @ref="radzenUpload" class="admiral-file-input admiral-file-input--xl"
+                                  Url="/upload/smoke/success" Multiple="false" Auto="false" MaxFileCount="1"
+                                  Accept=".pdf,.png,.jpg" Icon="admiral:system/attach-file-outline"
+                                  ChooseText="Перетащите файл сюда или нажмите для выбора"
+                                  Change="OnRadzenChange" Complete="OnRadzenComplete" Error="OnRadzenError" />
+                    <div style="margin-top: 12px; display: flex; gap: 12px; align-items: center">
+                        <RadzenButton Text="@SmokeL["Отправить"]" Icon="admiral:system/upload-outline" Disabled="@(!radzenHasFile)" Click="@(_ => UploadRadzen())" />
+                        <span class="admiral-component-page__result" aria-live="polite">@radzenResult</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@ThemeCode" Title="@SmokeL["Razor · прямой Radzen API"]" />
+            <ApiReference Title="@SmokeL["Параметры RadzenUpload + тема"]" Rows="@RadzenRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <div class="file-input-playground__sample">
+                    <AdmiralFileInput @ref="admiralInput" Dimension="@dimension" Title="@SmokeL["Добавьте файлы"]" ExtraText="@($"PDF, PNG, JPG или SVG · до {maxFiles} файлов · до {maxFileSize:N0} байт")"
+                                      Multiple="@multiple" Disabled="@disabled" Skeleton="@skeleton"
+                                      Accept=".pdf,.png,.jpg,.svg" MaxFiles="@maxFiles" MaxFileSize="@maxFileSize"
+                                      @bind-Files="files" FilesSelected="OnFilesSelected" FileRemoved="OnFileRemoved"
+                                      TriggerTemplate="@(customTrigger ? CustomFileTrigger : null)">
+                        <ChildContent>
+                        @foreach (var file in files)
+                        {
+                            <AdmiralUploadStatus @key="file" FileName="@file.Name" Meta="@($"{file.Size / 1024.0:0.#} KB")"
+                                                 State="@state" Progress="@progress" ErrorText="Тестовая ошибка загрузки"
+                                                 ActionAriaLabel="@SmokeL["Удалить файл"]" Disabled="@(disabled || skeleton)" ActionClicked="@(() => RemoveFile(file))" />
+                        }
+                        </ChildContent>
+                    </AdmiralFileInput>
+                    <span class="admiral-component-page__result" aria-live="polite">@SmokeL["Выбрано:"] @files.Count · @SmokeL["Последнее действие:"] @lastAction</span>
+                    </div>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Dimension"]</span><select @bind="dimension"><option value="Xl">XL</option><option value="M">M</option></select></label>
+                    <label><span>@SmokeL["State"]</span><select @bind="state"><option value="Idle">@SmokeL["Queue"]</option><option value="Loading">Loading</option><option value="Complete">@SmokeL["Uploaded"]</option><option value="Error">Error</option></select></label>
+                    <label><span>@SmokeL["Progress"]</span><input type="number" min="0" max="100" @bind="progress" /></label>
+                    <label><span>MaxFiles</span><input type="number" min="1" @bind="maxFiles" @bind:event="oninput" /></label>
+                    <label><span>@SmokeL["MaxFileSize · байты"]</span><input type="number" min="0" @bind="maxFileSize" @bind:event="oninput" /></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="multiple" /> Multiple</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="skeleton" /> Skeleton</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="customTrigger" /> @SmokeL["Custom trigger"]</label>
+                    <div class="file-input-playground__actions">
+                        <AdmiralButton Text="@SmokeL["Очистить извне"]" Appearance="AdmiralButtonAppearance.Secondary" Dimension="AdmiralButtonDimension.S" Disabled="@(files.Count == 0)" Click="@(_ => ClearFiles())" />
+                        <AdmiralButton Text="@SmokeL["Удалить первый извне"]" Appearance="AdmiralButtonAppearance.Secondary" Dimension="AdmiralButtonDimension.S" Disabled="@(files.Count == 0)" Click="@(_ => RemoveFirst())" />
+                        <AdmiralButton Text="@SmokeL["Прочитать потоки"]" Appearance="AdmiralButtonAppearance.Secondary" Dimension="AdmiralButtonDimension.S" Disabled="@(files.Count == 0)" Click="@(_ => ReadFiles())" />
+                        <AdmiralButton Text="@SmokeL["Сбросить input"]" Appearance="AdmiralButtonAppearance.Secondary" Dimension="AdmiralButtonDimension.S" Click="@(_ => ResetInput())" />
+                    </div>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private AdmiralFileInputDimension dimension = AdmiralFileInputDimension.Xl;
+    private AdmiralUploadState state = AdmiralUploadState.Idle;
+    private bool multiple = true, disabled, skeleton, radzenHasFile, customTrigger;
+    private double progress = 40;
+    private int maxFiles = 3;
+    private long maxFileSize = 10485760;
+    private string lastAction = "—", radzenResult = "Файл не выбран";
+    private IReadOnlyList<IBrowserFile> files = [];
+    private AdmiralFileInput? admiralInput;
+    private RadzenUpload? radzenUpload;
+    private RenderFragment<Func<Task>> CustomFileTrigger => openPicker => @<AdmiralButton Text="Выбрать файлы" Icon="admiral:system/attach-file-outline"
+        Disabled="@(disabled || skeleton)" Click="@(_ => openPicker())" />;
+
+    private void OnFilesSelected(IReadOnlyList<IBrowserFile> selected) { files = selected; lastAction = selected.Count == 0 ? "Выбор отклонён" : "Выбор файла"; }
+    private void OnFileRemoved(IBrowserFile file) => lastAction = "Удаление файла";
+    private void ClearFiles() { files = []; lastAction = "Очистка извне"; }
+    private void RemoveFirst() { files = files.Skip(1).ToArray(); lastAction = "Удаление извне"; }
+    private async Task ResetInput()
+    {
+        if (admiralInput is not null) await admiralInput.ResetAsync();
+        lastAction = "Сброс input";
+    }
+    private async Task ReadFiles()
+    {
+        long bytes = 0;
+        foreach (var file in files)
+        {
+            await using var stream = file.OpenReadStream(10485760);
+            var buffer = new byte[8192];
+            int count;
+            while ((count = await stream.ReadAsync(buffer)) > 0) bytes += count;
+        }
+        lastAction = $"Прочитано {bytes} байт";
+    }
+    private async Task RemoveFile(IBrowserFile file) { if (admiralInput is not null) await admiralInput.RemoveAsync(file); }
+    private void OnRadzenChange(UploadChangeEventArgs args) { radzenHasFile = args.Files?.Any() == true; radzenResult = radzenHasFile ? "Файл выбран" : "Файл не выбран"; }
+    private void OnRadzenComplete(UploadCompleteEventArgs _) => radzenResult = "Файл отправлен";
+    private void OnRadzenError(UploadErrorEventArgs _) => radzenResult = "Ошибка отправки";
+    private async Task UploadRadzen() { if (radzenUpload is not null) await radzenUpload.Upload(); }
+
+    private const string AdmiralCode = """
+        <AdmiralFileInput @bind-Files="files" Dimension="AdmiralFileInputDimension.Xl" Title="Добавьте файлы"
+                          Accept=".pdf,.png" Multiple="true" MaxFiles="3" MaxFileSize="10485760"
+                          FilesSelected="OnFilesSelected" />
+        <span role="status">@result</span>
+        @code {
+            private IReadOnlyList<IBrowserFile> files = [];
+            private string result = "—";
+            private void OnFilesSelected(IReadOnlyList<IBrowserFile> selected) =>
+                result = $"Selected: {selected.Count}";
+            // OpenReadStream and upload transport belong to the application.
+        }
+        """;
+    private const string ThemeCode = """
+        <RadzenUpload class="admiral-file-input admiral-file-input--xl"
+                      Url="/api/files" Auto="false" Multiple="true"
+                      Icon="admiral:system/attach-file-outline"
+                      Change="OnChange" Progress="OnProgress" Complete="OnComplete" />
+        <span role="status">@result</span>
+        @code {
+            private string result = "—";
+            private void OnChange(UploadChangeEventArgs args) => result = $"Selected: {args.Files?.Count() ?? 0}";
+            private void OnProgress(UploadProgressArgs args) => result = $"Progress: {args.Progress}%";
+            private void OnComplete(UploadCompleteEventArgs args) => result = "Upload complete";
+        }
+        @* Configure /api/files in the host application before uploading. *@
+        """;
+    private const string TriggerCode = """
+        <AdmiralFileInput @bind-Files="files" Title="Вложения" Disabled="@disabled">
+            <TriggerTemplate Context="openPicker">
+                <AdmiralButton Text="Выбрать файл" Disabled="@disabled"
+                               Click="@(_ => openPicker())" />
+            </TriggerTemplate>
+        </AdmiralFileInput>
+        <span role="status">Selected: @files.Count</span>
+        @code {
+            private IReadOnlyList<IBrowserFile> files = [];
+            private bool disabled;
+        }
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> SelectionRows =
+    [
+        new("Files / FilesChanged", "IReadOnlyList<IBrowserFile>? / null; EventCallback", "Без привязки список ведёт компонент. С @bind-Files родитель может удалять, переставлять и очищать файлы последнего выбора."),
+        new("FilesSelected", "EventCallback<IReadOnlyList<IBrowserFile>>", "Нативный выбор заменяет прежний. При ошибке приходит пустой массив; при удалении или ResetAsync событие не вызывается."),
+        new("FileRemoved", "EventCallback<IBrowserFile>", "Вызывается после RemoveAsync существующего файла. Внешнее изменение Files и ResetAsync его не вызывают."),
+        new("TriggerTemplate", "RenderFragment<Func<Task>>? / null", "Вместо dropzone рендерится ваш триггер. Callback открывает диалог; Enter/Space и disabled задаёт кнопка шаблона."),
+        new("OpenAsync()", "Task", "Открывает диалог из пользовательского действия. Disabled и Skeleton блокируют открытие."),
+        new("RemoveAsync(file)", "Task", "Удаляет выбранный файл; остальные потоки остаются действительными. Disabled и Skeleton блокируют действие."),
+        new("ResetAsync()", "Task", "Сбрасывает input, список и ошибку, вызывает FilesChanged. Ранее открытые потоки больше использовать нельзя."),
+        new("MaxFiles / MaxFileSize / Accept", "int / 10; long? / null; string / пусто", "Проверяются при новом выборе. Лимиты не перепроверяют уже выбранные файлы; Accept — подсказка picker и клиентская валидация, не защита API.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> ParameterRows =
+    [
+        new("Dimension", "AdmiralFileInputDimension; Xl", "Размер поверхности Xl или M."),
+        new("Title / ExtraText", "string; Перетащите файлы сюда или нажмите для выбора / string?; null", "Основная подпись и дополнительная подсказка; Title также используется как aria-label нативного input."),
+        new("Accept", "string; пусто", "Список расширений и MIME через запятую; проверяется после выбора."),
+        new("Multiple / MaxFiles", "bool; true / int; 10", "Разрешение нескольких файлов и предел их числа; при Multiple=false допустим только один, MaxFiles ниже 1 трактуется как 1."),
+        new("MaxFileSize", "long?; null", "Максимальный размер каждого файла в байтах."),
+        new("Disabled / Skeleton", "bool; false", "Блокируют выбор, OpenAsync и RemoveAsync; Skeleton помечает поверхность aria-busy."),
+        new("ChildContent", "RenderFragment?; null", "Своя разметка списка выбранных файлов; без шаблона компонент показывает AdmiralUploadStatus в состоянии Idle."),
+        new("TooManyFilesText / FileTooLargeText / FileTypeErrorText", "string", "Настраиваемые сообщения о трёх типах ошибок выбора."),
+        new("RemoveFileAriaLabel", "string; Удалить файл", "Доступное имя кнопки удаления в стандартном списке."),
+        new("Class / Style / AdditionalAttributes", "string? / string? / attributes", "Дополнительные класс, стиль и атрибуты корневого элемента.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> RadzenRows =
+    [
+        new("Url / Auto", "string / bool", "Адрес multipart API и автоматическая отправка."),
+        new("Multiple / Accept / MaxFileCount", "bool / string / int", "Число и допустимые форматы файлов."),
+        new("Change / Progress / Complete / Error", "Radzen events", "События выбора, передачи, завершения и ошибки."),
+        new("class", "string", "admiral-file-input с модификатором --xl или --m.")
+    ];
+}

@@ -1,0 +1,23 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_138" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="27.500000" height="19.500000" x="0.250000" y="4.250000" rx="2.750000" stroke="rgb(245,245,245)" stroke-width="0.500000" />
+		</g>
+	</mask>
+	<rect id="Israel" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="27.500000" height="19.500000" x="0.250000" y="4.250000" rx="2.750000" stroke="rgb(214,216,221)" stroke-width="0.500000" />
+	<g mask="url(#mask_138)">
+		<path id="Rectangle 2" d="M0 8L28 8L28 4L0 4L0 8Z" fill="rgb(14,70,212)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 8L28 4L0 4L0 8L28 8Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M0 24L28 24L28 20L0 20L0 24Z" fill="rgb(14,70,212)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 24L28 20L0 20L0 24L28 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Union" d="M9.53366 16.6667L12.4966 16.6667L14 19.3728L15.5034 16.6667L18.4663 16.6667L16.9849 14L18.4663 11.3333L15.5034 11.3333L14 8.62726L12.4966 11.3333L9.53366 11.3333L11.0151 14L9.53366 16.6667ZM11.3965 14.6864L10.6667 16L12.1263 16L11.3965 14.6864ZM12.8889 16L11.7778 14L12.8889 12L15.1111 12L16.2222 14L15.1111 16L12.8889 16ZM13.2593 16.6667L14 18L14.7407 16.6667L13.2593 16.6667ZM15.8738 16L17.3333 16L16.6035 14.6864L15.8738 16ZM16.6035 13.3136L17.3333 12L15.8738 12L16.6035 13.3136ZM14.7407 11.3333L14 10L13.2593 11.3333L14.7407 11.3333ZM12.1263 12L11.3965 13.3136L10.6667 12L12.1263 12Z" fill="rgb(9,62,197)" fill-rule="evenodd" />
+	</g>
+</svg>

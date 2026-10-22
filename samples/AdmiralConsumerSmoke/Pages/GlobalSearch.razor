@@ -1,0 +1,76 @@
+@page "/components/global-search"
+
+<PageTitle>Admiral GlobalSearch</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="GlobalSearch" Description="@T("Поиск с подсказками, выбором, отправкой запроса и клавиатурной навигацией.", "Search suggestions with selection, submission and keyboard navigation.")"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-globalsearch--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section"><h2>@SmokeL["Usage"]</h2>
+            <p>@T("Приложение передаёт Items. ValueChanged сообщает об изменении запроса, ItemSelected — о выборе подсказки, SearchSubmitted — об отправке. MaxResults ограничивает видимые подсказки, но не загружает данные.", "Items are supplied by the application. ValueChanged reports query edits, ItemSelected reports a suggestion and SearchSubmitted reports submission. MaxResults only limits visible suggestions; it does not fetch data.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralGlobalSearch" Rows="@Rows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section"><h2>Radzen + Admiral theme</h2>
+            <p>@T("Прямой RadzenTextBox даёт поле поиска с темой. Подсказки, активный вариант для клавиатуры, выбор и отправку приложение реализует самостоятельно.", "Direct RadzenTextBox provides themed query input. The application must build suggestions, active-option keyboard behavior, selection and submission separately.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <RadzenTextBox @bind-Value="directQuery" Placeholder="@SmokeL["Search"]" aria-label="@SmokeL["Search"]" />
+                <RadzenButton Text="@SmokeL["Search"]" Click="@(_ => directSubmitted = directQuery)" />
+                <span role="status">@T("Отправлено", "Submitted"): @directSubmitted</span>
+            </div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section"><h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground" data-testid="global-search-admiral-demo"><div class="admiral-component-playground__preview">
+                <AdmiralGlobalSearch Items="@items" Value="@query" ValueChanged="OnQueryChanged" ItemSelected="OnItemSelected"
+                                     SearchSubmitted="OnSubmitted" MaxResults="@maxResults" Placeholder="@T("Поиск платежей и счетов", "Search payments or accounts")" />
+                <span class="admiral-component-page__result" role="status">@SmokeL["Value"]: @query · @T("Действие", "Action"): @result</span>
+            </div><div class="admiral-component-controls"><label><span>MaxResults</span><input type="number" min="1" max="5" @bind="maxResults" /></label></div></div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private readonly IReadOnlyList<AdmiralSearchItem> items =
+    [new("payment-1042", "ADM-1042 · Northern Star", "Payment"), new("payment-1043", "ADM-1043 · Vector Lab", "Payment"), new("account-40702", "Account 40702", "Account")];
+    private string query = string.Empty, result = "—", directQuery = string.Empty, directSubmitted = "—";
+    private int maxResults = 5;
+    private void OnQueryChanged(string value) => query = value;
+    private void OnItemSelected(AdmiralSearchItem item) => result = item.Title;
+    private void OnSubmitted(string value) => result = value;
+    private const string AdmiralCode = """
+        <AdmiralGlobalSearch Items="items" Value="query" ValueChanged="OnQueryChanged"
+                             ItemSelected="OnItemSelected" SearchSubmitted="OnSubmitted" />
+        <span role="status">@result</span>
+        @code {
+            private IReadOnlyList<AdmiralSearchItem> items = [new("a", "Account")];
+            private string query = "", result = "—";
+            private void OnQueryChanged(string value) => query = value;
+            private void OnItemSelected(AdmiralSearchItem item) => result = item.Title;
+            private void OnSubmitted(string value) => result = value;
+        }
+        """;
+    private const string DirectCode = """
+        <RadzenTextBox @bind-Value="query" />
+        <RadzenButton Text="Search" Click="@(_ => submitted = query)" />
+        <span role="status">@submitted</span>
+        @code { private string query = "", submitted = "—"; }
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> Rows =
+    [
+        new("Items", "IReadOnlyList<AdmiralSearchItem>; []", "Suggestion source with Id, Title, optional Meta and Icon."),
+        new("Value / ValueChanged", "string / EventCallback<string>", "Controlled search query and edit callback."),
+        new("ItemSelected / SearchSubmitted", "EventCallback<AdmiralSearchItem> / EventCallback<string>", "Suggestion selection and query submission."),
+        new("MaxResults", "int; 5", "Maximum visible results; not a data-loading limit."),
+        new("Placeholder / Prefix / AriaLabel / EmptyText", "string? / string", "Input hint, prefix and accessible or empty-state text.")
+    ];
+}

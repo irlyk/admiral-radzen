@@ -1,0 +1,80 @@
+@page "/components/icon-button"
+<PageTitle>Admiral IconButton</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="IconButton" Description="Compact icon actions in four dimensions and two appearances."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-iconbutton--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@T("Использование и ограничения", "Usage and limitations")</h2>
+            <p>@T("Передавайте понятную метку AriaLabel: одна иконка не сообщает назначение кнопки. Click вызывается только у доступной кнопки. Loading, Disabled и Skeleton блокируют действие; Skeleton показывает заглушку вместо интерактивной кнопки.", "Provide a meaningful AriaLabel: an icon alone does not name the action. Click fires only while the button is available. Loading, Disabled and Skeleton block the action; Skeleton displays a placeholder instead of an interactive button.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralIconButton" Rows="@ApiRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenButton + Admiral theme</h2>
+            <p>@T("Прямой RadzenButton использует Icon, Variant, ButtonStyle, Size и IsBusy. Классы admiral-icon-button и admiral-icon-button--secondary включают оформление иконки. Тема не добавляет Admiral Dimension, Appearance или Skeleton.", "Direct RadzenButton uses Icon, Variant, ButtonStyle, Size and IsBusy. The admiral-icon-button and admiral-icon-button--secondary classes apply icon styling. The theme does not add Admiral Dimension, Appearance or Skeleton.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <RadzenButton Icon="admiral:system/search-outline" aria-label="Search" Variant="Variant.Text" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" class="admiral-icon-button admiral-icon-button--secondary" Disabled="@directDisabled" IsBusy="@directLoading" Click="@(_ => directClicks++)" />
+                <output aria-live="polite">@T("Нажатия Radzen", "Radzen clicks"): @directClicks</output>
+            </div><div class="admiral-component-controls">
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="directDisabled" /> Disabled</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="directLoading" /> IsBusy</label>
+            </div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@T("Интерактивный пример", "Interactive playground")</h2>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <AdmiralIconButton Icon="admiral:system/search-outline" AriaLabel="Search" Dimension="@dimension" Appearance="@appearance" Disabled="@disabled" Loading="@loading" Click="@(_ => clicks++)" />
+                <output aria-live="polite">@T("Нажатия", "Clicks"): @clicks</output>
+            </div><div class="admiral-component-controls">
+                <label><span>@SmokeL["Dimension"]</span><select @bind="dimension">@foreach (var value in Enum.GetValues<AdmiralButtonDimension>()) { <option value="@value">@value</option> }</select></label>
+                <label><span>@SmokeL["Appearance"]</span><select @bind="appearance">@foreach (var value in Enum.GetValues<AdmiralIconButtonAppearance>()) { <option value="@value">@value</option> }</select></label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="loading" /> Loading</label>
+            </div></div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+        <section class="admiral-component-page__section">
+            <h2>@T("Размеры и состояния", "Dimensions and states")</h2>
+            <div class="admiral-component-row">@foreach (var value in Enum.GetValues<AdmiralButtonDimension>()) { <AdmiralIconButton Icon="admiral:system/settings-outline" AriaLabel="Settings" Dimension="@value" Click="@(_ => clicks++)" /> }</div>
+            <div class="admiral-component-row"><AdmiralIconButton Icon="admiral:system/search-outline" AriaLabel="Loading" Loading="true" /><AdmiralIconButton Icon="admiral:system/search-outline" AriaLabel="Disabled" Disabled="true" /><AdmiralIconButton Icon="admiral:system/search-outline" AriaLabel="Skeleton" Skeleton="true" /></div>
+        </section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private AdmiralButtonDimension dimension = AdmiralButtonDimension.M;
+    private AdmiralIconButtonAppearance appearance = AdmiralIconButtonAppearance.Secondary;
+    private bool disabled, loading, directDisabled, directLoading;
+    private int clicks, directClicks;
+    private static readonly IReadOnlyList<ApiReference.Entry> ApiRows = [
+        new("Icon / AriaLabel", "string / required", "Icon token and accessible action name."),
+        new("Dimension / Appearance", "AdmiralButtonDimension.Xl / Secondary", "S, M, L or Xl; Primary, Secondary or Danger."),
+        new("Disabled / Loading / Skeleton", "bool / false", "Prevent activation; Skeleton renders a placeholder."),
+        new("Click", "EventCallback<MouseEventArgs>", "Fires for an enabled button on pointer or keyboard activation.")];
+    private const string AdmiralCode = """
+        <AdmiralIconButton Icon="admiral:system/search-outline" AriaLabel="Search"
+            Dimension="AdmiralButtonDimension.M" Appearance="AdmiralIconButtonAppearance.Secondary"
+            Click="@(_ => clicks++)" />
+        <output aria-live="polite">Clicks: @clicks</output>
+        @code { private int clicks; }
+        """;
+    private const string DirectCode = """
+        <RadzenButton Icon="admiral:system/search-outline" aria-label="Search"
+            Variant="Variant.Text" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small"
+            class="admiral-icon-button admiral-icon-button--secondary"
+            Click="@(_ => clicks++)" />
+        <output aria-live="polite">Clicks: @clicks</output>
+        @code { private int clicks; }
+        """;
+}

@@ -1,0 +1,61 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<mask id="mask_128" width="6.666667" height="13.333333" x="10.666687" y="7.333313" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<path id="Mask" d="M14 20.6666C15.3334 20.6666 17.3334 18.0501 17.3334 14C17.3334 9.94989 15.3334 7.33331 14 7.33331C12.6667 7.33331 10.6667 9.94989 10.6667 14C10.6667 18.0501 12.6667 20.6666 14 20.6666Z" fill="rgb(188,0,0)" fill-rule="evenodd" />
+			<path id="Mask" d="M17.3334 14C17.3334 9.94989 15.3334 7.33331 14 7.33331C12.6667 7.33331 10.6667 9.94989 10.6667 14C10.6667 18.0501 12.6667 20.6666 14 20.6666C15.3334 20.6666 17.3334 18.0501 17.3334 14Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+		<g id="pixso_custom_effect_11">
+			<effect x="0.000000" y="1.000000" visibility="visible" fill="rgb(0,0,0)" fill-opacity="0.0599999987" effectType="dropShadow" showShadowBehind="1" stdDeviation="0" radius="0" />
+			<effect x="0.000000" y="1.000000" visibility="hidden" fill="rgb(255,216.88,100.278)" fill-opacity="1" effectType="innerShadow" showShadowBehind="1" stdDeviation="0" radius="0" />
+		</g>
+		<filter id="filter_11" width="1.333313" height="15.666656" x="13.333374" y="6.666656" filterUnits="userSpaceOnUse" customEffect="url(#pixso_custom_effect_11)" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix" />
+			<feOffset dx="0.000000" dy="1.000000" in="SourceAlpha" />
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0 " />
+			<feBlend result="effect_dropShadow_1" in2="BackgroundImageFix" mode="normal" />
+			<feBlend result="shape" in="SourceGraphic" in2="effect_dropShadow_1" mode="normal" />
+		</filter>
+		<linearGradient id="paint_linear_51" x1="13.333374" x2="13.333374" y1="6.66668701" y2="21.3333549" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(255,255,255)" offset="0" stop-opacity="1" />
+			<stop stop-color="rgb(239.7,239.7,239.7)" offset="1" stop-opacity="1" />
+		</linearGradient>
+	</defs>
+	<mask id="mask_127" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Kenya" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_127)">
+		<path id="Rectangle 2" d="M0 9.33333L28 9.33333L28 4L0 4L0 9.33333Z" fill="rgb(38,38,38)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 9.33333L28 4L0 4L0 9.33333L28 9.33333Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M0 24L28 24L28 18.6667L0 18.6667L0 24Z" fill="rgb(1,131,1)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 24L28 18.6667L0 18.6667L0 24L28 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M0 18.6666L28 18.6666L28 9.33331L0 9.33331L0 18.6666Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 18.6666L28 9.33331L0 9.33331L0 18.6666L28 18.6666Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2 Copy 4" d="M0 17.3334L28 17.3334L28 10.6667L0 10.6667L0 17.3334Z" fill="rgb(220,8,8)" fill-rule="evenodd" />
+		<path id="Rectangle 2 Copy 4" d="M28 17.3334L28 10.6667L0 10.6667L0 17.3334L28 17.3334Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<g id="Oval 225">
+			<path id="Mask" d="M14 20.6666C15.3334 20.6666 17.3334 18.0501 17.3334 14C17.3334 9.94989 15.3334 7.33331 14 7.33331C12.6667 7.33331 10.6667 9.94989 10.6667 14C10.6667 18.0501 12.6667 20.6666 14 20.6666Z" fill="rgb(188,0,0)" fill-rule="evenodd" />
+			<path id="Mask" d="M17.3334 14C17.3334 9.94989 15.3334 7.33331 14 7.33331C12.6667 7.33331 10.6667 9.94989 10.6667 14C10.6667 18.0501 12.6667 20.6666 14 20.6666C15.3334 20.6666 17.3334 18.0501 17.3334 14Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+			<g mask="url(#mask_128)">
+				<path id="Mask Copy" d="M8.66671 21.3334C10.5077 21.3334 12 18.0501 12 14C12 9.94993 10.5077 6.66669 8.66671 6.66669C6.82576 6.66669 5.33337 9.94993 5.33337 14C5.33337 18.0501 6.82576 21.3334 8.66671 21.3334Z" fill="rgb(38,38,38)" fill-rule="evenodd" />
+				<path id="Mask Copy" d="M12 14C12 9.94993 10.5077 6.66669 8.66671 6.66669C6.82576 6.66669 5.33337 9.94993 5.33337 14C5.33337 18.0501 6.82576 21.3334 8.66671 21.3334C10.5077 21.3334 12 18.0501 12 14Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+				<path id="Mask Copy 2" d="M19.3333 21.3334C21.1743 21.3334 22.6667 18.0501 22.6667 14C22.6667 9.94993 21.1743 6.66669 19.3333 6.66669C17.4924 6.66669 16 9.94993 16 14C16 18.0501 17.4924 21.3334 19.3333 21.3334Z" fill="rgb(38,38,38)" fill-rule="evenodd" />
+				<path id="Mask Copy 2" d="M22.6667 14C22.6667 9.94993 21.1743 6.66669 19.3333 6.66669C17.4924 6.66669 16 9.94993 16 14C16 18.0501 17.4924 21.3334 19.3333 21.3334C21.1743 21.3334 22.6667 18.0501 22.6667 14Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+				<g filter="url(#filter_11)">
+					<path id="Oval 228" d="M14 12C14.3682 12 14.6667 10.8061 14.6667 9.33335C14.6667 7.86059 14.3682 6.66669 14 6.66669C13.6319 6.66669 13.3334 7.86059 13.3334 9.33335C13.3334 10.8061 13.6319 12 14 12ZM14 16C14.3682 16 14.6667 15.1046 14.6667 14C14.6667 12.8955 14.3682 12 14 12C13.6319 12 13.3334 12.8955 13.3334 14C13.3334 15.1046 13.6319 16 14 16ZM14 16C13.6319 16 13.3334 17.1939 13.3334 18.6667C13.3334 20.1394 13.6319 21.3334 14 21.3334C14.3682 21.3334 14.6667 20.1394 14.6667 18.6667C14.6667 17.1939 14.3682 16 14 16Z" fill="url(#paint_linear_51)" fill-rule="evenodd" />
+					<path id="Oval 228" d="M14 12C14.3682 12 14.6667 10.8061 14.6667 9.33335C14.6667 7.86059 14.3682 6.66669 14 6.66669C13.6319 6.66669 13.3334 7.86059 13.3334 9.33335C13.3334 10.8061 13.6319 12 14 12ZM14 16C14.3682 16 14.6667 15.1046 14.6667 14C14.6667 12.8955 14.3682 12 14 12C13.6319 12 13.3334 12.8955 13.3334 14C13.3334 15.1046 13.6319 16 14 16ZM14 16C13.6319 16 13.3334 17.1939 13.3334 18.6667C13.3334 20.1394 13.6319 21.3334 14 21.3334C14.3682 21.3334 14.6667 20.1394 14.6667 18.6667C14.6667 17.1939 14.3682 16 14 16Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>

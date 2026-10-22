@@ -1,0 +1,24 @@
+<ComponentDocTabs @bind-Value="tab" />
+@if (tab == ComponentDocTabs.Theme)
+{
+    <ThemeComponentPlayground Component="@Component" />
+}
+else if (tab == ComponentDocTabs.Api)
+{
+    <GeneratedComponentUsageGuide Component="@Component" />
+}
+else
+{
+    @if (!HasOwnPlayground)
+    {
+        <AdmiralQuickPlayground Component="@Component" />
+    }
+    @ChildContent
+}
+
+@code {
+    [Parameter, EditorRequired] public string Component { get; set; } = string.Empty;
+    [Parameter] public bool HasOwnPlayground { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    private string tab = ComponentDocTabs.Admiral;
+}

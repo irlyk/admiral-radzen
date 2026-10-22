@@ -1,0 +1,8 @@
+<AdmiralNumericSlider Value="@((decimal)Value)" ValueChanged="HandleValueChanged"
+                      Values="@Values.Select(value => (decimal)value)" ValuesChanged="HandleValuesChanged"
+                      Range="@Range" Min="@Min" Max="@Max" Step="@Step"
+                      Marks="@Marks?.Select(value => (decimal)value).ToArray()" ShowMarks="@(Marks is { Count: > 0 })"
+                      Dimension="@Dimension" ShowTooltip="@ShowTooltip" Disabled="@Disabled" Skeleton="@Skeleton"
+                      DragEnded="@DragEnded"
+                      AriaLabel="@AriaLabel" MinHandleAriaLabel="@MinHandleAriaLabel" MaxHandleAriaLabel="@MaxHandleAriaLabel"
+                      Class="@Class" Style="@Style" AdditionalAttributes="@AdditionalAttributes" />

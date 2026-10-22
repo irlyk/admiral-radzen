@@ -1,0 +1,147 @@
+@page "/components/divider"
+
+<PageTitle>Admiral Divider</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Divider"
+        Description="Разделитель толщиной 1 или 2 px: пять цветовых вариантов, две ориентации и произвольная длина."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-divider--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        <ApiReference Title="AdmiralDivider" Rows="@AdmiralRows" />
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Markup and accessibility"]</h2>
+            <p>@SmokeL["AdmiralDivider создаёт элемент с role=\"separator\" и aria-orientation. Length задаётся любым CSS-значением; при вертикальной ориентации у родительского блока должна быть подходящая высота."]</p>
+            <p>@SmokeL["В Radzen нет отдельного Divider. Для прямого использования темы можно добавить те же классы на HTML-элемент; семантику и классы размера, ориентации и цвета тогда задаёт приложение."]</p>
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>HTML + Admiral theme</h2>
+            <p>@SmokeL["Тема содержит классы"] <code>admiral-divider</code>, <code>admiral-divider--s/m</code>, <code>admiral-divider--horizontal/vertical</code> @SmokeL["и модификатор цвета. RadzenStack здесь нужен только для композиции, сам разделитель — обычный HTML."]</p>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    @if (themeVertical)
+                    {
+                        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="1rem" Style="height:4rem">
+                            <span>@SmokeL["Left"]</span>
+                            <hr class="@ThemeClass" style="--admiral-divider-length:3rem" role="separator" aria-orientation="vertical" />
+                            <span>@SmokeL["Right"]</span>
+                        </RadzenStack>
+                    }
+                    else
+                    {
+                        <RadzenStack Gap="0.75rem" Style="width:100%">
+                            <span>@SmokeL["First block"]</span>
+                            <hr class="@ThemeClass" style="--admiral-divider-length:70%" role="separator" aria-orientation="horizontal" />
+                            <span>@SmokeL["Second block"]</span>
+                        </RadzenStack>
+                    }
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Appearance"]</span><select @bind="themeAppearance">@foreach (var item in Enum.GetValues<AdmiralDividerAppearance>()) { <option value="@item">@item</option> }</select></label>
+                    <label><span>@SmokeL["Size"]</span><select @bind="themeSize"><option value="Medium">M · 2 px</option><option value="Small">S · 1 px</option></select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="themeVertical" /> @SmokeL["Вертикально"]</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@ThemeCode" Title="@SmokeL["Razor · прямой HTML и тема"]" />
+            <ApiReference Title="@SmokeL["HTML + тема"]" Rows="@ThemeRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    @if (orientation == AdmiralDividerOrientation.Vertical)
+                    {
+                        <div style="display:flex;align-items:center;gap:1rem;height:4rem">
+                            <span>@SmokeL["Left"]</span>
+                            <AdmiralDivider Size="@size" Appearance="@appearance" Orientation="@orientation"
+                                Length="@length" CustomColor="@(customColor ? "var(--rz-success)" : null)" />
+                            <span>@SmokeL["Right"]</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="display:grid;gap:0.75rem;width:100%">
+                            <span>@SmokeL["First block"]</span>
+                            <AdmiralDivider Size="@size" Appearance="@appearance" Orientation="@orientation"
+                                Length="@length" CustomColor="@(customColor ? "var(--rz-success)" : null)" />
+                            <span>@SmokeL["Second block"]</span>
+                        </div>
+                    }
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Appearance"]</span><select @bind="appearance">@foreach (var item in Enum.GetValues<AdmiralDividerAppearance>()) { <option value="@item">@item</option> }</select></label>
+                    <label><span>@SmokeL["Size"]</span><select @bind="size"><option value="Medium">M · 2 px</option><option value="Small">S · 1 px</option></select></label>
+                    <label><span>@SmokeL["Orientation"]</span><select @bind="orientation"><option value="Horizontal">@SmokeL["Горизонтально"]</option><option value="Vertical">@SmokeL["Вертикально"]</option></select></label>
+                    <label><span>@SmokeL["Length"]</span><select @bind="length"><option value="100%">100%</option><option value="70%">70%</option><option value="3rem">3rem</option></select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="customColor" /> @SmokeL["Свой цвет"]</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Admiral variants"]</h2>
+            <div style="display:grid;gap:1rem">
+                @foreach (var item in Enum.GetValues<AdmiralDividerAppearance>())
+                {
+                    <div style="display:grid;gap:0.25rem">
+                        <span>@item</span>
+                        <AdmiralDivider Appearance="@item" Size="AdmiralDividerSize.Small" />
+                        <AdmiralDivider Appearance="@item" Size="AdmiralDividerSize.Medium" />
+                    </div>
+                }
+            </div>
+        </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private AdmiralDividerSize size = AdmiralDividerSize.Medium, themeSize = AdmiralDividerSize.Medium;
+    private AdmiralDividerAppearance appearance, themeAppearance;
+    private AdmiralDividerOrientation orientation;
+    private string length = "100%";
+    private bool customColor, themeVertical;
+
+    private string ThemeClass => $"admiral-divider admiral-divider--{(themeSize == AdmiralDividerSize.Small ? "s" : "m")} admiral-divider--{(themeVertical ? "vertical" : "horizontal")} admiral-divider--{themeAppearance.ToString().ToLowerInvariant()}";
+
+    private const string AdmiralCode = """
+        <AdmiralDivider Appearance="AdmiralDividerAppearance.Primary"
+                        Size="AdmiralDividerSize.Small" Length="70%" />
+        <AdmiralDivider Orientation="AdmiralDividerOrientation.Vertical"
+                        Length="3rem" />
+        """;
+    private const string ThemeCode = """
+        <RadzenStack Gap="1rem">
+            <span>Первый блок</span>
+            <hr class="admiral-divider admiral-divider--horizontal admiral-divider--s admiral-divider--primary"
+                style="--admiral-divider-length:70%" role="separator" aria-orientation="horizontal" />
+            <span>Второй блок</span>
+        </RadzenStack>
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> ThemeRows =
+    [
+        new("admiral-divider--s / --m", "CSS-класс", "Толщина 1 или 2 px."),
+        new("admiral-divider--horizontal / --vertical", "CSS-класс", "Ось длины и толщина разделителя."),
+        new("admiral-divider--{appearance}", "CSS-класс", "Цвет из Admiral theme; default, subtle, strong, primary или staticwhite."),
+        new("--admiral-divider-length", "CSS-переменная", "Длина по выбранной оси; по умолчанию 100%."),
+        new("--admiral-divider-color", "CSS-переменная", "Пользовательский цвет поверх цветового варианта.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> AdmiralRows =
+    [
+        new("Size", "AdmiralDividerSize / Medium", "Medium рисует линию 2 px, Small — 1 px."),
+        new("Appearance", "AdmiralDividerAppearance / Default", "Цветовой вариант линии."),
+        new("Orientation", "AdmiralDividerOrientation / Horizontal", "Горизонтальная или вертикальная ось."),
+        new("Length", "string / 100%", "CSS длина по выбранной оси; вертикальному варианту нужна высота контейнера."),
+        new("CustomColor", "string? / null", "Переопределение цвета CSS значением."),
+        new("Class / Style / AdditionalAttributes", "string? / string? / attributes", "Дополнительные HTML классы, стили и атрибуты; событий нет.")
+    ];
+}

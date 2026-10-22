@@ -1,0 +1,19 @@
+.admiral-carousel-host {
+    width: 100%;
+    min-width: 0;
+}
+
+.admiral-carousel-host ::deep .rz-carousel-prev .rz-button-box,
+.admiral-carousel-host ::deep .rz-carousel-next .rz-button-box {
+    gap: 0;
+}
+
+.admiral-carousel-host ::deep .rz-carousel-prev .rz-button-text,
+.admiral-carousel-host ::deep .rz-carousel-next .rz-button-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}

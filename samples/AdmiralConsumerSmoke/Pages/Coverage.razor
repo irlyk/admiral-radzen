@@ -1,0 +1,165 @@
+@page "/coverage"
+@inject IHttpClientFactory HttpClientFactory
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<SharedResource> L
+
+<PageTitle>@L["Admiral component coverage"]</PageTitle>
+
+<div class="admiral-gallery admiral-coverage-page">
+    <header class="admiral-gallery__hero">
+        <RadzenText TextStyle="TextStyle.Overline">Admiral 2.1 → Radzen Blazor</RadzenText>
+        <RadzenText TextStyle="TextStyle.H2" TagName="TagName.H1">@L["Admiral component coverage"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body1">
+            @L["Live view of the repository coverage matrix. Use the filters to find completed and remaining component work."]
+        </RadzenText>
+    </header>
+
+    <section class="admiral-gallery__section" aria-labelledby="coverage-heading">
+        <div class="admiral-coverage__heading">
+            <div>
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="coverage-heading">@L["Coverage matrix"]</RadzenText>
+                @if (!isLoading && loadError is null)
+                {
+                    <RadzenText TextStyle="TextStyle.Caption">@L["{0} of {1} tracked component families", FilteredRows.Count(), rows.Count]</RadzenText>
+                }
+            </div>
+            <div class="admiral-coverage__summary" aria-label="@L["Coverage summary"]">
+                @foreach (var status in StatusValues)
+                {
+                    <RadzenBadge class="admiral-badge" BadgeStyle="@StatusStyle(status)"
+                                 Text="@($"{L[status]}: {rows.Count(row => row.Status == status)}")" />
+                }
+            </div>
+        </div>
+        <RadzenText TextStyle="TextStyle.Caption">
+            @L["Related Admiral Storybook pages are grouped into families here. This matrix is not yet a complete inventory; unlisted components are not counted as Not started."]
+        </RadzenText>
+
+        <div class="admiral-coverage__filters">
+            <AdmiralTextField Label="@L["Search components"]" IconStart="admiral:system/search-outline"
+                              DisplayClearIcon="true" @bind-Value="searchTerm" />
+            <AdmiralSelectField TValue="string" TItem="StatusOption" Label="@L["Status"]"
+                                Data="@StatusOptions" TextSelector="StatusText" ValueSelector="StatusValue"
+                                AllowClear="false" @bind-Value="selectedStatus" />
+        </div>
+
+        @if (isLoading)
+        {
+            <div class="admiral-icon-browser__message" role="status">
+                <AdmiralSpinner AriaLabel="@L["Loading"]" />
+            </div>
+        }
+        else if (loadError is not null)
+        {
+            <RadzenAlert AlertStyle="AlertStyle.Danger" Variant="Variant.Outlined">@loadError</RadzenAlert>
+        }
+        else
+        {
+            <RadzenDataGrid Data="@FilteredRows" TItem="CoverageRow" AllowSorting="true"
+                            GridLines="DataGridGridLines.Horizontal"
+                            class="admiral-table--m admiral-table--grey-header admiral-coverage__grid">
+                <Columns>
+                    <RadzenDataGridColumn TItem="CoverageRow" Property="Component" Title="@L["Admiral component"]" Width="15rem" />
+                    <RadzenDataGridColumn TItem="CoverageRow" Property="Mapping" Title="@L["Radzen mapping"]" Width="14rem" />
+                    <RadzenDataGridColumn TItem="CoverageRow" Property="Status" Title="@L["Status"]" Width="9rem">
+                        <Template Context="item">
+                            <RadzenBadge class="admiral-badge admiral-badge--s" BadgeStyle="@StatusStyle(item.Status)" Text="@L[item.Status]" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="CoverageRow" Property="Light" Title="@L["Light"]" Width="6rem" />
+                    <RadzenDataGridColumn TItem="CoverageRow" Property="Dark" Title="@L["Dark"]" Width="6rem" />
+                    <RadzenDataGridColumn TItem="CoverageRow" Property="Notes" Title="@L["Notes"]" Width="28rem" />
+                </Columns>
+            </RadzenDataGrid>
+        }
+    </section>
+</div>
+
+@code {
+    private static readonly string[] StatusValues = ["Verified", "Implemented", "Partial", "Not started", "No direct mapping"];
+    private readonly List<CoverageRow> rows = [];
+    private string searchTerm = string.Empty;
+    private string selectedStatus = string.Empty;
+    private string? loadError;
+    private bool isLoading = true;
+
+    private IEnumerable<StatusOption> StatusOptions =>
+        new[] { new StatusOption(L["All statuses"], string.Empty) }
+            .Concat(StatusValues.Select(status => new StatusOption(L[status], status)));
+
+    private IEnumerable<CoverageRow> FilteredRows => rows.Where(row =>
+        (string.IsNullOrEmpty(selectedStatus) || row.Status == selectedStatus) &&
+        (string.IsNullOrWhiteSpace(searchTerm) ||
+         row.Component.Contains(searchTerm.Trim(), StringComparison.OrdinalIgnoreCase) ||
+         row.Mapping.Contains(searchTerm.Trim(), StringComparison.OrdinalIgnoreCase) ||
+         row.Notes.Contains(searchTerm.Trim(), StringComparison.OrdinalIgnoreCase)));
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var client = HttpClientFactory.CreateClient();
+            var url = NavigationManager.ToAbsoluteUri("data/admiral-component-coverage.md");
+            var markdown = await client.GetStringAsync(url);
+            rows.AddRange(ParseMatrix(markdown));
+        }
+        catch (Exception exception)
+        {
+            loadError = L["The coverage matrix could not be loaded: {0}", exception.Message];
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private static IEnumerable<CoverageRow> ParseMatrix(string markdown)
+    {
+        var insideMatrix = false;
+
+        foreach (var rawLine in markdown.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries))
+        {
+            var line = rawLine.Trim();
+            if (line == "## Coverage matrix")
+            {
+                insideMatrix = true;
+                continue;
+            }
+
+            if (insideMatrix && line.StartsWith("## ", StringComparison.Ordinal))
+            {
+                yield break;
+            }
+
+            if (!insideMatrix || !line.StartsWith('|'))
+            {
+                continue;
+            }
+
+            var cells = line.Split('|').Skip(1).SkipLast(1).Select(CleanMarkdown).ToArray();
+            if (cells.Length != 6 || cells[0] == "Admiral component" || cells[0].StartsWith("---", StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            yield return new CoverageRow(cells[0], cells[1], cells[2], cells[3], cells[4], cells[5]);
+        }
+    }
+
+    private static string CleanMarkdown(string value) => value.Trim().Replace("`", string.Empty).Replace("**", string.Empty);
+
+    private static BadgeStyle StatusStyle(string status) => status switch
+    {
+        "Verified" => BadgeStyle.Success,
+        "Implemented" => BadgeStyle.Info,
+        "Partial" => BadgeStyle.Warning,
+        "Not started" => BadgeStyle.Danger,
+        _ => BadgeStyle.Base
+    };
+
+    private static string StatusText(StatusOption option) => option.Text;
+    private static string StatusValue(StatusOption option) => option.Value;
+
+    private sealed record CoverageRow(string Component, string Mapping, string Status, string Light, string Dark, string Notes);
+    private sealed record StatusOption(string Text, string Value);
+}

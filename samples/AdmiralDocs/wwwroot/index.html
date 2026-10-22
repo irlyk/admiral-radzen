@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <base href="/admiral-radzen/" />
+    <script>
+        // Blazor's local DevServer serves assets at the site root. Published
+        // docs retain the project subpath, including on localhost test hosts.
+        if ((location.hostname === 'localhost' || location.hostname === '127.0.0.1') &&
+            !location.pathname.startsWith('/admiral-radzen/')) {
+            document.querySelector('base').href = '/';
+        }
+    </script>
+    <title>AdmiralRadzen</title>
+    <link id="admiral-theme" href="_content/Radzen.Admiral.Themes/css/admiral-base.css" rel="stylesheet" />
+    <script src="js/preferences.js"></script>
+    <script src="js/docs-links.js" defer></script>
+    <link href="css/site.css" rel="stylesheet" />
+    <link href="css/docs.css" rel="stylesheet" />
+    <link href="AdmiralDocs.styles.css" rel="stylesheet" />
+    <link href="_content/Radzen.Admiral.Icons/admiral-radzen-icons.css" rel="stylesheet" />
+    <script src="_content/Radzen.Admiral.Icons/admiral-radzen-icons.js"></script>
+</head>
+<body>
+    <div id="app"><p>Загрузка документации…</p></div>
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+</body>
+</html>

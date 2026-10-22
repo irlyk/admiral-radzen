@@ -1,0 +1,26 @@
+<svg viewBox="0 0 28.0001 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000061" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_12" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Saint Vincent and the Grenadines" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_12)">
+		<rect id="Mask" width="14.666667" height="20.000000" x="13.333374" y="4.000000" fill="rgb(8,196,122)" />
+		<rect id="Mask" width="14.666667" height="20.000000" x="13.333374" y="4.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M0 24L9.33333 24L9.33333 4L0 4L0 24Z" fill="rgb(12,135,225)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M9.33333 24L9.33333 4L0 4L0 24L9.33333 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2 Copy" d="M8 24L20 24L20 4L8 4L8 24Z" fill="rgb(254,203,47)" fill-rule="evenodd" />
+		<path id="Rectangle 2 Copy" d="M20 24L20 4L8 4L8 24L20 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 1194" d="M9.33337 12L11.3334 8L13.3334 12L11.3334 16L9.33337 12ZM14.6667 12L16.6667 8L18.6667 12L16.6667 16L14.6667 12ZM14 13.3333L12 17.3333L14 21.3333L16 17.3333L14 13.3333Z" fill="rgb(8,196,122)" fill-rule="evenodd" />
+		<path id="Rectangle 1194" d="M9.33337 12L11.3334 8L13.3334 12L11.3334 16L9.33337 12ZM14.6667 12L16.6667 8L18.6667 12L16.6667 16L14.6667 12ZM14 13.3333L12 17.3333L14 21.3333L16 17.3333L14 13.3333Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	</g>
+</svg>

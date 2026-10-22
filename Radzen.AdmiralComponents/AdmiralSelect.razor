@@ -1,0 +1,175 @@
+@typeparam TValue
+@typeparam TItem
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
+
+<div class="@CssClass" data-status="@StatusName" aria-busy="@(Loading ? "true" : null)">
+    @if (Multiple)
+    {
+        <RadzenDropDown TValue="IEnumerable<object>"
+                        @ref="multipleDropDown" Open="FocusMultipleTriggerBeforeOpenAsync"
+                        Value="@SelectedOptionObjects" ValueChanged="@HandleMultipleChangedAsync" Name="@Name"
+                        Data="@multipleOptions" TextProperty="@nameof(SelectOption.Text)"
+                        DisabledProperty="@nameof(SelectOption.Disabled)" Placeholder="@Placeholder"
+                        Disabled="@(Disabled || Loading)" ReadOnly="@ReadOnly" Multiple="true" Chips="@Chips"
+                        AllowFiltering="@AllowFiltering" FilterDelay="@FilterDelay" FilterPlaceholder="@FilterPlaceholder"
+                        AllowClear="@AllowClear" AllowSelectAll="@AllowSelectAll" SelectAllText="@SelectAllText"
+                        SelectedItemsText="@SelectedItemsText" RemoveChipTitle="@RemoveChipTitle"
+                        Separator="@Separator"
+                        ClearAriaLabel="@ClearAriaLabel" SearchAriaLabel="@SearchAriaLabel" EmptyAriaLabel="@EmptyAriaLabel"
+                        PopupStyle="@PopupStyle" InputAttributes="@InputAttributes" class="admiral-select__control"
+                        @attributes="AdditionalAttributes">
+            <Template Context="context">@RenderMultipleOption((object)context)</Template>
+            <ValueTemplate Context="context">@RenderMultipleValue((object)context)</ValueTemplate>
+        </RadzenDropDown>
+    }
+    else
+    {
+        <AdmiralDropDown TValue="TValue" TItem="TItem"
+                     Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression" Name="@Name"
+                     Data="@Data" DataProvider="@DataProvider" TextSelector="@TextSelector" ValueSelector="@ValueSelector"
+                     GroupSelector="@GroupSelector" GroupTextSelector="@GroupTextSelector"
+                     GroupDisabledSelector="@GroupDisabledSelector" DisabledSelector="@DisabledSelector"
+                     ItemTemplate="@ItemTemplate" SelectedTemplate="@SelectedTemplate" LoadFailed="@LoadFailed"
+                     Placeholder="@Placeholder" FilterPlaceholder="@FilterPlaceholder"
+                     LoadingText="@LoadingText" EmptyText="@EmptyText" ErrorText="@ErrorText" RetryText="@RetryText"
+                     ClearAriaLabel="@ClearAriaLabel" SearchAriaLabel="@SearchAriaLabel" EmptyAriaLabel="@EmptyAriaLabel"
+                     SelectAllText="@SelectAllText" SelectedItemsText="@SelectedItemsText" RemoveChipTitle="@RemoveChipTitle"
+                     AllowFiltering="@AllowFiltering" AllowClear="@AllowClear" Disabled="@(Disabled || Loading)" ReadOnly="@ReadOnly"
+                     Multiple="false" Chips="@Chips" AllowSelectAll="@AllowSelectAll"
+                     AllowVirtualization="@AllowVirtualization" ClearSearchAfterSelection="@ClearSearchAfterSelection"
+                     FilterDelay="@FilterDelay" PageSize="@PageSize" VirtualizationOverscanCount="@VirtualizationOverscanCount"
+                     PopupStyle="@PopupStyle" InputAttributes="@InputAttributes" Class="admiral-select__control"
+                     @attributes="AdditionalAttributes" />
+    }
+    @if (Loading)
+    {
+        <span class="admiral-select__loading"><AdmiralSpinner Size="AdmiralSpinnerSize.MediumSmall" AriaLabel="@LoadingText" /></span>
+    }
+</div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && Multiple)
+        {
+            var module = await JS.InvokeAsync<IJSObjectReference>("import", "./_content/Radzen.Admiral.Components/admiral-select-focus.js");
+            await module.InvokeVoidAsync("installEscapeFocusRestore");
+            await module.DisposeAsync();
+        }
+    }
+
+    private RadzenDropDown<IEnumerable<object>>? multipleDropDown;
+    private async Task FocusMultipleTriggerBeforeOpenAsync()
+    {
+        if (multipleDropDown is not null)
+        {
+            await multipleDropDown.FocusAsync();
+        }
+    }
+
+    [Parameter] public TValue? Value { get; set; }
+    [Parameter] public EventCallback<TValue?> ValueChanged { get; set; }
+    [Parameter] public IEnumerable<TValue>? Values { get; set; }
+    [Parameter] public EventCallback<IEnumerable<TValue>?> ValuesChanged { get; set; }
+    [Parameter] public System.Linq.Expressions.Expression<Func<TValue?>>? ValueExpression { get; set; }
+    [Parameter] public string? Name { get; set; }
+    [Parameter] public IEnumerable<TItem>? Data { get; set; }
+    [Parameter] public Func<AdmiralDropDownQuery, CancellationToken, Task<AdmiralDropDownResult<TItem>>>? DataProvider { get; set; }
+    [Parameter] public Func<TItem, string>? TextSelector { get; set; }
+    [Parameter] public Func<TItem, TValue?>? ValueSelector { get; set; }
+    [Parameter] public Func<TItem, string?>? GroupSelector { get; set; }
+    [Parameter] public Func<string, string>? GroupTextSelector { get; set; }
+    [Parameter] public Func<string, bool>? GroupDisabledSelector { get; set; }
+    [Parameter] public Func<TItem, bool>? DisabledSelector { get; set; }
+    [Parameter] public RenderFragment<TItem>? ItemTemplate { get; set; }
+    [Parameter] public RenderFragment<TItem>? SelectedTemplate { get; set; }
+    [Parameter] public EventCallback<Exception> LoadFailed { get; set; }
+    [Parameter] public string? Placeholder { get; set; }
+    [Parameter] public string? FilterPlaceholder { get; set; }
+    [Parameter] public AdmiralInputSize Size { get; set; } = AdmiralInputSize.Medium;
+    [Parameter] public AdmiralInputStatus Status { get; set; }
+    [Parameter] public bool AllowFiltering { get; set; }
+    [Parameter] public bool AllowClear { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool ReadOnly { get; set; }
+    [Parameter] public bool Multiple { get; set; }
+    [Parameter] public bool Chips { get; set; }
+    [Parameter] public bool AllowSelectAll { get; set; } = true;
+    [Parameter] public bool AllowVirtualization { get; set; }
+    [Parameter] public bool ClearSearchAfterSelection { get; set; } = true;
+    [Parameter] public bool Skeleton { get; set; }
+    [Parameter] public bool Loading { get; set; }
+    [Parameter] public int FilterDelay { get; set; } = 300;
+    [Parameter] public int PageSize { get; set; } = 20;
+    [Parameter] public int VirtualizationOverscanCount { get; set; } = 5;
+    [Parameter] public string PopupStyle { get; set; } = "max-height: 15rem; overflow-x: hidden";
+    [Parameter] public string LoadingText { get; set; } = "Loading…";
+    [Parameter] public string EmptyText { get; set; } = "No options";
+    [Parameter] public string ErrorText { get; set; } = "Could not load options";
+    [Parameter] public string RetryText { get; set; } = "Retry";
+    [Parameter] public string ClearAriaLabel { get; set; } = "Clear";
+    [Parameter] public string SearchAriaLabel { get; set; } = "Search options";
+    [Parameter] public string EmptyAriaLabel { get; set; } = "Empty";
+    [Parameter] public string SelectAllText { get; set; } = "Select all";
+    [Parameter] public string SelectedItemsText { get; set; } = "items selected";
+    [Parameter] public string Separator { get; set; } = ", ";
+    [Parameter] public string RemoveChipTitle { get; set; } = "Remove";
+    [Parameter] public IReadOnlyDictionary<string, object>? InputAttributes { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string StatusName => Status.ToString().ToLowerInvariant();
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-select",
+        $"admiral-select--{(Size == AdmiralInputSize.Small ? "s" : Size == AdmiralInputSize.ExtraLarge ? "xl" : "m")}",
+        Status == AdmiralInputStatus.Default ? null : $"admiral-select--{StatusName}",
+        Loading ? "admiral-select--loading" : null,
+        Skeleton ? "rz-skeleton admiral-select--skeleton" : null,
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+
+    private IReadOnlyList<SelectOption> multipleOptions = [];
+    private IEnumerable<object> SelectedOptionObjects => multipleOptions
+        .Where(option => Values?.Contains(option.Value!) == true)
+        .Cast<object>()
+        .ToArray();
+
+    protected override void OnParametersSet()
+    {
+        if (!Multiple) return;
+        multipleOptions = (Data ?? []).Select(item => new SelectOption
+        {
+            Item = item,
+            Text = TextSelector?.Invoke(item) ?? item?.ToString() ?? string.Empty,
+            Value = ValueSelector is not null ? ValueSelector(item) : item is TValue value ? value : default,
+            Disabled = DisabledSelector?.Invoke(item) == true
+        }).ToArray();
+    }
+
+    private RenderFragment RenderMultipleOption(object context) => builder =>
+    {
+        var option = (SelectOption)context;
+        if (ItemTemplate is not null) builder.AddContent(0, ItemTemplate(option.Item));
+        else builder.AddContent(0, option.Text);
+    };
+
+    private RenderFragment RenderMultipleValue(object context) => builder =>
+    {
+        var option = (SelectOption)context;
+        if (SelectedTemplate is not null) builder.AddContent(0, SelectedTemplate(option.Item));
+        else builder.AddContent(0, option.Text);
+    };
+
+    private Task HandleMultipleChangedAsync(IEnumerable<object>? selected) => ValuesChanged.InvokeAsync(
+        (selected ?? []).OfType<SelectOption>().Select(option => option.Value!).ToArray());
+
+    private sealed class SelectOption
+    {
+        public required TItem Item { get; init; }
+        public required string Text { get; init; }
+        public TValue? Value { get; init; }
+        public bool Disabled { get; init; }
+    }
+}

@@ -1,0 +1,85 @@
+@page "/components/avatar"
+
+<PageTitle>Admiral Avatar</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Avatar / AvatarGroup" Description="@T("Аватары людей и аккаунтов: размер, статус и переполнение группы.", "People and account identities with size, presence and group overflow states.")"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-avatar--docs" />
+    <p><a href="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-avatargroup--docs" target="_blank" rel="noreferrer">@T("Официальный пример AvatarGroup", "Official AvatarGroup reference")</a></p>
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section"><h2>@SmokeL["Usage"]</h2>
+            <p>@T("Avatar показывает изображение, затем иконку, затем инициалы. Это кнопка: Click вызывается, если Disabled=false. AvatarGroup резервирует видимое место под счётчик переполнения, когда число элементов больше MaxVisible.", "Avatar uses an image when ImageUrl is supplied, then an icon, then initials. The component is a button: Click fires unless Disabled. AvatarGroup reserves one visible slot for overflow when MaxVisible is exceeded.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralAvatar" Rows="@AvatarRows" /><ApiReference Title="AdmiralAvatarGroup" Rows="@GroupRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section"><h2>Radzen + Admiral theme</h2>
+            <p>@T("У прямого Radzen нет аналога контракта переполнения AvatarGroup. Нативная кнопка может показать инициалы, но размеры, индикатор присутствия и переполнение реализует приложение.", "There is no direct Radzen control with the AvatarGroup overflow contract. A native button can show initials, but the application owns sizing, presence indicators and overflow behavior.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><button type="button" @onclick="() => directClicks++" aria-label="Alex Morozov">AM</button><span role="status">@T("Нажатия", "Clicks"): @directClicks</span></div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct HTML" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section"><h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground" data-testid="avatar-admiral-demo"><div class="admiral-component-playground__preview">
+                <AdmiralAvatar Name="Alex Morozov" Size="@size" Appearance="@appearance" Status="@status" Disabled="@disabled" Click="@(_ => clicks++)" />
+                <AdmiralAvatarGroup Items="@people" Size="@size" MaxVisible="@maxVisible" ItemClick="OnItemClick" OverflowClick="OnOverflowClick" />
+                <span class="admiral-component-page__result" role="status">@T("Нажатия", "Clicks"): @clicks · @message</span>
+            </div><div class="admiral-component-controls">
+                <label><span>@SmokeL["Size"]</span><select @bind="size">@foreach (var option in Enum.GetValues<AdmiralAvatarSize>()) { <option value="@option">@option</option> }</select></label>
+                <label><span>@SmokeL["Appearance"]</span><select @bind="appearance">@foreach (var option in Enum.GetValues<AdmiralAvatarAppearance>()) { <option value="@option">@option</option> }</select></label>
+                <label><span>@SmokeL["Status"]</span><select @bind="status">@foreach (var option in Enum.GetValues<AdmiralAvatarStatus>()) { <option value="@option">@option</option> }</select></label>
+                <label><span>MaxVisible</span><input type="number" min="1" max="4" @bind="maxVisible" /></label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> @SmokeL["Disabled"]</label>
+            </div></div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private AdmiralAvatarSize size = AdmiralAvatarSize.Medium;
+    private AdmiralAvatarAppearance appearance = AdmiralAvatarAppearance.Neutral2;
+    private AdmiralAvatarStatus status;
+    private readonly IReadOnlyList<AdmiralAvatarItem> people = [new("Alex Morozov"), new("Elena Petrova"), new("Maria Volkova"), new("Ivan Sidorov")];
+    private int maxVisible = 3, clicks, directClicks;
+    private bool disabled;
+    private string message = "—";
+    private void OnItemClick(AdmiralAvatarItem item) { message = item.Name; clicks++; }
+    private void OnOverflowClick() { message = T("Переполнение", "Overflow"); clicks++; }
+    private const string AdmiralCode = """
+        <AdmiralAvatar Name="Alex Morozov" Click="@(_ => clicks++)" />
+        <AdmiralAvatarGroup Items="people" MaxVisible="3" ItemClick="OnItemClick" />
+        <span role="status">Clicks: @clicks · @lastSelected</span>
+        @code {
+            private int clicks;
+            private string lastSelected = "—";
+            private IReadOnlyList<AdmiralAvatarItem> people = [new("Alex Morozov"), new("Elena Petrova")];
+            private void OnItemClick(AdmiralAvatarItem item) { lastSelected = item.Name; clicks++; }
+        }
+        """;
+    private const string DirectCode = """
+        <button type="button" aria-label="Alex Morozov" @onclick="() => clicks++">AM</button>
+        <span role="status">Clicks: @clicks</span>
+        @code { private int clicks; }
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> AvatarRows =
+    [
+        new("Name / Initials / ImageUrl / Icon", "string; required / string?; null", "Accessible name and preferred image, icon or derived initials."),
+        new("Size / Appearance / Status", "AdmiralAvatarSize; Xl / AdmiralAvatarAppearance; Neutral2 / AdmiralAvatarStatus; None", "Visual dimension, fill and presence indicator."),
+        new("Disabled / Click", "bool; false / EventCallback<MouseEventArgs>", "Prevent interaction or observe avatar activation."),
+        new("WithActivityRing / ShowActivityRing", "bool; false", "Activity ring capability and visible state."),
+        new("ShowTooltip", "bool; true", "Show Name as a browser tooltip.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> GroupRows =
+    [
+        new("Items / MaxVisible", "IReadOnlyList<AdmiralAvatarItem>; [] / int; int.MaxValue", "People and maximum displayed slots, including overflow."),
+        new("ItemClick / OverflowClick", "EventCallback<AdmiralAvatarItem> / EventCallback", "Activated person or overflow avatar."),
+        new("Size / Appearance / WithActivityRing", "AdmiralAvatarSize; Xl / AdmiralAvatarAppearance; Neutral2 / bool; false", "Defaults forwarded to visible avatars.")
+    ];
+}

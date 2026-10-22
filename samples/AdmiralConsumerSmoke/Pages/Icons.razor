@@ -1,0 +1,268 @@
+@page "/icons"
+@inject IHttpClientFactory HttpClientFactory
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+@inject IStringLocalizer<SharedResource> L
+
+<PageTitle>@L["Admiral icon gallery"]</PageTitle>
+
+<div class="admiral-gallery admiral-icon-gallery">
+    <header class="admiral-gallery__hero">
+        <RadzenText TextStyle="TextStyle.Overline">Radzen.Admiral.Icons</RadzenText>
+        <RadzenText TextStyle="TextStyle.H2" TagName="TagName.H1">@L["Admiral icon gallery"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body1">
+            @L["Browse all packaged Admiral SVG icons, filter them by path and copy a value ready for any Radzen Icon parameter."]
+        </RadzenText>
+    </header>
+
+    <section class="admiral-gallery__section admiral-component-page__section" aria-labelledby="icon-component-heading">
+        <h2 id="icon-component-heading">AdmiralIcon</h2>
+        <p>@L["Use AdmiralIcon for a sized Admiral token. The direct RadzenIcon accepts the same admiral: name through the packaged icon adapter; set its geometry with CSS."] <a href="https://admiralds.github.io/react-ui/?path=/docs/icons-icons--docs" target="_blank" rel="noreferrer">AdmiralDS icons</a></p>
+        <ComponentDocTabs @bind-Value="iconTab" />
+        @if (iconTab == ComponentDocTabs.Api)
+        {
+            <ApiReference Title="AdmiralIcon" Rows="@IconApiRows" />
+            <p>@L["Decorative icons should carry aria-hidden; give an interactive parent an accessible name. The icon adapter loads SVG assets lazily."]</p>
+            <CopyableRazorExample Code="@AdmiralIconCode" Title="Razor · AdmiralIcon" />
+        }
+        else if (iconTab == ComponentDocTabs.Theme)
+        {
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <RadzenIcon Icon="admiral:system/search-outline" class="admiral-icon" Style="@PreviewIconStyle" aria-hidden="true" />
+                <span>@L["Direct RadzenIcon with packaged Admiral icon assets"]</span>
+            </div></div>
+            <CopyableRazorExample Code="@RadzenIconCode" Title="Razor · direct RadzenIcon" />
+        }
+        else
+        {
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <AdmiralIcon Icon="admiral:system/search-outline" Size="@previewIconSize" aria-hidden="true" />
+                <span>@L["AdmiralIcon size"]: @((int)previewIconSize) px</span>
+            </div><div class="admiral-component-controls"><label><span>@L["Size"]</span><select @bind="previewIconSize">@foreach (var size in Enum.GetValues<AdmiralIconSize>()) { <option value="@size">@size</option> }</select></label></div></div>
+            <CopyableRazorExample Code="@AdmiralIconCode" Title="Razor · AdmiralIcon" />
+        }
+    </section>
+
+    <section class="admiral-gallery__section admiral-icon-browser" aria-labelledby="icon-browser-heading">
+        <div class="admiral-icon-browser__heading">
+            <div>
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="icon-browser-heading">@L["Icons"]</RadzenText>
+                @if (!isLoading && loadError is null)
+                {
+                    <RadzenText TextStyle="TextStyle.Caption">@L["{0} of {1} icons", FilteredCount, icons.Count]</RadzenText>
+                }
+            </div>
+        </div>
+
+        <div class="admiral-icon-browser__filters">
+            <AdmiralTextField Id="icon-search" Label="@L["Search icons"]" IconStart="admiral:system/search-outline"
+                              DisplayClearIcon="true" ClearAriaLabel="@L["Clear icon search"]"
+                              @bind-Value="SearchTerm" />
+            <AdmiralInputField Label="@L["Icon category"]" For="icon-category">
+                <AdmiralSelect TValue="string" TItem="string" Name="icon-category"
+                               Data="@categories" TextSelector="Identity" ValueSelector="Identity"
+                               Value="@SelectedCategory" ValueChanged="OnCategoryChanged"
+                               aria-label="@L["Icon category"]" />
+            </AdmiralInputField>
+        </div>
+
+        @if (selectedIcon is not null)
+        {
+            <div class="admiral-icon-selection" aria-live="polite">
+                <RadzenIcon Icon="@IconReference(selectedIcon)" class="admiral-icon-selection__preview" />
+                <div class="admiral-icon-selection__text">
+                    <RadzenText TextStyle="TextStyle.Caption">@L["Selected icon"]</RadzenText>
+                    <code>@IconReference(selectedIcon)</code>
+                </div>
+                <RadzenButton Text="@(copied ? L["Copied"] : L["Copy value"])"
+                              Icon="@(copied ? "admiral:service/check-outline" : "admiral:documents/copy-outline")"
+                              ButtonStyle="ButtonStyle.Primary"
+                              Variant="Variant.Outlined"
+                              Click="CopySelectedIcon" />
+            </div>
+        }
+
+        @if (isLoading)
+        {
+            <div class="admiral-icon-browser__message" role="status">
+                <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ShowValue="false" />
+                <RadzenText TextStyle="TextStyle.Body2">@L["Loading icon manifest…"]</RadzenText>
+            </div>
+        }
+        else if (loadError is not null)
+        {
+            <RadzenAlert AlertStyle="AlertStyle.Danger" Variant="Variant.Outlined">@loadError</RadzenAlert>
+        }
+        else if (FilteredCount == 0)
+        {
+            <div class="admiral-icon-browser__message">
+                <RadzenIcon Icon="admiral:system/search-outline" />
+                <RadzenText TextStyle="TextStyle.Body2">@L["No icons match the current filters."]</RadzenText>
+                <RadzenButton Text="@L["Reset filters"]" Variant="Variant.Text" Click="ResetFilters" />
+            </div>
+        }
+        else
+        {
+            <div class="admiral-icon-grid" role="list" aria-label="@L["Admiral icons"]">
+                @foreach (var icon in PagedIcons)
+                {
+                    <div role="listitem" @key="icon">
+                        <button type="button"
+                                class="@IconCardClass(icon)"
+                                title="@IconReference(icon)"
+                                aria-pressed="@(selectedIcon == icon ? "true" : "false")"
+                                @onclick="() => SelectIcon(icon)">
+                            <RadzenIcon Icon="@IconReference(icon)" aria-hidden="true" />
+                            <span>@IconName(icon)</span>
+                            <small>@IconCategory(icon)</small>
+                        </button>
+                    </div>
+                }
+            </div>
+
+            <RadzenPager @key="PagerKey"
+                         Count="@FilteredCount"
+                         PageSize="@PageSize"
+                         PageNumbersCount="7"
+                         HorizontalAlign="HorizontalAlign.Center"
+                         PageChanged="OnPageChanged"
+                         AlwaysVisible="false" />
+        }
+    </section>
+</div>
+
+@code {
+    private string iconTab = ComponentDocTabs.Admiral;
+    private AdmiralIconSize previewIconSize = AdmiralIconSize.Large;
+    private string PreviewIconStyle => $"width:{(int)previewIconSize}px;height:{(int)previewIconSize}px;font-size:{(int)previewIconSize}px;line-height:{(int)previewIconSize}px";
+    private static readonly IReadOnlyList<ApiReference.Entry> IconApiRows = [
+        new("Icon", "string / required", "Admiral icon token, for example admiral:system/search-outline."),
+        new("Size", "AdmiralIconSize / Large", "Small 16, Medium 20, Large 24 or ExtraLarge 32 pixels."),
+        new("Color / Class / Style", "string? / null", "Optional color and additional outer-element CSS."),
+        new("AdditionalAttributes", "HTML attributes", "Pass aria-hidden for decoration; name an interactive parent.")];
+    private const string AdmiralIconCode = """
+        <AdmiralIcon Icon="admiral:system/search-outline" Size="AdmiralIconSize.Large" aria-hidden="true" />
+        """;
+    private const string RadzenIconCode = """
+        <RadzenIcon Icon="admiral:system/search-outline" class="admiral-icon"
+                    Style="width:24px;height:24px;font-size:24px;line-height:24px" aria-hidden="true" />
+        """;
+    private const int PageSize = 96;
+    private readonly List<string> icons = [];
+    private readonly List<string> categories = [];
+    private string searchTerm = string.Empty;
+    private string selectedCategory = string.Empty;
+    private string? selectedIcon;
+    private string? loadError;
+    private int skip;
+    private bool isLoading = true;
+    private bool copied;
+
+    private string SearchTerm
+    {
+        get => searchTerm;
+        set
+        {
+            if (searchTerm == value)
+            {
+                return;
+            }
+
+            searchTerm = value ?? string.Empty;
+            skip = 0;
+            copied = false;
+        }
+    }
+
+    private string SelectedCategory => selectedCategory;
+
+    private string AllCategories => L["All categories"];
+    private static string Identity(string value) => value;
+
+    private IEnumerable<string> FilteredIcons => icons.Where(icon =>
+        (selectedCategory == AllCategories || IconCategory(icon) == selectedCategory) &&
+        (string.IsNullOrWhiteSpace(searchTerm) || icon.Contains(searchTerm.Trim(), StringComparison.OrdinalIgnoreCase)));
+
+    private int FilteredCount => FilteredIcons.Count();
+    private IEnumerable<string> PagedIcons => FilteredIcons.Skip(skip).Take(PageSize);
+    private string PagerKey => $"{searchTerm}|{selectedCategory}";
+
+    protected override async Task OnInitializedAsync()
+    {
+        selectedCategory = AllCategories;
+        categories.Add(AllCategories);
+
+        try
+        {
+            var client = HttpClientFactory.CreateClient();
+            var manifestUrl = NavigationManager.ToAbsoluteUri("_content/Radzen.Admiral.Icons/admiral-icons/icons.txt");
+            var manifest = await client.GetStringAsync(manifestUrl);
+
+            icons.AddRange(manifest
+                .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(icon => icon, StringComparer.OrdinalIgnoreCase));
+
+            categories.AddRange(icons
+                .Select(IconCategory)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(category => category, StringComparer.OrdinalIgnoreCase));
+        }
+        catch (Exception exception)
+        {
+            loadError = L["The icon manifest could not be loaded: {0}", exception.Message];
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void OnCategoryChanged(string? value)
+    {
+        selectedCategory = value?.ToString() ?? AllCategories;
+        skip = 0;
+        copied = false;
+    }
+
+    private void OnPageChanged(PagerEventArgs args)
+    {
+        skip = args.Skip;
+    }
+
+    private void ClearSearch()
+    {
+        SearchTerm = string.Empty;
+    }
+
+    private void ResetFilters()
+    {
+        SearchTerm = string.Empty;
+        selectedCategory = AllCategories;
+        skip = 0;
+    }
+
+    private void SelectIcon(string icon)
+    {
+        selectedIcon = icon;
+        copied = false;
+    }
+
+    private async Task CopySelectedIcon()
+    {
+        if (selectedIcon is null)
+        {
+            return;
+        }
+
+        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", IconReference(selectedIcon));
+        copied = true;
+    }
+
+    private static string IconReference(string icon) => $"admiral:{icon}";
+    private static string IconCategory(string icon) => icon.Split('/', 2)[0];
+    private static string IconName(string icon) => icon.Split('/', 2).Last();
+    private string IconCardClass(string icon) => selectedIcon == icon
+        ? "admiral-icon-card admiral-icon-card--selected"
+        : "admiral-icon-card";
+}

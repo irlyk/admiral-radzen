@@ -1,0 +1,22 @@
+// Regional glyphs are packaged so Chinese and Korean text does not depend on
+// fonts installed on the host OS. Latin and Cyrillic use the configured font or fallback stack.
+@font-face {
+  font-family: 'Admiral CJK';
+  src: url('../fonts/cjk/NotoSansSC-variable.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+2E80-2FFF, U+3000-312F, U+31A0-31EF,
+    U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F,
+    U+FF01-FF60, U+FFE0-FFE6, U+20000-2FA1F;
+}
+
+@font-face {
+  font-family: 'Admiral CJK';
+  src: url('../fonts/cjk/NotoSansKR-variable.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F,
+    U+AC00-D7FF, U+FFA0-FFDC;
+}

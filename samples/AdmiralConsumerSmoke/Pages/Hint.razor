@@ -1,0 +1,91 @@
+@page "/components/hint"
+@inject TooltipService Tooltips
+
+<PageTitle>Admiral Hint</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Hint"
+        Description="Интерактивная подсказка: click / hover, три размера и автоматический подбор положения."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-hint--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section">
+            <CopyableRazorExample Code="@Usage" Title="Razor · Admiral" />
+            <ApiReference Title="AdmiralHint" Rows="@Parameters" />
+            <h2>@SmokeL["Behavior and limitations"]</h2>
+            <p>@SmokeL["Click: Enter/Space открывают карточку, Tab/Shift+Tab остаются внутри, Escape и крестик закрывают с возвратом фокуса. PreventFocusSteal отключает перенос и удержание фокуса. Hover открывается при наведении или фокусе, не перехватывает фокус и не показывает крестик. Переход мыши на содержимое сохраняет карточку открытой; после ухода есть мостик 100 мс через зазор."]</p>
+            <p>@SmokeL["Автоподбор пробует стороны и выравнивания, затем ограничивает положение границами окна. До 640 px ширина равна окну минус 32 px, положение только сверху/снизу. Click-подсказка пересчитывается при прокрутке и resize; hover-подсказка закрывается. Внутреннюю прокрутку длинного содержимого можно продолжать."]</p>
+            <p>@SmokeL["Осознанное отличие позиционирования: Placement задаёт предпочтительную сторону с безопасным fallback. React при явно заданной стороне сохраняет её и может использовать пространство прокрутки за краем окна; здесь карточка остаётся внутри видимой области."]</p>
+            <p>@SmokeL["Для совместимости default — Click, Medium и прежний Position.Bottom; в React default — Hover, Large и автоподбор. Placement=Auto включает оригинальный сценарий автоподбора. В React расширенные выравнивания внутренние, а не дополнительные публичные позиции."]</p>
+            <p>@SmokeL["Используется нативный Popover API (современные Chrome/Edge, Firefox, Safari), чтобы избежать обрезания родительским overflow. В старых браузерах остаётся fixed fallback с ограничениями трансформированных контейнеров. React portal/targetElement и CSS-mixin не перенесены. Для TriggerContent задайте доступное имя и фокусируемый элемент."]</p>
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Radzen + тема"]</h2>
+            <p>@SmokeL["Независимый пример: RadzenButton + TooltipService, без Admiral-компонентов. CSS задаёт размеры, поверхность и close-иконку, но не focus trap и не hover-переход между trigger и карточкой."]</p>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <RadzenButton @ref="themeTrigger" Text="@SmokeL["Открыть Radzen Hint"]" Click="OpenThemeHint" />
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Radzen position"]</span><select aria-label="Позиция Radzen" @bind="themePosition">
+                        @foreach (var value in Enum.GetValues<TooltipPosition>()) { <option value="@value">@value</option> }
+                    </select></label>
+                    <label><span>@SmokeL["Radzen size"]</span><select aria-label="Размер Radzen" @bind="themeSize"><option>small</option><option>medium</option><option>large</option></select></label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@ThemeUsage" Title="@SmokeL["Razor · прямой Radzen"]" />
+            <ApiReference Title="@SmokeL["Контракт темы"]" Rows="@ThemeParameters" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <AdmiralHint TriggerText="Открыть Hint" Title="@SmokeL["Обработка записи"]" Open="@open" OpenChanged="OnChanged"
+                                 Placement="@placement" Size="@size" VisibilityTrigger="@trigger" Disabled="@disabled"
+                                 PreventFocusSteal="@preventFocusSteal" CloseOnDocumentClick="@outside"
+                                 TriggerAppearance="AdmiralButtonAppearance.Secondary" CloseAriaLabel="@SmokeL["Закрыть Hint"]">
+                        <ChildContent>
+                            <p>@SmokeL["Подсказка с интерактивным содержимым."]</p>
+                            <AdmiralButton Text="@SmokeL["Действие в подсказке"]" Dimension="AdmiralButtonDimension.S" Click="@(() => actions++)" />
+                            @if (longContent)
+                            {
+                                @for (var index = 0; index < 24; index++) { <p>Строка @(index + 1). Длинное содержимое прокручивается внутри карточки.</p> }
+                            }
+                        </ChildContent>
+                    </AdmiralHint>
+                    <AdmiralText Typography="AdmiralTypography.Caption1" role="status">@SmokeL["Открыто:"] @open · @SmokeL["Изменений:"] @changes · @SmokeL["Действий:"] @actions</AdmiralText>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Position"]</span><select aria-label="Положение" @bind="placement">@foreach (var value in Enum.GetValues<AdmiralHintPlacement>()) { <option value="@value">@value</option> }</select></label>
+                    <label><span>@SmokeL["Dimension"]</span><select aria-label="Размер" @bind="size">@foreach (var value in Enum.GetValues<AdmiralHintSize>()) { <option value="@value">@value</option> }</select></label>
+                    <label><span>@SmokeL["Trigger"]</span><select aria-label="Триггер" @bind="trigger">@foreach (var value in Enum.GetValues<AdmiralHintTrigger>()) { <option value="@value">@value</option> }</select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="outside" /> @SmokeL["Закрытие снаружи"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="preventFocusSteal" /> @SmokeL["Не перемещать фокус"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="longContent" /> @SmokeL["Длинное содержимое"]</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@PlaygroundUsage" Title="@SmokeL["Razor · текущие настройки"]" />
+        </section>
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Arbitrary trigger"]</h2>
+            <AdmiralHint Title="@SmokeL["Подсказка к иконке"]" Placement="AdmiralHintPlacement.Auto" CloseAriaLabel="@SmokeL["Закрыть подсказку к иконке"]">
+                <TriggerContent><AdmiralIconButton Icon="admiral:service/info-outline" AriaLabel="@SmokeL["Сведения о записи"]" Dimension="AdmiralButtonDimension.M" /></TriggerContent>
+                <ChildContent><p>@SmokeL["TriggerContent позволяет использовать иконку, ссылку или другой доступный контрол."]</p></ChildContent>
+            </AdmiralHint>
+        </section>
+    }
+</div>
+
+@code {
+    private RenderFragment<TooltipService> ThemeContent => service => @<div class="admiral-hint__dialog" role="dialog" aria-labelledby="radzen-hint-title">
+        <div class="admiral-hint__content"><h3 id="radzen-hint-title" class="admiral-hint__title">Radzen Hint</h3><p>Статические классы темы; поведение задаёт TooltipService.</p></div>
+        <button type="button" class="admiral-hint__close" aria-label="Закрыть Radzen Hint" @onclick="@(() => service.Close())"><RadzenIcon Icon="admiral:service/close-outline" Style="width:20px;height:20px;font-size:20px" /></button>
+    </div>;
+}

@@ -1,0 +1,102 @@
+@page "/components/lists"
+
+<PageTitle>Admiral Lists</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="List"
+        Description="Ordered and unordered typography lists with M/S dimensions, nested content and customizable markers."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-list-общие-примеры--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section"><h2>@T("Использование и ограничения", "Usage and limitations")</h2>
+            <p>@T("OrderedList и UnorderedList сохраняют семантику HTML ol/ul; AdmiralListItem — li. StyleType выбирает маркер, Dimension задаёт M/S, Gap расстояние между пунктами. MarkerColor меняет цвет маркера. Для Icon style поместите AdmiralListIcon в пункт. У списка нет событий: ссылки и кнопки размещайте внутри пунктов.", "OrderedList and UnorderedList keep HTML ol/ul semantics; AdmiralListItem is li. StyleType selects the marker, Dimension selects M/S, and Gap spaces items. MarkerColor colors the marker. For Icon style place AdmiralListIcon inside an item. Lists emit no events; put links or buttons inside items.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" /><ApiReference Title="AdmiralOrderedList / AdmiralUnorderedList" Rows="@ApiRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section"><h2>HTML lists + Admiral theme</h2>
+            <p>@T("Для прямого использования достаточно семантических ol/ul/li и классов admiral-text для шрифта. Тема не преобразует нативный список в Admiral StyleType, Gap, Dimension или иконные маркеры; задайте CSS приложения, если они нужны.", "For direct use, semantic ol/ul/li and the admiral-text class provide typography. The theme does not turn a native list into Admiral StyleType, Gap, Dimension or icon markers; add application CSS if needed.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><ol class="admiral-text admiral-text--body1long"><li>@T("Первый пункт", "First item")</li><li>@T("Второй пункт", "Second item")</li></ol><ul class="admiral-text admiral-text--body1long"><li>@T("Другой пункт", "Another item")</li></ul></div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="HTML · direct theme" />
+        </section>
+    }
+    else
+    {
+    <section class="admiral-component-page__section"><h2>@T("Интерактивный пример", "Interactive playground")</h2>
+        <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><AdmiralOrderedList StyleType="@style" Dimension="@dimension"><AdmiralListItem>@text</AdmiralListItem><AdmiralListItem>@T("Второй пункт", "Second item")</AdmiralListItem></AdmiralOrderedList></div><div class="admiral-component-controls"><label><span>@SmokeL["Text"]</span><input @bind="text" /></label><label><span>@SmokeL["Marker"]</span><select @bind="style">@foreach (var value in Enum.GetValues<AdmiralOrderedListStyle>()) { <option value="@value">@value</option> }</select></label><label><span>@SmokeL["Dimension"]</span><select @bind="dimension">@foreach (var value in Enum.GetValues<AdmiralListDimension>()) { <option value="@value">@value</option> }</select></label></div></div>
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Ordered markers"]</AdmiralText>
+        <div class="admiral-list-gallery">
+            @foreach (var style in Enum.GetValues<AdmiralOrderedListStyle>())
+            {
+                <AdmiralOrderedList StyleType="@style">
+                    <AdmiralListItem>@style — @T("первый пункт", "first item")</AdmiralListItem>
+                    <AdmiralListItem>@SmokeL["Second item with multiline content that demonstrates the natural wrapping behavior of an Admiral list."]</AdmiralListItem>
+                    <AdmiralListItem>@SmokeL["Third item"]</AdmiralListItem>
+                </AdmiralOrderedList>
+            }
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Unordered markers and dimensions"]</AdmiralText>
+        <div class="admiral-list-gallery">
+            <AdmiralUnorderedList MarkerColor="var(--rz-primary)">
+                <AdmiralListItem>@SmokeL["Colored bullet"]</AdmiralListItem>
+                <AdmiralListItem>@SmokeL["Default M typography"]</AdmiralListItem>
+            </AdmiralUnorderedList>
+            <AdmiralUnorderedList Dimension="AdmiralListDimension.S" StyleType="AdmiralUnorderedListStyle.Virgule">
+                <AdmiralListItem>@SmokeL["Small list with a dash"]</AdmiralListItem>
+                <AdmiralListItem>@SmokeL["Second item"]</AdmiralListItem>
+            </AdmiralUnorderedList>
+            <AdmiralUnorderedList StyleType="AdmiralUnorderedListStyle.Icon">
+                <AdmiralListItem><AdmiralListIcon Icon="admiral:system/star-outline" />@SmokeL["Custom icon marker"]</AdmiralListItem>
+                <AdmiralListItem><AdmiralListIcon Icon="admiral:service/check-outline" Color="var(--rz-success)" />@SmokeL["Another icon"]</AdmiralListItem>
+            </AdmiralUnorderedList>
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Nested list"]</AdmiralText>
+        <AdmiralOrderedList>
+            <AdmiralListItem>
+                @SmokeL["Parent item"]
+                <AdmiralUnorderedList Dimension="AdmiralListDimension.S" StyleType="AdmiralUnorderedListStyle.Virgule">
+                    <AdmiralListItem>@SmokeL["Nested item"]</AdmiralListItem>
+                    <AdmiralListItem>@SmokeL["Nested item"]</AdmiralListItem>
+                </AdmiralUnorderedList>
+            </AdmiralListItem>
+            <AdmiralListItem>@SmokeL["Second parent item"]</AdmiralListItem>
+        </AdmiralOrderedList>
+    </section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private string text = T("Первый пункт", "First item");
+    private AdmiralOrderedListStyle style;
+    private AdmiralListDimension dimension;
+    private static readonly IReadOnlyList<ApiReference.Entry> ApiRows = [
+        new("ChildContent", "RenderFragment? / null", "AdmiralListItem children; nested lists are allowed."),
+        new("Dimension / StyleType", "AdmiralListDimension / M; ordered/unordered style / default", "Typography size and marker kind."),
+        new("Gap / MarkerColor", "8px / null", "Spacing between items and marker color."),
+        new("AdmiralListItem.ChildContent", "RenderFragment? / null", "Item text, controls or nested list.")];
+    private const string AdmiralCode = """
+        <AdmiralOrderedList StyleType="AdmiralOrderedListStyle.Numbers" Dimension="AdmiralListDimension.M">
+            <AdmiralListItem>First item</AdmiralListItem>
+            <AdmiralListItem>Second item</AdmiralListItem>
+        </AdmiralOrderedList>
+        """;
+    private const string DirectCode = """
+        <ol class="admiral-text admiral-text--body1long">
+            <li>First item</li>
+            <li>Second item</li>
+        </ol>
+        """;
+}

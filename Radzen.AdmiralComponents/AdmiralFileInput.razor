@@ -1,0 +1,43 @@
+@implements IAsyncDisposable
+@using Microsoft.AspNetCore.Components.Forms
+
+<div class="@CssClass" style="@Style" @attributes="AdditionalAttributes">
+    <div class="admiral-file-input-control__dropzone" aria-disabled="@(Disabled || Skeleton ? "true" : "false")" aria-busy="@(Skeleton ? "true" : "false")">
+        @if (TriggerTemplate is not null)
+        {
+            @TriggerTemplate(OpenAsync)
+        }
+        else
+        {
+            <AdmiralIcon Icon="admiral:system/attach-file-outline" />
+            <span class="admiral-file-input-control__title">@Title</span>
+        }
+        <InputFile @ref="input" @key="inputVersion" class="admiral-file-input-control__input" OnChange="HandleChange"
+                   accept="@Accept" multiple="@Multiple" disabled="@(Disabled || Skeleton)" aria-label="@Title"
+                   tabindex="@(TriggerTemplate is null ? 0 : -1)" aria-describedby="@DescriptionIds"
+                   aria-invalid="@(error is not null ? "true" : null)" />
+    </div>
+    @if (!string.IsNullOrWhiteSpace(ExtraText))
+    {
+        <div id="@HintId" class="admiral-file-input-control__hint">@ExtraText</div>
+    }
+    @if (!string.IsNullOrWhiteSpace(error))
+    {
+        <div id="@ErrorId" class="admiral-file-input-control__error" role="alert">@error</div>
+    }
+    @if (ChildContent is not null)
+    {
+        <div class="admiral-file-input-control__files">@ChildContent</div>
+    }
+    else if (selectedFiles.Count > 0)
+    {
+        <div class="admiral-file-input-control__files">
+            @foreach (var file in selectedFiles)
+            {
+                <AdmiralUploadStatus @key="file" FileName="@file.Name" Meta="@FormatSize(file.Size)"
+                                     State="AdmiralUploadState.Idle" ActionAriaLabel="@RemoveFileAriaLabel" ShowAction="@(!Disabled && !Skeleton)"
+                                     ActionClicked="@(() => RemoveAsync(file))" />
+            }
+        </div>
+    }
+</div>

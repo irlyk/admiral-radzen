@@ -1,0 +1,137 @@
+@page "/components/typography"
+
+<PageTitle>Admiral Typography</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="T / Typography"
+        Description="All current Admiral 2.1 typography tokens with semantic HTML tags, custom color and skeleton state."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-t--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section"><h2>@T("Использование и ограничения", "Usage and limitations")</h2>
+            <p>@T("Typography выбирает шрифт и размер, а Tag — семантический HTML элемент; задавайте заголовкам правильный уровень независимо от визуального стиля. Color принимает CSS цвет. Skeleton показывает заглушку вместо текста. Компонент не посылает событий.", "Typography selects font and size while Tag selects the semantic HTML element; choose heading levels independently of visual style. Color accepts a CSS color. Skeleton shows a placeholder instead of text. The component emits no events.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" /><ApiReference Title="AdmiralText" Rows="@ApiRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section"><h2>RadzenText + Admiral theme</h2>
+            <p>@T("Прямой RadzenText использует TextStyle и TagName; тема задаёт шрифт, но не добавляет AdmiralTypography и Skeleton. Для заголовка H3 укажите TagName.H3, если он должен быть h3 в документе.", "Direct RadzenText uses TextStyle and TagName; the theme supplies typography but does not add AdmiralTypography or Skeleton. Set TagName.H3 when an H3 visual style should also be an h3 in the document.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><RadzenText TextStyle="TextStyle.H3" TagName="TagName.H3">@text</RadzenText></div><div class="admiral-component-controls"><label><span>Text</span><input @bind="text" /></label></div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
+        </section>
+    }
+    else
+    {
+    <section class="admiral-component-page__section"><h2>@T("Интерактивный пример", "Interactive playground")</h2>
+        <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><AdmiralText Typography="@typography" Tag="AdmiralTextTag.Paragraph" Skeleton="@skeleton">@text</AdmiralText></div><div class="admiral-component-controls"><label><span>Text</span><input @bind="text" /></label><label><span>Typography</span><select @bind="typography">@foreach (var value in Enum.GetValues<AdmiralTypography>()) { <option value="@value">@value</option> }</select></label><label class="admiral-component-controls__check"><input type="checkbox" @bind="skeleton" /> Skeleton</label></div></div>
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Headers"]</AdmiralText>
+        <div class="admiral-typography-list">
+            @foreach (var typography in HeaderStyles)
+            {
+                <div class="admiral-typography-sample">
+                    <code>@DisplayName(typography)</code>
+                    <AdmiralText Typography="@typography">The quick brown fox jumps over the lazy dog</AdmiralText>
+                </div>
+            }
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Text styles"]</AdmiralText>
+        <div class="admiral-typography-list">
+            @foreach (var typography in TextStyles)
+            {
+                <div class="admiral-typography-sample">
+                    <code>@DisplayName(typography)</code>
+                    <AdmiralText Typography="@typography">The quick brown fox jumps over the lazy dog</AdmiralText>
+                </div>
+            }
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["States and semantics"]</AdmiralText>
+        <div class="admiral-component-row">
+            <AdmiralText Typography="AdmiralTypography.Body1Long" Tag="AdmiralTextTag.Paragraph" Color="var(--rz-primary)">@SmokeL["Custom semantic paragraph"]</AdmiralText>
+            <AdmiralText Typography="AdmiralTypography.Body1Long" Skeleton="true">@SmokeL["Skeleton text example"]</AdmiralText>
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Chinese and Korean fallback"]</AdmiralText>
+        <p>@SmokeL["These samples use the packaged CJK fonts even when the operating system has no Chinese or Korean fonts. Check both weights in light and dark themes."]</p>
+        <div class="admiral-cjk-samples">
+            <div lang="zh-Hans">
+                <code>简体中文 · zh-Hans</code>
+                <AdmiralText Typography="AdmiralTypography.Subtitle2">账户信息与文件上传</AdmiralText>
+                <AdmiralText Typography="AdmiralTypography.Body1Long">请检查处理结果、审批状态和详细说明。</AdmiralText>
+                <p>Radzen/theme: 账户信息与文件上传</p>
+            </div>
+            <div lang="ko">
+                <code>한국어 · ko</code>
+                <AdmiralText Typography="AdmiralTypography.Subtitle2">계정 정보와 파일 업로드</AdmiralText>
+                <AdmiralText Typography="AdmiralTypography.Body1Long">처리 결과와 승인 상태 및 자세한 설명을 확인하세요.</AdmiralText>
+                <p>Radzen/theme: 계정 정보와 파일 업로드</p>
+            </div>
+        </div>
+    </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private string text = "The quick brown fox";
+    private AdmiralTypography typography = AdmiralTypography.Body1Long;
+    private bool skeleton;
+    private static readonly IReadOnlyList<ApiReference.Entry> ApiRows = [
+        new("ChildContent", "RenderFragment? / null", "Text or inline content."),
+        new("Typography", "AdmiralTypography.Body1Long", "Visual type token."),
+        new("Tag", "AdmiralTextTag / default", "Semantic HTML element independent of visual style."),
+        new("Color / Skeleton", "string? / null; bool / false", "CSS text color or placeholder state."),
+        new("Class / Style", "string? / null", "Additional styling.")];
+    private const string AdmiralCode = """
+        <AdmiralText Typography="AdmiralTypography.HeaderH3" Tag="AdmiralTextTag.H3">
+            Account details
+        </AdmiralText>
+        <AdmiralText Typography="AdmiralTypography.Body1Long" Tag="AdmiralTextTag.Paragraph">
+            Check the account information before continuing.
+        </AdmiralText>
+        """;
+    private const string DirectCode = """
+        <RadzenText TextStyle="TextStyle.H3" TagName="TagName.H3">Account details</RadzenText>
+        """;
+    private static readonly AdmiralTypography[] HeaderStyles =
+    [
+        AdmiralTypography.HeaderHl1, AdmiralTypography.HeaderHl2, AdmiralTypography.HeaderHl3,
+        AdmiralTypography.HeaderH1, AdmiralTypography.HeaderH2, AdmiralTypography.HeaderH3,
+        AdmiralTypography.HeaderH4, AdmiralTypography.HeaderH5, AdmiralTypography.HeaderH6
+    ];
+
+    private static readonly AdmiralTypography[] TextStyles =
+    [
+        AdmiralTypography.Subtitle1, AdmiralTypography.Subtitle2, AdmiralTypography.Subtitle3,
+        AdmiralTypography.Body1Long, AdmiralTypography.Body1Short,
+        AdmiralTypography.Body2Long, AdmiralTypography.Body2Short,
+        AdmiralTypography.Button1, AdmiralTypography.Button2,
+        AdmiralTypography.Caption1, AdmiralTypography.Caption2
+    ];
+
+    private static string DisplayName(AdmiralTypography typography) => typography switch
+    {
+        AdmiralTypography.HeaderHl1 => "Header/HL1", AdmiralTypography.HeaderHl2 => "Header/HL2", AdmiralTypography.HeaderHl3 => "Header/HL3",
+        AdmiralTypography.HeaderH1 => "Header/H1", AdmiralTypography.HeaderH2 => "Header/H2", AdmiralTypography.HeaderH3 => "Header/H3",
+        AdmiralTypography.HeaderH4 => "Header/H4", AdmiralTypography.HeaderH5 => "Header/H5", AdmiralTypography.HeaderH6 => "Header/H6",
+        AdmiralTypography.Subtitle1 => "Subtitle/Subtitle 1", AdmiralTypography.Subtitle2 => "Subtitle/Subtitle 2", AdmiralTypography.Subtitle3 => "Subtitle/Subtitle 3",
+        AdmiralTypography.Body1Long => "Body/Body 1 Long", AdmiralTypography.Body1Short => "Body/Body 1 Short",
+        AdmiralTypography.Body2Long => "Body/Body 2 Long", AdmiralTypography.Body2Short => "Body/Body 2 Short",
+        AdmiralTypography.Button1 => "Button/Button 1", AdmiralTypography.Button2 => "Button/Button 2",
+        AdmiralTypography.Caption1 => "Caption/Caption 1", _ => "Caption/Caption 2"
+    };
+}

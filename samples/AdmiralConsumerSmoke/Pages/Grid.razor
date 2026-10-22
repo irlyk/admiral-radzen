@@ -1,0 +1,102 @@
+@page "/components/grid"
+
+<PageTitle>Admiral Grid</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Grid / GridItem"
+        Description="@T("Адаптивная сетка Admiral с 4, 8 и 12 колонками.", "Responsive Admiral grid with 4, 8 and 12 columns.")"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-flex-container--docs" />
+    <p>@T("Официальная ссылка ведёт на родственный Flex.Container: отдельного React Grid с тем же API не подтверждено.", "The official link points to the related Flex.Container; a matching React Grid API has not been verified.")</p>
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenRow / RadzenColumn + Admiral theme</h2>
+            <p>@T("Прямые RadzenRow и RadzenColumn используют собственную 12-колоночную сетку. Тема задаёт оформление, но не заменяет их breakpoints на Admiral 4/8/12.", "Direct RadzenRow and RadzenColumn use Radzen's own twelve-column grid. The theme styles them but does not replace their breakpoints with Admiral's 4/8/12 scheme.")</p>
+            <div class="admiral-component-playground" data-testid="grid-radzen-demo">
+                <div class="admiral-component-playground__preview">
+                    <RadzenRow Gap="1rem">
+                        <RadzenColumn Size="4"><div class="admiral-grid-guide__column">1</div></RadzenColumn>
+                        <RadzenColumn Size="4"><div class="admiral-grid-guide__column">2</div></RadzenColumn>
+                        <RadzenColumn Size="4"><div class="admiral-grid-guide__column">3</div></RadzenColumn>
+                    </RadzenRow>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · Radzen API" />
+            <ApiReference Title="RadzenRow / RadzenColumn" Rows="@DirectRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Usage"]</h2>
+            <p>@T("GridItem ограничивает MobileSpan интервалом 1–4, TabletSpan — 1–8, DesktopSpan — 1–12. Variant.Alternative меняет отступы сетки. Компоненты только размещают содержимое и не имеют событий.", "GridItem clamps MobileSpan to 1–4, TabletSpan to 1–8, and DesktopSpan to 1–12. Variant.Alternative changes grid spacing. These layout components do not raise events.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralGrid" Rows="@GridRows" />
+            <ApiReference Title="AdmiralGridItem" Rows="@ItemRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground" data-testid="grid-admiral-demo">
+                <div class="admiral-component-playground__preview">
+                    <AdmiralGrid Variant="@(alternative ? AdmiralGridVariant.Alternative : AdmiralGridVariant.Standard)">
+                        @for (var index = 1; index <= 3; index++)
+                        {
+                            var item = index;
+                            <AdmiralGridItem MobileSpan="2" TabletSpan="@tabletSpan" DesktopSpan="@desktopSpan" Class="admiral-grid-guide__column">@item</AdmiralGridItem>
+                        }
+                    </AdmiralGrid>
+                    <span class="admiral-component-page__result" role="status">TabletSpan: @tabletSpan · DesktopSpan: @desktopSpan</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>TabletSpan</span><input type="number" min="1" max="8" @bind="tabletSpan" /></label>
+                    <label><span>DesktopSpan</span><input type="number" min="1" max="12" @bind="desktopSpan" /></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="alternative" /> Alternative</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <p><a href="/regression/layout">@T("Открыть интеграционный пример сетки", "Open the grid integration example")</a></p>
+        </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private int tabletSpan = 2, desktopSpan = 4;
+    private bool alternative;
+    private static bool IsRussian => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru";
+    private static string T(string ru, string en) => IsRussian ? ru : en;
+    private const string AdmiralCode = """
+        <AdmiralGrid Variant="AdmiralGridVariant.Standard">
+            <AdmiralGridItem MobileSpan="2" TabletSpan="2" DesktopSpan="4">First</AdmiralGridItem>
+            <AdmiralGridItem MobileSpan="2" TabletSpan="2" DesktopSpan="4">Second</AdmiralGridItem>
+            <AdmiralGridItem MobileSpan="2" TabletSpan="2" DesktopSpan="4">Third</AdmiralGridItem>
+        </AdmiralGrid>
+        """;
+    private const string DirectCode = """
+        <RadzenRow Gap="1rem">
+            <RadzenColumn Size="4">First</RadzenColumn>
+            <RadzenColumn Size="4">Second</RadzenColumn>
+            <RadzenColumn Size="4">Third</RadzenColumn>
+        </RadzenRow>
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> GridRows =
+    [
+        new("ChildContent", "RenderFragment?; null", "Grid item content."),
+        new("Variant", "AdmiralGridVariant; Standard", "Standard or Alternative spacing."),
+        new("Class / AdditionalAttributes", "string? / IReadOnlyDictionary<string, object>?", "Extra CSS class and HTML attributes.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> ItemRows =
+    [
+        new("MobileSpan / TabletSpan / DesktopSpan", "int; 4 / 8 / 12", "Responsive spans, clamped to the available 4, 8 and 12 columns."),
+        new("ChildContent / Class / Style", "RenderFragment? / string? / string?", "Content and optional HTML styling.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> DirectRows =
+    [
+        new("RadzenRow.Gap", "string?", "Gap between the direct Radzen columns."),
+        new("RadzenColumn.Size", "int?", "Span in Radzen's own 12-column grid.")
+    ];
+}

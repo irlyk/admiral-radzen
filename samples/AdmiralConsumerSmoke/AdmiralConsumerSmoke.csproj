@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RadzenBlazorVersion Condition="'$(RadzenBlazorVersion)' == ''">12.0.6</RadzenBlazorVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Radzen.Blazor" Version="$(RadzenBlazorVersion)" />
+    <PackageReference Include="Radzen.Admiral.Components" Version="1.2.2" />
+    <PackageReference Include="Radzen.Admiral.Icons" Version="1.0.3" />
+    <PackageReference Include="Radzen.Admiral.Themes" Version="1.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="../../docs/admiral-component-coverage.md"
+                      LogicalName="AdmiralComponentCoverage.md" />
+  </ItemGroup>
+
+</Project>

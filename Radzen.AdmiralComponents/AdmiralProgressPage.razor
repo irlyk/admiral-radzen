@@ -1,0 +1,37 @@
+<div class="@CssClass"
+     role="@(Status == AdmiralProgressPageStatus.Error ? "alert" : "status")"
+     aria-live="polite"
+     @attributes="AdditionalAttributes">
+    <div class="admiral-progress-page__label">
+        <span>@Label</span>
+        @if (ShowValue)
+        {
+            <span>@DisplayValue</span>
+        }
+    </div>
+    <div class="admiral-progress-page__track" role="progressbar"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="@ClampedValue"
+         aria-label="@AriaLabel">
+        <span style="width: @ClampedValue.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)%"></span>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Label { get; set; } = string.Empty;
+    [Parameter] public double Value { get; set; }
+    [Parameter] public string? ValueText { get; set; }
+    [Parameter] public bool ShowValue { get; set; } = true;
+    [Parameter] public AdmiralProgressPageStatus Status { get; set; }
+    [Parameter] public string? AriaLabel { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private double ClampedValue => Math.Clamp(Value, 0, 100);
+    private string DisplayValue => ValueText ?? $"{ClampedValue:0.##}%";
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-progress-page",
+        Status == AdmiralProgressPageStatus.Error ? "admiral-progress-page--error" : null,
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

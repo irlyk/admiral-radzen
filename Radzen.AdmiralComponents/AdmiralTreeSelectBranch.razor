@@ -1,0 +1,46 @@
+@namespace Radzen.Admiral.Components
+
+@foreach (var item in Items)
+{
+    if (IsVisible(item))
+    {
+        var hasChildren = item.Children.Count > 0;
+        var expanded = IsExpanded(item) || !string.IsNullOrWhiteSpace(Query);
+        var disabled = InheritedDisabled || item.Disabled;
+        var readOnly = InheritedReadOnly || item.ReadOnly;
+        <div @key="item.Id" id="@($"{IdPrefix}-{Uri.EscapeDataString(item.Id)}")" class="admiral-tree-select__node" role="treeitem" aria-label="@item.Text"
+             aria-expanded="@(hasChildren ? (expanded ? "true" : "false") : null)" aria-disabled="@(disabled || readOnly ? "true" : "false")"
+             aria-selected="@(!Multiple ? (SelectedIds.Contains(item.Id) ? "true" : "false") : null)"
+             aria-checked="@(Multiple ? (IsPartial(item) ? "mixed" : IsChecked(item) ? "true" : "false") : null)"
+             data-active="@(ActiveId == item.Id ? "true" : null)" data-disabled="@(disabled ? "true" : null)">
+            <div class="admiral-tree-select__row" style="padding-inline-start:@(Depth * 20 + 8)px">
+                @if (hasChildren)
+                {
+                    <button type="button" tabindex="-1" disabled="@disabled" class="admiral-tree-select__expand" aria-label="@(expanded ? CollapseText : ExpandText)" aria-expanded="@(expanded ? "true" : "false")" @onclick="() => ToggleExpanded.InvokeAsync(item.Id)">
+                        <AdmiralIcon Icon="@(expanded ? "admiral:system/chevron-down-outline" : "admiral:system/chevron-right-outline")" Size="AdmiralIconSize.Medium" />
+                    </button>
+                }
+                else
+                {
+                    <span class="admiral-tree-select__spacer"></span>
+                }
+                <button type="button" tabindex="-1" class="admiral-tree-select__option" disabled="@disabled" aria-disabled="@(readOnly || disabled ? "true" : "false")" @onclick="() => SelectItem.InvokeAsync(item)">
+                    @if (Multiple)
+                    {
+                        <span class="admiral-tree-select__check" aria-hidden="true">@(IsChecked(item) ? "✓" : IsPartial(item) ? "−" : "")</span>
+                    }
+                    <span>@item.Text</span>
+                </button>
+            </div>
+            @if (hasChildren && expanded)
+            {
+                <div role="group">
+                    <AdmiralTreeSelectBranch Items="@item.Children" SelectedIds="@SelectedIds" ExpandedIds="@ExpandedIds" Query="@Query"
+                                             Depth="@(Depth + 1)" Multiple="@Multiple" SelectItem="@SelectItem" ToggleExpanded="@ToggleExpanded"
+                                             ActiveId="@ActiveId" IdPrefix="@IdPrefix" InheritedDisabled="@disabled" InheritedReadOnly="@readOnly"
+                                             ExpandText="@ExpandText" CollapseText="@CollapseText" />
+                </div>
+            }
+        </div>
+    }
+}

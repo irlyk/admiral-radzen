@@ -1,0 +1,87 @@
+@page "/components/badge"
+
+<PageTitle>Admiral Badge</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Badge"
+        Description="All Admiral badge appearances in M and S dimensions, plus BadgeDot dimensions and semantic colors."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-badge--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section"><h2>@T("Использование и ограничения", "Usage and limitations")</h2>
+            <p>@T("Badge и BadgeDot отображают статус или число и не генерируют события. BadgeDot без видимого текста требует AriaLabel. Для интерактивного действия используйте Pill или Button; значение Badge обновляйте из состояния приложения.", "Badge and BadgeDot display status or an amount and emit no events. BadgeDot has no visible label, so provide AriaLabel. Use Pill or Button for an action; update Badge content from application state.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" /><ApiReference Title="AdmiralBadge / AdmiralBadgeDot" Rows="@ApiRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section"><h2>RadzenBadge + Admiral theme</h2>
+            <p>@T("Прямой RadzenBadge использует BadgeStyle и Text. Тема оформляет его, но не добавляет Appearance, Dimension и отдельную семантику BadgeDot.", "Direct RadzenBadge uses BadgeStyle and Text. The theme styles it but does not add Appearance, Dimension or BadgeDot semantics.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><RadzenBadge Text="@text" BadgeStyle="@badgeStyle" /></div><div class="admiral-component-controls"><label><span>Text</span><input @bind="text" /></label><label><span>BadgeStyle</span><select @bind="badgeStyle">@foreach (var value in Enum.GetValues<BadgeStyle>()) { <option value="@value">@value</option> }</select></label></div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
+        </section>
+    }
+    else
+    {
+    <section class="admiral-component-page__section"><h2>@T("Интерактивный пример", "Interactive playground")</h2>
+        <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><AdmiralBadge Text="@text" Appearance="@appearance" Dimension="@dimension" /><AdmiralBadgeDot Appearance="AdmiralBadgeDotAppearance.Info" AriaLabel="New items" /></div><div class="admiral-component-controls"><label><span>Text</span><input @bind="text" /></label><label><span>@SmokeL["Appearance"]</span><select @bind="appearance">@foreach (var value in Enum.GetValues<AdmiralBadgeAppearance>()) { <option value="@value">@value</option> }</select></label><label><span>@SmokeL["Dimension"]</span><select @bind="dimension">@foreach (var value in Enum.GetValues<AdmiralBadgeDimension>()) { <option value="@value">@value</option> }</select></label></div></div>
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Appearances"]</AdmiralText>
+        <div class="admiral-component-row">
+            @foreach (var appearance in Enum.GetValues<AdmiralBadgeAppearance>())
+            {
+                <AdmiralBadge Text="@appearance.ToString()" Appearance="@appearance" />
+            }
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Dimensions"]</AdmiralText>
+        <div class="admiral-component-row">
+            <AdmiralBadge Text="Badge M · 20" Appearance="AdmiralBadgeAppearance.Info" />
+            <AdmiralBadge Text="Badge S · 16" Appearance="AdmiralBadgeAppearance.Info" Dimension="AdmiralBadgeDimension.S" />
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">BadgeDot</AdmiralText>
+        <div class="admiral-badge-dot-grid">
+            @foreach (var appearance in Enum.GetValues<AdmiralBadgeDotAppearance>())
+            {
+                <AdmiralText Typography="AdmiralTypography.Body2Long">@appearance</AdmiralText>
+                @foreach (var dimension in Enum.GetValues<AdmiralBadgeDotDimension>())
+                {
+                    <span class="admiral-component-labelled-control">
+                        <AdmiralBadgeDot Appearance="@appearance" Dimension="@dimension" AriaLabel="@($"{appearance} {dimension}")" />
+                        <span>@dimension</span>
+                    </span>
+                }
+            }
+        </div>
+    </section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private string text = "8";
+    private AdmiralBadgeAppearance appearance = AdmiralBadgeAppearance.Info;
+    private AdmiralBadgeDimension dimension;
+    private BadgeStyle badgeStyle = BadgeStyle.Info;
+    private static readonly IReadOnlyList<ApiReference.Entry> ApiRows = [
+        new("Badge: Text / ChildContent", "string? / null; RenderFragment? / null", "Visible status or amount."),
+        new("Badge: Appearance / Dimension", "AdmiralBadgeAppearance / default; AdmiralBadgeDimension / M", "Semantic color and M/S size."),
+        new("Badge: AmountAriaLabel / AriaLabel", "Amount / null", "Accessible names for amount or badge."),
+        new("BadgeDot: Appearance / Dimension / AriaLabel", "default / M / null", "Dot color, size and accessible label.")];
+    private const string AdmiralCode = """
+        <AdmiralBadge Text="8" Appearance="AdmiralBadgeAppearance.Info" Dimension="AdmiralBadgeDimension.S" />
+        <AdmiralBadgeDot Appearance="AdmiralBadgeDotAppearance.Info" AriaLabel="New items" />
+        """;
+    private const string DirectCode = """
+        <RadzenBadge Text="8" BadgeStyle="BadgeStyle.Info" />
+        """;
+}

@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="ActionBar и GroupActionsPane: автоматическое меню переполнения и панель поиска, колонок и настроек." xml:space="preserve"><value>ActionBar and GroupActionsPane: automatic overflow menu and a search, column and settings toolbar.</value></data>
+  <data name="Связанный флажок, вложенные варианты, частичный выбор и размеры M/S." xml:space="preserve"><value>Linked checkboxes, nested options, partial selection and M/S sizes.</value></data>
+  <data name="Разделитель толщиной 1 или 2 px: пять цветовых вариантов, две ориентации и произвольная длина." xml:space="preserve"><value>A 1 or 2 px divider: five color variants, two orientations and custom length.</value></data>
+  <data name="Миниатюры и полноэкранный просмотр с навигацией и преобразованием изображений." xml:space="preserve"><value>Thumbnails and fullscreen viewing with navigation and image transformations.</value></data>
+  <data name="Внутренняя и внешняя навигация, перелистывание, автосмена и индикаторы слайдов." xml:space="preserve"><value>Inner and outer navigation, paging, autoplay and slide indicators.</value></data>
+  <data name="Основная плавающая кнопка раскрывает вертикальный стек вторичных действий." xml:space="preserve"><value>A primary floating button opens a vertical stack of secondary actions.</value></data>
+  <data name="Интерактивная подсказка: click / hover, три размера и автоматический подбор положения." xml:space="preserve"><value>Interactive hint: click / hover, three sizes and automatic positioning.</value></data>
+  <data name="Выбор файлов XL/M, ограничения формата и размера, список выбранных файлов и статусы отправки." xml:space="preserve"><value>XL/M file selection, format and size limits, selected files and upload states.</value></data>
+  <data name="Боковая панель для просмотра и редактирования: слева или справа, с затемнением или без блокировки страницы." xml:space="preserve"><value>A side panel for viewing and editing: left or right, with a backdrop or without blocking the page.</value></data>
+  <data name="Статусная метка: размеры, цвет точки или фона, иконка и действие." xml:space="preserve"><value>Status tag: sizes, dot or background color, icon and action.</value></data>
+  <data name="Один или два ползунка, размеры XL/M, отметки, подсказка значения и состояния." xml:space="preserve"><value>One or two handles, XL/M sizes, marks, value tooltips and states.</value></data>
+  <data name="Всплывающие уведомления со стеком, размещением и временем показа." xml:space="preserve"><value>Toast notifications with stacking, positioning and display duration.</value></data>
+  <data name="Иерархия с выбором, checkbox-ами, отключёнными ветками и навигацией с клавиатуры." xml:space="preserve"><value>A hierarchy with selection, checkboxes, disabled branches and keyboard navigation.</value></data>
+  <data name="Многострочный ввод Admiral: размеры S/M/XL, статусы, очистка, копирование и изменение высоты." xml:space="preserve"><value>Admiral multiline input: S/M/XL sizes, statuses, clear, copy and resizing.</value></data>
+  <data name="Выбор из вложенных пунктов в поле: одиночный и множественный режимы, поиск и выбранные значения." xml:space="preserve"><value>Nested options in an input: single and multiple selection, search and selected values.</value></data>
+  <data name="Как в React Admiral, в строке остаётся начальная часть Items, а не поместившийся хвост переходит в меню. Приоритетов нет. OverflowItems всегда остаётся в меню после автоматически скрытых действий. Размер кнопки меню также учитывается при расчёте. Для доступной ширины меньше одной кнопки задайте родителю минимальную ширину 32/40/48/56px соответственно размеру." xml:space="preserve"><value>As in React Admiral, the leading Items remain in the row and the remaining items move into the menu. There are no priorities. OverflowItems always follow the automatically hidden actions. The menu button width is included in the calculation. When the available width is smaller than one button, give the parent a minimum width of 32/40/48/56 px for the corresponding size.</value></data>
+  <data name="AutoOverflow=true растягивает панель по доступной ширине; ResizeObserver реагирует на окно, sidebar и изменение родителя. AutoOverflow=false сохраняет ручное разделение Items/OverflowItems и ширину по содержимому. JS только измеряет контейнер и восстанавливает фокус, распределение и callbacks остаются в C#." xml:space="preserve"><value>AutoOverflow=true stretches the bar to the available width; ResizeObserver reacts to the window, sidebar and parent size. AutoOverflow=false retains manual Items/OverflowItems and content-based width. JavaScript only measures the container and restores focus; allocation and callbacks remain in C#.</value></data>
+  <data name="DividerBefore сохранён для совместимости нашего API: разделитель перед действием, а не после, как withDivider в React. В начале строки и меню он не рисуется. Указывайте уникальные Id. Disabled блокирует действие и в строке, и в меню." xml:space="preserve"><value>DividerBefore is retained for API compatibility: the divider precedes an action, whereas React withDivider follows it. No divider appears at the start of the row or menu. Use unique IDs. Disabled blocks actions both in the row and in the menu.</value></data>
+  <data name="Tab проходит по доступным кнопкам, Enter/Space выполняют действие. В меню ↑/↓, Home/End перемещают фокус, Escape закрывает меню и возвращает фокус. Если при сужении выбранная кнопка исчезла, фокус переходит на меню. При изменении состава видимой части открытое меню закрывается." xml:space="preserve"><value>Tab moves through available buttons; Enter/Space activate them. In the menu, ↑/↓ and Home/End move focus; Escape closes the menu and restores focus. If a focused button disappears when the bar narrows, focus moves to the menu. Changes to the visible items close an open menu.</value></data>
+  <data name="Стили кнопок повторно используются из AdmiralIconButton: Secondary, hover/press, квадратный focus и disabled, включая сочетание hover + focus. Произвольные React render-функции заменены моделью AdmiralActionItem; собственные панели можно собрать из AdmiralIconButton и AdmiralMenu. GroupActionsPane не заменяет ActionBar: он содержит текстовые действия и инструменты таблицы, а не автоматическое меню переполнения." xml:space="preserve"><value>Button styles are reused from AdmiralIconButton: Secondary, hover/press, square focus and disabled, including hover + focus. AdmiralActionItem replaces arbitrary React render functions; custom bars can be built with AdmiralIconButton and AdmiralMenu. GroupActionsPane contains text actions and table tools rather than an automatic overflow menu.</value></data>
+  <data name="Тема оформляет RadzenButton; автоматический overflow — поведение AdmiralActionBar, CSS его не добавляет. В этом примере меню настроено вручную через RadzenSplitButton." xml:space="preserve"><value>The theme styles RadzenButton. Automatic overflow is AdmiralActionBar behavior and is not added by CSS. This example configures the menu manually with RadzenSplitButton.</value></data>
+  <data name="Razor · прямой Radzen" xml:space="preserve"><value>Razor · direct Radzen</value></data>
+  <data name="Постоянные действия в меню" xml:space="preserve"><value>Persistent menu actions</value></data>
+  <data name="Сократить Items до двух" xml:space="preserve"><value>Reduce Items to two</value></data>
+  <data name="Оригинальные сценарии GroupActionsPane" xml:space="preserve"><value>Original GroupActionsPane scenarios</value></data>
+  <data name="Razor · текущая конфигурация" xml:space="preserve"><value>Razor · current configuration</value></data>
+  <data name="Содержимое задаётся через" xml:space="preserve"><value>Content is supplied through</value></data>
+  <data name="и" xml:space="preserve"><value>and</value></data>
+  <data name=". Высоту области задавайте явно для собственного содержимого. На последнем слайде стрелка Radzen циклически возвращает к первому; скрытие конечной стрелки пока не реализовано." xml:space="preserve"><value>. Set an explicit height for custom content. At the last slide, Radzen navigation cycles back to the first; hiding the final arrow is not implemented.</value></data>
+  <data name="Официальный Admiral также выделяет" xml:space="preserve"><value>Official Admiral also provides</value></data>
+  <data name="как отдельный компонент индикаторов. Здесь индикаторы встроены в карусель Radzen." xml:space="preserve"><value>as a separate indicator component. Here the indicators are built into Radzen Carousel.</value></data>
+  <data name="Прямой Radzen API остаётся доступным: внешний вид задают классы" xml:space="preserve"><value>The direct Radzen API remains available. Appearance is provided by the classes</value></data>
+  <data name=". Этот пример не использует Admiral-обёртку." xml:space="preserve"><value>. This example does not use the Admiral wrapper.</value></data>
+  <data name="Razor · прямой Radzen API" xml:space="preserve"><value>Razor · direct Radzen API</value></data>
+  <data name="Отдельно сравните внутреннюю навигацию на акцентном фоне и внешнюю навигацию на обычной поверхности; в playground доступны автосмена и ручной выбор слайда." xml:space="preserve"><value>Compare inner navigation on an accent surface with outer navigation on a neutral surface. The playground supports autoplay and manual slide selection.</value></data>
+  <data name="Стрелки и индикаторы находятся поверх слайда." xml:space="preserve"><value>Arrows and indicators appear over the slide.</value></data>
+  <data name="Стрелки и индикаторы вынесены за содержимое." xml:space="preserve"><value>Arrows and indicators appear outside the content.</value></data>
+  <data name="Как в исходном Admiral, группа задаёт размер и состояние disabled, а значение родительского флажка вычисляется потребителем из дочерних значений. Это оставляет выбор всех пунктов и обработку частичного выбора под контролем приложения." xml:space="preserve"><value>As in the original Admiral component, the group sets size and disabled state, while the consumer computes the parent checkbox value from its children. Select-all and partial selection remain under application control.</value></data>
+  <data name="Вкладка Radzen показывает прямую композицию без наследования disabled и размера: эти свойства нужно передавать каждому флажку отдельно." xml:space="preserve"><value>The Radzen tab demonstrates direct composition without inherited size or disabled state; pass those properties to each checkbox.</value></data>
+  <data name="Обычные" xml:space="preserve"><value>Standard</value></data>
+  <data name="получают цвета и состояния из подключённой темы. Для вложенной группы используются" xml:space="preserve"><value>receive colors and states from the linked theme. The nested group uses</value></data>
+  <data name="и отступ 32 px; автоматической передачи размера и disabled здесь нет." xml:space="preserve"><value>and a 32 px inset; size and disabled state are not inherited automatically.</value></data>
+  <data name="Города" xml:space="preserve"><value>Cities</value></data>
+  <data name="Родительский флажок показывает indeterminate при частичном выборе; вкладка playground позволяет проверить выбор всех пунктов, disabled, ошибки и оба размера." xml:space="preserve"><value>The parent checkbox shows indeterminate state for a partial selection. The playground demonstrates select-all, disabled, errors and both sizes.</value></data>
+  <data name="AdmiralDivider создаёт элемент с role=&quot;separator&quot; и aria-orientation. Length задаётся любым CSS-значением; при вертикальной ориентации у родительского блока должна быть подходящая высота." xml:space="preserve"><value>AdmiralDivider renders role=&quot;separator&quot; and aria-orientation. Length accepts any CSS value; a vertical divider requires an appropriate parent height.</value></data>
+  <data name="В Radzen нет отдельного Divider. Для прямого использования темы можно добавить те же классы на HTML-элемент; семантику и классы размера, ориентации и цвета тогда задаёт приложение." xml:space="preserve"><value>Radzen has no standalone Divider. Apply the theme classes to a plain HTML element; the application supplies semantics and size, orientation and color classes.</value></data>
+  <data name="Тема содержит классы" xml:space="preserve"><value>The theme includes the classes</value></data>
+  <data name="и модификатор цвета. RadzenStack здесь нужен только для композиции, сам разделитель — обычный HTML." xml:space="preserve"><value>and a color modifier. RadzenStack is only used for composition; the divider itself is plain HTML.</value></data>
+  <data name="Вертикально" xml:space="preserve"><value>Vertical</value></data>
+  <data name="Razor · прямой HTML и тема" xml:space="preserve"><value>Razor · plain HTML and theme</value></data>
+  <data name="Горизонтально" xml:space="preserve"><value>Horizontal</value></data>
+  <data name="Свой цвет" xml:space="preserve"><value>Custom color</value></data>
+  <data name="Использование" xml:space="preserve"><value>Usage</value></data>
+  <data name="При открытии фокус получает первый доступный элемент. Tab и Shift+Tab остаются внутри панели; при закрытии фокус возвращается на кнопку открытия. PreventFocusRestore отключает возврат. Без Backdrop страницу можно прокручивать и нажимать её элементы; Escape обрабатывается только внутри Drawer." xml:space="preserve"><value>Opening the drawer focuses the first available element. Tab and Shift+Tab stay inside; closing restores focus to the trigger. PreventFocusRestore disables restoration. Without Backdrop, the page remains scrollable and interactive; Escape is handled only inside the Drawer.</value></data>
+  <data name="Open — управляемое состояние. Крестик, Escape и подложка вызывают OpenChanged(false), затем Closed. Программная смена Open не вызывает Closed. Обновите состояние в обработчике или используйте bind. На время 300-мс анимации закрытия содержимое становится inert и недоступно клавиатуре. При prefers-reduced-motion движение отключено." xml:space="preserve"><value>Open is controlled state. The close button, Escape and backdrop invoke OpenChanged(false), then Closed. A programmatic Open change does not invoke Closed. Update state in the callback or use binding. During the 300 ms closing animation, content is inert and unavailable to the keyboard. Motion is disabled for prefers-reduced-motion.</value></data>
+  <data name="CloseOnEscape и CloseOnBackdropClick по умолчанию true для совместимости с прежним Blazor API; в React они false. Ниже 576 px автоматически используется компактная геометрия. Mobile включает её на любой ширине и, как в React, открывает панель справа." xml:space="preserve"><value>CloseOnEscape and CloseOnBackdropClick default to true for compatibility with the previous Blazor API; React defaults to false. Below 576 px, compact geometry is used automatically. Mobile enables it at any width and opens the panel on the right, as in React.</value></data>
+  <data name="ChildContent и Actions заменяют композицию DrawerContent и DrawerButtonPanel. React-параметры container, overlayCssMixin и closeButtonPropsConfig не перенесены: панель фиксируется относительно окна, дополнительные атрибуты и Class передаются на dialog. Тема управляет геометрией и состояниями." xml:space="preserve"><value>ChildContent and Actions replace DrawerContent and DrawerButtonPanel composition. React container, overlayCssMixin and closeButtonPropsConfig are not ported. The panel is fixed to the viewport; additional attributes and Class apply to the dialog. The theme controls geometry and states.</value></data>
+  <data name="RadzenSidebar + тема" xml:space="preserve"><value>RadzenSidebar + theme</value></data>
+  <data name="Это независимый пример RadzenSidebar с классами пакета Themes. Responsive=false и явный Style отключают геометрию навигационного sidebar. Закрытие и подложку задаёт разметка приложения; CSS не добавляет управление фокусом и анимацию удаления DOM, которые есть у AdmiralDrawer." xml:space="preserve"><value>An independent RadzenSidebar example with packaged theme classes. Responsive=false and explicit Style replace navigation-sidebar geometry. Application markup supplies dismissal and backdrop; CSS does not add the focus management and DOM-removal animation provided by AdmiralDrawer.</value></data>
+  <data name="Справа" xml:space="preserve"><value>Right</value></data>
+  <data name="Слева" xml:space="preserve"><value>Left</value></data>
+  <data name="Затемнение Radzen-примера" xml:space="preserve"><value>Radzen example backdrop</value></data>
+  <data name="Вторичная поверхность Radzen-примера" xml:space="preserve"><value>Radzen example secondary surface</value></data>
+  <data name="Razor · Radzen + тема" xml:space="preserve"><value>Razor · Radzen + theme</value></data>
+  <data name="Затемнение" xml:space="preserve"><value>Backdrop</value></data>
+  <data name="Мобильная композиция" xml:space="preserve"><value>Mobile composition</value></data>
+  <data name="Кнопка закрытия" xml:space="preserve"><value>Close button</value></data>
+  <data name="Закрытие по Escape" xml:space="preserve"><value>Close on Escape</value></data>
+  <data name="Закрытие по подложке" xml:space="preserve"><value>Close on backdrop</value></data>
+  <data name="Не возвращать фокус" xml:space="preserve"><value>Do not restore focus</value></data>
+  <data name="Длинное содержимое" xml:space="preserve"><value>Long content</value></data>
+  <data name="Razor · текущие настройки" xml:space="preserve"><value>Razor · current settings</value></data>
+  <data name="Проверьте обе стороны, поверхности и ширины; панель без подложки; обязательное действие без крестика, Escape и закрытия по фону; мобильную композицию; прокрутку длинного содержимого при неподвижных заголовке и действиях." xml:space="preserve"><value>Check both sides, surfaces and widths; a panel without a backdrop; a mandatory action without a close button, Escape or backdrop dismissal; mobile composition; and long content scrolling with a fixed heading and actions.</value></data>
+  <data name="Radzen-панель" xml:space="preserve"><value>Radzen panel</value></data>
+  <data name="RadzenSidebar и стили темы. Здесь нет компонентов Admiral." xml:space="preserve"><value>RadzenSidebar with theme styles. This example contains no Admiral components.</value></data>
+  <data name="возвращает файлы браузера. Компонент не отправляет их сам: приложение читает поток" xml:space="preserve"><value>returns browser files. The component does not upload them: the application reads the stream</value></data>
+  <data name="и вызывает своё API. Состояние загрузки приложение передаёт через" xml:space="preserve"><value>and calls its API. The application provides upload state through</value></data>
+  <data name="; без шаблона выбранные файлы показываются в состоянии ожидания." xml:space="preserve"><value>; without a template, selected files appear in the pending state.</value></data>
+  <data name="проверяются в компоненте." xml:space="preserve"><value>are validated by the component.</value></data>
+  <data name="синхронизирует удаление, перестановку и очистку списка с нативным input. Допустимы только файлы последнего выбора этого компонента: произвольные" xml:space="preserve"><value>synchronizes removal, reordering and clearing with the native input. Only files from this component's latest selection are allowed; arbitrary</value></data>
+  <data name="другого input или ранее сохранённые файлы подставлять нельзя. Для серверных вложений используйте отдельный список." xml:space="preserve"><value>from another input or previously saved files cannot be assigned. Use a separate list for server attachments.</value></data>
+  <data name="Новый выбор заменяет предыдущий, а не добавляет к нему. Blazor инвалидирует старые потоки, поэтому отклонённый выбор тоже очищает предыдущий список и вызывает" xml:space="preserve"><value>A new selection replaces the previous one. Blazor invalidates old streams, so a rejected selection also clears the previous list and invokes</value></data>
+  <data name="с пустым массивом. Копируйте нужные потоки до следующего выбора." xml:space="preserve"><value>with an empty array. Copy any required streams before the next selection.</value></data>
+  <data name="сохраняет остальные потоки;" xml:space="preserve"><value>preserves the remaining streams;</value></data>
+  <data name="сбрасывает input и ошибку." xml:space="preserve"><value>resets the input and error.</value></data>
+  <data name="получает" xml:space="preserve"><value>receives</value></data>
+  <data name=": вызовите его из Click клавиатурно доступной кнопки. Этот режим не является dropzone. Обычная поверхность поддерживает нативный drop; проверка формата выполняется после выбора. Сервер обязан повторно проверить файлы независимо от клиентских ограничений." xml:space="preserve"><value>: invoke it from the Click handler of a keyboard-accessible button. This mode is not a drop zone. The standard surface supports native drop; format validation occurs after selection. The server must also validate files independently of client-side limits.</value></data>
+  <data name="Razor · произвольная кнопка выбора" xml:space="preserve"><value>Razor · custom file-selection button</value></data>
+  <data name="Прямой" xml:space="preserve"><value>Direct</value></data>
+  <data name="использует классы" xml:space="preserve"><value>uses the classes</value></data>
+  <data name=". В отличие от Admiral-обёртки он сам отправляет multipart на" xml:space="preserve"><value>. Unlike the Admiral wrapper, it sends multipart data to</value></data>
+  <data name="и отдаёт Radzen-события прогресса и завершения." xml:space="preserve"><value>and emits Radzen progress and completion events.</value></data>
+  <data name="MaxFileSize · байты" xml:space="preserve"><value>MaxFileSize · bytes</value></data>
+  <data name="управляет меню извне; без привязки оно управляет открытием самостоятельно. Открытое меню закрывается основной кнопкой или кликом вне группы. Дочерние действия всегда вторичные и по умолчанию сохраняют меню открытым, как в исходном Admiral." xml:space="preserve"><value>controls the menu externally; without binding, it manages its own open state. The main button or an outside click closes the menu. Child actions are always secondary and keep the menu open by default, as in the original Admiral.</value></data>
+  <data name="Размер M — 40 px, XL — 56 px. Для фиксированного меню используются отступы 28 px от края, в мобильном режиме — 16 px. Рекомендуется не более пяти действий." xml:space="preserve"><value>M is 40 px and XL is 56 px. Fixed menus use a 28 px edge inset, or 16 px in mobile mode. No more than five actions are recommended.</value></data>
+  <data name="Прямой Radzen API содержит собственное раскрытие и закрытие снаружи. Тема применяет цвета кнопок, но точные круглые действия и геометрию FloatingButtonMenu из Admiral обеспечивает обёртка на соседней вкладке." xml:space="preserve"><value>The direct Radzen API handles its own opening and outside dismissal. The theme supplies button colors; the Admiral wrapper on the adjacent tab supplies the precise circular actions and FloatingButtonMenu geometry.</value></data>
+  <data name="Второй экземпляр управляет открытием самостоятельно; здесь можно проверить закрытие при клике снаружи." xml:space="preserve"><value>The second instance manages its own open state. Use it to check outside-click dismissal.</value></data>
+  <data name="Click: Enter/Space открывают карточку, Tab/Shift+Tab остаются внутри, Escape и крестик закрывают с возвратом фокуса. PreventFocusSteal отключает перенос и удержание фокуса. Hover открывается при наведении или фокусе, не перехватывает фокус и не показывает крестик. Переход мыши на содержимое сохраняет карточку открытой; после ухода есть мостик 100 мс через зазор." xml:space="preserve"><value>Click: Enter/Space open the hint, Tab/Shift+Tab stay inside, and Escape or the close button dismiss it and restore focus. PreventFocusSteal disables moving and trapping focus. Hover opens on pointer hover or focus, does not steal focus and has no close button. Moving the pointer into the content keeps it open; a 100 ms grace period bridges the gap.</value></data>
+  <data name="Автоподбор пробует стороны и выравнивания, затем ограничивает положение границами окна. До 640 px ширина равна окну минус 32 px, положение только сверху/снизу. Click-подсказка пересчитывается при прокрутке и resize; hover-подсказка закрывается. Внутреннюю прокрутку длинного содержимого можно продолжать." xml:space="preserve"><value>Automatic placement tries sides and alignments, then constrains the hint to the viewport. Up to 640 px, its width is the viewport minus 32 px and placement is limited to top/bottom. Click hints reposition on scroll and resize; hover hints close. Long content can still scroll internally.</value></data>
+  <data name="Осознанное отличие позиционирования: Placement задаёт предпочтительную сторону с безопасным fallback. React при явно заданной стороне сохраняет её и может использовать пространство прокрутки за краем окна; здесь карточка остаётся внутри видимой области." xml:space="preserve"><value>Intentional positioning difference: Placement sets the preferred side with a safe fallback. React retains an explicitly chosen side and may use scrollable space beyond the viewport; this hint stays within the visible area.</value></data>
+  <data name="Для совместимости default — Click, Medium и прежний Position.Bottom; в React default — Hover, Large и автоподбор. Placement=Auto включает оригинальный сценарий автоподбора. В React расширенные выравнивания внутренние, а не дополнительные публичные позиции." xml:space="preserve"><value>For compatibility, defaults are Click, Medium and the previous Position.Bottom; React defaults are Hover, Large and automatic placement. Placement=Auto enables the original automatic-placement scenario. In React, extended alignments are internal rather than public positions.</value></data>
+  <data name="Используется нативный Popover API (современные Chrome/Edge, Firefox, Safari), чтобы избежать обрезания родительским overflow. В старых браузерах остаётся fixed fallback с ограничениями трансформированных контейнеров. React portal/targetElement и CSS-mixin не перенесены. Для TriggerContent задайте доступное имя и фокусируемый элемент." xml:space="preserve"><value>Uses the native Popover API in current Chrome/Edge, Firefox and Safari to avoid clipping by parent overflow. Older browsers use a fixed fallback with limitations inside transformed containers. React portal/targetElement and CSS mixins are not ported. Give TriggerContent an accessible name and a focusable element.</value></data>
+  <data name="Radzen + тема" xml:space="preserve"><value>Radzen + theme</value></data>
+  <data name="Независимый пример: RadzenButton + TooltipService, без Admiral-компонентов. CSS задаёт размеры, поверхность и close-иконку, но не focus trap и не hover-переход между trigger и карточкой." xml:space="preserve"><value>Independent example: RadzenButton + TooltipService, without Admiral components. CSS supplies size, surface and close-icon styling, but not focus trapping or hover transitions between the trigger and hint.</value></data>
+  <data name="Подсказка с интерактивным содержимым." xml:space="preserve"><value>A hint with interactive content.</value></data>
+  <data name="Закрытие снаружи" xml:space="preserve"><value>Dismiss on outside click</value></data>
+  <data name="Не перемещать фокус" xml:space="preserve"><value>Do not move focus</value></data>
+  <data name="TriggerContent позволяет использовать иконку, ссылку или другой доступный контрол." xml:space="preserve"><value>TriggerContent accepts an icon, link or another accessible control.</value></data>
+  <data name="Массив" xml:space="preserve"><value>The array</value></data>
+  <data name="задаёт адреса и альтернативные подписи." xml:space="preserve"><value>provides image URLs and alternative text.</value></data>
+  <data name="показывает все миниатюры; без него — одну активную. В открытом просмотре доступны клавиши Escape, ← и →, кнопки отражения, поворота и масштаба. Управляемые состояния подключаются через" xml:space="preserve"><value>shows all thumbnails; otherwise only the active thumbnail is shown. The viewer supports Escape, ← and →, plus mirror, rotation and zoom buttons. Bind controlled state through</value></data>
+  <data name="Увеличенное изображение можно перетаскивать мышью или одним пальцем; координаты ограничены краями изображения. Wheel сохраняет точку под указателем, pinch — центр жеста, пока не достигнута граница изображения. Масштаб ограничен MinScale/MaxScale. Быстрый горизонтальный touch-swipe больше 20px за время меньше 500ms перелистывает, в том числе при увеличении — как в React. Короткий/вертикальный/отменённый жест и продолжение pinch не перелистывают. На первой и последней картинке переход не зацикливается." xml:space="preserve"><value>A zoomed image can be dragged with the mouse or one finger; movement is constrained to the image edges. Wheel zoom preserves the point under the pointer and pinch preserves the gesture center until an edge is reached. MinScale/MaxScale constrain zoom. A horizontal touch swipe exceeding 20 px in less than 500 ms changes images even while zoomed, as in React. Short, vertical, cancelled gestures and pinch continuations do not change images. Navigation does not wrap at the first or last image.</value></data>
+  <data name="↑/↓ меняют масштаб, ←/→ перелистывают. Enter при фокусе на области просмотра или двойной клик переключают 1:1, F (физическая клавиша, независимо от раскладки) — вписывание и обратно, Space на области просмотра — следующее изображение. Клик по изображению фокусирует область просмотра. Enter/Space на кнопках сохраняют нативное действие кнопки; Tab остаётся внутри диалога. Ctrl/Cmd-сочетания не перехватываются." xml:space="preserve"><value>↑/↓ zoom; ←/→ change images. Enter with focus on the viewport, or a double click, toggles 1:1. F uses the physical key independently of keyboard layout to toggle fit. Space on the viewport advances to the next image. Clicking an image focuses the viewport. Enter/Space on buttons retain native behavior; Tab stays inside the dialog. Ctrl/Cmd combinations are not intercepted.</value></data>
+  <data name="При смене изображения и повторном открытии преобразования сбрасываются. Фиксированные MinScale/MaxScale сохраняют совместимость нашего API: в React минимальный масштаб вычисляется по изображению, максимальный по умолчанию — 10. Жесты и 1:1/F также ограничиваются этими параметрами. JS отвечает только за браузерные жесты и локальное перемещение; каждый pointermove не отправляется через Blazor Server." xml:space="preserve"><value>Transformations reset when the image changes or the viewer reopens. Fixed MinScale/MaxScale preserve API compatibility; React computes the minimum from the image and defaults to a maximum of 10. Gestures and 1:1/F are also constrained by these bounds. JavaScript handles browser gestures and local movement without sending every pointermove through Blazor Server.</value></data>
+  <data name="Browser Fullscreen API и шаблон toolbar не входят в публичный API оригинального ImageViewer. Цвета static-on-dark, hover/press/disabled, геометрия иконок и close повторяют исходник и находятся в упакованной теме. Для toolbar добавлен видимый квадратный keyboard focus по Radzen/Admiral-токенам: в исходном React toolbar нет собственного focus-visible стиля. При prefers-reduced-motion переходы отключаются. Pinch/swipe проверяются синтетическими событиями и браузерной touch-эмуляцией, но это не проверка физического устройства." xml:space="preserve"><value>Browser Fullscreen API and a toolbar template are not part of the original ImageViewer public API. Static-on-dark colors, hover/press/disabled, icon geometry and close styling follow the source and live in the packaged theme. The toolbar adds visible square keyboard focus using Radzen/Admiral tokens; the React toolbar has no dedicated focus-visible style. Transitions are disabled for prefers-reduced-motion. Pinch/swipe checks use synthetic events and browser touch emulation, not a physical device.</value></data>
+  <data name="У Radzen нет прямого аналога ImageViewer. Можно использовать" xml:space="preserve"><value>Radzen has no direct ImageViewer equivalent. You can use</value></data>
+  <data name="и обычный" xml:space="preserve"><value>and a standard</value></data>
+  <data name="с темой, но навигацию и трансформации тогда реализует приложение." xml:space="preserve"><value>with the theme, while implementing navigation and transformations in the application.</value></data>
+  <data name="Wheel / pinch — масштаб в точке жеста · drag — перемещение · swipe / ←→ / Space — перелистывание · ↑↓ — масштаб · Enter — 1:1 · F — вписать · Escape — закрыть." xml:space="preserve"><value>Wheel / pinch: zoom at the gesture point · drag: pan · swipe / ←→ / Space: change image · ↑↓: zoom · Enter: 1:1 · F: fit · Escape: close.</value></data>
+  <data name="↑/↓ — выбор подсказки; Enter — выбор активной подсказки или отправка введённого запроса, если подсказка не выбрана. Escape закрывает список. Tab проходит к очистке и кнопке поиска, затем выходит из компонента." xml:space="preserve"><value>↑/↓ select a suggestion. Enter selects the active suggestion or submits the typed query if none is selected. Escape closes the list. Tab moves to clear and search, then leaves the component.</value></data>
+  <data name="— отдельные события; выбор подсказки не вызывает оба сразу." xml:space="preserve"><value>are separate events; selecting a suggestion does not invoke both.</value></data>
+  <data name="AdmiralNumericSlider поддерживает decimal, положительный дробный Step, локализованные отметки и MarkTemplate. AdmiralSlider сохраняется как совместимый целочисленный адаптер с прежними Value/Values и событиями." xml:space="preserve"><value>AdmiralNumericSlider supports decimal values, a positive fractional Step, localized marks and MarkTemplate. AdmiralSlider remains a compatible integer adapter with the previous Value/Values and events.</value></data>
+  <data name="AnyStep=true соответствует step=&quot;any&quot;: pointer-значения не округляются к Step. Стрелки сохраняют шаг Step, Home/End выбирают границы, PageUp/Down — десять шагов; Tab остаётся нативным. Это расширение доступности: оригинальный React Slider с any не меняется от стрелок, а React Range не задаёт полной клавиатурной модели. Фиксированный шаг выравнивается относительно Min для совместимости нашей библиотеки, а не относительно нуля, как в React." xml:space="preserve"><value>AnyStep=true corresponds to step=&quot;any&quot;: pointer values are not rounded to Step. Arrow keys retain Step; Home/End choose the bounds and PageUp/Down move ten steps. Tab stays native. This extends accessibility: the React Slider ignores arrows with any, and React Range has no complete keyboard model. Fixed steps are anchored at Min for library compatibility, rather than at zero as in React.</value></data>
+  <data name="Маркеры Range могут совпадать и пересекаться. При пересечении нижний и верхний меняются ролями, а pointer/keyboard focus следует за перемещаемым маркером. ValuesChanged всегда возвращает отсортированную пару. Клик по треку выбирает ближайший маркер; при совпадении направление клика позволяет раздвинуть диапазон." xml:space="preserve"><value>Range handles can coincide and cross. When crossing, lower and upper exchange roles and pointer/keyboard focus follows the moving handle. ValuesChanged always returns a sorted pair. Clicking the track chooses the nearest handle; when handles coincide, the click direction separates them.</value></data>
+  <data name="DragEnded вызывается ровно один раз после отпускания pointer, в том числе при клике по треку, после финального ValueChanged/ValuesChanged. Pointercancel или потеря capture дают Cancelled=true с последним значением; клавиатура и отметки не вызывают DragEnded. Смена Min/Max/Step/AnyStep/Range или блокировка отменяют устаревший жест без callback завершения. JS отвечает за геометрию и отзывчивое preview; изменения отправляются последовательно, без server round-trip на каждый пиксель." xml:space="preserve"><value>DragEnded fires exactly once on pointer release, including track clicks, after the final ValueChanged/ValuesChanged. Pointercancel or lost capture produces Cancelled=true with the last value; keyboard and marks do not invoke DragEnded. Changes to Min/Max/Step/AnyStep/Range or blocking cancel a stale gesture without a completion callback. JavaScript handles geometry and responsive preview; updates are sent sequentially without a server round trip for each pixel.</value></data>
+  <data name="HandleAttributes / MinHandleAttributes / MaxHandleAttributes дают title, data-* и дополнительные HTML-атрибуты вместо React props-config функций. Встроенные role, tabindex, style, data-handle и value ARIA защищены от переопределения. Произвольные React DOM-обработчики не переносятся. Размеры XL/M соответствуют Range M/S по геометрии маркера." xml:space="preserve"><value>HandleAttributes / MinHandleAttributes / MaxHandleAttributes provide title, data-* and additional HTML attributes instead of React props-config functions. Built-in role, tabindex, style, data-handle and value ARIA cannot be overridden. Arbitrary React DOM handlers are not ported. XL/M match Range M/S handle geometry.</value></data>
+  <data name="Изменение bound Value/Values также отменяет устаревший жест. Если нужно сбросить к тому же уже опубликованному значению, сначала вызовите CancelInteractionAsync(): одинаковые параметры сами по себе не сообщают компоненту о намерении сброса. Метод не вызывает DragEnded." xml:space="preserve"><value>Changing bound Value/Values also cancels stale gestures. To reset to the same already-published value, call CancelInteractionAsync() first: identical parameters alone do not communicate reset intent. The method does not invoke DragEnded.</value></data>
+  <data name="Max должен быть больше Min, Step — положительным. Значения ограничиваются границами; диапазон сортируется. Изменение параметров само по себе не вызывает callback. Точность текста задаётся ValueFormat, Culture=null использует CurrentCulture. Базовые отметки — границы, дополнительные фильтруются и сортируются. Подсказки видны при hover/focus/нажатии; активный второй маркер диапазона сам по себе не показывает подсказку." xml:space="preserve"><value>Max must exceed Min and Step must be positive. Values are clamped and ranges are sorted. Parameter changes alone do not invoke callbacks. ValueFormat controls display precision; Culture=null uses CurrentCulture. Basic marks are the bounds; additional marks are filtered and sorted. Tooltips appear on hover, focus or press; an active second handle alone does not show a tooltip.</value></data>
+  <data name="Независимый decimal-пример без Admiral-обёрток. Тема задаёт трек и маркеры. admiral-slider--medium включает 16px; без него — 20px. Форматирование, отметки, свободные значения и пересечение маркеров добавляет Admiral-обёртка, не CSS. У прямого Radzen остаются ограничения: step=any округляется на сервере, Range не пересекается и не совпадает." xml:space="preserve"><value>Independent decimal example without Admiral wrappers. The theme supplies track and handles: admiral-slider--medium uses 16 px, otherwise 20 px. Formatting, marks, continuous values and crossing handles are wrapper features, not CSS. Direct Radzen retains its limitations: step=any is rounded on the server and Range handles cannot cross or coincide.</value></data>
+  <data name="Шаг 0,2 отсчитывается от −2,1. Home/End достигают обеих границ, включая Max=3,05 вне сетки шага." xml:space="preserve"><value>Step 0.2 is anchored at −2.1. Home/End reach both bounds, including the off-step Max=3.05.</value></data>
+  <data name="Razor · смещённые границы" xml:space="preserve"><value>Razor · offset bounds</value></data>
+  <data name="Без Click метка отображается как текст; с Click — как кнопка с клавиатурным фокусом. Иконка появляется только при StatusViaBackground. Если текст ограничен параметром Width, Tooltip можно использовать для полной подписи." xml:space="preserve"><value>Without Click, the tag is text; with Click, it is a keyboard-focusable button. An icon appears only with StatusViaBackground. If Width truncates the text, Tooltip can provide the full label.</value></data>
+  <data name="CustomBackground задаёт цвет точки или фона в зависимости от StatusViaBackground. CustomBorder и CustomHoverBackground нужны для фонового интерактивного варианта. Для произвольной стилизации доступен Style." xml:space="preserve"><value>CustomBackground sets the dot or background color according to StatusViaBackground. CustomBorder and CustomHoverBackground apply to the interactive background variant. Style supports additional custom styling.</value></data>
+  <data name="Прямой RadzenBadge получает цвета темы и подходит для простой семантической метки. Он не поддерживает модель Tag: цветную точку, два размера M/S, настраиваемую обводку или Click на самой метке." xml:space="preserve"><value>Direct RadzenBadge receives theme colors and suits a simple semantic label. It does not support the Tag model: a colored dot, M/S sizes, custom outline or Click on the label itself.</value></data>
+  <data name="Фон" xml:space="preserve"><value>Background</value></data>
+  <data name="Без границы" xml:space="preserve"><value>No border</value></data>
+  <data name="Иконка" xml:space="preserve"><value>Icon</value></data>
+  <data name="Свои цвета" xml:space="preserve"><value>Custom colors</value></data>
+  <data name="позволяют использовать" xml:space="preserve"><value>support</value></data>
+  <data name="обновляет значение при вводе;" xml:space="preserve"><value>updates the value while typing;</value></data>
+  <data name="вызывается после успешной записи в буфер обмена." xml:space="preserve"><value>fires after a successful clipboard write.</value></data>
+  <data name="использует CSS" xml:space="preserve"><value>uses CSS</value></data>
+  <data name=". В браузере без его поддержки остаётся обычная высота" xml:space="preserve"><value>. Browsers without support retain the normal height from</value></data>
+  <data name="; ручное изменение размера доступно через" xml:space="preserve"><value>; manual resizing is available through</value></data>
+  <data name=". Сложные маски ввода и управление позицией курсора из React TextArea пока не перенесены." xml:space="preserve"><value>. Complex React TextArea input masks and caret control are not ported.</value></data>
+  <data name="Прямой Radzen API остаётся доступен. Класс" xml:space="preserve"><value>The direct Radzen API remains available. The class</value></data>
+  <data name="задаёт геометрию, а" xml:space="preserve"><value>sets geometry, while</value></data>
+  <data name="— размер. Очистка, копирование и" xml:space="preserve"><value>sets size. Clear, copy and</value></data>
+  <data name="относятся только к Admiral-обёртке." xml:space="preserve"><value>are Admiral wrapper features.</value></data>
+  <data name="регистрирует" xml:space="preserve"><value>registers</value></data>
+  <data name=". Разместите один" xml:space="preserve"><value>. Place one</value></data>
+  <data name="до основного layout, затем внедрите сервис в любую страницу и вызовите" xml:space="preserve"><value>before the main layout, then inject the service into any page and call</value></data>
+  <data name=". Положение и ширину можно задать у host либо менять через сервис. Сервис возвращает идентификатор для" xml:space="preserve"><value>. Position and width can be set on the host or changed through the service. The service returns an ID for</value></data>
+  <data name="закрывает все сообщения." xml:space="preserve"><value>closes all notifications.</value></data>
+  <data name="Без" xml:space="preserve"><value>Without</value></data>
+  <data name="уведомление остаётся до ручного закрытия." xml:space="preserve"><value>the notification remains until dismissed manually.</value></data>
+  <data name="действует только вместе с положительным временем автозакрытия. Новые уведомления добавляются сверху." xml:space="preserve"><value>only applies with a positive auto-close duration. New notifications are added at the top.</value></data>
+  <data name="Прямой Radzen API остаётся доступным через" xml:space="preserve"><value>The direct Radzen API remains available through</value></data>
+  <data name="и уже подключённый" xml:space="preserve"><value>and the already-registered</value></data>
+  <data name=". У него собственные настройки размещения и длительности; прогресс-индикатор Admiral здесь не появляется." xml:space="preserve"><value>. It has its own placement and duration settings; the Admiral progress indicator is not provided here.</value></data>
+  <data name="Id уникален во всей иерархии. Модель не мутируется: выбранный узел, checked и expanded передаются отдельными коллекциями. Без callbacks параметры служат начальными значениями; их последующие изменения также применяются. С callbacks родитель владеет состоянием — используйте bind." xml:space="preserve"><value>IDs must be unique throughout the hierarchy. The model is not mutated: selection, checked and expanded state use separate collections. Without callbacks, parameters provide initial state and subsequent external changes are also applied. With callbacks, the parent owns the state; use binding.</value></data>
+  <data name="Клик по строке, Enter/Space выбирают её и, если AllowCheckBoxes=true, переключают checkbox. Стрелка раскрытия не выбирает и не отмечает строку. CheckStrictly=true отключает каскад; иначе переключение затрагивает доступных потомков и нормализует родителей. Disabled отключает всю ветку, включая потомков. Отключённые ветки не меняются при каскаде и исключены из расчёта доступных родителей — это намеренное отличие от React, где disabled проверяется отдельно для каждого узла." xml:space="preserve"><value>Clicking a row or pressing Enter/Space selects it and toggles its checkbox when AllowCheckBoxes=true. The expand arrow neither selects nor checks the row. CheckStrictly=true disables cascading; otherwise changes affect enabled descendants and normalize parents. Disabled disables the entire branch, including descendants. Disabled branches are unchanged by cascading and excluded from enabled-parent calculations. This intentionally differs from React, which checks disabled separately on each node.</value></data>
+  <data name="Tab входит в дерево один раз и выходит дальше; ↑/↓ — соседний доступный видимый узел; → — раскрыть или перейти к ребёнку; ← — свернуть или перейти к родителю; Home/End — первый/последний. Буква/цифра ищет следующий узел с такой первой буквой. Фокус отделён от выбора. Сворачивание родителя с выбранным ребёнком разрешено, выбор сохраняется. Все-disabled/пустое дерево остаётся доступно для чтения, но не меняет состояние." xml:space="preserve"><value>Tab enters the tree once and then leaves. ↑/↓ move to the adjacent enabled visible node; → expands or enters a child; ← collapses or moves to the parent; Home/End move to the first/last node. A letter/digit finds the next node beginning with it. Focus is separate from selection. A parent with a selected child can collapse without clearing selection. Empty or fully disabled trees remain readable but do not change state.</value></data>
+  <data name="React Tree использует собственные render-функции и не задаёт полную клавиатурную модель; здесь ItemTemplate настраивает только неинтерактивную подпись, а клавиатура следует tree-поведению Radzen/WAI-ARIA. Внешнее принудительное hover-состояние React не переносится: hover принадлежит указателю, keyboard focus — отдельная видимая рамка. Дерево не виртуализировано, как и React Tree. Для больших данных загружайте иерархию в приложении." xml:space="preserve"><value>React Tree uses custom render functions and does not define a complete keyboard model. Here ItemTemplate only customizes a non-interactive label, and keyboard behavior follows Radzen/WAI-ARIA tree navigation. Externally forced React hover is not ported: the pointer owns hover, and keyboard focus has a separate visible outline. Neither this tree nor React Tree is virtualized. The application loads large hierarchies.</value></data>
+  <data name="В обёртке нет Radzen-типов. Она использует RadzenCheckBox и общую тему, но управляет строками самостоятельно: RadzenTreeItem не предоставляет disabled API, а перехват кликов через CSS не блокировал бы клавиатурный выбор." xml:space="preserve"><value>The wrapper exposes no Radzen types. It uses RadzenCheckBox and the shared theme but manages rows itself: RadzenTreeItem has no disabled API, and CSS click blocking would not prevent keyboard selection.</value></data>
+  <data name="Прямой RadzenTree получает размеры, отступы и цвета через admiral-tree / admiral-tree--small. Checkable=false отключает checkbox, но не выбор или раскрытие узла: это не аналог Disabled." xml:space="preserve"><value>Direct RadzenTree receives sizes, spacing and colors through admiral-tree / admiral-tree--small. Checkable=false disables the checkbox, not selection or expansion; it is not equivalent to Disabled.</value></data>
+  <data name="ExpandedValues задаёт начальное раскрытие; дальнейшие выбор и раскрытие хранятся внутри компонента. Изменение playground не сбрасывает это дерево." xml:space="preserve"><value>ExpandedValues supplies initial expansion; subsequent selection and expansion are stored internally. Changing the playground does not reset this tree.</value></data>
+  <data name="Razor · локальное состояние" xml:space="preserve"><value>Razor · local state</value></data>
+  <data name="принимает дерево с уникальными строковыми" xml:space="preserve"><value>accepts a tree with unique string</value></data>
+  <data name=". В одиночном режиме связывайте" xml:space="preserve"><value>. Bind single selection through</value></data>
+  <data name=", в множественном —" xml:space="preserve"><value>and multiple selection through</value></data>
+  <data name=". Выбор родителя отмечает его доступных потомков; поиск раскрывает подходящие ветви." xml:space="preserve"><value>. Selecting a parent checks its enabled descendants; search expands matching branches.</value></data>
+  <data name="Enter, Space, ↑/↓ открывают список. ↑/↓ и Home/End выбирают активную строку; → раскрывает ветку или переходит к ребёнку, ← сворачивает её или возвращает к родителю. Enter/Space подтверждают выбор, Escape закрывает список и возвращает фокус. Disabled-ветви пропускаются." xml:space="preserve"><value>Enter, Space and ↑/↓ open the list. ↑/↓ and Home/End move the active row; → expands a branch or enters a child, while ← collapses or returns to the parent. Enter/Space confirm selection. Escape closes the list and restores focus. Disabled branches are skipped.</value></data>
+  <data name="В поиске ↑/↓ перемещают активную строку без потери фокуса ввода; Enter выбирает её. Home/End, ←/→ и пробел продолжают редактировать текст. Tab не перебирает каждый пункт: он проходит по контролам поля и выходит из popup. Клик снаружи закрывает список без перехвата фокуса." xml:space="preserve"><value>In search, ↑/↓ move the active row without moving input focus; Enter selects it. Home/End, ←/→ and Space continue editing text. Tab does not traverse each item: it moves through input controls and leaves the popup. An outside click closes the list without stealing focus.</value></data>
+  <data name="ReadOnly-поле, как в React Admiral, не раскрывается. ReadOnly-узел можно прочитать и раскрыть, но нельзя изменить; каскад не меняет его потомков. В множественном режиме состояние родителей нормализуется после выбора ребёнка, частичный выбор объявляется как" xml:space="preserve"><value>As in React Admiral, a ReadOnly input does not open. A ReadOnly node can be read and expanded but not changed; cascading preserves its descendants. In multiple mode, parent state is normalized after child selection and partial selection is announced as</value></data>
+  <data name="управляет только чипами:" xml:space="preserve"><value>only controls chips:</value></data>
+  <data name="показывает все выбранные узлы," xml:space="preserve"><value>shows all selected nodes,</value></data>
+  <data name="— выбранные листья," xml:space="preserve"><value>shows selected leaves,</value></data>
+  <data name="— выбранных родителей вместо их потомков. Порядок соответствует дереву; неизвестные Id не отображаются. Изменение стратегии не вызывает" xml:space="preserve"><value>shows selected parents instead of their descendants. Order follows the tree; unknown IDs are hidden. Changing the strategy does not invoke</value></data>
+  <data name="и не меняет каскадный выбор. В одиночном режиме параметр не используется." xml:space="preserve"><value>or change cascading selection. The parameter is ignored in single mode.</value></data>
+  <data name="Для совместимости по умолчанию используется" xml:space="preserve"><value>For compatibility, the default is</value></data>
+  <data name="; в React Admiral —" xml:space="preserve"><value>; React Admiral uses</value></data>
+  <data name=". В Parent учитывается выбранный Id родителя, а не только набор его листьев: передавайте полный результат" xml:space="preserve"><value>. Parent mode considers the selected parent ID, not only its selected leaves. Pass the complete result of</value></data>
+  <data name=", чтобы сохранить нормализованное состояние дерева." xml:space="preserve"><value>to preserve normalized tree state.</value></data>
+  <data name="показывает spinner, закрывает popup и блокирует выбор, очистку и удаление чипов, сохраняя значения." xml:space="preserve"><value>shows a spinner, closes the popup and blocks selection, clearing and chip removal while preserving values.</value></data>
+  <data name="заменяет содержимое поля неинтерактивной заглушкой;" xml:space="preserve"><value>replaces the input content with a non-interactive placeholder;</value></data>
+  <data name="задаёт локализованную подпись загрузки." xml:space="preserve"><value>provides a localized loading label.</value></data>
+  <data name="Кнопка удаления чипа снимает выбор узла и доступных потомков, пересчитывает родителей и вызывает" xml:space="preserve"><value>Removing a chip deselects the node and enabled descendants, recalculates parents and invokes</value></data>
+  <data name=". Disabled/ReadOnly-ветви и заблокированное поле не редактируются." xml:space="preserve"><value>. Disabled/ReadOnly branches and blocked inputs cannot be edited.</value></data>
+  <data name="— локализованный префикс названия кнопки, к которому добавляется текст узла. После удаления фокус возвращается на поле; Enter/Space на кнопке работают нативно." xml:space="preserve"><value>is the localized button-name prefix, followed by the node text. Focus returns to the input after removal; Enter/Space on the button retain native behavior.</value></data>
+  <data name="принимают положительные числа или" xml:space="preserve"><value>accept positive numbers or</value></data>
+  <data name="(без ограничения); минимум не может превышать максимум. Они работают только в Multiple. Строка чипов — 24px, промежуток — 4px. При открытии поля максимум снимается. Отличие от React: закрытое поле прокручивает чипы, а не заменяет скрытые чипы счётчиком +N. Это сохраняет доступ к каждой кнопке удаления через Tab." xml:space="preserve"><value>for no limit; minimum cannot exceed maximum. They only apply in Multiple mode. Chips are 24 px high with a 4 px gap. Opening the input removes the maximum. Unlike React, the closed input scrolls chips rather than replacing hidden chips with a +N counter, keeping every remove button reachable with Tab.</value></data>
+  <data name="— произвольные Razor-фрагменты над и под деревом вне его прокрутки. Управление фокусом внутри панелей остаётся у их контролов; Enter/Space не выбирают узел дерева, Escape закрывает popup. Разметку, подписи и локализацию панелей задаёт приложение." xml:space="preserve"><value>are arbitrary Razor fragments above and below the tree, outside its scrolling area. Their controls manage focus; Enter/Space do not select a tree node, and Escape closes the popup. The application supplies panel markup, labels and localization.</value></data>
+  <data name="Устаревший SelectTree в React-библиотеке показывает отдельное дерево. Здесь реализуется актуальное поле TreeSelect с сохраняемой совместимостью нашей иерархии: ←/→ соответствуют RadzenTree, тогда как React TreeSelect показывает плоский список с отступами. Виртуализация не является требованием паритета: публичный React TreeSelect её не подключает." xml:space="preserve"><value>The legacy React SelectTree displays a standalone tree. This implements the current TreeSelect input while retaining compatible hierarchy navigation: ←/→ follow RadzenTree, whereas React TreeSelect uses a flat indented list. Virtualization is not required for parity; the public React TreeSelect does not enable it.</value></data>
+  <data name="сохранён для совместимости и не используется." xml:space="preserve"><value>is retained for compatibility and is not used.</value></data>
+  <data name="получает оформление от темы и позволяет выбирать узлы, но сам по себе не является выпадающим полем и не формирует чипы. Для этого используйте Admiral-обёртку." xml:space="preserve"><value>receives theme styling and supports node selection, but is not a dropdown input and does not create chips. Use the Admiral wrapper for those features.</value></data>
+  <data name="Второй пункт" xml:space="preserve"><value>Second item</value></data>
+  <data name="Данные" xml:space="preserve"><value>Data</value></data>
+  <data name="Проверка" xml:space="preserve"><value>Review</value></data>
+  <data name="Готово" xml:space="preserve"><value>Done</value></data>
+  <data name="Прямой RadzenButton: оформление даёт пакет темы, иконки — пакет Icons. Размеры ExtraSmall / Small / Medium / Large соответствуют S / M / L / XL (32 / 40 / 48 / 56 px)." xml:space="preserve"><value>Direct RadzenButton: appearance comes from the theme and icons from the Icons package. ExtraSmall / Small / Medium / Large correspond to S / M / L / XL (32 / 40 / 48 / 56 px).</value></data>
+  <data name="Для базовой кнопки дополнительные классы не нужны. IsBusy — штатное поведение Radzen, оно отличается от Loading в AdmiralButton. BadgeCount, Skeleton, IconEnd и DisplayAsDisabled — возможности обёртки; одной темой они не добавляются." xml:space="preserve"><value>Basic buttons need no additional classes. IsBusy is native Radzen behavior and differs from AdmiralButton Loading. BadgeCount, Skeleton, IconEnd and DisplayAsDisabled are wrapper features and are not provided by the theme alone.</value></data>
+  <data name="Использование Button" xml:space="preserve"><value>Using Button</value></data>
+  <data name="Подключите CSS темы и адаптер иконок в host-странице приложения. Для AdmiralButton дополнительно нужен пакет Radzen.Admiral.Components и пространство имён Radzen.Admiral.Components.Models." xml:space="preserve"><value>Link the theme CSS and icon adapter in the host page. AdmiralButton additionally requires Radzen.Admiral.Components and the Radzen.Admiral.Components.Models namespace.</value></data>
+  <data name="Loading и Skeleton подавляют Click. DisplayAsDisabled меняет только вид: событие продолжает работать. В AdmiralButtonGroup размер и appearance берутся из группы. White предназначен для тёмного фона." xml:space="preserve"><value>Loading and Skeleton suppress Click. DisplayAsDisabled only changes appearance; the event still fires. AdmiralButtonGroup provides size and appearance to its buttons. White is intended for dark backgrounds.</value></data>
+  <data name="Style и aria-* передаются как дополнительные атрибуты. Для CSS-классов используйте Class. Для кнопки без текста обязательно задайте aria-label." xml:space="preserve"><value>Style and aria-* are passed as additional attributes. Use Class for CSS classes. Always give an icon-only button an aria-label.</value></data>
+  <data name="Использование Table" xml:space="preserve"><value>Using Table</value></data>
+  <data name="AdmiralDataGrid объединяет таблицу, панель действий, поиск, выбор колонок, локализацию и пагинацию. Для собственного интерфейса с прямым RadzenDataGrid используйте соседнюю вкладку «Radzen + тема»." xml:space="preserve"><value>AdmiralDataGrid combines a table, actions, search, column selection, localization and pagination. For custom UI using RadzenDataGrid directly, open the adjacent Radzen + theme tab.</value></data>
+  <data name="Клиентские данные, колонки и действия в разметке" xml:space="preserve"><value>Client data, columns and actions in markup</value></data>
+  <data name="Серверная загрузка" xml:space="preserve"><value>Server loading</value></data>
+  <data name="Data содержит только текущую страницу, Count — общее число найденных строк. Обрабатывайте Skip, Top, Filter и OrderBy в API. Поиск из toolbar приходит отдельно через SearchValueChanged: сохраните его для запроса LoadData; toolbar сам сбрасывает страницу. При внешнем фильтре используйте GoToPage(1) и Reload(). Не включайте LoadData, если весь набор уже загружен на клиент." xml:space="preserve"><value>Data contains only the current page; Count is the total matching row count. Handle Skip, Top, Filter and OrderBy in the API. Toolbar search arrives separately through SearchValueChanged: retain it for LoadData; the toolbar resets the page. With external filters, call GoToPage(1) and Reload(). Do not enable LoadData when the entire dataset is already loaded on the client.</value></data>
+  <data name="AdmiralDataGridColumn наследует API RadzenDataGridColumn. Часть контрактов таблицы пока использует типы Radzen (LoadDataArgs, TextAlign, FilterMode и другие); в таком примере нужен using Radzen. Дополнительные параметры внутренней таблицы можно передать через GridAttributes. Значения явно заданных параметров обёртки имеют приоритет — GridAttributes не заменяет их." xml:space="preserve"><value>AdmiralDataGridColumn inherits RadzenDataGridColumn. Some table contracts still use Radzen types such as LoadDataArgs, TextAlign and FilterMode, requiring using Radzen. GridAttributes forwards additional inner-grid parameters. Explicit wrapper parameters take precedence and cannot be replaced by GridAttributes.</value></data>
+  <data name="При выборе строк используйте Value / ValueChanged или bind-Value. При перестановке строк обработчик RowReordered должен сохранить новый порядок в вашей модели/API. Тема сама не сохраняет данные. Виртуализация требует ограниченной высоты GridStyle и проверки совместимости с деталями и группировкой." xml:space="preserve"><value>For row selection, use Value / ValueChanged or bind-Value. RowReordered must persist the new order in your model/API; the theme does not save data. Virtualization requires a constrained GridStyle height and compatibility checks with details and grouping.</value></data>
+  <data name="Клавиатура и детали строк" xml:space="preserve"><value>Keyboard and row details</value></data>
+  <data name="Стрелки вверх/вниз перемещают фокус по строкам. Без Template / DetailTemplate стрелки влево/вправо выделяют отдельную ячейку; при подключённом шаблоне деталей Radzen использует эти клавиши для сворачивания/раскрытия строки. ShowExpandColumn скрывает только колонку с кнопкой — не отключает шаблон и не меняет назначение клавиш. Для режима без деталей передавайте null вместо пустого RenderFragment." xml:space="preserve"><value>Up/down arrows move focus through rows. Without Template / DetailTemplate, left/right arrows focus individual cells; with a detail template, Radzen uses them to collapse/expand the row. ShowExpandColumn only hides the expand-button column; it does not disable the template or change keyboard behavior. Pass null rather than an empty RenderFragment when details are disabled.</value></data>
+  <data name="Этот playground использует прямые Radzen-компоненты и CSS пакета Radzen.Admiral.Themes. Возможности Admiral-обёрток сюда не подмешиваются." xml:space="preserve"><value>This playground uses direct Radzen components and CSS from Radzen.Admiral.Themes. Admiral wrapper features are not added.</value></data>
+  <data name="Размер темы" xml:space="preserve"><value>Theme size</value></data>
+  <data name="Действия по порядку; не поместившийся хвост переходит в меню." xml:space="preserve"><value>Actions in order; trailing items that do not fit move to the menu.</value></data>
+  <data name="Всегда в меню после скрытого хвоста Items." xml:space="preserve"><value>Always placed in the menu after the hidden Items.</value></data>
+  <data name="Измерение доступной ширины. False — ручной overflow и ширина по содержимому." xml:space="preserve"><value>Measures available width. False uses manual overflow and content-based width.</value></data>
+  <data name="Small=32, Medium=40, Large=48, ExtraLarge=56px. Иконка S=20, остальные=24px." xml:space="preserve"><value>Small=32, Medium=40, Large=48, ExtraLarge=56px. Icons: S=20, others=24px.</value></data>
+  <data name="Выполненное действие из строки или меню; disabled не вызывает событие." xml:space="preserve"><value>Action invoked from the toolbar or menu; disabled items do not raise events.</value></data>
+  <data name="Локализуемые доступные подписи toolbar и меню." xml:space="preserve"><value>Localizable accessible labels for the toolbar and menu.</value></data>
+  <data name="Иконка кнопки меню." xml:space="preserve"><value>Menu button icon.</value></data>
+  <data name="Класс и атрибуты корневого toolbar, включая style." xml:space="preserve"><value>Root toolbar class and attributes, including style.</value></data>
+  <data name="Уникальный Id, подпись для меню/title и адрес иконки." xml:space="preserve"><value>Unique Id, menu/title label and icon address.</value></data>
+  <data name="Отключает пункт в обоих представлениях." xml:space="preserve"><value>Disables the item in both presentations.</value></data>
+  <data name="Разделитель перед пунктом; не отображается перед первым видимым пунктом." xml:space="preserve"><value>Separator before the item; omitted before the first visible item.</value></data>
+  <data name="Доступная подпись иконки, по умолчанию Text." xml:space="preserve"><value>Accessible icon label; defaults to Text.</value></data>
+  <data name="Flex-контейнер и высота S/M/L/XL. Без --adaptive ширина по содержимому." xml:space="preserve"><value>Flex container and S/M/L/XL height. Without --adaptive, width follows content.</value></data>
+  <data name="Размер слота, Secondary иконка и состояния hover/press/focus/disabled." xml:space="preserve"><value>Slot size, Secondary icon and hover/press/focus/disabled states.</value></data>
+  <data name="Разделитель; 16px в S, 20px в остальных размерах." xml:space="preserve"><value>Separator: 16px in S, 20px in other sizes.</value></data>
+  <data name="Ручное меню; автоматического распределения действий тема не добавляет." xml:space="preserve"><value>Manual menu; the theme does not distribute actions automatically.</value></data>
+  <data name="Классы и параметры темы" xml:space="preserve"><value>Theme classes and parameters</value></data>
+  <data name="Создавайте и подтверждайте платежи в одном месте." xml:space="preserve"><value>Create and approve payments in one place.</value></data>
+  <data name="Следите за поступлениями и расходами по периодам." xml:space="preserve"><value>Track income and expenses by period.</value></data>
+  <data name="Загрузите актуальные документы и отчёты." xml:space="preserve"><value>Download current documents and reports.</value></data>
+  <data name="Разметка слайдов без Admiral-компонентов." xml:space="preserve"><value>Slide markup without Admiral components.</value></data>
+  <data name="Текущая страница и двусторонняя привязка." xml:space="preserve"><value>Current page and two-way binding.</value></data>
+  <data name="Автосмена слайдов и интервал в миллисекундах." xml:space="preserve"><value>Automatic slide changes and interval in milliseconds.</value></data>
+  <data name="Стрелки, индикаторы и жест прокрутки." xml:space="preserve"><value>Arrows, indicators and swipe gesture.</value></data>
+  <data name="Расположение индикаторов внутри или снаружи слайда." xml:space="preserve"><value>Indicators inside or outside the slide.</value></data>
+  <data name="Точные классы Admiral theme для геометрии и цветов." xml:space="preserve"><value>Exact Admiral theme classes for geometry and colors.</value></data>
+  <data name="Параметры RadzenCarousel + тема" xml:space="preserve"><value>RadzenCarousel parameters + theme</value></data>
+  <data name="Значение и обработчик изменения каждого флажка." xml:space="preserve"><value>Value and change handler for each checkbox.</value></data>
+  <data name="Позволяет отобразить частичный выбор через null." xml:space="preserve"><value>Displays a partial selection through null.</value></data>
+  <data name="Недоступное состояние и режим только для чтения." xml:space="preserve"><value>Disabled and read-only states.</value></data>
+  <data name="Расстояние между родителем и дочерними пунктами, задаётся вручную." xml:space="preserve"><value>Spacing between parent and child items, set manually.</value></data>
+  <data name="Параметры RadzenCheckBox + тема" xml:space="preserve"><value>RadzenCheckBox parameters + theme</value></data>
+  <data name="Толщина 1 или 2 px." xml:space="preserve"><value>Thickness of 1 or 2 px.</value></data>
+  <data name="Ось длины и толщина разделителя." xml:space="preserve"><value>Length axis and divider thickness.</value></data>
+  <data name="Цвет из Admiral theme; default, subtle, strong, primary или staticwhite." xml:space="preserve"><value>Admiral theme color: default, subtle, strong, primary or staticwhite.</value></data>
+  <data name="Длина по выбранной оси; по умолчанию 100%." xml:space="preserve"><value>Length along the selected axis; defaults to 100%.</value></data>
+  <data name="Пользовательский цвет поверх цветового варианта." xml:space="preserve"><value>Custom color overriding the color variant.</value></data>
+  <data name="HTML + тема" xml:space="preserve"><value>HTML + theme</value></data>
+  <data name="Radzen и классы темы" xml:space="preserve"><value>Radzen and theme classes</value></data>
+  <data name="Управляемая видимость; поддерживает @bind-Open." xml:space="preserve"><value>Controlled visibility; supports @bind-Open.</value></data>
+  <data name="Заголовок и доступное имя диалога." xml:space="preserve"><value>Title and accessible dialog name.</value></data>
+  <data name="Физический край окна: Left или Right. Mobile всегда использует Right." xml:space="preserve"><value>Physical window edge: Left or Right. Mobile always uses Right.</value></data>
+  <data name="Primary / Secondary — семантические поверхности текущей Admiral-темы." xml:space="preserve"><value>Primary / Secondary semantic surfaces from the current Admiral theme.</value></data>
+  <data name="CSS-ширина. Максимум — ширина окна минус 16 px." xml:space="preserve"><value>CSS width. Maximum: viewport width minus 16 px.</value></data>
+  <data name="Панель справа шириной окна минус 16 px, уменьшенные отступы и вертикальные действия." xml:space="preserve"><value>Right panel, viewport width minus 16 px, with compact spacing and vertical actions.</value></data>
+  <data name="Затемнение и блокировка прокрутки страницы. При false фон страницы доступен для мыши." xml:space="preserve"><value>Backdrop and page scroll lock. When false, the page remains pointer-accessible.</value></data>
+  <data name="Кнопка IconPlacement: 24 × 24 px и отступы по 4 px, область hover 32 × 32 px." xml:space="preserve"><value>IconPlacement button: 24 × 24 px with 4 px padding; hover area 32 × 32 px.</value></data>
+  <data name="Запрос закрытия по Escape, когда фокус внутри панели." xml:space="preserve"><value>Requests closing on Escape while focus is inside the panel.</value></data>
+  <data name="Запрос закрытия по нажатию на подложку; работает только при Backdrop=true." xml:space="preserve"><value>Requests closing on backdrop click; requires Backdrop=true.</value></data>
+  <data name="При true не возвращает фокус на элемент, открывший панель." xml:space="preserve"><value>When true, does not restore focus to the element that opened the panel.</value></data>
+  <data name="Локализуемая подпись кнопки закрытия." xml:space="preserve"><value>Localizable close button label.</value></data>
+  <data name="Уведомление о запросе закрытия из UI, после OpenChanged(false)." xml:space="preserve"><value>Notification of a UI close request, after OpenChanged(false).</value></data>
+  <data name="Прокручиваемое содержимое и неподвижная панель действий." xml:space="preserve"><value>Scrollable content and fixed action panel.</value></data>
+  <data name="Дополнительные классы и атрибуты dialog, например data-testid." xml:space="preserve"><value>Additional dialog classes and attributes, such as data-testid.</value></data>
+  <data name="Панель раскрыта; автоматическое поведение навигационного sidebar отключено." xml:space="preserve"><value>Expanded panel; automatic navigation sidebar behavior is disabled.</value></data>
+  <data name="Позиция Radzen согласуется с CSS-модификатором панели." xml:space="preserve"><value>Radzen position matches the panel CSS modifier.</value></data>
+  <data name="Край окна и направление анимации открытия." xml:space="preserve"><value>Window edge and opening animation direction.</value></data>
+  <data name="Вторичная поверхность / компактная геометрия." xml:space="preserve"><value>Secondary surface / compact geometry.</value></data>
+  <data name="Затемнение с блокировкой страницы / доступный фон без затемнения." xml:space="preserve"><value>Backdrop with page lock / interactive page without a backdrop.</value></data>
+  <data name="Заголовок, независимая прокрутка и панель действий." xml:space="preserve"><value>Title, independent scrolling and action panel.</value></data>
+  <data name="Явная позиция и ширина заменяют стандартные inline-отступы RadzenSidebar." xml:space="preserve"><value>Explicit position and width replace standard RadzenSidebar inline offsets.</value></data>
+  <data name="Без привязки список ведёт компонент. С @bind-Files родитель может удалять, переставлять и очищать файлы последнего выбора." xml:space="preserve"><value>Without binding, the component manages the list. With @bind-Files, the parent can remove, reorder and clear the latest selection.</value></data>
+  <data name="Нативный выбор заменяет прежний. При ошибке приходит пустой массив; при удалении или ResetAsync событие не вызывается." xml:space="preserve"><value>Native selection replaces the previous one. Errors produce an empty array; removal and ResetAsync do not raise this event.</value></data>
+  <data name="Вызывается после RemoveAsync существующего файла. Внешнее изменение Files и ResetAsync его не вызывают." xml:space="preserve"><value>Raised after RemoveAsync removes an existing file. External Files changes and ResetAsync do not raise it.</value></data>
+  <data name="Вместо dropzone рендерится ваш триггер. Callback открывает диалог; Enter/Space и disabled задаёт кнопка шаблона." xml:space="preserve"><value>Renders your trigger instead of the dropzone. The callback opens the dialog; the template button handles Enter/Space and disabled state.</value></data>
+  <data name="Открывает диалог из пользовательского действия. Disabled и Skeleton блокируют открытие." xml:space="preserve"><value>Opens the dialog from a user action. Disabled and Skeleton prevent opening.</value></data>
+  <data name="Удаляет выбранный файл; остальные потоки остаются действительными. Disabled и Skeleton блокируют действие." xml:space="preserve"><value>Removes a selected file; other streams remain valid. Disabled and Skeleton prevent the action.</value></data>
+  <data name="Сбрасывает input, список и ошибку, вызывает FilesChanged. Ранее открытые потоки больше использовать нельзя." xml:space="preserve"><value>Resets the input, list and error, and invokes FilesChanged. Previously opened streams must no longer be used.</value></data>
+  <data name="Проверяются при новом выборе. Лимиты не перепроверяют уже выбранные файлы; Accept — подсказка picker и клиентская валидация, не защита API." xml:space="preserve"><value>Checked on a new selection. Limits do not revalidate existing files; Accept guides the picker and client validation, not API security.</value></data>
+  <data name="Адрес multipart API и автоматическая отправка." xml:space="preserve"><value>Multipart API address and automatic upload.</value></data>
+  <data name="Число и допустимые форматы файлов." xml:space="preserve"><value>File count and accepted formats.</value></data>
+  <data name="События выбора, передачи, завершения и ошибки." xml:space="preserve"><value>Selection, progress, completion and error events.</value></data>
+  <data name="admiral-file-input с модификатором --xl или --m." xml:space="preserve"><value>admiral-file-input with the --xl or --m modifier.</value></data>
+  <data name="Управление выбором и методы" xml:space="preserve"><value>Selection control and methods</value></data>
+  <data name="Параметры RadzenUpload + тема" xml:space="preserve"><value>RadzenUpload parameters + theme</value></data>
+  <data name="Иконки закрытой и открытой основной кнопки." xml:space="preserve"><value>Icons for the closed and open main button.</value></data>
+  <data name="Управляемое состояние меню и его изменение." xml:space="preserve"><value>Controlled menu state and change notification.</value></data>
+  <data name="Цветовые варианты основной кнопки." xml:space="preserve"><value>Main button color variants.</value></data>
+  <data name="Размер, расстояние между действиями и направление раскрытия." xml:space="preserve"><value>Size, action spacing and expansion direction.</value></data>
+  <data name="Действия с собственными Icon, Text, Click и Disabled." xml:space="preserve"><value>Actions with their own Icon, Text, Click and Disabled.</value></data>
+  <data name="Параметры RadzenFabMenu + тема" xml:space="preserve"><value>RadzenFabMenu parameters + theme</value></data>
+  <data name="Контракт темы" xml:space="preserve"><value>Theme contract</value></data>
+  <data name="Текст и иконка стандартного триггера." xml:space="preserve"><value>Standard trigger text and icon.</value></data>
+  <data name="Произвольный фокусируемый триггер; имеет приоритет над стандартным." xml:space="preserve"><value>Custom focusable trigger; takes precedence over the standard trigger.</value></data>
+  <data name="Доступный заголовок и содержимое карточки." xml:space="preserve"><value>Accessible title and card content.</value></data>
+  <data name="Small 280, Medium 384, Large 488 px. На мобильном ширина адаптивна." xml:space="preserve"><value>Small 280, Medium 384, Large 488 px. Responsive width on mobile.</value></data>
+  <data name="Auto, Top, Right, Bottom, Left с подбором безопасного положения. Null использует Position." xml:space="preserve"><value>Auto, Top, Right, Bottom, Left with safe positioning. Null uses Position.</value></data>
+  <data name="Click — явное закрытие и focus trap. Hover — hover/focus без перемещения фокуса." xml:space="preserve"><value>Click: explicit dismissal and focus trap. Hover: hover/focus without moving focus.</value></data>
+  <data name="Видимость, двусторонняя привязка и наблюдаемый результат открытия/закрытия." xml:space="preserve"><value>Visibility, two-way binding and observable open/close result.</value></data>
+  <data name="Отключает начальный фокус и focus trap в click-режиме." xml:space="preserve"><value>Disables initial focus and focus trap in click mode.</value></data>
+  <data name="Вариант Admiral-кнопки; null сохраняет старые параметры Radzen." xml:space="preserve"><value>Admiral button appearance; null preserves legacy Radzen parameters.</value></data>
+  <data name="Запрещает открытие и скрывает открытую карточку." xml:space="preserve"><value>Prevents opening and hides an open card.</value></data>
+  <data name="Закрытие click-подсказки вне триггера и карточки." xml:space="preserve"><value>Dismisses a click hint outside the trigger and card.</value></data>
+  <data name="Локализуемое доступное имя крестика." xml:space="preserve"><value>Localizable accessible name for the close icon.</value></data>
+  <data name="Совместимость: используйте Admiral Placement в новом коде." xml:space="preserve"><value>Compatibility: use Admiral Placement in new code.</value></data>
+  <data name="Совместимость: заменяются TriggerAppearance или TriggerContent." xml:space="preserve"><value>Compatibility: replaced by TriggerAppearance or TriggerContent.</value></data>
+  <data name="Передаются стандартной кнопке. При TriggerContent атрибуты задаются самому триггеру." xml:space="preserve"><value>Passed to the standard button. With TriggerContent, set attributes on the custom trigger.</value></data>
+  <data name="Поверхность, радиус, тень и типографика карточки." xml:space="preserve"><value>Card surface, radius, shadow and typography.</value></data>
+  <data name="Ширины 280 / 384 / 488 px, адаптивная мобильная ширина." xml:space="preserve"><value>Widths of 280 / 384 / 488 px, responsive on mobile.</value></data>
+  <data name="Композиция интерактивного содержимого и кнопки закрытия." xml:space="preserve"><value>Interactive content and close button composition.</value></data>
+  <data name="Позиция, время жизни и закрытие снаружи. Фокусом и hover-переходами тема не управляет." xml:space="preserve"><value>Position, lifetime and outside dismissal. The theme does not manage focus or hover transitions.</value></data>
+  <data name="Открывает собственный диалог приложения." xml:space="preserve"><value>Opens the application's own dialog.</value></data>
+  <data name="Использует упакованные Admiral SVG через адаптер иконок." xml:space="preserve"><value>Uses packaged Admiral SVGs through the icon adapter.</value></data>
+  <data name="Само изображение и его alt; обработку ошибок добавляет приложение." xml:space="preserve"><value>Image and alt text; the application handles errors.</value></data>
+  <data name="Прямой Radzen API" xml:space="preserve"><value>Direct Radzen API</value></data>
+  <data name="Россия" xml:space="preserve"><value>Russia</value></data>
+  <data name="Беларусь" xml:space="preserve"><value>Belarus</value></data>
+  <data name="Казахстан" xml:space="preserve"><value>Kazakhstan</value></data>
+  <data name="RadzenSlider + тема" xml:space="preserve"><value>RadzenSlider + theme</value></data>
+  <data name="Значение одинарного слайдера." xml:space="preserve"><value>Single slider value.</value></data>
+  <data name="Включает два маркера; тогда TValue — IEnumerable&lt;decimal&gt;." xml:space="preserve"><value>Enables two thumbs; TValue is then IEnumerable&lt;decimal&gt;.</value></data>
+  <data name="Границы и шаг RadzenSlider." xml:space="preserve"><value>RadzenSlider bounds and step.</value></data>
+  <data name="admiral-slider--medium для маркера M; без класса — XL." xml:space="preserve"><value>admiral-slider--medium for an M thumb; without the class, XL.</value></data>
+  <data name="Одинарное значение и уведомление об изменении." xml:space="preserve"><value>Single value and change notification.</value></data>
+  <data name="Два значения; null использует границы, обратный порядок сортируется." xml:space="preserve"><value>Two values; null uses the bounds, reversed values are sorted.</value></data>
+  <data name="Два ползунка вместо одного." xml:space="preserve"><value>Two thumbs instead of one.</value></data>
+  <data name="Границы и положительный шаг; Max &gt; Min." xml:space="preserve"><value>Bounds and positive step; Max &gt; Min.</value></data>
+  <data name="Свободный pointer без округления; клавиатура всё равно использует положительный Step." xml:space="preserve"><value>Unrounded pointer movement; keyboard navigation still uses a positive Step.</value></data>
+  <data name="Один callback после pointerup/cancel, после финального изменения. Values — снимок пары/значения, Cancelled отличает отмену." xml:space="preserve"><value>One callback after pointerup/cancel, after the final change. Values is a snapshot of the pair/value; Cancelled identifies cancellation.</value></data>
+  <data name="Value — значение или нижняя граница Range; Values — независимый снимок из 1/2 значений; Cancelled=true для pointercancel/lost capture." xml:space="preserve"><value>Value is the value or lower Range bound; Values is an independent snapshot of 1/2 values; Cancelled=true for pointercancel/lost capture.</value></data>
+  <data name="Отбрасывает preview и ожидающие события без DragEnded; используйте перед сбросом к тому же bound value." xml:space="preserve"><value>Discards preview and pending events without DragEnded; use before resetting to the same bound value.</value></data>
+  <data name="Дополнительные атрибуты одного/нижнего/верхнего маркера. Встроенные role, style, tabindex и value ARIA сохраняются." xml:space="preserve"><value>Additional attributes for the single/lower/upper thumb. Built-in role, style, tabindex and value ARIA are preserved.</value></data>
+  <data name="Список дополнительных отметок и их видимость. Границы добавляются автоматически." xml:space="preserve"><value>Additional tick marks and their visibility. Bounds are added automatically.</value></data>
+  <data name="Произвольный локализованный текст отметки." xml:space="preserve"><value>Custom localized tick text.</value></data>
+  <data name="Форматирование отметок и значений; null означает CurrentCulture." xml:space="preserve"><value>Formatting of ticks and values; null means CurrentCulture.</value></data>
+  <data name="XL: 20px, M: 16px. Для React Range это M/S." xml:space="preserve"><value>XL: 20px, M: 16px. Corresponds to M/S in React Range.</value></data>
+  <data name="Подсказка значения; запрет взаимодействия; загрузочный placeholder." xml:space="preserve"><value>Value tooltip; disabled interaction; loading placeholder.</value></data>
+  <data name="Локализуемые доступные имена маркеров." xml:space="preserve"><value>Localizable accessible thumb names.</value></data>
+  <data name="Классы, CSS и атрибуты корневого элемента." xml:space="preserve"><value>Root element classes, CSS and attributes.</value></data>
+  <data name="Текст метки." xml:space="preserve"><value>Label text.</value></data>
+  <data name="Семантический цвет из Admiral theme." xml:space="preserve"><value>Semantic color from the Admiral theme.</value></data>
+  <data name="Оттенок Radzen; не эквивалентен StatusViaBackground." xml:space="preserve"><value>Radzen shade; not equivalent to StatusViaBackground.</value></data>
+  <data name="RadzenBadge + тема" xml:space="preserve"><value>RadzenBadge + theme</value></data>
+  <data name="Содержимое и событие изменения; поддерживают @bind-Value." xml:space="preserve"><value>Content and change event; support @bind-Value.</value></data>
+  <data name="Начальная высота в строках." xml:space="preserve"><value>Initial height in rows.</value></data>
+  <data name="Обновлять Value при вводе, а не при потере фокуса." xml:space="preserve"><value>Update Value while typing rather than on blur.</value></data>
+  <data name="Ограничение длины ввода." xml:space="preserve"><value>Input length limit.</value></data>
+  <data name="admiral-text-area-control и модификатор размера --s/--m/--xl." xml:space="preserve"><value>admiral-text-area-control and size modifier --s/--m/--xl.</value></data>
+  <data name="RadzenTextArea + тема" xml:space="preserve"><value>RadzenTextArea + theme</value></data>
+  <data name="Заголовок и содержимое уведомления." xml:space="preserve"><value>Notification title and content.</value></data>
+  <data name="Info, Success, Warning или Error; по умолчанию Info." xml:space="preserve"><value>Info, Success, Warning or Error; defaults to Info.</value></data>
+  <data name="Показывает семантическую иконку; по умолчанию true." xml:space="preserve"><value>Shows the semantic icon; defaults to true.</value></data>
+  <data name="Автозакрытие после положительного интервала; по умолчанию null." xml:space="preserve"><value>Auto-dismiss after a positive interval; defaults to null.</value></data>
+  <data name="Полоска обратного отсчёта; по умолчанию false." xml:space="preserve"><value>Countdown bar; defaults to false.</value></data>
+  <data name="Дополнительные действия внутри карточки." xml:space="preserve"><value>Additional actions inside the card.</value></data>
+  <data name="Добавить сообщение в начало стека; возвращает его ID." xml:space="preserve"><value>Prepend a message to the stack; returns its ID.</value></data>
+  <data name="Удалить одно сообщение и отменить его таймер." xml:space="preserve"><value>Remove one message and cancel its timer.</value></data>
+  <data name="Удалить все активные сообщения." xml:space="preserve"><value>Remove all active messages.</value></data>
+  <data name="Текущее состояние стека и событие обновления." xml:space="preserve"><value>Current stack state and update event.</value></data>
+  <data name="Положение и ширина host, если они не зафиксированы его параметрами." xml:space="preserve"><value>Host position and width, unless fixed by its parameters.</value></data>
+  <data name="Семантический тип уведомления." xml:space="preserve"><value>Semantic notification type.</value></data>
+  <data name="Заголовок и текст." xml:space="preserve"><value>Title and text.</value></data>
+  <data name="Время показа в миллисекундах." xml:space="preserve"><value>Display duration in milliseconds.</value></data>
+  <data name="Параметры Radzen NotificationMessage" xml:space="preserve"><value>Radzen NotificationMessage parameters</value></data>
+  <data name="Уникальный Id и локализованная подпись; Icon=null, Disabled=false, Children=[]." xml:space="preserve"><value>Unique Id and localized label; Icon=null, Disabled=false, Children=[].</value></data>
+  <data name="Выбор строки независимо от focus и checked." xml:space="preserve"><value>Row selection independent of focus and checked state.</value></data>
+  <data name="Полный набор checked Id, включая родителей. Начальный checked родитель сам по себе не отмечает детей." xml:space="preserve"><value>Full set of checked IDs, including parents. Initially checking a parent alone does not check its children.</value></data>
+  <data name="Раскрытые ветки; selected child не блокирует сворачивание родителя." xml:space="preserve"><value>Expanded branches; a selected child does not prevent collapsing the parent.</value></data>
+  <data name="Размер, блокировка всего дерева, checkbox-ы и независимый выбор." xml:space="preserve"><value>Size, whole-tree disabled state, checkboxes and independent selection.</value></data>
+  <data name="Только неинтерактивная подпись; геометрия, aria и события остаются в обёртке." xml:space="preserve"><value>Non-interactive label only; geometry, aria and events remain in the wrapper.</value></data>
+  <data name="Локализуемые подписи дерева, раскрытия, сворачивания и пустого состояния." xml:space="preserve"><value>Localizable tree, expand, collapse and empty-state labels.</value></data>
+  <data name="Тематизированный RadzenTree, M/S и отступы по уровням." xml:space="preserve"><value>Themed RadzenTree, M/S and indentation by level.</value></data>
+  <data name="Управляемое выбранное значение и отметки checkbox-ов." xml:space="preserve"><value>Controlled selected value and checked items.</value></data>
+  <data name="Режим checkbox-ов и каскад Radzen." xml:space="preserve"><value>Checkbox mode and Radzen cascading.</value></data>
+  <data name="Раскрытие и возможность отметить checkbox; полноценного Disabled нет." xml:space="preserve"><value>Expansion and checkbox availability; no complete Disabled equivalent.</value></data>
+  <data name="Состояния и модель" xml:space="preserve"><value>States and model</value></data>
+  <data name="Выбор узла RadzenTree." xml:space="preserve"><value>RadzenTree node selection.</value></data>
+  <data name="Включает флажки для множественного выбора." xml:space="preserve"><value>Enables checkboxes for multiple selection.</value></data>
+  <data name="Каскадное состояние дочерних и родительских узлов." xml:space="preserve"><value>Cascading state of child and parent nodes.</value></data>
+  <data name="admiral-tree активирует оформление из темы." xml:space="preserve"><value>admiral-tree activates the packaged theme styling.</value></data>
+  <data name="RadzenTree + тема" xml:space="preserve"><value>RadzenTree + theme</value></data>
+  <data name="Подпись и имя иконки. Для Admiral используйте префикс admiral:." xml:space="preserve"><value>Label and icon name. Use the admiral: prefix for Admiral icons.</value></data>
+  <data name="Высота кнопки; Small соответствует Admiral M, а не S." xml:space="preserve"><value>Button height; Small corresponds to Admiral M, not S.</value></data>
+  <data name="Filled, Flat, Outlined, Text — способ отображения фона и границы." xml:space="preserve"><value>Filled, Flat, Outlined, Text: background and border appearance.</value></data>
+  <data name="Семантическая палитра кнопки." xml:space="preserve"><value>Semantic button palette.</value></data>
+  <data name="Отключение взаимодействия / штатный индикатор ожидания Radzen." xml:space="preserve"><value>Disables interaction / displays the built-in Radzen busy indicator.</value></data>
+  <data name="Подпись во время IsBusy; задайте исходный текст, если его нужно сохранить." xml:space="preserve"><value>Label during IsBusy; provide the original text to preserve it.</value></data>
+  <data name="Обработчик нажатия." xml:space="preserve"><value>Click handler.</value></data>
+  <data name="Дополнительное оформление и доступное имя кнопки." xml:space="preserve"><value>Additional styling and accessible button name.</value></data>
+  <data name="RadzenButton — параметры playground" xml:space="preserve"><value>RadzenButton — playground parameters</value></data>
+  <data name="Текст кнопки." xml:space="preserve"><value>Button text.</value></data>
+  <data name="Содержимое вместо Text." xml:space="preserve"><value>Content replacing Text.</value></data>
+  <data name="HTML-поведение: Button, Submit или Reset." xml:space="preserve"><value>HTML behavior: Button, Submit or Reset.</value></data>
+  <data name="Иконка перед / после текста, например admiral:system/star-solid." xml:space="preserve"><value>Icon before / after text, such as admiral:system/star-solid.</value></data>
+  <data name="Произвольное содержимое иконки; имеет приоритет над её строковым именем." xml:space="preserve"><value>Custom icon content; takes precedence over its string name.</value></data>
+  <data name="Недоступная кнопка; блокирует нажатие." xml:space="preserve"><value>Disabled button; prevents clicks.</value></data>
+  <data name="Только визуальное отключение, Click остаётся активен." xml:space="preserve"><value>Visual disabled state only; Click remains active.</value></data>
+  <data name="Квадратная кнопка без текста и badge. Задайте aria-label." xml:space="preserve"><value>Square button without text or badge. Provide aria-label.</value></data>
+  <data name="Спиннер вместо содержимого с сохранением геометрии; Click подавлен." xml:space="preserve"><value>Spinner replacing content while preserving geometry; Click is suppressed.</value></data>
+  <data name="Состояние skeleton; Click подавлен." xml:space="preserve"><value>Skeleton state; Click is suppressed.</value></data>
+  <data name="Число для Primary, Secondary, Tertiary, Ghost. Не выводится у квадратной кнопки." xml:space="preserve"><value>Count for Primary, Secondary, Tertiary, Ghost. Not shown on square buttons.</value></data>
+  <data name="Событие клика; поддерживает синхронный и async обработчик." xml:space="preserve"><value>Click event; supports synchronous and async handlers.</value></data>
+  <data name="Дополнительный CSS-класс." xml:space="preserve"><value>Additional CSS class.</value></data>
+  <data name="Нераспознанные атрибуты передаются внутренней кнопке: style, id, aria-label, data-*." xml:space="preserve"><value>Unmatched attributes pass to the inner button: style, id, aria-label, data-*.</value></data>
+  <data name="AdmiralButton — параметры, шаблоны и событие" xml:space="preserve"><value>AdmiralButton — parameters, templates and event</value></data>
+  <data name="Размер ячеек таблицы; выбирайте один модификатор." xml:space="preserve"><value>Table cell size; choose one modifier.</value></data>
+  <data name="Альтернативный фон заголовков, учитывающий тему." xml:space="preserve"><value>Alternative theme-aware header background.</value></data>
+  <data name="Убирает внешнюю рамку. Внутренние границы задаются GridLines." xml:space="preserve"><value>Removes the outer border. GridLines controls internal borders.</value></data>
+  <data name="Перенос длинных заголовков." xml:space="preserve"><value>Wraps long headers.</value></data>
+  <data name="Перенос содержимого ячеек." xml:space="preserve"><value>Wraps cell content.</value></data>
+  <data name="Компактная штатная пагинация (32 px). Без модификатора используется обычный размер темы; отдельных --m / --l / --xl нет." xml:space="preserve"><value>Compact built-in pagination (32 px). Without the modifier, the normal theme size is used; no separate --m / --l / --xl.</value></data>
+  <data name="Штатная клиентская пагинация; при LoadData данные страницы возвращает приложение." xml:space="preserve"><value>Built-in client pagination; with LoadData, the application supplies page data.</value></data>
+  <data name="Штатные сортировка и фильтры Radzen. Их подписи локализуются параметрами Radzen." xml:space="preserve"><value>Built-in Radzen sorting and filters. Labels are localized through Radzen parameters.</value></data>
+  <data name="Изменение ширины, перетаскивание колонок, группировка." xml:space="preserve"><value>Column resizing, reordering and grouping.</value></data>
+  <data name="Штатный выбор видимых колонок." xml:space="preserve"><value>Built-in column picker.</value></data>
+  <data name="Чередование фона строк и внутренние границы." xml:space="preserve"><value>Alternating row backgrounds and internal borders.</value></data>
+  <data name="Классы темы для RadzenDataGrid" xml:space="preserve"><value>Theme classes for RadzenDataGrid</value></data>
+  <data name="Тип и строки таблицы. Без LoadData сортировка, поиск и paging работают с полным Data на клиенте." xml:space="preserve"><value>Table type and rows. Without LoadData, sorting, search and paging operate on the full Data collection on the client.</value></data>
+  <data name="Определения колонок из кода либо AdmiralDataGridColumn в разметке. Выберите один подход." xml:space="preserve"><value>Column definitions from code or AdmiralDataGridColumn markup. Choose one approach.</value></data>
+  <data name="Серверная загрузка страницы, общий результат запроса и индикатор загрузки." xml:space="preserve"><value>Server page loading, total query count and loading indicator.</value></data>
+  <data name="Включение пагинации и количество строк." xml:space="preserve"><value>Enables pagination and sets the row count.</value></data>
+  <data name="None, PaginationTwo, PaginationOne, PaginationOneSimple. Это варианты обёртки, а не CSS-параметр Radzen." xml:space="preserve"><value>None, PaginationTwo, PaginationOne, PaginationOneSimple. Wrapper variants, not a Radzen CSS parameter.</value></data>
+  <data name="Размер пагинатора и доступное количество строк." xml:space="preserve"><value>Pager size and available page sizes.</value></data>
+  <data name="Изменение страницы и размера страницы." xml:space="preserve"><value>Page and page-size changes.</value></data>
+  <data name="Текст поиска toolbar и его изменение; поддерживает bind-SearchValue." xml:space="preserve"><value>Toolbar search text and change notification; supports bind-SearchValue.</value></data>
+  <data name="Своя логика клиентского поиска. Не заменяет фильтры вашего серверного API." xml:space="preserve"><value>Custom client search logic. Does not replace server API filters.</value></data>
+  <data name="Переопределение текстов поиска, фильтров, пустого состояния и пагинации; по умолчанию берётся текущая культура." xml:space="preserve"><value>Overrides search, filter, empty-state and pagination text; defaults to the current culture.</value></data>
+  <data name="Small, Medium, Large, ExtraLarge — геометрия таблицы." xml:space="preserve"><value>Small, Medium, Large, ExtraLarge: table geometry.</value></data>
+  <data name="None, Horizontal, Vertical, Both — внутренние границы." xml:space="preserve"><value>None, Horizontal, Vertical, Both: internal borders.</value></data>
+  <data name="Серый заголовок / отсутствие внешней рамки." xml:space="preserve"><value>Gray header / no outer border.</value></data>
+  <data name="Перенос текста в заголовках / ячейках." xml:space="preserve"><value>Wraps header / cell text.</value></data>
+  <data name="Чередование фона строк." xml:space="preserve"><value>Alternating row backgrounds.</value></data>
+  <data name="Сортировка и разрешение сортировки по нескольким колонкам." xml:space="preserve"><value>Sorting and permission to sort by multiple columns.</value></data>
+  <data name="Фильтры колонок и режим их отображения." xml:space="preserve"><value>Column filters and their display mode.</value></data>
+  <data name="Задержка фильтра и применение при вводе." xml:space="preserve"><value>Filter delay and application while typing.</value></data>
+  <data name="Формат даты в фильтре и возможность вводить её вручную." xml:space="preserve"><value>Filter date format and manual input availability.</value></data>
+  <data name="Изменение ширины / порядка колонок пользователем." xml:space="preserve"><value>User resizing / reordering of columns.</value></data>
+  <data name="Штатный выбор колонок Radzen, выбор всех и поиск; не включайте одновременно с аналогичной панелью Admiral без необходимости." xml:space="preserve"><value>Built-in Radzen column picker, select-all and search; avoid enabling it alongside the equivalent Admiral panel unless needed.</value></data>
+  <data name="Группировка и подпись области группировки." xml:space="preserve"><value>Grouping and grouping-area label.</value></data>
+  <data name="Скрытие сгруппированной колонки / постоянный footer группы." xml:space="preserve"><value>Hides grouped columns / always shows group footers.</value></data>
+  <data name="Адаптивность и базовая ширина колонок. Для горизонтального скролла задавайте достаточные Width / MinWidth." xml:space="preserve"><value>Responsive behavior and default column width. Set sufficient Width / MinWidth for horizontal scrolling.</value></data>
+  <data name="Виртуализация строк и число дополнительных строк за пределами viewport." xml:space="preserve"><value>Row virtualization and extra rows beyond the viewport.</value></data>
+  <data name="Отображение заголовка и пустого состояния." xml:space="preserve"><value>Header and empty-state visibility.</value></data>
+  <data name="Подсказки содержимого и названий колонок." xml:space="preserve"><value>Tooltips for cell content and column names.</value></data>
+  <data name="Контролы раскрытия деталей и групп; стрелки групп по умолчанию видны." xml:space="preserve"><value>Detail and group expansion controls; group arrows are visible by default.</value></data>
+  <data name="Управляемое раскрытие всех групп; null оставляет индивидуальное состояние каждой группы." xml:space="preserve"><value>Controlled expansion of all groups; null preserves individual group states.</value></data>
+  <data name="Одновременно одна или несколько раскрытых строк." xml:space="preserve"><value>One or multiple expanded rows at a time.</value></data>
+  <data name="Выделение по клику и одиночный/множественный выбор." xml:space="preserve"><value>Click selection and single/multiple selection mode.</value></data>
+  <data name="Выбранные строки; поддерживает bind-Value." xml:space="preserve"><value>Selected rows; supports bind-Value.</value></data>
+  <data name="Перестановка строк; RowKey должен возвращать стабильный уникальный ключ." xml:space="preserve"><value>Row reordering; RowKey must return a stable unique key.</value></data>
+  <data name="Имя ключевого свойства и сброс страницы при сортировке." xml:space="preserve"><value>Key property name and page reset on sorting.</value></data>
+  <data name="Панель Admiral и кнопка настроек; SettingsClicked обрабатывает её нажатие." xml:space="preserve"><value>Admiral toolbar and settings button; SettingsClicked handles its click.</value></data>
+  <data name="Действия над таблицей и обработчик выбранного действия." xml:space="preserve"><value>Table actions and selected-action handler.</value></data>
+  <data name="Действия строки из кода и общий обработчик; действие может иметь собственный callback." xml:space="preserve"><value>Row actions from code and shared handler; an action may have its own callback.</value></data>
+  <data name="Декларативные AdmiralDataGridRowAction с индивидуальными Click." xml:space="preserve"><value>Declarative AdmiralDataGridRowAction items with individual Click handlers.</value></data>
+  <data name="Ширина колонки действий." xml:space="preserve"><value>Action column width.</value></data>
+  <data name="Раскрываемое содержимое строки. DetailTemplate — альтернативный параметр." xml:space="preserve"><value>Expandable row content. DetailTemplate is an alternative parameter.</value></data>
+  <data name="Шаблоны шапки, footer и пустого состояния." xml:space="preserve"><value>Header, footer and empty-state templates.</value></data>
+  <data name="Шаблон редактирования и режим редактирования строк." xml:space="preserve"><value>Edit template and row editing mode.</value></data>
+  <data name="Нажатие / двойное нажатие на строку." xml:space="preserve"><value>Row click / double click.</value></data>
+  <data name="Изменение выделения / раскрытия строки." xml:space="preserve"><value>Row selection / expansion changes.</value></data>
+  <data name="Начало редактирования, сохранение и создание строки." xml:space="preserve"><value>Start editing, save and create a row.</value></data>
+  <data name="Результат перестановки строк и доступное имя контролов." xml:space="preserve"><value>Row reordering result and accessible control names.</value></data>
+  <data name="Перестановка, изменение ширины и группировка колонок." xml:space="preserve"><value>Column reordering, resizing and grouping.</value></data>
+  <data name="Изменение видимости колонок через панель Admiral." xml:space="preserve"><value>Column visibility changes through the Admiral panel.</value></data>
+  <data name="Настройка атрибутов и доступности раскрытия при отрисовке строки." xml:space="preserve"><value>Custom row attributes and expansion availability during rendering.</value></data>
+  <data name="CSS-класс и стиль внешнего контейнера, включая toolbar и пагинацию." xml:space="preserve"><value>Outer container CSS class and style, including toolbar and pagination.</value></data>
+  <data name="Класс и стиль только внутреннего RadzenDataGrid." xml:space="preserve"><value>Class and style for the inner RadzenDataGrid only.</value></data>
+  <data name="Дополнительные параметры Radzen и HTML-атрибуты. Предпочитайте явно объявленные параметры обёртки." xml:space="preserve"><value>Additional Radzen parameters and HTML attributes. Prefer explicit wrapper parameters.</value></data>
+  <data name="Свойство данных, заголовок и тип для операций колонки." xml:space="preserve"><value>Data property, title and type for column operations.</value></data>
+  <data name="CSS-размеры колонки, например 12rem. Минимальная ширина предотвращает наложение текста." xml:space="preserve"><value>Column CSS sizes, such as 12rem. Minimum width prevents overlapping text.</value></data>
+  <data name="Видимость и доступность в выборе колонок." xml:space="preserve"><value>Visibility and availability in the column picker.</value></data>
+  <data name="Возможности конкретной колонки; глобальная возможность должна быть включена в таблице." xml:space="preserve"><value>Column capabilities; the corresponding global table capability must be enabled.</value></data>
+  <data name="Формат значения и выравнивание. Например {0:N2} и Right для суммы." xml:space="preserve"><value>Value format and alignment. For example, {0:N2} and Right for amounts.</value></data>
+  <data name="Отображение и редактор ячейки с контекстом текущей строки." xml:space="preserve"><value>Cell display and editor with the current row as context.</value></data>
+  <data name="Содержимое заголовка, footer и собственный контрол фильтра." xml:space="preserve"><value>Header, footer and custom filter control content.</value></data>
+  <data name="Значение и оператор фильтра колонки." xml:space="preserve"><value>Column filter value and operator.</value></data>
+  <data name="Закрепление слева или справа при горизонтальном скролле." xml:space="preserve"><value>Pins to the left or right during horizontal scrolling.</value></data>
+  <data name="Дополнительные классы ячейки, заголовка и footer." xml:space="preserve"><value>Additional cell, header and footer classes.</value></data>
+  <data name="Данные, поиск и пагинация" xml:space="preserve"><value>Data, search and pagination</value></data>
+  <data name="Геометрия и взаимодействия" xml:space="preserve"><value>Geometry and interactions</value></data>
+  <data name="Шаблоны, действия, события и расширение" xml:space="preserve"><value>Templates, actions, events and extensions</value></data>
+  <data name="Значение RadzenNumeric и двустороннее связывание." xml:space="preserve"><value>RadzenNumeric value and two-way binding.</value></data>
+  <data name="Ограничения и шаг числа." xml:space="preserve"><value>Numeric bounds and step.</value></data>
+  <data name="Показывает штатные кнопки увеличения и уменьшения." xml:space="preserve"><value>Shows built-in increment and decrement buttons.</value></data>
+  <data name="Размер поля, определённый Admiral theme." xml:space="preserve"><value>Input size defined by the Admiral theme.</value></data>
+  <data name="Элементы и выбранное значение RadzenDropDown." xml:space="preserve"><value>RadzenDropDown items and selected value.</value></data>
+  <data name="Поля подписи и значения сложной модели." xml:space="preserve"><value>Label and value properties of a complex model.</value></data>
+  <data name="Множественный выбор и отображение выбранных элементов." xml:space="preserve"><value>Multiple selection and selected-item display.</value></data>
+  <data name="Поиск в popup и очистка." xml:space="preserve"><value>Popup search and clearing.</value></data>
+  <data name="Размер селекта в Admiral theme." xml:space="preserve"><value>Select size in the Admiral theme.</value></data>
+  <data name="Текст и двустороннее связывание." xml:space="preserve"><value>Text and two-way binding.</value></data>
+  <data name="Подсказка пустого RadzenTextBox." xml:space="preserve"><value>Placeholder for an empty RadzenTextBox.</value></data>
+  <data name="Недоступное состояние и только чтение." xml:space="preserve"><value>Disabled and read-only states.</value></data>
+  <data name="Размер поля в Admiral theme." xml:space="preserve"><value>Input size in the Admiral theme.</value></data>
+  <data name="Подпись и Admiral-иконка RadzenButton." xml:space="preserve"><value>RadzenButton label and Admiral icon.</value></data>
+  <data name="Штатный размер Radzen, оформленный темой." xml:space="preserve"><value>Built-in Radzen size styled by the theme.</value></data>
+  <data name="Вариант поверхности и семантическая палитра." xml:space="preserve"><value>Surface variant and semantic palette.</value></data>
+  <data name="Недоступное состояние и индикатор загрузки Radzen." xml:space="preserve"><value>Disabled state and Radzen loading indicator.</value></data>
+  <data name="Основное действие кнопки." xml:space="preserve"><value>Main button action.</value></data>
+  <data name="Содержимое RadzenBadge." xml:space="preserve"><value>RadzenBadge content.</value></data>
+  <data name="Семантический цвет, оформленный темой." xml:space="preserve"><value>Semantic color styled by the theme.</value></data>
+  <data name="Скруглённая форма штатного badge." xml:space="preserve"><value>Rounded shape of the built-in badge.</value></data>
+  <data name="Кнопка открытия меню." xml:space="preserve"><value>Menu trigger button.</value></data>
+  <data name="Пункты с Text, Value, Icon и Disabled." xml:space="preserve"><value>Items with Text, Value, Icon and Disabled.</value></data>
+  <data name="Основное действие или выбранный пункт." xml:space="preserve"><value>Main action or selected item.</value></data>
+  <data name="Активный шаг и двустороннее связывание." xml:space="preserve"><value>Active step and two-way binding.</value></data>
+  <data name="Шаги с Text, Icon и Disabled." xml:space="preserve"><value>Steps with Text, Icon and Disabled.</value></data>
+  <data name="Типографический токен Radzen, сопоставленный с Admiral theme." xml:space="preserve"><value>Radzen typography token mapped to the Admiral theme.</value></data>
+  <data name="Семантический HTML-тег." xml:space="preserve"><value>Semantic HTML tag.</value></data>
+  <data name="Текст или разметка." xml:space="preserve"><value>Text or markup.</value></data>
+  <data name="Геометрия RadzenSkeleton." xml:space="preserve"><value>RadzenSkeleton geometry.</value></data>
+  <data name="Форма skeleton." xml:space="preserve"><value>Skeleton shape.</value></data>
+  <data name="Тип анимации." xml:space="preserve"><value>Animation type.</value></data>
+  <data name="Адрес и окно перехода." xml:space="preserve"><value>Link address and target window.</value></data>
+  <data name="Подпись и иконка." xml:space="preserve"><value>Label and icon.</value></data>
+  <data name="Недоступное состояние." xml:space="preserve"><value>Disabled state.</value></data>
+  <data name="Открывает подсказку для ElementReference." xml:space="preserve"><value>Opens a tooltip for ElementReference.</value></data>
+  <data name="Position, Delay, Duration и CssClass popup." xml:space="preserve"><value>Popup Position, Delay, Duration and CssClass.</value></data>
+  <data name="Закрывает текущую подсказку." xml:space="preserve"><value>Closes the current tooltip.</value></data>
+  <data name="Подключает типографику или оформление scrollbar." xml:space="preserve"><value>Applies typography or scrollbar styling.</value></data>
+  <data name="Размер области прокрутки и направление задаются обычным CSS." xml:space="preserve"><value>Scroll area size and direction use ordinary CSS.</value></data>
+  <data name="ol/ul/li или контейнер остаются нативными элементами." xml:space="preserve"><value>ol/ul/li or the container remain native elements.</value></data>
+  <data name="Параметры playground Radzen + тема" xml:space="preserve"><value>Radzen + theme playground parameters</value></data>
+  <data name="Ещё" xml:space="preserve"><value>More</value></data>
+  <data name="Редактировать" xml:space="preserve"><value>Edit</value></data>
+  <data name="Удалить" xml:space="preserve"><value>Delete</value></data>
+  <data name="Действия с документом" xml:space="preserve"><value>Document actions</value></data>
+  <data name="Ещё действия" xml:space="preserve"><value>More actions</value></data>
+  <data name="Открыть поиск" xml:space="preserve"><value>Open search</value></data>
+  <data name="Закрыть поиск" xml:space="preserve"><value>Close search</value></data>
+  <data name="Поиск" xml:space="preserve"><value>Search</value></data>
+  <data name="Поиск…" xml:space="preserve"><value>Search…</value></data>
+  <data name="Выбрать колонки" xml:space="preserve"><value>Choose columns</value></data>
+  <data name="Колонки" xml:space="preserve"><value>Columns</value></data>
+  <data name="Настройки" xml:space="preserve"><value>Settings</value></data>
+  <data name="Выбор городов" xml:space="preserve"><value>City selection</value></data>
+  <data name="Выберите один или несколько городов" xml:space="preserve"><value>Select one or more cities</value></data>
+  <data name="Открыть Radzen-панель" xml:space="preserve"><value>Open Radzen panel</value></data>
+  <data name="Открыть Drawer" xml:space="preserve"><value>Open Drawer</value></data>
+  <data name="Проверить доступность фоновой страницы" xml:space="preserve"><value>Check background page accessibility</value></data>
+  <data name="Редактирование записи" xml:space="preserve"><value>Edit record</value></data>
+  <data name="Закрыть Drawer" xml:space="preserve"><value>Close Drawer</value></data>
+  <data name="Название записи" xml:space="preserve"><value>Record name</value></data>
+  <data name="Сохранить" xml:space="preserve"><value>Save</value></data>
+  <data name="Отмена" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Отправить" xml:space="preserve"><value>Upload</value></data>
+  <data name="Добавьте файлы" xml:space="preserve"><value>Add files</value></data>
+  <data name="Удалить файл" xml:space="preserve"><value>Remove file</value></data>
+  <data name="Очистить извне" xml:space="preserve"><value>Clear externally</value></data>
+  <data name="Удалить первый извне" xml:space="preserve"><value>Remove first externally</value></data>
+  <data name="Прочитать потоки" xml:space="preserve"><value>Read streams</value></data>
+  <data name="Сбросить input" xml:space="preserve"><value>Reset input</value></data>
+  <data name="Действия" xml:space="preserve"><value>Actions</value></data>
+  <data name="Печать" xml:space="preserve"><value>Print</value></data>
+  <data name="Быстрые действия" xml:space="preserve"><value>Quick actions</value></data>
+  <data name="Открыть Radzen Hint" xml:space="preserve"><value>Open Radzen Hint</value></data>
+  <data name="Обработка записи" xml:space="preserve"><value>Record processing</value></data>
+  <data name="Закрыть Hint" xml:space="preserve"><value>Close Hint</value></data>
+  <data name="Действие в подсказке" xml:space="preserve"><value>Hint action</value></data>
+  <data name="Подсказка к иконке" xml:space="preserve"><value>Icon hint</value></data>
+  <data name="Закрыть подсказку к иконке" xml:space="preserve"><value>Close icon hint</value></data>
+  <data name="Сведения о записи" xml:space="preserve"><value>Record details</value></data>
+  <data name="Открыть изображение" xml:space="preserve"><value>Open image</value></data>
+  <data name="Закрыть" xml:space="preserve"><value>Close</value></data>
+  <data name="Отдельный референс Range в Admiral" xml:space="preserve"><value>Separate Admiral Range reference</value></data>
+  <data name="Тестовый ползунок" xml:space="preserve"><value>Test slider</value></data>
+  <data name="Нижняя граница" xml:space="preserve"><value>Lower bound</value></data>
+  <data name="Верхняя граница" xml:space="preserve"><value>Upper bound</value></data>
+  <data name="Совместить маркеры" xml:space="preserve"><value>Align thumbs</value></data>
+  <data name="Сбросить значение" xml:space="preserve"><value>Reset value</value></data>
+  <data name="Целочисленный ползунок" xml:space="preserve"><value>Integer slider</value></data>
+  <data name="Смещённый диапазон" xml:space="preserve"><value>Offset range</value></data>
+  <data name="Успешно" xml:space="preserve"><value>Success</value></data>
+  <data name="Нейтрально" xml:space="preserve"><value>Neutral</value></data>
+  <data name="Длинный статус для проверки обрезки" xml:space="preserve"><value>Long status to test truncation</value></data>
+  <data name="Прямой RadzenTextArea" xml:space="preserve"><value>Direct RadzenTextArea</value></data>
+  <data name="Комментарий" xml:space="preserve"><value>Comment</value></data>
+  <data name="Содержимое можно очистить или скопировать" xml:space="preserve"><value>Content can be cleared or copied</value></data>
+  <data name="Введите комментарий" xml:space="preserve"><value>Enter a comment</value></data>
+  <data name="S · компактный" xml:space="preserve"><value>S · compact</value></data>
+  <data name="M · стандартный" xml:space="preserve"><value>M · standard</value></data>
+  <data name="XL · крупный" xml:space="preserve"><value>XL · large</value></data>
+  <data name="Закрыть все" xml:space="preserve"><value>Close all</value></data>
+  <data name="Документы" xml:space="preserve"><value>Documents</value></data>
+  <data name="Отчёты" xml:space="preserve"><value>Reports</value></data>
+  <data name="Текущий месяц" xml:space="preserve"><value>Current month</value></data>
+  <data name="Архив · Checkable=false" xml:space="preserve"><value>Archive · Checkable=false</value></data>
+  <data name="Документы компании" xml:space="preserve"><value>Company documents</value></data>
+  <data name="Сбросить" xml:space="preserve"><value>Reset</value></data>
+  <data name="Локальное состояние" xml:space="preserve"><value>Local state</value></data>
+  <data name="Финансы" xml:space="preserve"><value>Finance</value></data>
+  <data name="Платежи" xml:space="preserve"><value>Payments</value></data>
+  <data name="Отчеты" xml:space="preserve"><value>Reports</value></data>
+  <data name="Акты" xml:space="preserve"><value>Statements of work</value></data>
+  <data name="Выписки" xml:space="preserve"><value>Statements</value></data>
+  <data name="Выберите раздел" xml:space="preserve"><value>Select a section</value></data>
+  <data name="Поиск раздела" xml:space="preserve"><value>Search sections</value></data>
+  <data name="Выбрать доступные" xml:space="preserve"><value>Select available</value></data>
+  <data name="Первое" xml:space="preserve"><value>First</value></data>
+  <data name="Второе" xml:space="preserve"><value>Second</value></data>
+  <data name="Действие" xml:space="preserve"><value>Action</value></data>
+  <data name="Наведи или сфокусируй" xml:space="preserve"><value>Hover or focus</value></data>
+  <data name="Подпись" xml:space="preserve"><value>Label</value></data>
+  <data name="Введите значение" xml:space="preserve"><value>Enter a value</value></data>
+  <data name="Значение:" xml:space="preserve"><value>Value:</value></data>
+  <data name="Изменений:" xml:space="preserve"><value>Changes:</value></data>
+  <data name="Завершений:" xml:space="preserve"><value>Completions:</value></data>
+  <data name="Отменён:" xml:space="preserve"><value>Cancelled:</value></data>
+  <data name="Нажатий:" xml:space="preserve"><value>Clicks:</value></data>
+  <data name="Выбрано:" xml:space="preserve"><value>Selected:</value></data>
+  <data name="Последнее действие:" xml:space="preserve"><value>Last action:</value></data>
+  <data name="Открыто:" xml:space="preserve"><value>Open:</value></data>
+  <data name="Действий:" xml:space="preserve"><value>Actions:</value></data>
+  <data name="Запросов закрытия:" xml:space="preserve"><value>Close requests:</value></data>
+  <data name="Нажатий на фоновую страницу:" xml:space="preserve"><value>Background page clicks:</value></data>
+  <data name="Активных сообщений:" xml:space="preserve"><value>Active messages:</value></data>
+  <data name="Выбранный узел:" xml:space="preserve"><value>Selected node:</value></data>
+  <data name="Поиск:" xml:space="preserve"><value>Search:</value></data>
+  <data name="Колонки:" xml:space="preserve"><value>Columns:</value></data>
+  <data name="No components found" xml:space="preserve"><value>No components found</value></data>
+  <data name="Checkbox" xml:space="preserve"><value>Checkbox</value></data>
+  <data name="A standalone field" xml:space="preserve"><value>A standalone field</value></data>
+  <data name="Value" xml:space="preserve"><value>Value</value></data>
+  <data name="Changes" xml:space="preserve"><value>Changes</value></data>
+  <data name="Single checkbox states, sizes and value changes. For parent and nested selection, see Checkbox groups." xml:space="preserve"><value>Single checkbox states, sizes and value changes. For parent and nested selection, see Checkbox groups.</value></data>
+  <data name="The field wraps RadzenCheckBox with Admiral size, error and label styling. ValueChanged and Change both report a nullable Boolean value. Use Checkbox groups for linked parent and child values." xml:space="preserve"><value>The field wraps RadzenCheckBox with Admiral size, error and label styling. ValueChanged and Change both report a nullable Boolean value. Use Checkbox groups for linked parent and child values.</value></data>
+  <data name="This example uses RadzenCheckBox directly. The packaged theme styles its states; the application supplies its label and event handler." xml:space="preserve"><value>This example uses RadzenCheckBox directly. The packaged theme styles its states; the application supplies its label and event handler.</value></data>
+  <data name="PaginationOne is the full variant: it shows page-size and page selectors, the item range, and previous/next buttons." xml:space="preserve"><value>PaginationOne is the full variant: it shows page-size and page selectors, the item range, and previous/next buttons.</value></data>
+  <data name="PaginationOneSimple is the compact variant: it shows the item range and previous/next buttons without page-size or page selectors. The standalone AdmiralPaginationOne example below uses Simple=true." xml:space="preserve"><value>PaginationOneSimple is the compact variant: it shows the item range and previous/next buttons without page-size or page selectors. The standalone AdmiralPaginationOne example below uses Simple=true.</value></data>
+  <data name="PaginationOne is the full variant with page-size and page selectors, item range, and previous/next buttons. PaginationOneSimple keeps the range and buttons but omits both selectors. Set Pagination on AdmiralDataGrid; for standalone AdmiralPaginationOne set Simple=true for the compact variant." xml:space="preserve"><value>PaginationOne is the full variant with page-size and page selectors, item range, and previous/next buttons. PaginationOneSimple keeps the range and buttons but omits both selectors. Set Pagination on AdmiralDataGrid; for standalone AdmiralPaginationOne set Simple=true for the compact variant.</value></data>
+  <data name="Open the official Admiral Checkbox story" xml:space="preserve"><value>Open the official Admiral Checkbox story</value></data>
+  <data name="Нативно отключает кнопку; блокирует Click, Submit и Reset." xml:space="preserve"><value>Disables the native button and blocks Click, Submit and Reset.</value></data>
+  <data name="Квадратная кнопка без видимого текста и badge. Text задаёт доступное имя; если Text пуст, задайте aria-label." xml:space="preserve"><value>Square button without visible text or badge. Text supplies its accessible name; if Text is empty, provide aria-label.</value></data>
+  <data name="Спиннер вместо содержимого с сохранением геометрии; кнопка нативно отключена, Click, Submit и Reset блокируются." xml:space="preserve"><value>Spinner replaces the content while preserving geometry; the native button is disabled, blocking Click, Submit and Reset.</value></data>
+  <data name="Состояние skeleton; кнопка нативно отключена, Click, Submit и Reset блокируются." xml:space="preserve"><value>Skeleton state; the native button is disabled, blocking Click, Submit and Reset.</value></data>
+</root>

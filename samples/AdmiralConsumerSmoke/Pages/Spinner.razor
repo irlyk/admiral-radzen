@@ -1,0 +1,59 @@
+@page "/components/spinner"
+
+<PageTitle>Admiral Spinner</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Spinner" Description="@T("Индикатор загрузки пяти размеров с инверсным цветом.", "Loading indicator in five sizes and inverse color.")"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-spinner--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section"><h2>@SmokeL["Usage"]</h2>
+            <p>@T("Spinner показывает активность без значения прогресса и событий отмены или завершения. По умолчанию это assertive alert; не размещайте много таких оповещений одновременно.", "Spinner displays activity only; it has no progress value, cancellation or completion event. Its default live region is an assertive alert, so avoid repeating it for many simultaneous items.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralSpinner" Rows="@Rows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section"><h2>Radzen + Admiral theme</h2>
+            <p>@T("Для задач с известным прогрессом у Radzen есть ProgressBar. Для неопределённой загрузки используйте AdmiralSpinner: тема не добавляет его SVG в компоненты Radzen.", "Radzen has a progress bar for determinate work. For an indeterminate Admiral spinner shape, use AdmiralSpinner; the theme does not create that SVG in Radzen controls.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><RadzenProgressBar Value="@progress" /><span role="status">@progress%</span></div>
+                <div class="admiral-component-controls"><label><span>@SmokeL["Value"]</span><input type="range" min="0" max="100" @bind="progress" /></label></div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen progress" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section"><h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground" data-testid="spinner-admiral-demo"><div class="admiral-component-playground__preview">
+                <AdmiralSpinner Size="@size" Inverse="@inverse" AriaLabel="@SmokeL["Loading"]" />
+                <span class="admiral-component-page__result" role="status">@size · @(inverse ? T("Инверсный", "Inverse") : T("Обычный", "Default"))</span>
+            </div><div class="admiral-component-controls">
+                <label><span>@SmokeL["Size"]</span><select @bind="size">@foreach (var option in Enum.GetValues<AdmiralSpinnerSize>()) { <option value="@option">@option</option> }</select></label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="inverse" /> Inverse</label>
+            </div></div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private AdmiralSpinnerSize size = AdmiralSpinnerSize.Medium;
+    private bool inverse;
+    private int progress = 45;
+    private const string AdmiralCode = """
+        <AdmiralSpinner Size="AdmiralSpinnerSize.Medium" AriaLabel="Loading data" />
+        """;
+    private const string DirectCode = """
+        <RadzenProgressBar Value="@progress" />
+        <span role="status">@progress%</span>
+        @code { private int progress = 45; }
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> Rows =
+    [
+        new("Size", "AdmiralSpinnerSize; Medium", "Small, MediumSmall, Medium, Large or Xl SVG geometry."),
+        new("Inverse", "bool; false", "Use the inverse palette on dark surfaces."),
+        new("AriaLabel", "string; Loading", "Accessible announcement for the loading indicator.")
+    ];
+}

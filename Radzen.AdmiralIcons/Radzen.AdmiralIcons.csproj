@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PackageId>Radzen.Admiral.Icons</PackageId>
+    <AssemblyName>Radzen.Admiral.Icons</AssemblyName>
+    <RootNamespace>Radzen.Admiral.Icons</RootNamespace>
+    <Title>Radzen Admiral Icons</Title>
+    <Description>Full Admiral DS SVG icon pack and lazy inline SVG adapter for Radzen Blazor components.</Description>
+    <IsPackable>true</IsPackable>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Version>1.0.3</Version>
+    <Authors>irlyk</Authors>
+    <Copyright>Copyright (c) 2026 irlyk</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/irlyk/admiral-radzen</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/irlyk/admiral-radzen.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="README.md" Pack="true" PackagePath="\" />
+    <Content Include="../THIRD_PARTY_NOTICES.md" Pack="true" PackagePath="THIRD_PARTY_NOTICES.md" />
+    <Content Include="../LICENSE" Pack="true" PackagePath="\" />
+    <Content Update="icons\**\*" Pack="false" />
+  </ItemGroup>
+
+  <Target Name="PrepareAdmiralIconStaticWebAssets"
+          BeforeTargets="ResolveStaticWebAssetsInputs;ProcessStaticWebAssets;Pack">
+    <ItemGroup>
+      <_AdmiralIconAsset Include="icons\**\*.svg" />
+      <_AdmiralIconStaticAsset Include="@(_AdmiralIconAsset)">
+        <Destination>$(MSBuildProjectDirectory)\wwwroot\admiral-icons\%(RecursiveDir)%(Filename)%(Extension)</Destination>
+      </_AdmiralIconStaticAsset>
+      <_AdmiralIconManifestLine Include="@(_AdmiralIconAsset->'%(RecursiveDir)%(Filename)')" />
+    </ItemGroup>
+
+    <RemoveDir Directories="$(MSBuildProjectDirectory)\wwwroot\admiral-icons" />
+    <MakeDir Directories="$(MSBuildProjectDirectory)\wwwroot\admiral-icons" />
+    <Copy SourceFiles="@(_AdmiralIconStaticAsset)"
+          DestinationFiles="@(_AdmiralIconStaticAsset->'%(Destination)')"
+          SkipUnchangedFiles="true" />
+    <WriteLinesToFile File="$(MSBuildProjectDirectory)\wwwroot\admiral-icons\icons.txt"
+                      Lines="@(_AdmiralIconManifestLine)"
+                      Overwrite="true"
+                      WriteOnlyWhenDifferent="true" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\icons\admiral-icons-source.json"
+          DestinationFolder="$(MSBuildProjectDirectory)\wwwroot\admiral-icons"
+          SkipUnchangedFiles="true" />
+  </Target>
+</Project>

@@ -1,0 +1,617 @@
+@page "/tables"
+@inject IStringLocalizer<SharedResource> L
+
+<PageTitle>@L["Admiral table gallery"]</PageTitle>
+
+<div class="admiral-gallery admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Table"
+        Description="Sizes, column behavior, states, actions, detail rows and pagination in one configurable AdmiralDataGrid."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-data-table-table--docs" />
+
+    <ComponentDocTabs @bind-Value="documentationTab" />
+    @if (documentationTab == ComponentDocTabs.Theme)
+    {
+        <TableThemePlayground />
+    }
+    else if (documentationTab == ComponentDocTabs.Api)
+    {
+        <TableUsageGuide />
+    }
+    else
+    {
+    <section class="admiral-gallery__section" aria-labelledby="table-playground-heading">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2" id="table-playground-heading">@SmokeL["Playground"]</AdmiralText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["The controls follow the Admiral Table hierarchy: geometry first, then content behavior, followed by interactive and advanced scenarios."]
+        </RadzenText>
+        <div class="admiral-component-playground admiral-table-playground">
+            <div class="admiral-component-playground__preview admiral-table-playground__preview">
+                <div class="admiral-table-gallery__scroll" data-testid="table-playground-scroll">
+                    <div class="admiral-table-playground__table">
+                        <AdmiralDataGrid TItem="TablePayment"
+                                         Data="@(playgroundEmpty ? Array.Empty<TablePayment>() : reorderPayments)" Columns="@playgroundGridColumns"
+                                         IsLoading="@playgroundLoading"
+                                         ToolbarActions="@(playgroundToolbarActions ? TableActions : [])"
+                                         ToolbarActionClicked="HandleToolbarAction"
+                                         RowActions="@(playgroundRowActions ? ReviewRowAction : [])"
+                                         RowActionClicked="OnPlaygroundRowAction"
+                                         ActionColumnWidth="9rem"
+                                         ShowToolbar="@playgroundToolbar"
+                                         Size="@playgroundSize" Pagination="@playgroundPagination"
+                                         PaginationSize="@playgroundPaginationSize"
+                                         PageSize="@playgroundPageSize" PageSizeOptions="@TablePageSizes"
+                                         GridLines="@playgroundGridLines"
+                                         GreyHeader="@playgroundGreyHeader" NoBorder="@playgroundNoBorder"
+                                         WrapHeaders="@playgroundWrapHeaders" WrapCells="@playgroundWrapCells"
+                                         AllowAlternatingRows="@playgroundZebra"
+                                         AllowSorting="@playgroundSorting" AllowFiltering="@playgroundFiltering"
+                                         AllowColumnResize="@playgroundResize" AllowColumnReorder="@playgroundColumnReorder"
+                                         ColumnReordered="OnInteractionColumnReordered"
+                                         AllowGrouping="@playgroundGrouping" Group="OnInteractionGroupChanged"
+                                         ShowExpandColumn="@playgroundDetails"
+                                         AllowRowSelectOnRowClick="@playgroundSelectionEnabled"
+                                         SelectionMode="DataGridSelectionMode.Multiple" @bind-Value="playgroundSelection"
+                                         AllowRowReorder="@playgroundRowReorder"
+                                         RowKey="@(payment => payment.Reference)" RowReordered="HandleRowReordered"
+                                         Template="@(playgroundDetails ? PlaygroundDetailTemplate : null)" />
+                    </div>
+                </div>
+                <span class="admiral-component-page__result" aria-live="polite">
+                    @TableActionMessage
+                    @if (playgroundSelectionEnabled)
+                    {
+                        <text>@L["Selected rows"]: @playgroundSelection.Count.</text>
+                    }
+                </span>
+            </div>
+            <div class="admiral-component-controls admiral-table-playground__controls">
+                <fieldset>
+                    <legend>@L["Geometry and pagination"]</legend>
+                    <label><span>@L["Size"]</span><select @bind="playgroundSize">@foreach (var item in Enum.GetValues<AdmiralDataGridSize>()) { <option value="@item">@item</option> }</select></label>
+                    <label><span>@L["Pagination"]</span><select @bind="playgroundPagination">@foreach (var item in Enum.GetValues<AdmiralDataGridPagination>()) { <option value="@item">@item</option> }</select></label>
+                    <label><span>@L["Pagination size"]</span><select @bind="playgroundPaginationSize">@foreach (var item in Enum.GetValues<AdmiralPaginationSize>()) { <option value="@item">@item</option> }</select></label>
+                    <label><span>@L["Grid lines"]</span><select @bind="playgroundGridLines">@foreach (var item in Enum.GetValues<DataGridGridLines>()) { <option value="@item">@item</option> }</select></label>
+                    <label><span>@L["Page size"]</span><select @bind="playgroundPageSize"><option>2</option><option>4</option><option>8</option></select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundGreyHeader" /> @L["Grey header"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundNoBorder" /> @L["No outer border"]</label>
+                </fieldset>
+                <fieldset>
+                    <legend>@L["Content and rows"]</legend>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundEmpty" /> @L["Empty data"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundLoading" /> @L["Loading"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundWrapHeaders" /> @L["Wrap headers"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundWrapCells" /> @L["Wrap cells"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundZebra" /> @L["Alternating rows"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundDetails" /> @L["Detail rows"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundSelectionEnabled" /> @L["Row selection"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundRowActions" /> @L["Row actions"]</label>
+                </fieldset>
+                <fieldset>
+                    <legend>@L["Interactions"]</legend>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundToolbar" /> @L["Toolbar"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundToolbarActions" /> @L["Toolbar actions"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundSorting" /> @L["Sorting"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundFiltering" /> @L["Filtering"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundResize" /> @L["Column resize"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundColumnReorder" /> @L["Column reorder"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundGrouping" /> @L["Grouping"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundRowReorder" /> @L["Row reorder"]</label>
+                </fieldset>
+            </div>
+        </div>
+    </section>
+
+    <CopyableRazorExample Code="@PlaygroundMarkup" Title="@PlaygroundCodeTitle" />
+    <section class="admiral-gallery__section" aria-labelledby="server-table-heading">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2" id="server-table-heading">LoadData / IsLoading</AdmiralText>
+        <AdmiralDataGrid TItem="TablePayment" Data="@serverRows" Count="@payments.Length"
+                         LoadData="LoadServerRows" IsLoading="@serverLoading"
+                         ShowToolbar="false" PageSize="4">
+            <ColumnContent>
+                <AdmiralDataGridColumn TItem="TablePayment" Property="Reference" Title="@L["Reference"]" Width="9rem" />
+                <AdmiralDataGridColumn TItem="TablePayment" Property="Beneficiary" Title="@L["Beneficiary"]" />
+                <AdmiralDataGridColumn TItem="TablePayment" Property="Amount" Title="@L["Amount"]" FormatString="{0:N2}" TextAlign="TextAlign.Right" />
+            </ColumnContent>
+        </AdmiralDataGrid>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="lazy-table-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="lazy-table-heading">@L["Async table inside Accordion"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["Open the item to reproduce first-load rendering. The Admiral edit icon must never appear as its text identifier."]
+        </RadzenText>
+        <RadzenAccordion>
+            <Items>
+                <RadzenAccordionItem Text="@L["Load payment table"]" SelectedChanged="LoadAccordionTable">
+                    @if (lazyLoading)
+                    {
+                        <div class="admiral-table-gallery__loading">
+                            <AdmiralSpinner AriaLabel="@L["Loading"]" />
+                            <span>@L["Loading table…"]</span>
+                        </div>
+                    }
+                    else if (lazyRows is not null)
+                    {
+                        <RadzenDataGrid Data="@lazyRows" TItem="TablePayment" AllowAlternatingRows="false"
+                                        GridLines="DataGridGridLines.Horizontal"
+                                        class="admiral-table--m admiral-table--grey-header">
+                            <Columns>
+                                <AdmiralDataGridColumn TItem="TablePayment" Property="Reference" Title="@L["Reference"]" Width="9rem" />
+                                <AdmiralDataGridColumn TItem="TablePayment" Property="Beneficiary" Title="@L["Beneficiary"]" />
+                                <AdmiralDataGridColumn TItem="TablePayment" Width="4rem" Sortable="false" TextAlign="TextAlign.Center">
+                                    <Template Context="payment">
+                                        <RadzenButton class="admiral-icon-button" Variant="Variant.Text" Size="ButtonSize.Small"
+                                                      Icon="admiral:system/edit-outline" aria-label="@($"{L["Edit"]}: {payment.Reference}")" />
+                                    </Template>
+                                </AdmiralDataGridColumn>
+                            </Columns>
+                        </RadzenDataGrid>
+                    }
+                    else
+                    {
+                        <RadzenText TextStyle="TextStyle.Body2">@L["The table will load after opening this item."]</RadzenText>
+                    }
+                </RadzenAccordionItem>
+            </Items>
+        </RadzenAccordion>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="table-s-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="table-s-heading">@L["Table S with PaginationTwo S"]</RadzenText>
+        <div class="admiral-table-gallery__frame">
+        <AdmiralGroupActionsPane Size="AdmiralGroupActionsPaneSize.Small" Actions="@TableActions"
+                                 @bind-SearchValue="TableSearchValue" @bind-Columns="tableColumns"
+                                 SearchPlaceholder="@L["Search table"]" SearchAriaLabel="@L["Search table"]"
+                                 OpenSearchAriaLabel="@L["Open search"]" CloseSearchAriaLabel="@L["Close search"]"
+                                 ConfigureColumnsAriaLabel="@L["Configure columns"]"
+                                 VisibleColumnsAriaLabel="@L["Visible columns"]" SettingsAriaLabel="@L["Table settings"]" />
+        <RadzenDataGrid Data="@FilteredPayments" TItem="TablePayment" AllowPaging="true" PageSize="3"
+                        AllowSorting="true" AllowAlternatingRows="false"
+                        PagerHorizontalAlign="HorizontalAlign.Center" GridLines="DataGridGridLines.Horizontal"
+                        class="admiral-table--s admiral-table--grey-header admiral-pagination-two--s">
+            <Columns>
+                <AdmiralDataGridColumn TItem="TablePayment" Property="Reference" Title="@L["Reference"]" Width="9rem" Visible="@IsColumnVisible("reference")" />
+                <AdmiralDataGridColumn TItem="TablePayment" Property="Beneficiary" Title="@L["Beneficiary"]" Visible="@IsColumnVisible("beneficiary")" />
+                <AdmiralDataGridColumn TItem="TablePayment" Property="Amount" Title="@L["Amount"]" FormatString="{0:N2}" TextAlign="TextAlign.Right" Width="9rem" Visible="@IsColumnVisible("amount")" />
+                <AdmiralDataGridColumn TItem="TablePayment" Width="3.5rem" Sortable="false" TextAlign="TextAlign.Center">
+                    <Template Context="payment">
+                        <RadzenButton class="admiral-icon-button" Variant="Variant.Text" Size="ButtonSize.ExtraSmall"
+                                      Icon="admiral:system/edit-outline" aria-label="@($"{L["Edit"]}: {payment.Reference}")" />
+                    </Template>
+                </AdmiralDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+        </div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="table-m-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="table-m-heading">@L["AdmiralDataGrid unified API"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">@L["Toolbar, search, column picker, filters, localization, pagination and executable row actions are configured by one component."]</RadzenText>
+        <div class="admiral-table-gallery__frame">
+            <AdmiralDataGrid TItem="TablePayment"
+                             Data="@payments" Columns="@easyGridColumns"
+                             ToolbarActions="@TableActions" ToolbarActionClicked="HandleToolbarAction"
+                             AllowFiltering="true" AllowColumnResize="true" AllowColumnReorder="true"
+                             Pagination="AdmiralDataGridPagination.PaginationTwo" PageSize="4"
+                             GridLines="DataGridGridLines.Both" GreyHeader="true">
+                <Actions>
+                    <AdmiralDataGridRowAction TItem="TablePayment"
+                                              Icon="admiral:documents/copy-outline"
+                                              AriaLabelFor="@(payment => $"{L["Copy"]}: {payment.Reference}")"
+                                              Click="CopyPayment" />
+                    <AdmiralDataGridRowAction TItem="TablePayment"
+                                              Icon="admiral:system/edit-outline"
+                                              AriaLabelFor="@(payment => $"{L["Edit"]}: {payment.Reference}")"
+                                              Click="EditPayment" />
+                </Actions>
+            </AdmiralDataGrid>
+        </div>
+        <div class="admiral-table-gallery__interaction-status" role="status" aria-live="polite">@TableActionMessage</div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="table-interactions-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="table-interactions-heading">@L["Table filters, column reorder and grouping"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["Use the header filter buttons, drag headers to reorder them, or drop a header into the group panel."]
+        </RadzenText>
+        <div class="admiral-table-gallery__scroll">
+            <div class="admiral-table-gallery__frame admiral-table-gallery__frame--interactive">
+                <RadzenDataGrid Data="@payments" TItem="TablePayment"
+                                AllowFiltering="true" FilterMode="FilterMode.Advanced"
+                                FilterPopupRenderMode="PopupRenderMode.OnDemand"
+                                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                LogicalFilterOperator="LogicalFilterOperator.Or"
+                                AllowColumnReorder="true" ColumnReordered="OnInteractionColumnReordered"
+                                AllowGrouping="true" Group="OnInteractionGroupChanged"
+                                AllowColumnResize="true" AllowSorting="true"
+                                AllowPaging="true" PageSize="6" PagerHorizontalAlign="HorizontalAlign.Center"
+                                GroupPanelText="@L["Drag a column header here to group"]"
+                                FilterText="@L["Filter"]" ApplyFilterText="@L["Apply"]" ClearFilterText="@L["Clear"]"
+                                AndOperatorText="@L["And"]" OrOperatorText="@L["Or"]"
+                                GridLines="DataGridGridLines.Both" AllowAlternatingRows="false"
+                                class="admiral-table--m admiral-table--grey-header admiral-table--wrap-header">
+                    <Columns>
+                        <AdmiralDataGridColumn TItem="TablePayment" Property="Reference" Title="@L["Reference"]" Width="10rem" />
+                        <AdmiralDataGridColumn TItem="TablePayment" Property="Beneficiary" Title="@L["Beneficiary"]" Width="17rem" />
+                        <AdmiralDataGridColumn TItem="TablePayment" Property="Amount" Title="@L["Amount"]" FormatString="{0:N2}" Width="10rem" TextAlign="TextAlign.Right" />
+                        <AdmiralDataGridColumn TItem="TablePayment" Property="Status" Title="@L["Status"]" Width="10rem">
+                            <Template Context="payment"><RadzenBadge Text="@L[payment.Status]" BadgeStyle="@StatusStyle(payment.Status)" /></Template>
+                        </AdmiralDataGridColumn>
+                        <AdmiralDataGridColumn TItem="TablePayment" Property="Purpose" Title="@L["Purpose"]" Width="22rem" />
+                    </Columns>
+                </RadzenDataGrid>
+            </div>
+        </div>
+        <div class="admiral-table-gallery__interaction-status" role="status" aria-live="polite">
+            @L[tableInteractionMessage]
+        </div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="table-markup-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="table-markup-heading">@L["Markup columns and nested template"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["Columns can use regular Radzen markup, cell and header templates. Expand a row to inspect its nested content."]
+        </RadzenText>
+        <div class="admiral-table-gallery__frame">
+            <AdmiralDataGrid TItem="TablePayment" Data="@payments.Take(4)"
+                             ShowToolbar="false" Pagination="AdmiralDataGridPagination.None"
+                             ShowExpandColumn="true" GridLines="DataGridGridLines.Horizontal">
+                <ColumnContent>
+                    <AdmiralDataGridColumn TItem="TablePayment" Property="Reference" Width="12rem">
+                        <HeaderTemplate><strong>@L["Payment reference"]</strong></HeaderTemplate>
+                    </AdmiralDataGridColumn>
+                    <AdmiralDataGridColumn TItem="TablePayment" Property="Beneficiary" Title="@L["Beneficiary"]" />
+                    <AdmiralDataGridColumn TItem="TablePayment" Property="Status" Title="@L["Status"]" Width="10rem">
+                        <Template Context="payment">
+                            <RadzenBadge Text="@L[payment.Status]" BadgeStyle="@StatusStyle(payment.Status)" />
+                        </Template>
+                    </AdmiralDataGridColumn>
+                </ColumnContent>
+                <Template Context="payment">
+                    <div class="admiral-table-gallery__details">
+                        <strong>@payment.Reference · @payment.Beneficiary</strong>
+                        <span>@payment.Purpose</span>
+                    </div>
+                </Template>
+            </AdmiralDataGrid>
+        </div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="table-row-reorder-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="table-row-reorder-heading">@L["Row drag and drop"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["Drag the six-dot handle. RowReordered reports the final position and the application updates its controlled list."]
+        </RadzenText>
+        <div class="admiral-table-gallery__frame">
+            <AdmiralDataGrid TItem="TablePayment" Data="@reorderPayments" Columns="@easyGridColumns"
+                             ShowToolbar="false" Pagination="AdmiralDataGridPagination.None"
+                             AllowSorting="false" AllowRowReorder="true"
+                             RowKey="@(payment => payment.Reference)"
+                             RowReordered="HandleRowReordered"
+                             RowReorderAriaLabel="@L["Move row"]"
+                             GridLines="DataGridGridLines.Horizontal" />
+        </div>
+        <div class="admiral-table-gallery__interaction-status" role="status" aria-live="polite">@rowReorderMessage</div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="table-l-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="table-l-heading">@L["Table L with PaginationOne and wrapping"]</RadzenText>
+        <p>@L["PaginationOne is the full variant: it shows page-size and page selectors, the item range, and previous/next buttons."]</p>
+        <div class="admiral-table-gallery__scroll">
+            <div class="admiral-table-gallery__frame admiral-table-gallery__frame--wide">
+                <AdmiralDataGrid TItem="TablePayment"
+                                 Data="@payments" Columns="@largeGridColumns" RowActions="@ReviewRowAction"
+                                 ToolbarActions="@TableActions" ToolbarActionClicked="HandleToolbarAction"
+                                 AllowFiltering="true"
+                                 Pagination="AdmiralDataGridPagination.PaginationOne"
+                                 PageSize="2" PageSizeOptions="@TablePageSizes"
+                                 Size="AdmiralDataGridSize.Large" GridLines="DataGridGridLines.Vertical"
+                                 GreyHeader="true" WrapHeaders="true" WrapCells="true"
+                                 ActionColumnWidth="8rem" />
+            </div>
+        </div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="table-xl-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="table-xl-heading">@L["Table XL with compact pagination"]</RadzenText>
+        <p>@L["PaginationOneSimple is the compact variant: it shows the item range and previous/next buttons without page-size or page selectors. The standalone AdmiralPaginationOne example below uses Simple=true."]</p>
+        <RadzenText TextStyle="TextStyle.Body2">@L["Plain header, no outer border and no internal grid lines."]</RadzenText>
+        <div class="admiral-table-gallery__frame admiral-table-gallery__frame--responsive-test">
+        <AdmiralGroupActionsPane Size="AdmiralGroupActionsPaneSize.ExtraLarge" Actions="@TableActions"
+                                 @bind-SearchValue="TableSearchValue" @bind-Columns="tableColumns"
+                                 SearchPlaceholder="@L["Search table"]" SearchAriaLabel="@L["Search table"]"
+                                 OpenSearchAriaLabel="@L["Open search"]" CloseSearchAriaLabel="@L["Close search"]"
+                                 ConfigureColumnsAriaLabel="@L["Configure columns"]"
+                                 VisibleColumnsAriaLabel="@L["Visible columns"]" SettingsAriaLabel="@L["Table settings"]" />
+        <RadzenDataGrid Data="@CompactRows" TItem="TablePayment" AllowAlternatingRows="false"
+                        GridLines="DataGridGridLines.None"
+                        class="admiral-table--xl admiral-table--no-border admiral-table--wrap-cells">
+            <Columns>
+                <AdmiralDataGridColumn TItem="TablePayment" Property="Reference" Title="@L["Reference"]" Width="9rem" Visible="@IsColumnVisible("reference")" />
+                <AdmiralDataGridColumn TItem="TablePayment" Property="Beneficiary" Title="@L["Beneficiary"]" Visible="@IsColumnVisible("beneficiary")" />
+                <AdmiralDataGridColumn TItem="TablePayment" Property="Purpose" Title="@L["Purpose"]" Width="19rem" Visible="@IsColumnVisible("purpose")" />
+                <AdmiralDataGridColumn TItem="TablePayment" Width="9rem" MinWidth="9rem" Sortable="false">
+                    <Template Context="payment">
+                        <RadzenButton class="admiral-button admiral-button--secondary" Variant="Variant.Outlined"
+                                      Size="ButtonSize.Small" Text="@L["Open"]" />
+                    </Template>
+                </AdmiralDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+        </div>
+        <RadzenStack Gap="1rem">
+            <AdmiralPaginationOne @bind-Page="compactPage" PageSize="2" TotalItems="@FilteredPayments.Count"
+                                  Simple="true" Size="AdmiralPaginationSize.Small"
+                                  ItemRangeFormat="@L["{0}–{1} of {2} items"]"
+                                  PreviousPageAriaLabel="@L["Previous page"]" NextPageAriaLabel="@L["Next page"]"
+                                  AriaLabel="@L["Compact PaginationOne"]" />
+            <AdmiralPaginationSimple Count="@CompactPageCount" @bind-CurrentIndex="CompactPageIndex"
+                                     AriaLabel="@L["PaginationSimple sections"]"
+                                     ItemAriaLabelFormat="@L["Section {0}"]" />
+        </RadzenStack>
+    </section>
+    }
+</div>
+
+@code {
+    private string PlaygroundCodeTitle => $"Razor · {L["Current playground configuration"]}";
+    private string documentationTab = ComponentDocTabs.Admiral;
+    private bool playgroundEmpty, playgroundLoading;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private string PlaygroundMarkup => $$"""
+        @using Radzen
+        @using Radzen.Admiral.Components
+        @using Radzen.Admiral.Components.Models
+
+        <AdmiralDataGrid TItem="Payment" Data="@payments"
+            Size="AdmiralDataGridSize.{{playgroundSize}}"
+            Pagination="AdmiralDataGridPagination.{{playgroundPagination}}"
+            PaginationSize="AdmiralPaginationSize.{{playgroundPaginationSize}}"
+            PageSize="{{playgroundPageSize}}" GridLines="DataGridGridLines.{{playgroundGridLines}}"
+            GreyHeader="{{playgroundGreyHeader.ToString().ToLowerInvariant()}}" NoBorder="{{playgroundNoBorder.ToString().ToLowerInvariant()}}"
+            WrapHeaders="{{playgroundWrapHeaders.ToString().ToLowerInvariant()}}" WrapCells="{{playgroundWrapCells.ToString().ToLowerInvariant()}}"
+            AllowAlternatingRows="{{playgroundZebra.ToString().ToLowerInvariant()}}" AllowSorting="{{playgroundSorting.ToString().ToLowerInvariant()}}"
+            AllowFiltering="{{playgroundFiltering.ToString().ToLowerInvariant()}}" AllowColumnResize="{{playgroundResize.ToString().ToLowerInvariant()}}"
+            AllowColumnReorder="{{playgroundColumnReorder.ToString().ToLowerInvariant()}}" AllowGrouping="{{playgroundGrouping.ToString().ToLowerInvariant()}}"
+            ShowToolbar="{{playgroundToolbar.ToString().ToLowerInvariant()}}" IsLoading="{{playgroundLoading.ToString().ToLowerInvariant()}}">
+            <ColumnContent>
+                <AdmiralDataGridColumn TItem="Payment" Property="Reference" Title="{{T("Номер", "Number")}}" />
+                <AdmiralDataGridColumn TItem="Payment" Property="Beneficiary" Title="{{T("Получатель", "Beneficiary")}}" />
+                <AdmiralDataGridColumn TItem="Payment" Property="Amount" Title="{{T("Сумма", "Amount")}}" FormatString="{0:N2}" />
+            </ColumnContent>
+        </AdmiralDataGrid>
+        @code {
+            private record Payment(string Reference, string Beneficiary, decimal Amount);
+            private Payment[] payments = [new("ADM-1042", "Northern Star", 1200m)];
+        }
+        """;
+    private static readonly int[] TablePageSizes = [2, 4, 8];
+    private IReadOnlyList<TablePayment>? lazyRows;
+    private IReadOnlyList<TablePayment> serverRows = [];
+    private bool serverLoading;
+    private IReadOnlyList<AdmiralPaneColumn> tableColumns = [];
+    private IReadOnlyList<AdmiralDataGridColumnDefinition<TablePayment>> easyGridColumns = [];
+    private IReadOnlyList<AdmiralDataGridColumnDefinition<TablePayment>> largeGridColumns = [];
+    private IReadOnlyList<AdmiralDataGridColumnDefinition<TablePayment>> playgroundGridColumns = [];
+    private List<TablePayment> reorderPayments = [];
+    private IList<TablePayment> playgroundSelection = [];
+    private AdmiralDataGridSize playgroundSize = AdmiralDataGridSize.Medium;
+    private AdmiralDataGridPagination playgroundPagination = AdmiralDataGridPagination.PaginationTwo;
+    private AdmiralPaginationSize playgroundPaginationSize = AdmiralPaginationSize.Medium;
+    private DataGridGridLines playgroundGridLines = DataGridGridLines.Horizontal;
+    private int playgroundPageSize = 4;
+    private bool playgroundToolbar = true;
+    private bool playgroundToolbarActions = true;
+    private bool playgroundRowActions = true;
+    private bool playgroundGreyHeader;
+    private bool playgroundNoBorder;
+    private bool playgroundWrapHeaders = true;
+    private bool playgroundWrapCells = true;
+    private bool playgroundZebra;
+    private bool playgroundSorting = true;
+    private bool playgroundFiltering;
+    private bool playgroundResize;
+    private bool playgroundColumnReorder;
+    private bool playgroundGrouping;
+    private bool playgroundDetails;
+    private RenderFragment<TablePayment> PlaygroundDetailTemplate => payment => @<div class="admiral-table-gallery__details">
+        <strong>@payment.Reference · @payment.Beneficiary</strong>
+        <span>@payment.Purpose</span>
+    </div>;
+    private bool playgroundSelectionEnabled;
+    private bool playgroundRowReorder;
+    private string tableSearchValue = string.Empty;
+    private bool lazyLoading;
+    private int compactPage = 1;
+    private string tableInteractionMessage = "Drag and filter actions will be reported here.";
+    private string tableLambdaMessage = string.Empty;
+    private string tableCallbackMessage = string.Empty;
+    private string rowReorderMessage = string.Empty;
+    private string TableActionMessage => string.Join(' ', new[] { tableLambdaMessage, tableCallbackMessage }
+        .Where(value => !string.IsNullOrWhiteSpace(value)));
+
+    private readonly TablePayment[] payments =
+    [
+        new("ADM-1042", "Northern Star LLC", 128_400m, "Completed", "Equipment supply under contract NS-42 with delivery to the northern regional office."),
+        new("ADM-1043", "Vector Laboratory and Research Center", 2_850m, "Pending", "Software license renewal and extended technical support for twelve months."),
+        new("ADM-1044", "Oceanic Trade", 46_100m, "Rejected", "International logistics services for the September shipment."),
+        new("ADM-1045", "Aurora Systems", 780_000m, "Completed", "Advance payment for infrastructure modernization and installation services."),
+        new("ADM-1046", "Atlas Retail Distribution Network", 93_200m, "Pending", "Payment for goods supplied to three regional distribution centers."),
+        new("ADM-1047", "Northwind GmbH", 18_750m, "Completed", "Consulting services and preparation of compliance documentation."),
+        new("ADM-1048", "Pacific Studio", 6_400m, "Rejected", "Design services for the updated customer portal and mobile application."),
+        new("ADM-1049", "Volga Logistics", 215_000m, "Completed", "Freight transportation and warehouse handling for August."),
+        new("ADM-1050", "Meridian Finance", 54_600m, "Pending", "Settlement under the agency agreement and associated service fees."),
+        new("ADM-1051", "Siberian Energy Projects", 410_000m, "Completed", "Engineering survey and project documentation milestone payment."),
+        new("ADM-1052", "Baltic Components", 31_250m, "Pending", "Electronic components supplied under purchase order BC-771."),
+        new("ADM-1053", "Central Office Services", 12_900m, "Completed", "Office maintenance and facility management services.")
+    ];
+
+    private IReadOnlyList<TablePayment> FilteredPayments => string.IsNullOrWhiteSpace(tableSearchValue)
+        ? payments
+        : payments.Where(payment =>
+                payment.Reference.Contains(tableSearchValue, StringComparison.OrdinalIgnoreCase) ||
+                payment.Beneficiary.Contains(tableSearchValue, StringComparison.OrdinalIgnoreCase) ||
+                payment.Purpose.Contains(tableSearchValue, StringComparison.OrdinalIgnoreCase) ||
+                L[payment.Status].Value.Contains(tableSearchValue, StringComparison.OrdinalIgnoreCase))
+            .ToArray();
+
+    private string TableSearchValue
+    {
+        get => tableSearchValue;
+        set
+        {
+            tableSearchValue = value;
+            compactPage = 1;
+        }
+    }
+
+    private IReadOnlyList<AdmiralActionItem> TableActions =>
+    [
+        new("approve", L["Approve"], "admiral:service/check-outline"),
+        new("export", L["Export"], "admiral:system/download-outline"),
+        new("reject", L["Reject"], "admiral:system/delete-outline", Disabled: true),
+        new("archive", L["Archive"], "admiral:documents/folder-outline", DividerBefore: true)
+    ];
+
+    private IReadOnlyList<AdmiralDataGridAction<TablePayment>> ReviewRowAction =>
+    [
+        new("review", "admiral:system/edit-outline")
+        {
+            Text = L["Review"],
+            Execute = payment => ReportRowAction(L["Review"], payment)
+        }
+    ];
+
+    private IEnumerable<TablePayment> CompactRows => FilteredPayments
+        .Skip((compactPage - 1) * 2)
+        .Take(2);
+
+    private int CompactPageCount => (int)Math.Ceiling(FilteredPayments.Count / 2d);
+    private int CompactPageIndex
+    {
+        get => compactPage - 1;
+        set => compactPage = value + 1;
+    }
+
+    private async Task LoadAccordionTable(bool selected)
+    {
+        if (!selected || lazyRows is not null || lazyLoading)
+        {
+            return;
+        }
+
+        lazyLoading = true;
+        await Task.Delay(650);
+        lazyRows = payments.Take(3).ToArray();
+        lazyLoading = false;
+    }
+
+    private async Task LoadServerRows(LoadDataArgs args)
+    {
+        serverLoading = true;
+        await InvokeAsync(StateHasChanged);
+        await Task.Delay(120);
+        serverRows = payments.Skip(args.Skip ?? 0).Take(args.Top ?? 4).ToArray();
+        serverLoading = false;
+    }
+
+    protected override void OnInitialized()
+    {
+        tableColumns =
+        [
+            new("reference", L["Reference"]),
+            new("beneficiary", L["Beneficiary"]),
+            new("amount", L["Amount"]),
+            new("status", L["Status"]),
+            new("purpose", L["Purpose"])
+        ];
+        easyGridColumns =
+        [
+            new("reference", nameof(TablePayment.Reference), L["Reference"]) { Width = "9rem" },
+            new("beneficiary", nameof(TablePayment.Beneficiary), L["Beneficiary"]),
+            new("amount", nameof(TablePayment.Amount), L["Amount"])
+            {
+                Width = "9rem",
+                FormatString = "{0:N2}",
+                TextAlign = TextAlign.Right
+            },
+            new("status", nameof(TablePayment.Status), L["Status"]) { Width = "9rem" }
+        ];
+        largeGridColumns =
+        [
+            new("reference", nameof(TablePayment.Reference), L["Payment reference and creation channel"]) { Width = "9rem" },
+            new("beneficiary", nameof(TablePayment.Beneficiary), L["Beneficiary and payment destination"]) { Width = "13rem" },
+            new("purpose", nameof(TablePayment.Purpose), L["Long payment purpose that can wrap onto multiple lines"]) { Width = "17rem" }
+        ];
+        playgroundGridColumns =
+        [
+            new("reference", nameof(TablePayment.Reference), L["Reference"]) { Width = "8rem" },
+            new("beneficiary", nameof(TablePayment.Beneficiary), L["Beneficiary"]) { Width = "12rem" },
+            new("amount", nameof(TablePayment.Amount), L["Amount"]) { Width = "7rem", FormatString = "{0:N2}", TextAlign = TextAlign.Right },
+            new("status", nameof(TablePayment.Status), L["Status"]) { Width = "7rem" },
+            new("purpose", nameof(TablePayment.Purpose), L["Purpose"]) { Width = "8rem" }
+        ];
+        reorderPayments = payments.Take(5).ToList();
+    }
+
+    private void ReportRowAction(string action, TablePayment payment)
+    {
+        tableLambdaMessage = $"action: {action} · {payment.Reference};";
+    }
+
+    private void OnPlaygroundRowAction(AdmiralDataGridActionEventArgs<TablePayment> args) =>
+        tableCallbackMessage = $"event: {args.ActionId} · {args.Item.Reference};";
+
+    private void CopyPayment(TablePayment payment) => ReportRowAction(L["Copy"], payment);
+
+    private void EditPayment(TablePayment payment) => ReportRowAction(L["Edit"], payment);
+
+    private void HandleToolbarAction(AdmiralActionItem action) =>
+        tableCallbackMessage = $"toolbar: {action.Id}";
+
+    private bool IsColumnVisible(string id) => tableColumns.FirstOrDefault(column => column.Id == id)?.Visible ?? true;
+
+    private static BadgeStyle StatusStyle(string status) => status switch
+    {
+        "Completed" => BadgeStyle.Success,
+        "Pending" => BadgeStyle.Warning,
+        _ => BadgeStyle.Danger
+    };
+
+    private void OnInteractionColumnReordered(DataGridColumnReorderedEventArgs<TablePayment> args)
+    {
+        tableInteractionMessage = string.Format(
+            L["Column {0} moved from position {1} to {2}."],
+            args.Column?.Title ?? string.Empty,
+            args.OldIndex + 1,
+            args.NewIndex + 1);
+    }
+
+    private void OnInteractionGroupChanged(DataGridColumnGroupEventArgs<TablePayment> args)
+    {
+        tableInteractionMessage = args.GroupDescriptor is null
+            ? string.Format(L["Grouping by {0} was removed."], args.Column?.Title ?? string.Empty)
+            : string.Format(L["Table grouped by {0}."], args.Column?.Title ?? string.Empty);
+    }
+
+    private void HandleRowReordered(AdmiralDataGridRowReorderEventArgs<TablePayment> args)
+    {
+        var currentIndex = reorderPayments.FindIndex(payment => payment.Reference == args.RowKey);
+        if (currentIndex < 0)
+        {
+            return;
+        }
+
+        var payment = reorderPayments[currentIndex];
+        reorderPayments.RemoveAt(currentIndex);
+        reorderPayments.Insert(Math.Clamp(args.NewIndex, 0, reorderPayments.Count), payment);
+        reorderPayments = [.. reorderPayments];
+        rowReorderMessage = string.Format(
+            L["Row {0} moved from position {1} to {2}."],
+            args.Item.Reference,
+            args.OldIndex + 1,
+            args.NewIndex + 1);
+    }
+
+    private sealed record TablePayment(string Reference, string Beneficiary, decimal Amount, string Status, string Purpose);
+}

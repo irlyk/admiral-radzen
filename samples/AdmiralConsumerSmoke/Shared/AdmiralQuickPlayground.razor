@@ -1,0 +1,53 @@
+<section class="admiral-component-page__section" aria-label="@SmokeL["Playground"]">
+    <h2>@SmokeL["Playground"]</h2>
+    <div class="admiral-component-playground">
+        <div class="admiral-component-playground__preview">
+            @switch (Component)
+            {
+                case "Badge": <AdmiralBadge Text="@text" Appearance="@badgeAppearance" Dimension="@badgeDimension" /> break;
+                case "ButtonGroups": <AdmiralButtonGroup Dimension="@buttonDimension"><AdmiralButton Text="@SmokeL["Первое"]" /><AdmiralButton Text="@SmokeL["Второе"]" /></AdmiralButtonGroup> break;
+                case "Chips": <AdmiralChip Text="@text" Appearance="@chipAppearance" Dimension="@chipDimension" @bind-Selected="selected" Disabled="@disabled" IconStart="admiral:system/star-solid" /> break;
+                case "IconButton": <AdmiralIconButton Icon="admiral:system/star-solid" AriaLabel="@SmokeL["Действие"]" Dimension="@buttonDimension" Appearance="@iconAppearance" Disabled="@disabled" Loading="@loading" /> break;
+                case "Link": <AdmiralLink Path="#playground" Text="@text" Appearance="@linkAppearance" Dimension="@linkDimension" Disabled="@disabled" IconEnd="admiral:system/arrow-right-outline" /> break;
+                case "Lists": <AdmiralOrderedList Dimension="@listDimension" StyleType="@listStyle"><AdmiralListItem>@text</AdmiralListItem><AdmiralListItem>@SmokeL["Второй пункт"]</AdmiralListItem></AdmiralOrderedList> break;
+                case "Pills": <AdmiralPill Text="@text" Appearance="@pillAppearance" IconStart="admiral:system/info-outline" Click="@(() => clicks++)" /> break;
+                case "ScrollContainer": <AdmiralScrollContainer Height="@($"{height}rem")" Horizontal="@horizontal"><div style="width: @(horizontal ? "60rem" : "auto")">@foreach (var i in Enumerable.Range(1, 12)) { <p>Строка @i для проверки прокрутки</p> }</div></AdmiralScrollContainer> break;
+                case "Skeleton": <span class="admiral-component-row"><AdmiralPseudoIcon Dimension="@buttonDimension" /><AdmiralPseudoText /></span> break;
+                case "Stepper": <AdmiralStepper @bind-ActiveStep="step" Orientation="@stepperOrientation"><AdmiralStep>@SmokeL["Данные"]</AdmiralStep><AdmiralStep>@SmokeL["Проверка"]</AdmiralStep><AdmiralStep>@SmokeL["Готово"]</AdmiralStep></AdmiralStepper> break;
+                case "TextButton": <AdmiralTextButton Text="@text" Dimension="@textButtonDimension" Appearance="@textButtonAppearance" IconStart="admiral:system/star-solid" Disabled="@disabled" Loading="@loading" /> break;
+                case "Tooltip": <AdmiralTooltip Text="@text" Position="@tooltipPosition" Dimension="@tooltipDimension" Delay="100"><AdmiralButton Text="@SmokeL["Наведи или сфокусируй"]" /></AdmiralTooltip> break;
+                case "Typography": <AdmiralText Typography="@typography" Tag="AdmiralTextTag.Paragraph" Skeleton="@skeleton">@text</AdmiralText> break;
+            }
+            @if (Component == "Pills") { <span role="status">@SmokeL["Нажатий:"] @clicks</span> }
+        </div>
+        <div class="admiral-component-controls">
+            @if (Component is not "Stepper" and not "Skeleton" and not "ScrollContainer") { <label><span>@SmokeL["Text"]</span><input @bind="text" /></label> }
+            @if (Component == "Badge") { <label><span>@SmokeL["Appearance"]</span><select @bind="badgeAppearance">@EnumOptions(typeof(AdmiralBadgeAppearance))</select></label><label><span>@SmokeL["Dimension"]</span><select @bind="badgeDimension">@EnumOptions(typeof(AdmiralBadgeDimension))</select></label> }
+            @if (Component is "ButtonGroups" or "IconButton" or "Skeleton") { <label><span>@SmokeL["Dimension"]</span><select @bind="buttonDimension">@EnumOptions(typeof(AdmiralButtonDimension))</select></label> }
+            @if (Component == "Chips") { <label><span>@SmokeL["Appearance"]</span><select @bind="chipAppearance">@EnumOptions(typeof(AdmiralChipAppearance))</select></label><label><span>@SmokeL["Dimension"]</span><select @bind="chipDimension">@EnumOptions(typeof(AdmiralChipDimension))</select></label><label class="admiral-component-controls__check"><input type="checkbox" @bind="selected" /> @SmokeL["Selected"]</label> }
+            @if (Component == "IconButton") { <label><span>@SmokeL["Appearance"]</span><select @bind="iconAppearance">@EnumOptions(typeof(AdmiralIconButtonAppearance))</select></label> }
+            @if (Component == "Link") { <label><span>@SmokeL["Appearance"]</span><select @bind="linkAppearance">@EnumOptions(typeof(AdmiralLinkAppearance))</select></label><label><span>@SmokeL["Dimension"]</span><select @bind="linkDimension">@EnumOptions(typeof(AdmiralLinkDimension))</select></label> }
+            @if (Component == "Lists") { <label><span>@SmokeL["Marker"]</span><select @bind="listStyle">@EnumOptions(typeof(AdmiralOrderedListStyle))</select></label><label><span>@SmokeL["Dimension"]</span><select @bind="listDimension">@EnumOptions(typeof(AdmiralListDimension))</select></label> }
+            @if (Component == "Pills") { <label><span>@SmokeL["Appearance"]</span><select @bind="pillAppearance">@EnumOptions(typeof(AdmiralPillAppearance))</select></label> }
+            @if (Component == "ScrollContainer") { <label><span>@SmokeL["Height, rem"]</span><input type="number" min="5" max="20" @bind="height" /></label><label class="admiral-component-controls__check"><input type="checkbox" @bind="horizontal" /> @SmokeL["Horizontal"]</label> }
+            @if (Component == "Stepper") { <label><span>@SmokeL["Orientation"]</span><select @bind="stepperOrientation">@EnumOptions(typeof(AdmiralStepperOrientation))</select></label><label><span>ActiveStep</span><input type="number" min="0" max="2" @bind="step" /></label> }
+            @if (Component == "TextButton") { <label><span>@SmokeL["Appearance"]</span><select @bind="textButtonAppearance">@EnumOptions(typeof(AdmiralTextButtonAppearance))</select></label><label><span>@SmokeL["Dimension"]</span><select @bind="textButtonDimension">@EnumOptions(typeof(AdmiralTextButtonDimension))</select></label> }
+            @if (Component == "Tooltip") { <label><span>@SmokeL["Position"]</span><select @bind="tooltipPosition">@EnumOptions(typeof(AdmiralTooltipPosition))</select></label><label><span>@SmokeL["Dimension"]</span><select @bind="tooltipDimension">@EnumOptions(typeof(AdmiralTooltipDimension))</select></label> }
+            @if (Component == "Typography") { <label><span>Typography</span><select @bind="typography">@EnumOptions(typeof(AdmiralTypography))</select></label><label class="admiral-component-controls__check"><input type="checkbox" @bind="skeleton" /> Skeleton</label> }
+            @if (Component is "Chips" or "IconButton" or "Link" or "TextButton") { <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> @SmokeL["Disabled"]</label> }
+            @if (Component is "IconButton" or "TextButton") { <label class="admiral-component-controls__check"><input type="checkbox" @bind="loading" /> @SmokeL["Loading"]</label> }
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter, EditorRequired] public string Component { get; set; } = string.Empty;
+    private string text = "Пример"; private bool? selected; private bool disabled, loading, horizontal, skeleton; private int height = 10, step, clicks;
+    private AdmiralBadgeAppearance badgeAppearance = AdmiralBadgeAppearance.Info; private AdmiralBadgeDimension badgeDimension;
+    private AdmiralButtonDimension buttonDimension = AdmiralButtonDimension.M; private AdmiralChipAppearance chipAppearance; private AdmiralChipDimension chipDimension;
+    private AdmiralIconButtonAppearance iconAppearance = AdmiralIconButtonAppearance.Secondary; private AdmiralLinkAppearance linkAppearance; private AdmiralLinkDimension linkDimension;
+    private AdmiralOrderedListStyle listStyle; private AdmiralListDimension listDimension; private AdmiralPillAppearance pillAppearance = AdmiralPillAppearance.Success;
+    private AdmiralStepperOrientation stepperOrientation; private AdmiralTextButtonAppearance textButtonAppearance; private AdmiralTextButtonDimension textButtonDimension = AdmiralTextButtonDimension.M;
+    private AdmiralTooltipPosition tooltipPosition; private AdmiralTooltipDimension tooltipDimension; private AdmiralTypography typography = AdmiralTypography.Body1Long;
+    private static RenderFragment EnumOptions(Type type) => builder => { var seq = 0; foreach (var value in Enum.GetValues(type)) { builder.OpenElement(seq++, "option"); builder.AddAttribute(seq++, "value", value); builder.AddContent(seq++, value); builder.CloseElement(); } };
+}

@@ -1,0 +1,26 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_26" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Togo" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_26)">
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="0.000000" y="4.000000" fill="rgb(255,212,77)" />
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="0.000000" y="4.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 537" d="M28 4L28 8L12 8L12 4L28 4ZM28 12L28 16L12 16L12 12L28 12ZM28 24L28 20L0 20L0 24L28 24Z" fill="rgb(21,154,116)" fill-rule="evenodd" />
+		<path id="Rectangle 537" d="M28 4L28 8L12 8L12 4L28 4ZM28 12L28 16L12 16L12 12L28 12ZM28 24L28 20L0 20L0 24L28 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<rect id="Rectangle 1568" width="12.000000" height="12.000000" x="0.000000" y="4.000000" fill="rgb(237,31,69)" />
+		<rect id="Rectangle 1568" width="12.000000" height="12.000000" x="0.000000" y="4.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Star 8" d="M6 11.56L3.64886 13.2361L4.51635 10.4821L2.19577 8.76393L5.08306 8.73793L6 6L6.91694 8.73793L9.80423 8.76393L7.48365 10.4821L8.35114 13.2361L6 11.56Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Star 8" d="M3.64886 13.2361L4.51635 10.4821L2.19577 8.76393L5.08306 8.73793L6 6L6.91694 8.73793L9.80423 8.76393L7.48365 10.4821L8.35114 13.2361L6 11.56L3.64886 13.2361Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	</g>
+</svg>

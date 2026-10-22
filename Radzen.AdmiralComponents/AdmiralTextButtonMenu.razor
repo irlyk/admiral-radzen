@@ -1,0 +1,18 @@
+<AdmiralMenu AriaLabel="@AriaLabel" Class="@MenuClass">
+    <Trigger>
+        <AdmiralTextButton Text="@Text" IconStart="@IconStart" IconEnd="admiral:system/chevron-down-outline"
+                           Appearance="@Appearance" Dimension="@Dimension" Disabled="@Disabled" />
+    </Trigger>
+    <ChildContent>@ChildContent</ChildContent>
+</AdmiralMenu>
+
+@code {
+    [Parameter] public string Text { get; set; } = "Menu";
+    [Parameter] public string? IconStart { get; set; }
+    [Parameter] public AdmiralTextButtonAppearance Appearance { get; set; }
+    [Parameter] public AdmiralTextButtonDimension Dimension { get; set; } = AdmiralTextButtonDimension.M;
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public string AriaLabel { get; set; } = "Menu";
+    [Parameter] public string? MenuClass { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

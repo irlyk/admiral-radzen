@@ -1,0 +1,61 @@
+@page "/components/progress"
+
+<PageTitle>Admiral Progress</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="ProgressHeader / ProgressPage" Description="@T("Прогресс выполнения задачи в заголовке или на странице.", "Determinate progress for a header or page task.")"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-progressheader-base--docs" />
+    <p><a href="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-progresspage--docs" target="_blank" rel="noreferrer">@T("Официальный пример ProgressPage", "Official ProgressPage reference")</a></p>
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section"><h2>@SmokeL["Usage"]</h2>
+            <p>@T("Оба компонента только отображают состояние. Обновляйте Value из приложения: компоненты не запускают задачу и не отправляют события прогресса. Значение отображается в диапазоне 0–100.", "Both components are display-only. Update Value from application state; neither starts work nor emits progress events. Values are displayed within 0–100.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralProgressHeader" Rows="@HeaderRows" /><ApiReference Title="AdmiralProgressPage" Rows="@PageRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section"><h2>RadzenProgressBar + Admiral theme</h2>
+            <p>@T("Тема оформляет RadzenProgressBar, но у него свои параметры метки и статуса. Он не даёт встроенное размещение ProgressHeader или композицию метки и значения ProgressPage.", "RadzenProgressBar receives theme styling but has its own labeling and status API. It does not provide ProgressHeader's inline layout or ProgressPage's label/value composition.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><RadzenProgressBar Value="@value" Style="width: min(100%, 24rem)" /><span role="status">@value%</span></div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section"><h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground" data-testid="progress-admiral-demo"><div class="admiral-component-playground__preview">
+                <AdmiralProgressHeader Value="@value" Inline="@inline" Appearance="@(error ? AdmiralProgressHeaderAppearance.Error : default)" AriaLabel="@SmokeL["Header progress"]" />
+                <AdmiralProgressPage Label="@T("Загрузка документов", "Uploading documents")" Value="@value" Status="@(error ? AdmiralProgressPageStatus.Error : default)" AriaLabel="@T("Прогресс загрузки", "Upload progress")" />
+                <span class="admiral-component-page__result" role="status">@value%</span>
+            </div><div class="admiral-component-controls">
+                <label><span>@SmokeL["Value"]</span><input type="range" min="0" max="100" @bind="value" /></label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="inline" /> Inline</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="error" /> @SmokeL["Error"]</label>
+            </div></div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private double value = 42;
+    private bool inline = true, error;
+    private const string AdmiralCode = """
+        <AdmiralProgressHeader Value="@progress" Inline="true" AriaLabel="Upload progress" />
+        <AdmiralProgressPage Label="Uploading documents" Value="@progress" />
+        <span role="status">@progress%</span>
+        @code { private double progress = 42; }
+        """;
+    private const string DirectCode = """
+        <RadzenProgressBar Value="@progress" Style="width: min(100%, 24rem)" />
+        <span role="status">@progress%</span>
+        @code { private double progress = 42; }
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> HeaderRows =
+    [new("Value", "double; 0", "Percent, clamped to 0–100 for display and aria-valuenow."), new("Appearance / Inline", "AdmiralProgressHeaderAppearance / bool", "Error appearance and inline layout."), new("AriaLabel", "string?", "Accessible name for the progress bar.")];
+    private static readonly IReadOnlyList<ApiReference.Entry> PageRows =
+    [new("Label / Value", "string / double", "Task label and percentage."), new("ValueText / ShowValue", "string? / bool; null / true", "Optional displayed value override and visibility."), new("Status / AriaLabel", "AdmiralProgressPageStatus / string?", "Error status and accessible progress label.")];
+}

@@ -1,0 +1,54 @@
+<div class="admiral-carousel-host">
+<RadzenCarousel Items="@Items"
+                SelectedIndex="@SelectedIndex"
+                SelectedIndexChanged="@SelectedIndexChanged"
+                Change="@Change"
+                Auto="@Auto"
+                Interval="@Interval"
+                AnimationDuration="@AnimationDuration"
+                AllowNavigation="@AllowNavigation"
+                AllowPaging="@AllowPaging"
+                AllowScroll="@AllowScroll"
+                ItemsPerPage="@ItemsPerPage"
+                PagerOverlay="@(Appearance == AdmiralCarouselAppearance.Inner)"
+                PagerPosition="PagerPosition.Bottom"
+                PagerButtonAriaLabelFormat="@PagerButtonAriaLabelFormat"
+                PrevText="@PreviousText"
+                NextText="@NextText"
+                ButtonVariant="Variant.Text"
+                ButtonSize="ButtonSize.Small"
+                class="@CssClass"
+                Style="@CssStyle"
+                @attributes="AdditionalAttributes" />
+</div>
+
+@code {
+    [Parameter] public RenderFragment? Items { get; set; }
+    [Parameter] public AdmiralCarouselAppearance Appearance { get; set; } = AdmiralCarouselAppearance.Inner;
+    [Parameter] public int SelectedIndex { get; set; }
+    [Parameter] public EventCallback<int> SelectedIndexChanged { get; set; }
+    [Parameter] public EventCallback<int> Change { get; set; }
+    [Parameter] public bool Auto { get; set; }
+    [Parameter] public double Interval { get; set; } = 4000;
+    [Parameter] public double? AnimationDuration { get; set; } = 300;
+    [Parameter] public bool AllowNavigation { get; set; } = true;
+    [Parameter] public bool AllowPaging { get; set; } = true;
+    [Parameter] public bool AllowScroll { get; set; } = true;
+    [Parameter] public int ItemsPerPage { get; set; } = 1;
+    [Parameter] public string PagerButtonAriaLabelFormat { get; set; } = "Go to slide {0}";
+    [Parameter] public string PreviousText { get; set; } = "Previous slide";
+    [Parameter] public string NextText { get; set; } = "Next slide";
+    [Parameter] public string Height { get; set; } = "16rem";
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-carousel",
+        Appearance == AdmiralCarouselAppearance.Inner ? "admiral-carousel--inner" : "admiral-carousel--outer",
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+
+    private string CssStyle => $"height: {Height}; {Style}";
+}

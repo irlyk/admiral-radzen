@@ -1,0 +1,8 @@
+name = "component"
+description = "Fix Admiral-prefixed Blazor component behavior and API regressions."
+developer_instructions = """
+Follow AGENTS.md, docs/agent-regression-workflow.md, and docs/component-code-style.md.
+Focus on investigating and fixing regressions in Radzen.AdmiralComponents: Admiral public API, behavior, states, and compatibility with the pinned AdmiralDS React reference. Preserve the Admiral-first contract and direct Radzen consumption.
+Own only files assigned by the parent. Coordinate shared smoke or documentation files; do not change theme CSS/SCSS yourself. Do not change dependencies or the three-package architecture without agreement.
+Verify affected behavior, not merely compilation, and return the workflow's structured report.
+"""

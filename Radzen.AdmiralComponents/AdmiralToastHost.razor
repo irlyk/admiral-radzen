@@ -1,0 +1,38 @@
+@implements IDisposable
+@inject AdmiralToastService Toasts
+
+<div class="@CssClass" style="@HostStyle" role="region" aria-label="@AriaLabel" @attributes="AdditionalAttributes">
+    @foreach (var entry in Toasts.Entries)
+    {
+        <div @key="entry.Id" class="admiral-toast-host__entry">
+            <AdmiralNotificationItem Title="@entry.Options.Title" Status="@entry.Options.Status"
+                                     DisplayStatusIcon="@entry.Options.DisplayStatusIcon" IsClosable="true"
+                                     Elevated="true" Close="@(() => Remove(entry.Id))" Actions="@entry.Options.Actions"
+                                     CloseAriaLabel="@CloseAriaLabel">
+                @entry.Options.Message
+            </AdmiralNotificationItem>
+            @if (entry.Options.ShowProgress && entry.Options.AutoDeleteTime is { } duration && duration > TimeSpan.Zero)
+            {
+                <span class="admiral-toast-host__progress admiral-toast-host__progress--@entry.Options.Status.ToString().ToLowerInvariant()"
+                      style="animation-duration: @(duration.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture))ms"></span>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public AdmiralToastPosition? Position { get; set; }
+    [Parameter] public string? Width { get; set; }
+    [Parameter] public string AriaLabel { get; set; } = "Notifications";
+    [Parameter] public string CloseAriaLabel { get; set; } = "Close notification";
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => $"admiral-toast-host admiral-toast-host--{(Position ?? Toasts.Position).ToString().ToLowerInvariant()} {Class}";
+    private string HostStyle => $"--admiral-toast-width: {Width ?? Toasts.Width}; {Style}";
+    protected override void OnInitialized() => Toasts.Changed += OnChanged;
+    private void OnChanged() => _ = InvokeAsync(StateHasChanged);
+    private void Remove(Guid id) => Toasts.Remove(id);
+    public void Dispose() => Toasts.Changed -= OnChanged;
+}

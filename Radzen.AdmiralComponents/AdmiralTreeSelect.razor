@@ -1,0 +1,82 @@
+<div @ref="root" class="@CssClass" style="@Style" data-open="@(isOpen ? "true" : "false")"
+     data-disabled="@(Disabled || Loading || Skeleton ? "true" : "false")" data-readonly="@(ReadOnly ? "true" : "false")"
+     data-skeleton="@(Skeleton ? "true" : "false")" data-multiple="@(Multiple ? "true" : "false")" aria-busy="@(Loading || Skeleton ? "true" : "false")" @attributes="AdditionalAttributes">
+    <div class="admiral-tree-select__control" style="@RowsStyle" data-limit-rows="@(Multiple && MaxRowCount.HasValue ? "true" : "false")">
+        @if (!Skeleton && Multiple && SelectedItems.Count > 0)
+        {
+            <div class="admiral-tree-select__values" @onclick="ToggleOpen">
+                <div class="admiral-tree-select__chips">
+                    @foreach (var item in SelectedItems)
+                    {
+                        <span @key="item.Id" class="admiral-tree-select__chip">
+                            <span class="admiral-tree-select__chip-label">@item.Text</span>
+                            @if (CanRemove(item))
+                            {
+                                <button type="button" class="admiral-tree-select__chip-remove" aria-label="@($"{RemoveChipAriaLabel} {item.Text}")"
+                                        @onclick="() => RemoveChipAsync(item)" @onclick:stopPropagation="true">
+                                    <AdmiralIcon Icon="admiral:service/close-outline" Size="AdmiralIconSize.Small" />
+                                </button>
+                            }
+                        </span>
+                    }
+                </div>
+            </div>
+        }
+        <button @ref="trigger" type="button" class="admiral-tree-select__trigger" role="combobox" aria-haspopup="tree" aria-expanded="@(isOpen ? "true" : "false")"
+                aria-controls="@(isOpen ? TreeId : null)" aria-activedescendant="@ActiveDescendant" aria-label="@(AriaLabel ?? Placeholder)" aria-readonly="@(ReadOnly ? "true" : "false")"
+                disabled="@(Disabled || Loading || Skeleton)" @onclick="ToggleOpen">
+            @if (!Skeleton && (!Multiple || SelectedItems.Count == 0))
+            {
+                <span class="@(Multiple || string.IsNullOrEmpty(SingleLabel) ? "admiral-tree-select__placeholder" : null)">@(Multiple ? Placeholder : SingleLabel ?? Placeholder)</span>
+            }
+            @if (!Skeleton)
+            {
+                @if (Loading)
+                {
+                    <AdmiralSpinner Size="AdmiralSpinnerSize.MediumSmall" AriaLabel="@LoadingAriaLabel" />
+                }
+                else
+                {
+                    <AdmiralIcon Icon="admiral:system/chevron-down-outline" Size="AdmiralIconSize.Medium" />
+                }
+            }
+        </button>
+        @if (AllowClear && HasSelection && !IsInteractionBlocked)
+        {
+            <button type="button" class="admiral-tree-select__clear" aria-label="@ClearAriaLabel" @onclick="ClearAsync">
+                <AdmiralIcon Icon="admiral:service/close-outline" Size="AdmiralIconSize.Medium" />
+            </button>
+        }
+    </div>
+    @if (isOpen)
+    {
+        <div class="admiral-tree-select__popup">
+            @if (TopPanelTemplate is not null)
+            {
+                <div class="admiral-tree-select__panel" data-tree-panel>@TopPanelTemplate</div>
+            }
+            @if (Searchable)
+            {
+                <input class="admiral-tree-select__search" type="search" value="@query" @oninput="Search"
+                       role="combobox" aria-haspopup="tree" aria-expanded="true" aria-controls="@TreeId" aria-activedescendant="@ActiveDescendant"
+                       placeholder="@SearchPlaceholder" aria-label="@SearchPlaceholder" />
+            }
+            <div id="@TreeId" class="admiral-tree-select__tree" role="tree" aria-label="@(AriaLabel ?? Placeholder)" aria-multiselectable="@(Multiple ? "true" : "false")">
+                @if (Items.Any(item => IsVisible(item)))
+                {
+                    <AdmiralTreeSelectBranch Items="@Items" SelectedIds="@EffectiveSelected" ExpandedIds="@expandedIds" Query="@query"
+                                             Multiple="@Multiple" SelectItem="SelectAsync" ToggleExpanded="ToggleExpanded"
+                                             ActiveId="@activeId" IdPrefix="@TreeId" ExpandText="@ExpandAriaLabel" CollapseText="@CollapseAriaLabel" />
+                }
+                else
+                {
+                    <div class="admiral-tree-select__empty">@EmptyText</div>
+                }
+            </div>
+            @if (BottomPanelTemplate is not null)
+            {
+                <div class="admiral-tree-select__panel" data-tree-panel>@BottomPanelTemplate</div>
+            }
+        </div>
+    }
+</div>

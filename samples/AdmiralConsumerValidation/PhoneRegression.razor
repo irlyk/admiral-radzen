@@ -1,0 +1,46 @@
+@page "/phone-regression"
+
+<link data-testid="phone-theme-link" href="@themeCss" rel="stylesheet" />
+<h1>Phone package regression</h1>
+<button type="button" data-testid="phone-theme-toggle" @onclick="ToggleTheme">Switch phone theme</button>
+<output data-testid="phone-theme">@theme</output>
+<div data-testid="phone-admiral">
+    <AdmiralPhoneNumberInputField Label="Package phone" Value="@value" ValueChanged="OnValueChanged"
+                                  Country="@country" CountryChanged="OnCountryChanged"
+                                  AllowCountrySearch="true" />
+</div>
+<output data-testid="phone-model" role="status">Value: @value · Country: @country · ValueChanged: @valueChanges · CountryChanged: @countryChanges</output>
+<div data-testid="phone-digits">
+    <AdmiralPhoneNumberInputField Label="Digits phone" ValueMode="AdmiralPhoneValueMode.Digits"
+                                  Value="@digits" ValueChanged="OnDigitsChanged"
+                                  Country="@digitsCountry" CountryChanged="OnDigitsCountryChanged" />
+</div>
+<output data-testid="phone-digits-model">Value: @digits · Country: @digitsCountry · CountryChanged: @digitsCountryChanges</output>
+<div data-testid="phone-direct-radzen">
+    <RadzenDropDown TValue="string" Data="@countryNames" @bind-Value="directCountry" AllowFiltering="true" />
+    <RadzenTextBox @bind-Value="directPhone" Placeholder="Direct Radzen phone" />
+</div>
+<output data-testid="phone-direct-model">Country: @directCountry · Value: @directPhone</output>
+
+@code {
+    private string? value = "+7 777 123-45-67";
+    private string? country = "KAZ";
+    private int valueChanges;
+    private int countryChanges;
+    private string? digits = "77771234567";
+    private string? digitsCountry = "KAZ";
+    private int digitsCountryChanges;
+    private readonly string[] countryNames = ["Kazakhstan", "Russia", "Belarus"];
+    private string directCountry = "Kazakhstan";
+    private string directPhone = string.Empty;
+    private string theme = "Light";
+    private string themeCss => theme == "Light"
+        ? "_content/Radzen.Admiral.Themes/css/admiral-base.css"
+        : "_content/Radzen.Admiral.Themes/css/admiral-dark-base.css";
+
+    private void OnValueChanged(string? next) { value = next; valueChanges++; }
+    private void OnCountryChanged(string? next) { country = next; countryChanges++; }
+    private void OnDigitsChanged(string? next) => digits = next;
+    private void OnDigitsCountryChanged(string? next) { digitsCountry = next; digitsCountryChanges++; }
+    private void ToggleTheme() => theme = theme == "Light" ? "Dark" : "Light";
+}

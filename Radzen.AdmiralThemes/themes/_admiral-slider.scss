@@ -1,0 +1,76 @@
+// Shared by Admiral wrappers and direct RadzenSlider inside an admiral-slider root.
+.admiral-slider {
+  width: 100%;
+  min-width: 0;
+  padding-block: 0.75rem 0;
+  .rz-slider { display: block; width: 100%; }
+  .rz-slider-handle:focus-visible { outline: 2px solid var(--rz-primary); outline-offset: 4px; }
+}
+.admiral-slider--m .rz-slider {
+  --rz-slider-handle-width: 1rem;
+  --rz-slider-handle-height: 1rem;
+}
+.admiral-slider--m .rz-slider-handle::after { width: 6px; height: 6px; }
+.admiral-slider--tooltip .rz-slider-handle::before {
+  position: absolute;
+  inset-block-end: calc(100% + 10px);
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  min-width: 28px;
+  padding: 2px 6px;
+  border-radius: var(--rz-border-radius);
+  background: var(--rz-tooltip-background-color);
+  color: var(--rz-tooltip-color);
+  content: var(--admiral-slider-value);
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+.admiral-slider--tooltip .rz-slider-handle:hover::before,
+.admiral-slider--tooltip .rz-slider-handle:focus-visible::before,
+.admiral-slider--tooltip .rz-slider-handle.admiral-slider__handle--dragging::before,
+.admiral-slider--tooltip .rz-slider-handle:active::before { opacity: 1; }
+.admiral-slider--disabled.admiral-slider--tooltip .rz-slider-handle::before { display: none; }
+.admiral-slider__track {
+  touch-action: pan-y;
+  &::before { position: absolute; inset: -12px 0; content: ''; }
+  .admiral-slider__handle--dragging { background-color: var(--rz-slider-handle-hover-background-color); }
+}
+.admiral-slider__track .rz-slider-handle:focus,
+.admiral-slider__track .admiral-slider__handle--dragging { z-index: 3; }
+.admiral-slider--range.admiral-slider--tooltip .rz-slider-handle:nth-of-type(2)::before { content: var(--admiral-slider-start); }
+.admiral-slider--range.admiral-slider--tooltip .rz-slider-handle:nth-of-type(3)::before { content: var(--admiral-slider-end); }
+.admiral-slider__marks {
+  position: relative;
+  height: 24px;
+  margin-block-start: 14px;
+  color: var(--rz-text-color);
+  font-size: 14px;
+  line-height: 20px;
+}
+.admiral-slider__mark {
+  position: absolute;
+  width: max-content;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  cursor: pointer;
+  &:first-child { transform: none; }
+  &:last-child { transform: translateX(-100%); }
+  &:hover, &:active { color: var(--rz-primary-darker); }
+  &:focus-visible { outline: 2px solid var(--rz-primary); outline-offset: 2px; border-radius: var(--rz-border-radius); }
+  &:disabled { color: var(--rz-text-disabled-color); cursor: not-allowed; }
+}
+.admiral-slider--skeleton {
+  min-height: 48px;
+  border-radius: var(--rz-border-radius);
+  background: var(--rz-skeleton-background-color);
+  > * { visibility: hidden; }
+}

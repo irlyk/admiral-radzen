@@ -1,0 +1,44 @@
+<div class="@CssClass" role="status" @attributes="AdditionalAttributes">
+    @if (!IconAtEnd)
+    {
+        @IconContent
+    }
+    <span class="admiral-status-indicator__text">@Text</span>
+    @if (IconAtEnd)
+    {
+        @IconContent
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Text { get; set; } = string.Empty;
+    [Parameter] public string? Icon { get; set; }
+    [Parameter] public AdmiralStatusIndicatorSize Size { get; set; } = AdmiralStatusIndicatorSize.Medium;
+    [Parameter] public AdmiralStatusIndicatorAppearance Appearance { get; set; }
+    [Parameter] public bool IconAtEnd { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private RenderFragment IconContent => builder =>
+    {
+        if (string.IsNullOrWhiteSpace(Icon))
+        {
+            return;
+        }
+
+        builder.OpenComponent<RadzenIcon>(0);
+        builder.AddAttribute(1, nameof(RadzenIcon.Icon), Icon);
+        builder.AddAttribute(2, "class", "admiral-status-indicator__icon");
+        builder.AddAttribute(3, "aria-hidden", "true");
+        builder.CloseComponent();
+    };
+
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-status-indicator",
+        Size == AdmiralStatusIndicatorSize.Small ? "admiral-status-indicator--s" : null,
+        $"admiral-status-indicator--{Appearance.ToString().ToLowerInvariant()}",
+        IconAtEnd ? "admiral-status-indicator--icon-end" : null,
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

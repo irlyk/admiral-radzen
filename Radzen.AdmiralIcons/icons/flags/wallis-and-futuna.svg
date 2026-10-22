@@ -1,0 +1,31 @@
+<svg viewBox="0 0 28.5 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.500000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_244" width="28.000000" height="20.000000" x="0.500000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.500000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.500000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Wallis and Futuna" width="28.000000" height="28.000000" x="0.500000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.500000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.500000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_244)">
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="0.500000" y="4.000000" fill="rgb(244,70,83)" />
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="0.500000" y="4.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M0.5 15L15.5 15L15.5 4L0.5 4L0.5 15Z" fill="rgb(8,59,154)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M15.5 15L15.5 4L0.5 4L0.5 15L15.5 15Z" fill-rule="evenodd" stroke="rgb(255,255,255)" stroke-width="1.000000" />
+		<path id="Rectangle 3" d="M0.5 15L5.5 15L5.5 4L0.5 4L0.5 15Z" fill="rgb(8,59,154)" fill-rule="evenodd" />
+		<path id="Rectangle 4" d="M5.5 15L10.5 15L10.5 4L5.5 4L5.5 15Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Rectangle 5" d="M10.5 15L15.5 15L15.5 4L10.5 4L10.5 15Z" fill="rgb(244,70,83)" fill-rule="evenodd" />
+		<g id="Group 21">
+			<path id="Vector 37" d="M24.3949 10.5L19.2689 10.5L21.8319 13.063L24.3949 10.5Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+			<path id="Vector 38" d="M5.12595 0L0 0L2.56298 2.56298L5.12595 0Z" fill="rgb(255,255,255)" fill-rule="evenodd" transform="matrix(1,0,0,-1,19.2689,17.4199)" />
+			<path id="Vector 39" d="M5.12595 0L0 0L2.56298 2.56298L5.12595 0Z" fill="rgb(255,255,255)" fill-rule="evenodd" transform="matrix(-4.37114e-08,-1,-1,4.37114e-08,25.1638,16.5229)" />
+			<path id="Vector 40" d="M5.12595 0L0 0L2.56298 2.56298L5.12595 0Z" fill="rgb(255,255,255)" fill-rule="evenodd" transform="matrix(4.37114e-08,-1,1,4.37114e-08,18.5,16.5229)" />
+		</g>
+	</g>
+</svg>

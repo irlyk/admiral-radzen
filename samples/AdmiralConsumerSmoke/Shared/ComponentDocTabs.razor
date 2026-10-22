@@ -1,0 +1,18 @@
+@inject IStringLocalizer<SharedResource> L
+
+<nav class="component-doc-tabs" aria-label="@L["Documentation section"]">
+    @foreach (var tab in Tabs)
+    {
+        <button type="button" data-doc-tab="@(tab == Theme ? "theme" : tab == Api ? "api" : "admiral")" aria-pressed="@(Value == tab ? "true" : "false")" @onclick="() => ValueChanged.InvokeAsync(tab)">@L[Label(tab)]</button>
+    }
+</nav>
+
+@code {
+    public const string Admiral = "Admiral";
+    public const string Theme = "Radzen + тема";
+    public const string Api = "Использование и API";
+    private static readonly string[] Tabs = [Admiral, Theme, Api];
+    private static string Label(string tab) => tab switch { Theme => "Radzen + theme", Api => "Usage and API", _ => Admiral };
+    [Parameter] public string Value { get; set; } = Admiral;
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+}

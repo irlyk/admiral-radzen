@@ -1,0 +1,1626 @@
+@page "/regression/overview"
+@inject DialogService DialogService
+@inject TooltipService TooltipService
+@inject IStringLocalizer<SharedResource> L
+
+<PageTitle>@L["Radzen Admiral component gallery"]</PageTitle>
+
+<div class="admiral-gallery">
+    <header class="admiral-gallery__hero">
+        <RadzenText TextStyle="TextStyle.Overline">@L["Radzen extension packages"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.H2" TagName="TagName.H1">@L["Admiral component gallery"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body1">
+            @L["Package-consumer smoke test for the Admiral dark theme and lazy SVG icon adapter."]
+        </RadzenText>
+    </header>
+
+    <section class="admiral-gallery__section" aria-labelledby="buttons-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="buttons-heading">@L["Buttons and icons"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">@L["Admiral appearances, four dimensions, icon-only and text buttons."]</RadzenText>
+        <RadzenStack Gap="1rem">
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.75rem" Wrap="FlexWrap.Wrap" AlignItems="AlignItems.Center">
+                <RadzenButton class="admiral-button admiral-button--primary" Size="ButtonSize.Small" Text="@L["Primary"]" />
+                <RadzenButton class="admiral-button admiral-button--secondary" Size="ButtonSize.Small" Variant="Variant.Outlined" Text="@L["Secondary"]" />
+                <RadzenButton class="admiral-button admiral-button--tertiary" Size="ButtonSize.Small" Variant="Variant.Flat" Text="@L["Tertiary"]" />
+                <RadzenButton class="admiral-button admiral-button--ghost" Size="ButtonSize.Small" Variant="Variant.Text" Text="@L["Ghost"]" />
+                <RadzenButton class="admiral-button admiral-button--danger" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Danger" Text="@L["Danger"]" />
+                <RadzenButton class="admiral-button admiral-button--success" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Success" Text="@L["Success"]" />
+                <RadzenButton class="admiral-button admiral-button--primary" Size="ButtonSize.Small" Text="@L["Disabled"]" Disabled="true" />
+                <RadzenButton class="admiral-button admiral-button--primary" Size="ButtonSize.Small" Text="@L["Submit"]" BusyText="@L["Loading"]" IsBusy="true" />
+                <span class="admiral-surface admiral-surface--dark-static" style="padding: 0.5rem;">
+                    <RadzenButton class="admiral-button admiral-button--white" Size="ButtonSize.Small" Variant="Variant.Outlined" Text="@L["White"]" />
+                </span>
+            </RadzenStack>
+
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.75rem" Wrap="FlexWrap.Wrap" AlignItems="AlignItems.Center">
+                <RadzenButton class="admiral-button admiral-button--primary" Size="ButtonSize.Large" Text="XL · 56" />
+                <RadzenButton class="admiral-button admiral-button--primary" Size="ButtonSize.Medium" Text="L · 48" />
+                <RadzenButton class="admiral-button admiral-button--primary" Size="ButtonSize.Small" Text="M · 40" />
+                <RadzenButton class="admiral-button admiral-button--primary" Size="ButtonSize.ExtraSmall" Text="S · 32" />
+            </RadzenStack>
+
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.75rem" Wrap="FlexWrap.Wrap" AlignItems="AlignItems.Center">
+                <RadzenButton class="admiral-icon-button admiral-icon-button--primary" Size="ButtonSize.Large"
+                              Variant="Variant.Text" Icon="admiral:service/plus-outline" aria-label="@L["Add"]" />
+                <RadzenButton class="admiral-icon-button" Size="ButtonSize.Medium"
+                              Variant="Variant.Text" Icon="admiral:system/search-outline" aria-label="@L["Search"]" />
+                <RadzenButton class="admiral-icon-button" Size="ButtonSize.Small"
+                              Variant="Variant.Text" Icon="admiral:system/settings-outline" aria-label="@L["Settings"]" />
+                <RadzenButton class="admiral-icon-button" Size="ButtonSize.ExtraSmall"
+                              Variant="Variant.Text" Icon="admiral:service/close-outline" aria-label="@L["Close"]" />
+                <RadzenButton class="admiral-icon-button" Size="ButtonSize.Small" Disabled="true"
+                              Variant="Variant.Text" Icon="admiral:system/settings-outline" aria-label="@L["Disabled"]" />
+            </RadzenStack>
+
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap" AlignItems="AlignItems.Center">
+                <RadzenButton class="admiral-text-button" Size="ButtonSize.Small" Variant="Variant.Text"
+                              Icon="admiral:system/search-outline" Text="@L["Text primary"]" />
+                <RadzenButton class="admiral-text-button admiral-text-button--secondary" Size="ButtonSize.Small" Variant="Variant.Text"
+                              Icon="admiral:documents/description-outline" Text="@L["Text secondary"]" />
+                <RadzenButton class="admiral-text-button" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Text="@L["Small text"]" />
+                <RadzenButton class="admiral-text-button" Size="ButtonSize.Small" Variant="Variant.Text" Text="@L["Disabled"]" Disabled="true" />
+            </RadzenStack>
+
+            <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-mb-0">@L["Button groups"]</RadzenText>
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap" AlignItems="AlignItems.Center">
+                <div class="admiral-button-group admiral-button-group--primary" role="group" aria-label="@L["Primary button group"]">
+                    <RadzenButton class="admiral-button admiral-button--primary" Size="ButtonSize.Small" Text="@L["Create"]" />
+                    <RadzenButton class="admiral-button admiral-button--primary" Size="ButtonSize.Small" Text="@L["Copy"]" />
+                    <RadzenButton class="admiral-button admiral-button--primary" Size="ButtonSize.Small" Text="@L["Archive"]" Disabled="true" />
+                </div>
+                <div class="admiral-button-group admiral-button-group--secondary" role="group" aria-label="@L["Secondary button group"]">
+                    <RadzenButton class="admiral-button admiral-button--secondary" Size="ButtonSize.ExtraSmall" Variant="Variant.Outlined" Text="@L["Day"]" />
+                    <RadzenButton class="admiral-button admiral-button--secondary" Size="ButtonSize.ExtraSmall" Variant="Variant.Outlined" Text="@L["Week"]" />
+                    <RadzenButton class="admiral-button admiral-button--secondary" Size="ButtonSize.ExtraSmall" Variant="Variant.Outlined" Text="@L["Month"]" />
+                </div>
+                <div class="admiral-button-group admiral-button-group--tertiary" role="group" aria-label="@L["Tertiary button group"]">
+                    <RadzenButton class="admiral-button admiral-button--tertiary" Size="ButtonSize.Small" Variant="Variant.Flat" Text="@L["Left"]" />
+                    <RadzenButton class="admiral-button admiral-button--tertiary" Size="ButtonSize.Small" Variant="Variant.Flat" Text="@L["Center"]" />
+                    <RadzenButton class="admiral-button admiral-button--tertiary" Size="ButtonSize.Small" Variant="Variant.Flat" Text="@L["Right"]" />
+                </div>
+            </RadzenStack>
+
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="1.5rem" Wrap="FlexWrap.Wrap" AlignItems="AlignItems.Center">
+                <div class="admiral-icon-button-group" role="group" aria-label="@L["Document actions"]">
+                    <RadzenButton class="admiral-icon-button" Size="ButtonSize.Small" Variant="Variant.Text"
+                                  Icon="admiral:system/print-outline" aria-label="@L["Print"]" />
+                    <RadzenButton class="admiral-icon-button" Size="ButtonSize.Small" Variant="Variant.Text"
+                                  Icon="admiral:service/share-outline" aria-label="@L["Share"]" />
+                    <RadzenButton class="admiral-icon-button" Size="ButtonSize.Small" Variant="Variant.Text"
+                                  Icon="admiral:system/edit-outline" aria-label="@L["Edit"]" />
+                </div>
+                <AdmiralFloatingButton Fixed="false" Icon="admiral:system/email-outline"
+                                       AriaLabel="@L["Open messages"]" BadgeCount="5" />
+                <AdmiralFloatingButton Fixed="false" Size="AdmiralFloatingButtonSize.Xl"
+                                       Appearance="AdmiralFloatingButtonAppearance.Secondary"
+                                       Icon="admiral:system/email-outline" AriaLabel="@L["Open messages"]"
+                                       BadgeDot="true" BadgeAppearance="AdmiralFloatingButtonBadgeAppearance.Warning" />
+                <AdmiralFloatingButton Fixed="false" Disabled="true" Icon="admiral:system/email-outline"
+                                       AriaLabel="@L["Messages unavailable"]" />
+            </RadzenStack>
+        </RadzenStack>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="navigation-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="navigation-heading">@L["Links, anchors and dividers"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">@L["Admiral Link M/S states, a scroll-aware nested Anchor and all Divider appearances."]</RadzenText>
+        <RadzenStack Gap="1rem">
+            <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-mb-0">@L["Links"]</RadzenText>
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="1.5rem" Wrap="FlexWrap.Wrap" AlignItems="AlignItems.Center">
+                <RadzenLink class="admiral-link" Path="#forms-heading" Text="@L["Primary link"]" />
+                <RadzenLink class="admiral-link admiral-link--secondary" Path="#feedback-heading"
+                            Icon="admiral:documents/description-outline" Text="@L["Secondary with icon"]" />
+                <RadzenLink class="admiral-link admiral-link--s" Path="#hierarchy-heading">
+                    @L["Small with end icon"]
+                    <RadzenIcon Icon="admiral:system/arrow-right-outline" aria-hidden="true" />
+                </RadzenLink>
+                <RadzenLink class="admiral-link" Text="@L["Disabled link"]" Disabled="true" aria-disabled="true" />
+            </RadzenStack>
+
+            <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-mb-0">@L["Dividers"]</RadzenText>
+            <RadzenStack Gap="0.75rem">
+                <AdmiralDivider Size="AdmiralDividerSize.Small" Appearance="AdmiralDividerAppearance.Subtle" />
+                <AdmiralDivider />
+                <AdmiralDivider Appearance="AdmiralDividerAppearance.Strong" />
+                <AdmiralDivider Appearance="AdmiralDividerAppearance.Primary" Length="65%" />
+                <div style="display: flex; align-items: center; gap: 1rem; height: 2.5rem;">
+                    <span>@L["Before"]</span>
+                    <AdmiralDivider Orientation="AdmiralDividerOrientation.Vertical" Length="2.5rem" />
+                    <span>@L["After"]</span>
+                </div>
+            </RadzenStack>
+
+            <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-mb-0">@L["Page anchor"]</RadzenText>
+            <RadzenToc class="admiral-anchor" Selector=".rz-body" Style="max-width: 20rem;">
+                <RadzenTocItem Text="@L["Buttons and icons"]" Selector="#buttons-heading">
+                    <RadzenTocItem Text="@L["Form controls"]" Selector="#forms-heading">
+                        <RadzenTocItem Text="@L["Feedback and loading"]" Selector="#feedback-heading" />
+                    </RadzenTocItem>
+                </RadzenTocItem>
+                <RadzenTocItem Text="@L["Avatars and groups"]" Selector="#avatars-heading" />
+                <RadzenTocItem Text="@L["Breadcrumb and accordion"]" Selector="#hierarchy-heading" />
+            </RadzenToc>
+        </RadzenStack>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="avatars-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="avatars-heading">@L["Avatars and groups"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">@L["Initials, image, icon, statuses, activity ring and compact overflow group."]</RadzenText>
+        <RadzenStack Gap="1rem">
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.75rem" Wrap="FlexWrap.Wrap" AlignItems="AlignItems.Center">
+                <AdmiralAvatar Name="Alexey Morozov" Size="AdmiralAvatarSize.Xl" />
+                <AdmiralAvatar Name="Elena Petrova" Size="AdmiralAvatarSize.Large" Appearance="AdmiralAvatarAppearance.Neutral1" />
+                <AdmiralAvatar Name="Maria Volkova" Size="AdmiralAvatarSize.Medium" Appearance="AdmiralAvatarAppearance.Neutral3" />
+                <AdmiralAvatar Name="Northern Star" Size="AdmiralAvatarSize.Small" Appearance="AdmiralAvatarAppearance.Neutral4" />
+                <AdmiralAvatar Name="Vector Lab" Size="AdmiralAvatarSize.Xs" />
+                <AdmiralAvatar Name="Oceanic Trade" Size="AdmiralAvatarSize.Xxs" />
+            </RadzenStack>
+
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.75rem" Wrap="FlexWrap.Wrap" AlignItems="AlignItems.Center">
+                <AdmiralAvatar Name="Elena Petrova" ImageUrl="images/avatar-demo.svg" Status="AdmiralAvatarStatus.Success" />
+                <AdmiralAvatar Name="User without a photo" Icon="admiral:system/person-outline" Status="AdmiralAvatarStatus.Warning" />
+                <AdmiralAvatar Name="Do not disturb" Initials="DS" Appearance="AdmiralAvatarAppearance.Neutral3" Status="AdmiralAvatarStatus.Danger" />
+                <AdmiralAvatar Name="Offline user" Initials="OF" Status="AdmiralAvatarStatus.Inactive" />
+                <AdmiralAvatar Name="Active account" Initials="AA" WithActivityRing="true" ShowActivityRing="true" />
+                <AdmiralAvatar Name="Disabled account" Initials="DA" Disabled="true" />
+            </RadzenStack>
+
+            <AdmiralAvatarGroup Items="@AvatarItems" Size="AdmiralAvatarSize.Medium" MaxVisible="4"
+                                OverflowAriaLabel="@L["{0} hidden users"]"
+                                aria-label="@L["Project participants"]" />
+            <AdmiralAvatarGroup Items="@AvatarActivityItems" Size="AdmiralAvatarSize.Small" MaxVisible="5"
+                                WithActivityRing="true" OverflowAriaLabel="@L["{0} hidden users"]"
+                                aria-label="@L["Active participants"]" />
+        </RadzenStack>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="binary-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="binary-heading">@L["Checkbox and switch states"]</RadzenText>
+        <div class="admiral-state-grid">
+            <div class="admiral-state-grid__item">
+                <RadzenCheckBox @bind-Value="uncheckedCheckbox" TValue="bool" />
+                <RadzenLabel Text="@L["Unchecked"]" />
+            </div>
+            <div class="admiral-state-grid__item">
+                <RadzenCheckBox @bind-Value="checkedCheckbox" TValue="bool" />
+                <RadzenLabel Text="@L["Checked"]" />
+            </div>
+            <div class="admiral-state-grid__item">
+                <RadzenCheckBox @bind-Value="indeterminateCheckbox" TValue="bool?" TriState="true" />
+                <RadzenLabel Text="@L["Indeterminate"]" />
+            </div>
+            <div class="admiral-state-grid__item">
+                <RadzenCheckBox Value="false" TValue="bool" Disabled="true" />
+                <RadzenLabel Text="@L["Disabled"]" />
+            </div>
+            <div class="admiral-state-grid__item">
+                <RadzenCheckBox Value="true" TValue="bool" Disabled="true" />
+                <RadzenLabel Text="@L["Disabled checked"]" />
+            </div>
+            <div class="admiral-state-grid__item">
+                <RadzenSwitch @bind-Value="switchOff" />
+                <RadzenLabel Text="@L["Switch off"]" />
+            </div>
+            <div class="admiral-state-grid__item">
+                <RadzenSwitch @bind-Value="switchOn" />
+                <RadzenLabel Text="@L["Switch on"]" />
+            </div>
+            <div class="admiral-state-grid__item">
+                <RadzenSwitch Value="false" Disabled="true" />
+                <RadzenLabel Text="@L["Disabled off"]" />
+            </div>
+            <div class="admiral-state-grid__item">
+                <RadzenSwitch Value="true" Disabled="true" />
+                <RadzenLabel Text="@L["Disabled on"]" />
+            </div>
+        </div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="choice-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="choice-heading">@L["Choice controls"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["Admiral radio sizes and states with SegmentedControl and ContentSwitcher mappings over Radzen SelectBar."]
+        </RadzenText>
+        <div class="admiral-gallery__form-grid">
+            <div class="admiral-choice-demo">
+                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0">@L["Radio button M"]</RadzenText>
+                <RadzenRadioButtonList TValue="string" @bind-Value="paymentMethod"
+                                       class="admiral-radio-list" Gap="0.75rem">
+                    <Items>
+                        <RadzenRadioButtonListItem Text="@L["Card"]" Value="@("card")" />
+                        <RadzenRadioButtonListItem Text="@L["Bank transfer"]" Value="@("bank")" />
+                        <RadzenRadioButtonListItem Text="@L["Cash"]" Value="@("cash")" class="admiral-radio--error" />
+                        <RadzenRadioButtonListItem Text="@L["Unavailable"]" Value="@("disabled")" Disabled="true" />
+                    </Items>
+                </RadzenRadioButtonList>
+            </div>
+
+            <div class="admiral-choice-demo">
+                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0">@L["Radio button S"]</RadzenText>
+                <RadzenRadioButtonList TValue="string" @bind-Value="deliverySpeed"
+                                       class="admiral-radio-list admiral-radio-list--s" Gap="0.75rem">
+                    <Items>
+                        <RadzenRadioButtonListItem Text="@L["Standard"]" Value="@("standard")" />
+                        <RadzenRadioButtonListItem Text="@L["Express"]" Value="@("express")" />
+                        <RadzenRadioButtonListItem Text="@L["Unavailable"]" Value="@("disabled")" Disabled="true" />
+                    </Items>
+                </RadzenRadioButtonList>
+            </div>
+
+            <div class="admiral-choice-demo">
+                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0">@L["Segmented control"]</RadzenText>
+                <RadzenSelectBar TValue="string" @bind-Value="segmentedView"
+                                 class="admiral-segmented-control admiral-segmented-control--outlined admiral-segmented-control--m">
+                    <Items>
+                        <RadzenSelectBarItem Text="@L["List"]" Value="@("list")" Icon="admiral:redact/list-bulleted-outline" />
+                        <RadzenSelectBarItem Text="@L["Cards"]" Value="@("cards")" Icon="admiral:category/grid-outline" />
+                        <RadzenSelectBarItem Text="@L["Unavailable"]" Value="@("disabled")" Disabled="true" />
+                    </Items>
+                </RadzenSelectBar>
+                <RadzenSelectBar TValue="IEnumerable<string>" @bind-Value="segmentedTools" Multiple="true"
+                                 class="admiral-segmented-control admiral-segmented-control--filled admiral-segmented-control--s">
+                    <Items>
+                        <RadzenSelectBarItem Text="@L["Filter"]" Value="@("filter")" />
+                        <RadzenSelectBarItem Text="@L["Sort"]" Value="@("sort")" />
+                        <RadzenSelectBarItem Text="@L["Group"]" Value="@("group")" />
+                    </Items>
+                </RadzenSelectBar>
+            </div>
+
+            <div class="admiral-choice-demo">
+                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0">@L["Content switcher"]</RadzenText>
+                <RadzenSelectBar TValue="string" @bind-Value="contentSection"
+                                 class="admiral-content-switcher admiral-content-switcher--l">
+                    <Items>
+                        <RadzenSelectBarItem Text="@L["Overview"]" Value="@("overview")" />
+                        <RadzenSelectBarItem Text="@L["Details"]" Value="@("details")" />
+                        <RadzenSelectBarItem Text="@L["History"]" Value="@("history")" Disabled="true" />
+                    </Items>
+                </RadzenSelectBar>
+                <RadzenSelectBar TValue="string" @bind-Value="primaryContentSection"
+                                 class="admiral-content-switcher admiral-content-switcher--primary admiral-content-switcher--fill">
+                    <Items>
+                        <RadzenSelectBarItem Text="@L["Active"]" Value="@("active")" />
+                        <RadzenSelectBarItem Text="@L["Archived"]" Value="@("archived")" />
+                    </Items>
+                </RadzenSelectBar>
+            </div>
+        </div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="alerts-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="alerts-heading">@L["Alerts"]</RadzenText>
+        <RadzenStack Gap="0.75rem">
+            <RadzenAlert AlertStyle="AlertStyle.Info" Shade="Shade.Default">@L["Informational filled alert"]</RadzenAlert>
+            <RadzenAlert AlertStyle="AlertStyle.Success" Variant="Variant.Outlined">@L["Successful outlined alert"]</RadzenAlert>
+            <RadzenAlert AlertStyle="AlertStyle.Warning" Variant="Variant.Outlined">@L["Warning outlined alert"]</RadzenAlert>
+            <RadzenAlert AlertStyle="AlertStyle.Dark" Variant="Variant.Outlined">@L["Dark outlined alert"]</RadzenAlert>
+        </RadzenStack>
+
+        <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-mt-4 rz-mb-0">@L["Detailed notifications"]</RadzenText>
+        <div class="admiral-gallery__form-grid">
+            <AdmiralNotificationItem Status="AdmiralNotificationStatus.Info"
+                                     Title="@L["Payment information"]"
+                                     DisplayStatusIcon="true"
+                                     IsClosable="true"
+                                     Elevated="true"
+                                     Visible="@showInfoNotification"
+                                     Close="@(() => showInfoNotification = false)"
+                                     CloseAriaLabel="@L["Close notification"]">
+                <ChildContent>@L["The payment is ready for review."]</ChildContent>
+                <Actions>
+                    <RadzenButton Text="@L["Review"]" Variant="Variant.Text" Size="ButtonSize.Small" />
+                </Actions>
+            </AdmiralNotificationItem>
+            <AdmiralNotificationItem Status="AdmiralNotificationStatus.Warning"
+                                     Title="@L["Payment requires confirmation"]"
+                                     DisplayStatusIcon="true">
+                <ChildContent>@L["The recipient details have changed. Review them before continuing."]</ChildContent>
+                <Actions>
+                    <RadzenButton Text="@L["Review"]" Variant="Variant.Text" Size="ButtonSize.Small" />
+                </Actions>
+            </AdmiralNotificationItem>
+            <AdmiralNotificationItem Status="AdmiralNotificationStatus.Error"
+                                     Title="@L["Payment rejected"]"
+                                     DisplayStatusIcon="true">
+                <ChildContent>@L["The bank rejected the payment. Correct the details and try again."]</ChildContent>
+                <Actions>
+                    <RadzenButton Text="@L["Try again"]" Variant="Variant.Text" Size="ButtonSize.Small" />
+                </Actions>
+            </AdmiralNotificationItem>
+            <AdmiralNotificationItem Status="AdmiralNotificationStatus.Success"
+                                     Title="@L["Payment completed"]"
+                                     DisplayStatusIcon="true"
+                                     IsBorderHidden="true">
+                <ChildContent>@L["The payment was accepted and sent for processing."]</ChildContent>
+                <Actions>
+                    <RadzenButton Text="@L["Done"]" Variant="Variant.Text" Size="ButtonSize.Small" />
+                </Actions>
+            </AdmiralNotificationItem>
+        </div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="forms-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="forms-heading">@L["Form controls"]</RadzenText>
+        <div class="admiral-gallery__form-grid">
+            <RadzenFormField Text="@L["Account name"]">
+                <RadzenTextBox @bind-Value="accountName" Placeholder="@L["Enter a name"]" />
+            </RadzenFormField>
+            <RadzenFormField Text="@L["Transfer date"]">
+                <RadzenDatePicker @bind-Value="transferDate" DateFormat="dd.MM.yyyy" ShowTime="false"
+                                  ShowButtonBar="true" />
+            </RadzenFormField>
+            <RadzenFormField Text="@L["Currency"]">
+                <RadzenDropDown @bind-Value="currency" Data="currencies" AllowFiltering="true"
+                                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" />
+            </RadzenFormField>
+            <RadzenFormField Text="@L["Amount"]">
+                <RadzenNumeric @bind-Value="amount" Min="0" Step="100" />
+            </RadzenFormField>
+            <RadzenTextBox Value="@L["Disabled value"]" Disabled="true" />
+            <RadzenTextBox Placeholder="@L["Invalid field"]" class="invalid" />
+        </div>
+        <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap">
+            <RadzenCheckBox @bind-Value="confirmed" TValue="bool" />
+            <RadzenLabel Text="@L["Confirmed"]" />
+            <RadzenSwitch @bind-Value="notifications" />
+            <RadzenLabel Text="@L["Notifications"]" />
+        </RadzenStack>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="popup-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="popup-heading">@L["Popup and selection states"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["Open the calendar and selects to verify elevation, hover, selected, disabled and filtered states."]
+        </RadzenText>
+        <div class="admiral-gallery__form-grid">
+            <RadzenFormField Text="@L["Payment date"]">
+                <RadzenDatePicker @bind-Value="paymentDate" DateFormat="dd.MM.yyyy" ShowTime="false"
+                                  ShowButtonBar="true" Min="@DateTime.Today.AddMonths(-3)"
+                                  Max="@DateTime.Today.AddMonths(3)" />
+            </RadzenFormField>
+            <RadzenFormField Text="@L["Searchable currency"]">
+                <RadzenDropDown @bind-Value="searchableCurrency" Data="currencies" AllowClear="true"
+                                AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" />
+            </RadzenFormField>
+            <RadzenFormField Text="@L["Settlement currencies"]">
+                <RadzenDropDown @bind-Value="selectedCurrencies" Data="currencies" Multiple="true" Chips="true"
+                                AllowClear="true" AllowFiltering="true"
+                                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" />
+            </RadzenFormField>
+            <RadzenFormField Text="@L["Disabled select"]">
+                <RadzenDropDown Value="@("EUR")" Data="currencies" Disabled="true" />
+            </RadzenFormField>
+            <RadzenFormField Text="@L["Date range"]">
+                <AdmiralDateRangePicker @bind-Start="rangeStart" @bind-End="rangeEnd"
+                                        AriaLabel="@L["Date range"]"
+                                        ToggleAriaLabel="@L["Open date range calendar"]"
+                                        PopupAriaLabel="@L["Date range calendar"]"
+                                        Placeholder="@L["Choose a date range"]" />
+            </RadzenFormField>
+            <RadzenFormField Text="@L["Payment date and time"]">
+                <RadzenDatePicker @bind-Value="paymentDateTime" TValue="DateTime?"
+                                  DateFormat="dd.MM.yyyy HH:mm" ShowTime="true" ShowSeconds="false"
+                                  HoursStep="1" MinutesStep="15" ShowTimeOkButton="true" />
+            </RadzenFormField>
+            <RadzenFormField Text="@L["Payment time"]">
+                <RadzenDatePicker @bind-Value="paymentTime" TValue="DateTime?"
+                                  DateFormat="HH:mm" ShowTime="true" TimeOnly="true"
+                                  HoursStep="1" MinutesStep="15" ShowTimeOkButton="true" />
+            </RadzenFormField>
+            <RadzenFormField Text="@L["Grouped currency"]">
+                <AdmiralDropDown TValue="string" TItem="CurrencyOption"
+                                 @bind-Value="groupedCurrency"
+                                 Data="currencyOptions"
+                                 TextSelector="CurrencyText"
+                                 ValueSelector="CurrencyValue"
+                                 GroupSelector="CurrencyGroup"
+                                 GroupTextSelector="LocalizeCurrencyGroup"
+                                 GroupDisabledSelector="CurrencyGroupDisabled"
+                                 FilterPlaceholder="@L["Search options"]"
+                                 EmptyText="@L["No matching options"]"
+                                 SearchAriaLabel="@L["Search options"]"
+                                 ClearAriaLabel="@L["Clear selection"]">
+                    <SelectedTemplate Context="option">
+                        <strong>@option.Code</strong>
+                        <span>@L[option.Name]</span>
+                    </SelectedTemplate>
+                    <ItemTemplate Context="option">
+                        <strong>@option.Code</strong>
+                        <span>@L[option.Name]</span>
+                    </ItemTemplate>
+                </AdmiralDropDown>
+            </RadzenFormField>
+            <RadzenFormField Text="@L["Virtualized beneficiary"]">
+                <AdmiralDropDown TValue="int?" TItem="BeneficiaryOption"
+                                 @bind-Value="virtualizedBeneficiary"
+                                 DataProvider="LoadBeneficiariesAsync"
+                                 TextSelector="BeneficiaryText"
+                                 ValueSelector="BeneficiaryValue"
+                                 AllowVirtualization="true" PageSize="20"
+                                 VirtualizationOverscanCount="5"
+                                 FilterPlaceholder="@L["Search 250 companies"]"
+                                 LoadingText="@L["Loading options…"]"
+                                 EmptyText="@L["No matching options"]"
+                                 ErrorText="@L["Could not load options"]"
+                                 RetryText="@L["Retry"]"
+                                 SearchAriaLabel="@L["Search options"]"
+                                 ClearAriaLabel="@L["Clear selection"]" />
+            </RadzenFormField>
+        </div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="feedback-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="feedback-heading">@L["Feedback and loading"]</RadzenText>
+        <RadzenStack Gap="1rem">
+            <RadzenProgressBar Value="64" ShowValue="true" />
+            <RadzenProgressBar Value="38" ProgressBarStyle="ProgressBarStyle.Success" />
+            <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-mb-0">@L["Spinner sizes"]</RadzenText>
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap" AlignItems="AlignItems.Center">
+                <AdmiralSpinner Size="AdmiralSpinnerSize.Xl" AriaLabel="@L["Loading"]" />
+                <AdmiralSpinner Size="AdmiralSpinnerSize.Large" AriaLabel="@L["Loading"]" />
+                <AdmiralSpinner Size="AdmiralSpinnerSize.Medium" AriaLabel="@L["Loading"]" />
+                <AdmiralSpinner Size="AdmiralSpinnerSize.MediumSmall" AriaLabel="@L["Loading"]" />
+                <AdmiralSpinner Size="AdmiralSpinnerSize.Small" AriaLabel="@L["Loading"]" />
+                <span class="admiral-surface admiral-surface--dark-static" style="padding: 0.75rem;">
+                    <AdmiralSpinner Size="AdmiralSpinnerSize.Medium" Inverse="true" AriaLabel="@L["Loading"]" />
+                </span>
+            </RadzenStack>
+            <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-mb-0">@L["Status indicators"]</RadzenText>
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="1.5rem" Wrap="FlexWrap.Wrap" AlignItems="AlignItems.Center">
+                <AdmiralStatusIndicator Text="@L["In processing"]" Icon="admiral:service/info-solid" />
+                <AdmiralStatusIndicator Text="@L["Completed"]" Icon="admiral:service/check-outline"
+                                        Appearance="AdmiralStatusIndicatorAppearance.Success" />
+                <AdmiralStatusIndicator Text="@L["Requires attention"]" Icon="admiral:service/error-solid"
+                                        Appearance="AdmiralStatusIndicatorAppearance.Warning" />
+                <AdmiralStatusIndicator Text="@L["Rejected"]" Icon="admiral:service/close-outline"
+                                        Appearance="AdmiralStatusIndicatorAppearance.Danger" IconAtEnd="true" />
+                <AdmiralStatusIndicator Text="@L["Compact status"]" Size="AdmiralStatusIndicatorSize.Small"
+                                        Appearance="AdmiralStatusIndicatorAppearance.Primary" />
+            </RadzenStack>
+            <div class="admiral-gallery__skeletons">
+                <RadzenSkeleton SkeletonType="SkeletonType.Circle" Width="3rem" Height="3rem" />
+                <RadzenStack Gap="0.5rem" class="admiral-gallery__skeleton-lines">
+                    <RadzenSkeleton Width="70%" Height="1rem" />
+                    <RadzenSkeleton Width="100%" Height="1rem" />
+                    <RadzenSkeleton Width="88%" Height="1rem" />
+                </RadzenStack>
+            </div>
+        </RadzenStack>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="dialog-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="dialog-heading">@L["Modal dialog"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["Admiral size, status, scrolling and responsive action scenarios."]
+        </RadzenText>
+        <RadzenStack Orientation="Orientation.Horizontal" Gap="0.75rem" Wrap="FlexWrap.Wrap">
+            <RadzenButton Text="@L["Small"]" Variant="Variant.Outlined" Click='@(() => ShowModal(L["Small"], "24rem", "s"))' />
+            <RadzenButton Text="@L["Medium"]" Click='@(() => ShowModal(L["Medium"], "30.5rem", "m"))' />
+            <RadzenButton Text="@L["Large"]" Variant="Variant.Outlined" Click='@(() => ShowModal(L["Large"], "37rem", "l"))' />
+            <RadzenButton Text="@L["Extra large"]" Variant="Variant.Outlined" Click='@(() => ShowModal(L["Extra large"], "50rem", "xl"))' />
+            <RadzenButton Text="@L["Information"]" Icon="admiral:service/info-outline" Click="@(() => ShowStatusModal(ModalStatus.Information))" />
+            <RadzenButton Text="@L["Success"]" Icon="admiral:service/check-outline" ButtonStyle="ButtonStyle.Success" Click="@(() => ShowStatusModal(ModalStatus.Success))" />
+            <RadzenButton Text="@L["Warning"]" Icon="admiral:service/error-outline" ButtonStyle="ButtonStyle.Warning" Click="@(() => ShowStatusModal(ModalStatus.Warning))" />
+            <RadzenButton Text="@L["Danger"]" Icon="admiral:service/close-circle-outline" ButtonStyle="ButtonStyle.Danger" Click="@(() => ShowStatusModal(ModalStatus.Danger))" />
+            <RadzenButton Text="@L["Scrolling modal"]" Icon="admiral:documents/description-outline" ButtonStyle="ButtonStyle.Secondary" Click="ShowScrollModal" />
+        </RadzenStack>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="navigation-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="navigation-heading">@L["Navigation and compact status"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-mb-0">@L["Horizontal tabs L"]</RadzenText>
+        <RadzenTabs class="admiral-tabs admiral-tabs--underline">
+            <Tabs>
+                <RadzenTabsItem Text="@L["Overview"]" Icon="admiral:category/grid-outline">
+                    <RadzenText TextStyle="TextStyle.Body2">@L["Summary content for the selected tab."]</RadzenText>
+                </RadzenTabsItem>
+                <RadzenTabsItem Text="@L["Transactions"]" Icon="admiral:finance/card-outline">
+                    <RadzenText TextStyle="TextStyle.Body2">@L["Transaction history content."]</RadzenText>
+                </RadzenTabsItem>
+                <RadzenTabsItem Text="@L["Settings"]" Icon="admiral:system/settings-outline">
+                    <RadzenText TextStyle="TextStyle.Body2">@L["Account settings content."]</RadzenText>
+                </RadzenTabsItem>
+                <RadzenTabsItem Text="@L["Unavailable"]" Disabled="true" />
+            </Tabs>
+        </RadzenTabs>
+        <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-mb-0">@L["Horizontal tabs M adaptive"]</RadzenText>
+        <RadzenTabs class="admiral-tabs admiral-tabs--m admiral-tabs--fill admiral-tabs--underline admiral-tabs--secondary">
+            <Tabs>
+                <RadzenTabsItem Text="@L["Active"]"><RadzenText TextStyle="TextStyle.Body2">@L["Active items"]</RadzenText></RadzenTabsItem>
+                <RadzenTabsItem Text="@L["Archived"]"><RadzenText TextStyle="TextStyle.Body2">@L["Archived items"]</RadzenText></RadzenTabsItem>
+                <RadzenTabsItem Text="@L["Unavailable"]" Disabled="true" />
+            </Tabs>
+        </RadzenTabs>
+        <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-mb-0">@L["Badges and dots"]</RadzenText>
+        <RadzenStack Orientation="Orientation.Horizontal" Gap="0.75rem" Wrap="FlexWrap.Wrap" AlignItems="AlignItems.Center">
+            <RadzenBadge class="admiral-badge" Text="8" BadgeStyle="BadgeStyle.Info" aria-label="@L["Amount: 8"]" />
+            <RadzenBadge class="admiral-badge" Text="@L["Active"]" BadgeStyle="BadgeStyle.Success" />
+            <RadzenBadge class="admiral-badge admiral-badge--s" Text="@L["Pending"]" BadgeStyle="BadgeStyle.Warning" />
+            <RadzenBadge class="admiral-badge admiral-badge--disabled" Text="@L["Disabled"]" />
+            <span class="admiral-badge-dot admiral-badge-dot--l admiral-badge-dot--info" role="img" aria-label="@L["Information status"]"></span>
+            <span class="admiral-badge-dot admiral-badge-dot--success" role="img" aria-label="@L["Success status"]"></span>
+            <span class="admiral-badge-dot admiral-badge-dot--s admiral-badge-dot--warning" role="img" aria-label="@L["Warning status"]"></span>
+            <span class="admiral-badge-dot admiral-badge-dot--xs admiral-badge-dot--error" role="img" aria-label="@L["Error status"]"></span>
+        </RadzenStack>
+
+        <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-mb-0">@L["Chips"]</RadzenText>
+        <RadzenStack Orientation="Orientation.Horizontal" Gap="0.75rem" Wrap="FlexWrap.Wrap" AlignItems="AlignItems.Center">
+            <RadzenChip class="admiral-chip" Text="@L["Outlined"]" Variant="Variant.Outlined" />
+            <RadzenChip class="admiral-chip" Text="@L["Business"]" Icon="admiral:category/bank-outline" />
+            <RadzenChip class="admiral-chip" Text="@L["Selected"]" Variant="Variant.Outlined" Selected="true" />
+            <RadzenChip class="admiral-chip" Text="@L["Disabled"]" Variant="Variant.Outlined" Disabled="true" />
+            <RadzenChip class="admiral-chip" Text="@L["Small"]" Variant="Variant.Outlined" Size="ChipSize.Small" />
+            @if (showRemovableChip)
+            {
+                <RadzenChip class="admiral-chip" Text="@L["Removable"]" Variant="Variant.Outlined"
+                            RemoveChipTitle="@L["Remove"]" Close="@(_ => showRemovableChip = false)" />
+            }
+        </RadzenStack>
+
+        <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-mb-0">@L["Tags"]</RadzenText>
+        <RadzenStack Orientation="Orientation.Horizontal" Gap="0.75rem" Wrap="FlexWrap.Wrap" AlignItems="AlignItems.Center">
+            <AdmiralTag Text="@L["Neutral"]" />
+            <AdmiralTag Text="@L["Success"]" Kind="AdmiralTagKind.Success" />
+            <AdmiralTag Text="@L["Primary"]" Kind="AdmiralTagKind.Primary" Size="AdmiralTagSize.Small" />
+            <AdmiralTag Text="@L["Danger"]" Kind="AdmiralTagKind.Danger" StatusViaBackground="true" />
+            <AdmiralTag Text="@L["Warning"]" Kind="AdmiralTagKind.Warning" StatusViaBackground="true"
+                        Icon="admiral:service/error-outline" />
+            <AdmiralTag Text="@L["Disabled"]" Disabled="true" />
+        </RadzenStack>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="hierarchy-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="hierarchy-heading">@L["Breadcrumb and accordion"]</RadzenText>
+        <RadzenBreadCrumb>
+            <RadzenBreadCrumbItem Text="@L["Home"]" Path="/" Icon="admiral:system/home-outline" />
+            <RadzenBreadCrumbItem Text="@L["Payments"]" Path="/" />
+            <RadzenBreadCrumbItem Text="@L["Payment ADM-1042"]" />
+        </RadzenBreadCrumb>
+        <RadzenAccordion Multiple="true">
+            <Items>
+                <RadzenAccordionItem Text="@L["Payment details"]" @bind-Selected="paymentDetailsExpanded">
+                    <RadzenText TextStyle="TextStyle.Body1" class="rz-m-0">
+                        @L["Northern Star LLC · 128 400 RUB · scheduled for processing today."]
+                    </RadzenText>
+                </RadzenAccordionItem>
+                <RadzenAccordionItem Text="@L["Recipient and bank"]">
+                    <RadzenText TextStyle="TextStyle.Body1" class="rz-m-0">
+                        @L["Recipient and routing information are available to authorized operators."]
+                    </RadzenText>
+                </RadzenAccordionItem>
+                <RadzenAccordionItem Text="@L["Unavailable section"]" Disabled="true"
+                                     class="admiral-accordion-item-disabled" aria-disabled="true">
+                    @L["This content is unavailable."]
+                </RadzenAccordionItem>
+            </Items>
+        </RadzenAccordion>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="side-menu-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="side-menu-heading">@L["Drawer and side menu"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["Admiral large SideMenu geometry inside a collapsible Sider, plus a right-side Drawer composition with backdrop."]
+        </RadzenText>
+        <RadzenStack Orientation="Orientation.Horizontal" Gap="0.75rem" Wrap="FlexWrap.Wrap">
+            <RadzenButton Text="@L["Toggle side menu"]" Icon="menu" Variant="Variant.Outlined"
+                          Click="@(() => sideMenuExpanded = !sideMenuExpanded)" />
+            <RadzenButton Text="@L["Open drawer"]" Icon="admiral:documents/description-outline"
+                          Click="@(() => drawerOpen = true)" />
+        </RadzenStack>
+        <RadzenLayout class="admiral-side-menu-demo">
+            <RadzenHeader class="admiral-side-menu-demo__header">
+                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0">@L["Payments workspace"]</RadzenText>
+            </RadzenHeader>
+            <RadzenSidebar @bind-Expanded="sideMenuExpanded" Responsive="false"
+                           class="admiral-side-menu-demo__sider" Style="--rz-sidebar-width: 15rem;">
+                <RadzenPanelMenu Multiple="true">
+                    <RadzenPanelMenuItem Text="@L["Overview"]" Icon="admiral:system/home-outline" Selected="true" />
+                    <RadzenPanelMenuItem Text="@L["Payments"]" Icon="admiral:category/bank-outline" Expanded="true">
+                        <RadzenPanelMenuItem Text="@L["Incoming"]" />
+                        <RadzenPanelMenuItem Text="@L["Outgoing"]" />
+                    </RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Text="@L["Documents"]" Icon="admiral:documents/description-outline" />
+                    <RadzenPanelMenuItem Text="@L["Settings"]" Icon="admiral:system/settings-outline" />
+                    <RadzenPanelMenuItem Text="@L["Unavailable"]" Disabled="true" />
+                </RadzenPanelMenu>
+            </RadzenSidebar>
+            <RadzenBody class="admiral-side-menu-demo__body">
+                <RadzenText TextStyle="TextStyle.H5" TagName="TagName.H3" class="rz-m-0">@L["Payment overview"]</RadzenText>
+                <RadzenText TextStyle="TextStyle.Body1" class="rz-m-0">
+                    @L["The content area expands when the SideMenu is collapsed."]
+                </RadzenText>
+            </RadzenBody>
+        </RadzenLayout>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="tooltip-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="tooltip-heading">@L["Tooltip and hint"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["Hover the compact controls to compare Tooltip dimensions and positions. Click the help controls to open an interactive Hint card."]
+        </RadzenText>
+        <RadzenStack Orientation="Orientation.Horizontal" Gap="0.75rem" Wrap="FlexWrap.Wrap" AlignItems="AlignItems.Center">
+            <RadzenButton Text="@L["Top medium"]" Variant="Variant.Outlined"
+                          MouseEnter="@(element => ShowTooltip(element, TooltipPosition.Top, false))"
+                          MouseLeave="@(_ => TooltipService.Close())" />
+            <RadzenButton Text="@L["Bottom small"]" Variant="Variant.Outlined"
+                          MouseEnter="@(element => ShowTooltip(element, TooltipPosition.Bottom, true))"
+                          MouseLeave="@(_ => TooltipService.Close())" />
+            <RadzenButton Text="@L["Left"]" Variant="Variant.Text"
+                          MouseEnter="@(element => ShowTooltip(element, TooltipPosition.Left, false))"
+                          MouseLeave="@(_ => TooltipService.Close())" />
+            <RadzenButton Text="@L["Right"]" Variant="Variant.Text"
+                          MouseEnter="@(element => ShowTooltip(element, TooltipPosition.Right, false))"
+                          MouseLeave="@(_ => TooltipService.Close())" />
+        </RadzenStack>
+        <RadzenStack Orientation="Orientation.Horizontal" Gap="0.75rem" Wrap="FlexWrap.Wrap" AlignItems="AlignItems.Center">
+            <AdmiralHint TriggerText="@L["Large hint"]"
+                         Title="@L["Payment processing"]"
+                         CloseAriaLabel="@L["Close hint"]"
+                         Size="AdmiralHintSize.Large"
+                         Position="TooltipPosition.Top"
+                         TriggerButtonStyle="ButtonStyle.Secondary"
+                         TriggerVariant="Variant.Outlined">
+                @L["The payment is validated before it is sent to the bank. You can continue working while processing is in progress."]
+            </AdmiralHint>
+            <AdmiralHint TriggerText="@L["Medium hint"]"
+                         Title="@L["Payment processing"]"
+                         Position="TooltipPosition.Bottom"
+                         CloseAriaLabel="@L["Close hint"]">
+                @L["The payment is validated before it is sent to the bank. You can continue working while processing is in progress."]
+            </AdmiralHint>
+        </RadzenStack>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="slider-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="slider-heading">@L["Slider and range"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["Admiral XL and M handles, clickable tick labels, disabled state and Radzen's native two-handle range."]
+        </RadzenText>
+        <RadzenStack Gap="1.5rem">
+            <div>
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween"
+                             AlignItems="AlignItems.Center" Style="max-width: 32rem;">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0">@L["Amount · XL"]</RadzenText>
+                    <RadzenText TextStyle="TextStyle.Body2" class="rz-m-0">@sliderValue ₽</RadzenText>
+                </RadzenStack>
+                <div class="admiral-slider-field">
+                    <RadzenSlider @bind-Value="sliderValue" TValue="int" Min="0" Max="100" Step="5" />
+                    <div class="admiral-slider-ticks" aria-label="@L["Amount marks"]">
+                        <button type="button" class="admiral-slider-tick" style="inset-inline-start: 0%;" @onclick="@(() => sliderValue = 0)">0 ₽</button>
+                        <button type="button" class="admiral-slider-tick" style="inset-inline-start: 25%;" @onclick="@(() => sliderValue = 25)">25 ₽</button>
+                        <button type="button" class="admiral-slider-tick" style="inset-inline-start: 50%;" @onclick="@(() => sliderValue = 50)">50 ₽</button>
+                        <button type="button" class="admiral-slider-tick" style="inset-inline-start: 75%;" @onclick="@(() => sliderValue = 75)">75 ₽</button>
+                        <button type="button" class="admiral-slider-tick" style="inset-inline-start: 100%;" @onclick="@(() => sliderValue = 100)">100 ₽</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween"
+                             AlignItems="AlignItems.Center" Style="max-width: 32rem;">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0">@L["Compact · M"]</RadzenText>
+                    <RadzenText TextStyle="TextStyle.Body2" class="rz-m-0">@compactSliderValue%</RadzenText>
+                </RadzenStack>
+                <div class="admiral-slider-field">
+                    <RadzenSlider @bind-Value="compactSliderValue" TValue="int" Min="0" Max="100" Step="1"
+                                  class="admiral-slider--medium" />
+                </div>
+            </div>
+            <div>
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween"
+                             AlignItems="AlignItems.Center" Style="max-width: 32rem;">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0">@L["Price range"]</RadzenText>
+                    <RadzenText TextStyle="TextStyle.Body2" class="rz-m-0">@priceRange.First()–@priceRange.Last() ₽</RadzenText>
+                </RadzenStack>
+                <div class="admiral-slider-field">
+                    <RadzenSlider @bind-Value="priceRange" TValue="IEnumerable<int>" Range="true"
+                                  Min="0" Max="100" Step="5" />
+                </div>
+            </div>
+            <div>
+                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0">@L["Disabled"]</RadzenText>
+                <div class="admiral-slider-field admiral-slider-field--disabled">
+                    <RadzenSlider Value="60" TValue="int" Min="0" Max="100" Disabled="true" />
+                </div>
+            </div>
+        </RadzenStack>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="tree-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="tree-heading">@L["Tree"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["Admiral M and S dimensions with nested expansion, selection, packaged SVG chevrons and propagated checkbox state."]
+        </RadzenText>
+        <div class="admiral-gallery__form-grid">
+            <div>
+                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0 rz-mb-2">@L["Navigation · M"]</RadzenText>
+                <RadzenTree @bind-Value="selectedTreeValue" class="admiral-tree">
+                    <RadzenTreeItem Text="@L["Payments"]" Value="@("payments")" Expanded="true">
+                        <Template Context="item">
+                            <RadzenIcon Icon="admiral:category/bank-outline" class="admiral-tree__icon" />
+                            <span>@item.Text</span>
+                        </Template>
+                        <ChildContent>
+                            <RadzenTreeItem Text="@L["Incoming"]" Value="@("incoming")">
+                                <Template Context="item">
+                                    <RadzenIcon Icon="admiral:system/arrow-down-outline" class="admiral-tree__icon" />
+                                    <span>@item.Text</span>
+                                </Template>
+                            </RadzenTreeItem>
+                            <RadzenTreeItem Text="@L["Outgoing"]" Value="@("outgoing")" Selected="true">
+                                <Template Context="item">
+                                    <RadzenIcon Icon="admiral:system/arrow-up-outline" class="admiral-tree__icon" />
+                                    <span>@item.Text</span>
+                                </Template>
+                            </RadzenTreeItem>
+                        </ChildContent>
+                    </RadzenTreeItem>
+                    <RadzenTreeItem Text="@L["Documents"]" Value="@("documents")" Expanded="true">
+                        <Template Context="item">
+                            <RadzenIcon Icon="admiral:documents/description-outline" class="admiral-tree__icon" />
+                            <span>@item.Text</span>
+                        </Template>
+                        <ChildContent>
+                            <RadzenTreeItem Text="@L["Statements"]" Value="@("statements")" Expanded="true">
+                                <RadzenTreeItem Text="@L["August 2026"]" Value="@("statement-august-2026")" />
+                                <RadzenTreeItem Text="@L["July 2026"]" Value="@("statement-july-2026")" />
+                            </RadzenTreeItem>
+                            <RadzenTreeItem Text="@L["Acts"]" Value="@("acts")" />
+                        </ChildContent>
+                    </RadzenTreeItem>
+                    <RadzenTreeItem Text="@L["Settings"]" Value="@("settings")">
+                        <Template Context="item">
+                            <RadzenIcon Icon="admiral:system/settings-outline" class="admiral-tree__icon" />
+                            <span>@item.Text</span>
+                        </Template>
+                    </RadzenTreeItem>
+                </RadzenTree>
+            </div>
+            <div>
+                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0 rz-mb-2">@L["Access · S with checkboxes"]</RadzenText>
+                <RadzenTree AllowCheckBoxes="true" AllowCheckChildren="true" AllowCheckParents="true"
+                            @bind-CheckedValues="checkedTreeValues" class="admiral-tree admiral-tree--small">
+                    <RadzenTreeItem Text="@L["Payment permissions"]" Value="@("payment-permissions")" Expanded="true">
+                        <RadzenTreeItem Text="@L["View payments"]" Value="@("view-payments")" Selected="true" />
+                        <RadzenTreeItem Text="@L["Create payments"]" Value="@("create-payments")" />
+                        <RadzenTreeItem Text="@L["Approve payments"]" Value="@("approve-payments")" />
+                    </RadzenTreeItem>
+                    <RadzenTreeItem Text="@L["Reports"]" Value="@("reports")" Expanded="true">
+                        <RadzenTreeItem Text="@L["Monthly reports"]" Value="@("monthly-reports")" Expanded="true">
+                            <RadzenTreeItem Text="@L["August 2026"]" Value="@("report-august-2026")" />
+                            <RadzenTreeItem Text="@L["July 2026"]" Value="@("report-july-2026")" />
+                        </RadzenTreeItem>
+                        <RadzenTreeItem Text="@L["Export statements"]" Value="@("export-statements")" />
+                        <RadzenTreeItem Text="@L["Archived reports"]" Value="@("archived-reports")" Checkable="false" />
+                    </RadzenTreeItem>
+                </RadzenTree>
+            </div>
+        </div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="carousel-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="carousel-heading">@L["Carousel"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["Admiral inner/default and outer/primary slider appearances with 56 px navigation zones, keyboard focus and swipe support."]
+        </RadzenText>
+        <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0 rz-mb-2">AdmiralCarousel / AdmiralCarouselItem</RadzenText>
+        <AdmiralCarousel @bind-SelectedIndex="admiralCarouselIndex" Appearance="AdmiralCarouselAppearance.Outer"
+                         Auto="false" Height="16rem"
+                         PreviousText="@L["Previous slide"]" NextText="@L["Next slide"]"
+                         PagerButtonAriaLabelFormat="@L["Go to slide {0}"]">
+            <Items>
+                <AdmiralCarouselItem>
+                    <article class="admiral-carousel-slide">
+                        <p class="admiral-carousel-slide__eyebrow">@L["Account"]</p>
+                        <h3 class="admiral-carousel-slide__title">@L["Operating balance"]</h3>
+                        <p class="admiral-carousel-slide__body">@L["2 480 600 ₽ available for payments today."]</p>
+                    </article>
+                </AdmiralCarouselItem>
+                <AdmiralCarouselItem>
+                    <article class="admiral-carousel-slide">
+                        <p class="admiral-carousel-slide__eyebrow">@L["Schedule"]</p>
+                        <h3 class="admiral-carousel-slide__title">@L["Three payments pending"]</h3>
+                        <p class="admiral-carousel-slide__body">@L["The next payment is scheduled for 14:30."]</p>
+                    </article>
+                </AdmiralCarouselItem>
+                <AdmiralCarouselItem>
+                    <article class="admiral-carousel-slide">
+                        <p class="admiral-carousel-slide__eyebrow">@L["Team"]</p>
+                        <h3 class="admiral-carousel-slide__title">@L["Approvals configured"]</h3>
+                        <p class="admiral-carousel-slide__body">@L["Two operators can approve outgoing payments."]</p>
+                    </article>
+                </AdmiralCarouselItem>
+            </Items>
+        </AdmiralCarousel>
+        <div class="admiral-gallery__form-grid">
+            <div>
+                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0 rz-mb-2">@L["Inner slider"]</RadzenText>
+                <RadzenCarousel @bind-SelectedIndex="innerCarouselIndex" Auto="false" AllowScroll="true"
+                                AllowNavigation="true" AllowPaging="true" PagerOverlay="true"
+                                PagerPosition="PagerPosition.Bottom" AnimationDuration="300"
+                                class="admiral-carousel admiral-carousel--inner" Style="height: 16rem;">
+                    <Items>
+                        <RadzenCarouselItem>
+                            <article class="admiral-carousel-slide admiral-carousel-slide--accent">
+                                <p class="admiral-carousel-slide__eyebrow">@L["Payments"]</p>
+                                <h3 class="admiral-carousel-slide__title">@L["Fast transfers"]</h3>
+                                <p class="admiral-carousel-slide__body">@L["Create and approve business payments in one workspace."]</p>
+                            </article>
+                        </RadzenCarouselItem>
+                        <RadzenCarouselItem>
+                            <article class="admiral-carousel-slide admiral-carousel-slide--accent">
+                                <p class="admiral-carousel-slide__eyebrow">@L["Analytics"]</p>
+                                <h3 class="admiral-carousel-slide__title">@L["Cash flow overview"]</h3>
+                                <p class="admiral-carousel-slide__body">@L["Track incoming and outgoing operations by period."]</p>
+                            </article>
+                        </RadzenCarouselItem>
+                        <RadzenCarouselItem>
+                            <article class="admiral-carousel-slide admiral-carousel-slide--accent">
+                                <p class="admiral-carousel-slide__eyebrow">@L["Documents"]</p>
+                                <h3 class="admiral-carousel-slide__title">@L["Statements are ready"]</h3>
+                                <p class="admiral-carousel-slide__body">@L["Download the latest account documents and reports."]</p>
+                            </article>
+                        </RadzenCarouselItem>
+                    </Items>
+                </RadzenCarousel>
+            </div>
+            <div>
+                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0 rz-mb-2">@L["Outer slider"]</RadzenText>
+                <RadzenCarousel @bind-SelectedIndex="outerCarouselIndex" Auto="false" AllowScroll="true"
+                                AllowNavigation="true" AllowPaging="true" PagerOverlay="false"
+                                PagerPosition="PagerPosition.Bottom" AnimationDuration="300"
+                                class="admiral-carousel admiral-carousel--outer" Style="height: 16rem;">
+                    <Items>
+                        <RadzenCarouselItem>
+                            <article class="admiral-carousel-slide">
+                                <p class="admiral-carousel-slide__eyebrow">@L["Account"]</p>
+                                <h3 class="admiral-carousel-slide__title">@L["Operating balance"]</h3>
+                                <p class="admiral-carousel-slide__body">@L["2 480 600 ₽ available for payments today."]</p>
+                            </article>
+                        </RadzenCarouselItem>
+                        <RadzenCarouselItem>
+                            <article class="admiral-carousel-slide">
+                                <p class="admiral-carousel-slide__eyebrow">@L["Schedule"]</p>
+                                <h3 class="admiral-carousel-slide__title">@L["Three payments pending"]</h3>
+                                <p class="admiral-carousel-slide__body">@L["The next payment is scheduled for 14:30."]</p>
+                            </article>
+                        </RadzenCarouselItem>
+                        <RadzenCarouselItem>
+                            <article class="admiral-carousel-slide">
+                                <p class="admiral-carousel-slide__eyebrow">@L["Team"]</p>
+                                <h3 class="admiral-carousel-slide__title">@L["Approvals configured"]</h3>
+                                <p class="admiral-carousel-slide__body">@L["Two operators can approve outgoing payments."]</p>
+                            </article>
+                        </RadzenCarouselItem>
+                    </Items>
+                </RadzenCarousel>
+            </div>
+        </div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="upload-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="upload-heading">@L["File uploader"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["Admiral XL and M file inputs with drag-and-drop, keyboard focus, selected files and representative upload states."]
+        </RadzenText>
+        <div class="admiral-gallery__form-grid">
+            <div>
+                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0 rz-mb-2">@L["XL · live upload"]</RadzenText>
+                <RadzenUpload @ref="liveUpload"
+                              class="admiral-file-input admiral-file-input--xl admiral-file-input--external-status"
+                              Url="@LiveUploadUrl"
+                              Multiple="false" Auto="false" MaxFileCount="1"
+                              Accept=".pdf,.doc,.docx,.png,.jpg"
+                              Icon="admiral:system/attach-file-outline"
+                              ChooseText="@L["Drop a file here or click to select"]" DeleteText="@L["Remove file"]"
+                              Change="HandleUploadChange" Progress="HandleUploadProgress"
+                              Complete="HandleUploadComplete" Error="HandleUploadError" />
+                <div class="admiral-file-input__hint">@L["PDF, DOCX, PNG or JPG · up to 10 MB"]</div>
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.75rem" Wrap="FlexWrap.Wrap"
+                             class="admiral-file-input__actions">
+                    <RadzenButton Text="@L["Send file"]" Icon="admiral:system/upload-outline"
+                                  Size="ButtonSize.Small" Disabled="@(!liveUploadHasFile || liveUploadState == AdmiralUploadState.Loading)"
+                                  Click="SendLiveUpload" />
+                    <RadzenButton Text="@L["Reset"]" Variant="Variant.Text" ButtonStyle="ButtonStyle.Base"
+                                  Size="ButtonSize.Small" Disabled="@(!liveUploadHasFile)" Click="ResetLiveUpload" />
+                    <RadzenSwitch @bind-Value="simulateUploadError" Disabled="@liveUploadHasFile" />
+                    <RadzenText TextStyle="TextStyle.Caption" class="rz-m-0">@L["Simulate server error"]</RadzenText>
+                </RadzenStack>
+                @if (liveUploadHasFile)
+                {
+                    <AdmiralUploadStatus FileName="@liveUploadName"
+                                         Meta="@LiveUploadMeta"
+                                         Icon="@LiveUploadIcon"
+                                         State="@liveUploadState"
+                                         Progress="@liveUploadProgress"
+                                         ErrorText="@liveUploadError"
+                                         ActionAriaLabel="@L["Remove file"]"
+                                         ActionClicked="ResetLiveUpload" />
+                }
+            </div>
+            <div>
+                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0 rz-mb-2">@L["M · disabled"]</RadzenText>
+                <RadzenUpload class="admiral-file-input admiral-file-input--m"
+                              Disabled="true" Auto="false"
+                              Icon="admiral:system/attach-file-outline"
+                              ChooseText="@L["File selection is unavailable"]" />
+                <div class="admiral-file-input__hint">@L["The disabled state keeps the same compact geometry."]</div>
+            </div>
+        </div>
+        <div class="admiral-upload-files" aria-label="@L["File upload state examples"]">
+            <AdmiralUploadStatus FileName="signed-payment.pdf"
+                                 Meta="@L["PDF · 842 KB · Uploaded"]"
+                                 Icon="admiral:documents/file-pdf-outline"
+                                 State="AdmiralUploadState.Complete"
+                                 ActionAriaLabel="@L["Remove uploaded file"]" />
+            <AdmiralUploadStatus FileName="payment-register.pdf"
+                                 Meta="@L["PDF · 2.4 MB · Loading"]"
+                                 Icon="admiral:documents/file-pdf-outline"
+                                 State="AdmiralUploadState.Loading"
+                                 Progress="64"
+                                 ActionAriaLabel="@L["Cancel upload"]" />
+            <AdmiralUploadStatus FileName="transactions.xlsx"
+                                 Meta="XLSX · 14.8 MB"
+                                 ErrorText="@L["The file exceeds the 10 MB limit"]"
+                                 Icon="admiral:documents/file-xlsx-outline"
+                                 State="AdmiralUploadState.Error"
+                                 ActionAriaLabel="@L["Remove failed file"]" />
+        </div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="global-search-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="global-search-heading">@L["Global search"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["Admiral search composition with prefix, clear and submit actions, suggestions and keyboard navigation."]
+        </RadzenText>
+        <AdmiralGlobalSearch Items="@GlobalSearchItems"
+                             @bind-Value="globalSearchQuery"
+                             Prefix="@L["Payments"]"
+                             Placeholder="@L["Reference, company or account"]"
+                             AriaLabel="@L["Global search"]"
+                             ClearAriaLabel="@L["Clear search"]"
+                             SubmitAriaLabel="@L["Search"]"
+                             EmptyText="@L["No matches"]"
+                             SearchSubmitted="@(value => globalSearchAction = $"Search: {value}")"
+                             ItemSelected="@(item => globalSearchAction = $"Selected: {item.Id}")" />
+        <p class="admiral-component-page__result" data-global-search-result aria-live="polite">@globalSearchAction</p>
+        <p>@SmokeL["↑/↓ — выбор подсказки; Enter — выбор активной подсказки или отправка введённого запроса, если подсказка не выбрана. Escape закрывает список. Tab проходит к очистке и кнопке поиска, затем выходит из компонента."]
+
+            <code>ItemSelected</code> @SmokeL["и"] <code>SearchSubmitted</code> @SmokeL["— отдельные события; выбор подсказки не вызывает оба сразу."]</p>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="action-bar-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="action-bar-heading">@L["Action bar and group actions"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["Admiral icon action groups, logical dividers, overflow menu and a table action pane with expandable search."]
+        </RadzenText>
+        <div class="admiral-gallery__form-grid">
+            <div>
+                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0 rz-mb-2">ActionBar XL · 56 px</RadzenText>
+                <AdmiralActionBar Items="@DocumentActions"
+                                  OverflowItems="@DocumentOverflowActions"
+                                  AriaLabel="@L["Document actions"]"
+                                  OverflowAriaLabel="@L["More actions"]" />
+            </div>
+            <div>
+                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0 rz-mb-2">ActionBar M · 40 px</RadzenText>
+                <AdmiralActionBar Items="@CompactActions"
+                                  Size="AdmiralActionBarSize.Medium"
+                                  AriaLabel="@L["Compact actions"]" />
+            </div>
+        </div>
+
+        <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0 rz-mt-4 rz-mb-2">GroupActionsPane XL</RadzenText>
+        <AdmiralGroupActionsPane Actions="@GroupActions"
+                                 @bind-SearchValue="paneSearchValue"
+                                 @bind-Columns="paneColumns"
+                                 SearchPlaceholder="@L["Search table"]"
+                                 SearchAriaLabel="@L["Search table"]"
+                                 OpenSearchAriaLabel="@L["Open search"]"
+                                 CloseSearchAriaLabel="@L["Close search"]"
+                                 ConfigureColumnsAriaLabel="@L["Configure columns"]"
+                                 VisibleColumnsAriaLabel="@L["Visible columns"]"
+                                 SettingsAriaLabel="@L["Table settings"]" />
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="progress-stepper-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="progress-stepper-heading">@L["Progress stepper and page progress"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["Radzen step navigation plus Admiral desktop/mobile progress summaries and primary/error page progress."]
+        </RadzenText>
+
+        <RadzenSteps @bind-SelectedIndex="progressStepIndex" ShowStepsButtons="false" AllowStepSelect="true"
+                     class="admiral-steps-demo">
+            <Steps>
+                <RadzenStepsItem Text="@L["Details"]"><RadzenText class="rz-m-0">@L["Enter payment details."]</RadzenText></RadzenStepsItem>
+                <RadzenStepsItem Text="@L["Review"]"><RadzenText class="rz-m-0">@L["Review the payment before approval."]</RadzenText></RadzenStepsItem>
+                <RadzenStepsItem Text="@L["Approval"]"><RadzenText class="rz-m-0">@L["Approve the payment."]</RadzenText></RadzenStepsItem>
+                <RadzenStepsItem Text="@L["Complete"]"><RadzenText class="rz-m-0">@L["The payment is ready for processing."]</RadzenText></RadzenStepsItem>
+            </Steps>
+        </RadzenSteps>
+
+        <div class="admiral-gallery__form-grid admiral-progress-stepper-grid">
+            <AdmiralProgressStepper Steps="@ProgressStepNames"
+                                    @bind-SelectedIndex="progressStepIndex"
+                                    ShowActions="true"
+                                    CounterFormat="@L["Step {0} of {1}"]"
+                                    NextStepFormat="@L["Next: {0}"]"
+                                    PreviousText="@L["Previous"]"
+                                    NextText="@L["Next"]"
+                                    AriaValueFormat="@L["Step {0}: {1}"]" />
+
+            <AdmiralProgressStepper Steps="@ProgressStepNames"
+                                    @bind-SelectedIndex="progressStepIndex"
+                                    Mobile="true"
+                                    CounterFormat="@L["Step {0} of {1}"]"
+                                    NextStepFormat="@L["Next: {0}"]"
+                                    AriaValueFormat="@L["Step {0}: {1}"]" />
+        </div>
+
+        <div class="admiral-gallery__form-grid admiral-progress-page-grid">
+            <AdmiralProgressPage Label="@L["Uploading documents…"]" Value="64" />
+            <AdmiralProgressPage Label="@L["Upload failed"]" Value="42"
+                                 Status="AdmiralProgressPageStatus.Error" />
+        </div>
+
+        <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-mt-4 rz-mb-0">@L["Header progress"]</RadzenText>
+        <div class="admiral-gallery__form-grid admiral-progress-header-grid">
+            <div class="admiral-progress-header-demo">
+                <RadzenText TextStyle="TextStyle.Caption" class="rz-m-0">@L["Primary"] — @progressHeaderValue%</RadzenText>
+                <AdmiralProgressHeader Value="@progressHeaderValue" Inline="true"
+                                       AriaLabel="@L["Primary header progress"]" />
+                <RadzenButton Text="@L["Advance progress"]" Variant="Variant.Outlined"
+                              Click="AdvanceHeaderProgress" />
+            </div>
+            <div class="admiral-progress-header-demo">
+                <RadzenText TextStyle="TextStyle.Caption" class="rz-m-0">@L["Error"] — 42%</RadzenText>
+                <AdmiralProgressHeader Value="42" Inline="true"
+                                       Appearance="AdmiralProgressHeaderAppearance.Error"
+                                       AriaLabel="@L["Error header progress"]" />
+            </div>
+        </div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="data-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="data-heading">@L["Data table"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">
+            @L["The extended grid supports grouping, resizing, reordering, column picking, expandable rows and semantic row backgrounds."]
+        </RadzenText>
+        <AdmiralGroupActionsPane @bind-SearchValue="paymentGridSearchValue"
+                                 @bind-Columns="paymentGridColumns"
+                                 ShowSettings="false"
+                                 SearchPlaceholder="@L["Search table"]"
+                                 SearchAriaLabel="@L["Search table"]"
+                                 OpenSearchAriaLabel="@L["Open search"]"
+                                 CloseSearchAriaLabel="@L["Close search"]"
+                                 ConfigureColumnsAriaLabel="@L["Configure columns"]"
+                                 VisibleColumnsAriaLabel="@L["Visible columns"]"
+                                 Class="admiral-data-grid__toolbar" />
+        <RadzenDataGrid @ref="paymentsGrid" Data="FilteredPayments" TItem="PaymentRow"
+                        AllowSorting="true" AllowMultiColumnSorting="true" ShowMultiColumnSortingIndex="true"
+                        AllowFiltering="true" FilterMode="FilterMode.Advanced"
+                        FilterText="@L["Filter"]" AndOperatorText="@L["And"]" OrOperatorText="@L["Or"]"
+                        ApplyFilterText="@L["Apply"]" ClearFilterText="@L["Clear"]"
+                        EqualsText="@L["Equals"]" NotEqualsText="@L["Not equals"]"
+                        LessThanText="@L["Less than"]" LessThanOrEqualsText="@L["Less than or equals"]"
+                        GreaterThanText="@L["Greater than"]" GreaterThanOrEqualsText="@L["Greater than or equals"]"
+                        StartsWithText="@L["Starts with"]" EndsWithText="@L["Ends with"]"
+                        ContainsText="@L["Contains"]" DoesNotContainText="@L["Does not contain"]"
+                        InText="@L["In"]" NotInText="@L["Not in"]"
+                        IsNullText="@L["Is null"]" IsNotNullText="@L["Is not null"]"
+                        IsEmptyText="@L["Is empty"]" IsNotEmptyText="@L["Is not empty"]"
+                        CustomText="@L["Custom"]"
+                        AllowPaging="true" PageSize="6" AllowAlternatingRows="false"
+                        GridLines="DataGridGridLines.Both"
+                        PagerHorizontalAlign="HorizontalAlign.Center"
+                        FirstPageTitle="@L["First page"]" FirstPageAriaLabel="@L["First page"]"
+                        PrevPageTitle="@L["Previous page"]" PrevPageAriaLabel="@L["Previous page"]"
+                        NextPageTitle="@L["Next page"]" NextPageAriaLabel="@L["Next page"]"
+                        LastPageTitle="@L["Last page"]" LastPageAriaLabel="@L["Last page"]"
+                        PageTitleFormat="@L["Page {0}"]" PageAriaLabelFormat="@L["Go to page {0}"]"
+                        AllowColumnResize="true" AllowColumnReorder="true"
+                        AllGroupsExpanded="true"
+                        ExpandMode="DataGridExpandMode.Multiple" ShowExpandColumn="true" ShowExpandAll="false"
+                        RowRender="RenderPaymentRow"
+                        AllowRowSelectOnRowClick="true" SelectionMode="DataGridSelectionMode.Single"
+                        @bind-Value="selectedPayments" Responsive="true"
+                        class="admiral-data-grid admiral-table--m admiral-table--grey-header">
+            <Template Context="payment">
+                <div class="admiral-data-grid__detail">
+                    <RadzenIcon Icon="admiral:system/info-outline" />
+                    <div>
+                        <strong>@L["Payment route"]</strong>
+                        <span>@payment.Route · @L["Created by"]: @payment.CreatedBy</span>
+                    </div>
+                </div>
+            </Template>
+            <Columns>
+                <RadzenDataGridColumn TItem="PaymentRow" Property="Reference" Title="@L["Reference"]" Width="10rem"
+                                      Visible="@PaymentColumnVisible("reference")" />
+                <RadzenDataGridColumn TItem="PaymentRow" Property="Beneficiary" Title="@L["Beneficiary"]" Width="15rem"
+                                      Visible="@PaymentColumnVisible("beneficiary")" />
+                <RadzenDataGridColumn TItem="PaymentRow" Property="Amount" Title="@L["Amount"]" Width="9rem"
+                                      FormatString="{0:N2}" TextAlign="TextAlign.Right"
+                                      Visible="@PaymentColumnVisible("amount")" />
+                <RadzenDataGridColumn TItem="PaymentRow" Property="Currency" Title="@L["Currency"]" Width="7rem"
+                                      Visible="@PaymentColumnVisible("currency")" />
+                <RadzenDataGridColumn TItem="PaymentRow" Property="Status" Title="@L["Status"]" Width="9rem"
+                                      Visible="@PaymentColumnVisible("status")">
+                    <Template Context="payment">
+                        <RadzenBadge Text="@L[payment.Status]" BadgeStyle="@GetStatusStyle(payment.Status)" />
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PaymentRow" Width="4rem" TextAlign="TextAlign.Center"
+                                      Sortable="false" Filterable="false" Resizable="false" Reorderable="false">
+                    <Template Context="payment">
+                        <RadzenButton Icon="admiral:system/edit-outline"
+                                      ButtonStyle="ButtonStyle.Primary" Variant="Variant.Text"
+                                      Size="ButtonSize.Small"
+                                      aria-label="@($"{L["Edit"]}: {payment.Reference}")" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    </section>
+</div>
+
+<AdmiralDrawer @bind-Open="drawerOpen"
+               Title="@L["Payment details"]"
+               CloseAriaLabel="@L["Close drawer"]">
+    <ChildContent>
+        <RadzenStack Gap="1rem">
+            <RadzenText TextStyle="TextStyle.Body1" class="rz-m-0">
+                @L["Review the payment information before sending it for processing."]
+            </RadzenText>
+            <RadzenFormField Text="@L["Reference"]">
+                <RadzenTextBox Value="ADM-1042" ReadOnly="true" />
+            </RadzenFormField>
+            <RadzenFormField Text="@L["Beneficiary"]">
+                <RadzenTextBox Value="Northern Star LLC" ReadOnly="true" />
+            </RadzenFormField>
+            <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Outlined">
+                @L["The payment will be processed today."]
+            </RadzenAlert>
+        </RadzenStack>
+    </ChildContent>
+    <Actions>
+        <RadzenButton Text="@L["Confirm"]" Click="@(_ => drawerOpen = false)" />
+        <RadzenButton Text="@L["Cancel"]" ButtonStyle="ButtonStyle.Secondary"
+                      Click="@(_ => drawerOpen = false)" />
+    </Actions>
+</AdmiralDrawer>
+
+@code {
+    private string accountName = string.Empty;
+    private DateTime? transferDate = DateTime.Today;
+    private DateTime? paymentDate = DateTime.Today.AddDays(3);
+    private DateTime? rangeStart = DateTime.Today.AddDays(2);
+    private DateTime? rangeEnd = DateTime.Today.AddDays(4);
+    private DateTime? paymentDateTime = DateTime.Today.AddDays(1).AddHours(14).AddMinutes(30);
+    private DateTime? paymentTime = DateTime.Today.AddHours(16).AddMinutes(15);
+    private readonly string[] currencies = ["RUB", "USD", "EUR", "CNY"];
+    private string currency = "RUB";
+    private string? searchableCurrency = "USD";
+    private IEnumerable<string> selectedCurrencies = ["RUB", "EUR"];
+    private string groupedCurrency = "RUB";
+    private int? virtualizedBeneficiary = 12;
+    private decimal? amount = 12500;
+    private bool confirmed = true;
+    private bool notifications = true;
+    private bool uncheckedCheckbox;
+    private bool checkedCheckbox = true;
+    private bool? indeterminateCheckbox;
+    private bool switchOff;
+    private bool paymentDetailsExpanded = true;
+    private bool switchOn = true;
+    private string paymentMethod = "card";
+    private string deliverySpeed = "standard";
+    private string segmentedView = "list";
+    private IEnumerable<string> segmentedTools = ["filter", "sort"];
+    private string contentSection = "overview";
+    private string primaryContentSection = "active";
+    private bool sideMenuExpanded = true;
+    private bool drawerOpen;
+    private int sliderValue = 50;
+    private int compactSliderValue = 65;
+    private IEnumerable<int> priceRange = [25, 75];
+    private object selectedTreeValue = "outgoing";
+    private IEnumerable<object> checkedTreeValues = ["view-payments"];
+    private int admiralCarouselIndex;
+    private int innerCarouselIndex;
+    private int outerCarouselIndex;
+    private RadzenUpload? liveUpload;
+    private bool liveUploadHasFile;
+    private bool simulateUploadError;
+    private string liveUploadName = string.Empty;
+    private long liveUploadSize;
+    private AdmiralUploadState liveUploadState = AdmiralUploadState.Idle;
+    private double liveUploadProgress;
+    private string? liveUploadError;
+    private string paneSearchValue = string.Empty;
+    private IReadOnlyList<AdmiralPaneColumn> paneColumns = [];
+    private string paymentGridSearchValue = string.Empty;
+    private IReadOnlyList<AdmiralPaneColumn> paymentGridColumns = [];
+    private int progressStepIndex = 1;
+    private int progressHeaderValue = 48;
+    private bool showInfoNotification = true;
+    private bool showRemovableChip = true;
+    private string[] ProgressStepNames => [L["Details"], L["Review"], L["Approval"], L["Complete"]];
+
+    private static readonly AdmiralAvatarItem[] AvatarItems =
+    [
+        new("Elena Petrova", ImageUrl: "images/avatar-demo.svg"),
+        new("Alexey Morozov", Appearance: AdmiralAvatarAppearance.Neutral3),
+        new("Maria Volkova", Appearance: AdmiralAvatarAppearance.Neutral4),
+        new("Northern Star", Icon: "admiral:system/person-outline"),
+        new("Vector Lab"),
+        new("Oceanic Trade")
+    ];
+
+    private static readonly AdmiralAvatarItem[] AvatarActivityItems =
+    [
+        new("Elena Petrova", ImageUrl: "images/avatar-demo.svg", ShowActivityRing: true),
+        new("Alexey Morozov", Appearance: AdmiralAvatarAppearance.Neutral3),
+        new("Maria Volkova", Appearance: AdmiralAvatarAppearance.Neutral4, ShowActivityRing: true),
+        new("Northern Star", Icon: "admiral:system/person-outline"),
+        new("Vector Lab")
+    ];
+
+    private void AdvanceHeaderProgress() => progressHeaderValue = progressHeaderValue >= 100 ? 0 : progressHeaderValue + 13;
+    private string globalSearchQuery = string.Empty;
+    private RadzenDataGrid<PaymentRow>? paymentsGrid;
+
+    private string LiveUploadUrl => simulateUploadError ? "/upload/smoke/error" : "/upload/smoke/success";
+    private string LiveUploadIcon => Path.GetExtension(liveUploadName).Equals(".pdf", StringComparison.OrdinalIgnoreCase)
+        ? "admiral:documents/file-pdf-outline"
+        : "admiral:documents/file-outline";
+    private string LiveUploadMeta
+    {
+        get
+        {
+            var extension = Path.GetExtension(liveUploadName).TrimStart('.').ToUpperInvariant();
+            var size = liveUploadSize < 1024 * 1024
+                ? $"{Math.Max(1, Math.Ceiling(liveUploadSize / 1024d)):0} KB"
+                : $"{liveUploadSize / 1024d / 1024d:0.#} MB";
+            var status = liveUploadState switch
+            {
+                AdmiralUploadState.Loading => L["Loading"].Value,
+                AdmiralUploadState.Complete => L["Uploaded"].Value,
+                AdmiralUploadState.Error => L["Upload failed"].Value,
+                _ => L["Ready to upload"].Value
+            };
+            return $"{extension} · {size} · {status}";
+        }
+    }
+
+    private void HandleUploadChange(UploadChangeEventArgs args)
+    {
+        var file = args.Files?.FirstOrDefault();
+        liveUploadHasFile = file is not null;
+        liveUploadName = file?.Name ?? string.Empty;
+        liveUploadSize = file?.Size ?? 0;
+        liveUploadState = AdmiralUploadState.Idle;
+        liveUploadProgress = 0;
+        liveUploadError = null;
+    }
+
+    private void HandleUploadProgress(UploadProgressArgs args)
+    {
+        liveUploadState = AdmiralUploadState.Loading;
+        liveUploadProgress = args.Progress;
+    }
+
+    private void HandleUploadComplete(UploadCompleteEventArgs args)
+    {
+        liveUploadState = args.Cancelled ? AdmiralUploadState.Idle : AdmiralUploadState.Complete;
+        liveUploadProgress = args.Cancelled ? 0 : 100;
+        liveUploadError = null;
+    }
+
+    private void HandleUploadError(UploadErrorEventArgs args)
+    {
+        liveUploadState = AdmiralUploadState.Error;
+        liveUploadError = L["The server rejected the test upload"].Value;
+    }
+
+    private async Task SendLiveUpload()
+    {
+        if (liveUpload is null || !liveUploadHasFile)
+        {
+            return;
+        }
+
+        liveUploadState = AdmiralUploadState.Loading;
+        liveUploadProgress = 0;
+        liveUploadError = null;
+        await liveUpload.Upload();
+    }
+
+    private async Task ResetLiveUpload()
+    {
+        if (liveUpload is not null)
+        {
+            await liveUpload.ClearFiles();
+        }
+
+        liveUploadHasFile = false;
+        liveUploadName = string.Empty;
+        liveUploadSize = 0;
+        liveUploadState = AdmiralUploadState.Idle;
+        liveUploadProgress = 0;
+        liveUploadError = null;
+    }
+
+    private readonly CurrencyOption[] currencyOptions =
+    [
+        new("RUB", "Russian ruble", "Europe"),
+        new("EUR", "Euro", "Europe"),
+        new("GBP", "Pound sterling", "Europe"),
+        new("CNY", "Chinese yuan", "Asia"),
+        new("JPY", "Japanese yen", "Asia"),
+        new("INR", "Indian rupee", "Asia"),
+        new("USD", "US dollar", "Americas"),
+        new("CAD", "Canadian dollar", "Americas"),
+        new("BRL", "Brazilian real", "Americas")
+    ];
+
+    private readonly BeneficiaryOption[] beneficiaryOptions = Enumerable.Range(1, 250)
+        .Select(index => new BeneficiaryOption(index, $"Company {index:000} · Account {40700 + index}"))
+        .ToArray();
+
+    private string CurrencyText(CurrencyOption option) => L[option.Name];
+    private static string CurrencyValue(CurrencyOption option) => option.Code;
+    private static string CurrencyGroup(CurrencyOption option) => option.Region;
+    private string LocalizeCurrencyGroup(string group) => L[group];
+    private static bool CurrencyGroupDisabled(string group) => group == "Americas";
+    private static string BeneficiaryText(BeneficiaryOption option) => option.Name;
+    private static int? BeneficiaryValue(BeneficiaryOption option) => option.Id;
+
+    private async Task<AdmiralDropDownResult<BeneficiaryOption>> LoadBeneficiariesAsync(
+        AdmiralDropDownQuery query, CancellationToken cancellationToken)
+    {
+        await Task.Delay(450, cancellationToken);
+        if (query.SearchText.Equals("error", StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException("Smoke provider failure");
+        }
+
+        var filtered = string.IsNullOrWhiteSpace(query.SearchText)
+            ? beneficiaryOptions.AsEnumerable()
+            : beneficiaryOptions.Where(option => option.Name.Contains(query.SearchText, StringComparison.OrdinalIgnoreCase));
+        var matches = filtered.ToArray();
+        var page = matches.Skip(query.Skip).Take(query.Take ?? matches.Length).ToArray();
+        return new(page, matches.Length);
+    }
+
+    protected override void OnInitialized()
+    {
+        accountName = L["Admiral account"];
+        paneColumns =
+        [
+            new("reference", L["Reference"]),
+            new("beneficiary", L["Beneficiary"]),
+            new("amount", L["Amount"]),
+            new("created-by", L["Created by"], false)
+        ];
+        paymentGridColumns =
+        [
+            new("reference", L["Reference"]),
+            new("beneficiary", L["Beneficiary"]),
+            new("amount", L["Amount"]),
+            new("currency", L["Currency"]),
+            new("status", L["Status"])
+        ];
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && paymentsGrid is not null && paymentsGrid.Groups.Count == 0)
+        {
+            paymentsGrid.Groups.Add(new GroupDescriptor
+            {
+                Property = nameof(PaymentRow.Currency),
+                Title = L["Currency"],
+                SortOrder = SortOrder.Ascending
+            });
+
+            await paymentsGrid.Reload();
+        }
+    }
+
+    private IReadOnlyList<AdmiralSearchItem> GlobalSearchItems =>
+    [
+        new("payment-1042", "ADM-1042 · Northern Star LLC", L["Payment · 128 400 RUB"]),
+        new("payment-1043", "ADM-1043 · Vector Lab", L["Payment · 2 850 USD"]),
+        new("account-40702", L["Operating account · 40702"], L["Account · RUB"]),
+        new("beneficiary-aurora", "Aurora Systems", L["Beneficiary"]),
+        new("register-august", L["August payment register"], L["Document · PDF"])
+    ];
+
+    private string globalSearchAction = "—";
+
+    private IReadOnlyList<AdmiralActionItem> DocumentActions =>
+    [
+        new("edit", L["Edit"], "admiral:system/edit-outline"),
+        new("copy", L["Copy"], "admiral:documents/copy-outline"),
+        new("download", L["Download"], "admiral:system/download-outline", DividerBefore: true),
+        new("delete", L["Delete"], "admiral:system/delete-outline", Disabled: true)
+    ];
+
+    private IReadOnlyList<AdmiralActionItem> DocumentOverflowActions =>
+    [
+        new("export", L["Export"], "admiral:system/download-outline"),
+        new("duplicate", L["Duplicate"], "admiral:documents/copy-outline"),
+        new("delete", L["Delete"], "admiral:system/delete-outline", Disabled: true)
+    ];
+
+    private IReadOnlyList<AdmiralActionItem> CompactActions => DocumentActions.Take(3).ToArray();
+
+    private IReadOnlyList<AdmiralActionItem> GroupActions =>
+    [
+        new("approve", L["Approve"], "admiral:service/check-outline"),
+        new("export", L["Export"], "admiral:system/download-outline"),
+        new("reject", L["Reject"], "admiral:system/delete-outline", Disabled: true),
+        new("archive", L["Archive"], "admiral:documents/folder-outline", DividerBefore: true)
+    ];
+
+    private void ShowTooltip(ElementReference element, TooltipPosition position, bool small)
+    {
+        TooltipService.Open(element,
+            small ? L["Caption tooltip"] : L["Admiral tooltip"],
+            new TooltipOptions
+            {
+                Position = position,
+                Duration = null,
+                CloseTooltipOnDocumentClick = false,
+                CssClass = small ? "admiral-tooltip--small" : "admiral-tooltip--medium"
+            });
+    }
+
+    private async Task ShowModal(string dimension, string width, string size)
+    {
+        await DialogService.OpenAsync(L["{0} payment modal", dimension], dialog =>
+        @<RadzenStack Gap="1.5rem">
+            <RadzenText TextStyle="TextStyle.Body1" class="rz-m-0">
+                @L["Send 128 400 RUB to Northern Star LLC? You can review the payment before confirmation."]
+            </RadzenText>
+            <RadzenStack class="admiral-dialog__actions" Orientation="Orientation.Horizontal" Gap="1rem" JustifyContent="JustifyContent.End">
+                <RadzenButton Text="@L["Cancel"]" ButtonStyle="ButtonStyle.Secondary" Click="() => dialog.Close(false)" />
+                <RadzenButton Text="@L["Confirm"]" ButtonStyle="ButtonStyle.Primary" Click="() => dialog.Close(true)" />
+            </RadzenStack>
+        </RadzenStack>,
+        new DialogOptions
+        {
+            Width = width,
+            CssClass = $"admiral-dialog admiral-dialog--{size}",
+            CloseDialogOnOverlayClick = true,
+            ShowClose = true
+        });
+    }
+
+    private async Task ShowStatusModal(ModalStatus status)
+    {
+        var definition = GetModalStatusDefinition(status);
+        await DialogService.OpenAsync(L[definition.Title], dialog =>
+        @<RadzenStack Gap="1.5rem">
+            <RadzenIcon Icon="@definition.Icon" class="@($"admiral-dialog__status-icon admiral-dialog__status-icon--{definition.CssClass}")" />
+            <RadzenText TextStyle="TextStyle.Body1" class="rz-m-0">
+                @L[definition.Message]
+            </RadzenText>
+            <RadzenStack class="admiral-dialog__actions" Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End">
+                <RadzenButton Text="@L[definition.Action]" ButtonStyle="ButtonStyle.Primary" Click="() => dialog.Close(true)" />
+            </RadzenStack>
+        </RadzenStack>,
+        new DialogOptions
+        {
+            Width = "24rem",
+            CssClass = $"admiral-dialog admiral-dialog--s admiral-dialog--status admiral-dialog--status-{definition.CssClass}",
+            CloseDialogOnOverlayClick = true,
+            ShowClose = true
+        });
+    }
+
+    private async Task ShowScrollModal()
+    {
+        await DialogService.OpenAsync(L["Payment conditions"], dialog =>
+        @<RadzenStack Gap="1.5rem" class="admiral-dialog__scroll-layout">
+            <div class="admiral-dialog__scroll-content">
+                @foreach (var paragraph in ModalParagraphs)
+                {
+                    <RadzenText TextStyle="TextStyle.Body1">@paragraph</RadzenText>
+                }
+            </div>
+            <RadzenStack class="admiral-dialog__actions" Orientation="Orientation.Horizontal" Gap="1rem" JustifyContent="JustifyContent.End">
+                <RadzenButton Text="@L["Cancel"]" ButtonStyle="ButtonStyle.Secondary" Click="() => dialog.Close(false)" />
+                <RadzenButton Text="@L["Accept"]" ButtonStyle="ButtonStyle.Primary" Click="() => dialog.Close(true)" />
+            </RadzenStack>
+        </RadzenStack>,
+        new DialogOptions
+        {
+            Width = "37rem",
+            Height = "26rem",
+            CssClass = "admiral-dialog admiral-dialog--l admiral-dialog--scroll",
+            CloseDialogOnOverlayClick = true,
+            ShowClose = true
+        });
+    }
+
+    private string[] ModalParagraphs =>
+    [
+        L["Payment orders are processed after the available balance and recipient details are verified."],
+        L["The execution date can change when a payment is created outside the recipient bank's operating hours."],
+        L["Currency conversion uses the rate available when the payment reaches processing."],
+        L["A completed payment can be reviewed in the transaction history together with its reference number."],
+        L["If compliance review is required, the payment remains pending until the requested documents are supplied."],
+        L["By accepting these conditions you confirm that the recipient information has been checked."]
+    ];
+
+    private static ModalStatusDefinition GetModalStatusDefinition(ModalStatus status) => status switch
+    {
+        ModalStatus.Information => new("information", "admiral:service/info-outline", "Payment information", "The payment is ready for review.", "Review"),
+        ModalStatus.Warning => new("warning", "admiral:service/error-outline", "Payment requires confirmation", "The recipient details have changed. Review them before continuing.", "Review"),
+        ModalStatus.Danger => new("danger", "admiral:service/close-circle-outline", "Payment rejected", "The bank rejected the payment. Correct the details and try again.", "Try again"),
+        _ => new("success", "admiral:service/check-outline", "Payment completed", "The payment was accepted and sent for processing.", "Done")
+    };
+
+    private readonly PaymentRow[] payments =
+    [
+        new("ADM-1042", "Northern Star LLC", 128_400m, "RUB", "Completed", "VTB → VTB", "Elena Petrova"),
+        new("ADM-1043", "Vector Lab", 2_850m, "USD", "Pending", "VTB → Correspondent bank", "Alexey Morozov"),
+        new("ADM-1044", "Oceanic Trade", 46_100m, "EUR", "Rejected", "VTB → SEPA", "Elena Petrova"),
+        new("ADM-1045", "Aurora Systems", 780_000m, "RUB", "Completed", "VTB → Bank of Russia", "Maria Volkova"),
+        new("ADM-1046", "Atlas Retail", 93_200m, "RUB", "Pending", "VTB → VTB", "Alexey Morozov"),
+        new("ADM-1047", "Northwind GmbH", 18_750m, "EUR", "Completed", "VTB → SEPA", "Maria Volkova"),
+        new("ADM-1048", "Pacific Studio", 6_400m, "USD", "Rejected", "VTB → Correspondent bank", "Elena Petrova"),
+        new("ADM-1049", "Volga Logistics", 215_000m, "RUB", "Completed", "VTB → Bank of Russia", "Alexey Morozov")
+    ];
+
+    private IEnumerable<PaymentRow> FilteredPayments => string.IsNullOrWhiteSpace(paymentGridSearchValue)
+        ? payments
+        : payments.Where(payment =>
+            payment.Reference.Contains(paymentGridSearchValue, StringComparison.OrdinalIgnoreCase) ||
+            payment.Beneficiary.Contains(paymentGridSearchValue, StringComparison.OrdinalIgnoreCase) ||
+            payment.Currency.Contains(paymentGridSearchValue, StringComparison.OrdinalIgnoreCase) ||
+            L[payment.Status].Value.Contains(paymentGridSearchValue, StringComparison.OrdinalIgnoreCase));
+
+    private bool PaymentColumnVisible(string id) =>
+        paymentGridColumns.FirstOrDefault(column => column.Id == id)?.Visible ?? true;
+
+    private IList<PaymentRow> selectedPayments = [];
+
+    private static BadgeStyle GetStatusStyle(string status) => status switch
+    {
+        "Completed" => BadgeStyle.Success,
+        "Pending" => BadgeStyle.Warning,
+        _ => BadgeStyle.Danger
+    };
+
+    private static void RenderPaymentRow(RowRenderEventArgs<PaymentRow> args)
+    {
+        if (args.Data is null)
+        {
+            return;
+        }
+
+        args.Expandable = true;
+        args.Attributes["class"] = args.Data.Status switch
+        {
+            "Completed" => "admiral-table-row--success",
+            "Pending" => "admiral-table-row--warning",
+            _ => "admiral-table-row--danger"
+        };
+    }
+
+    private sealed record CurrencyOption(string Code, string Name, string Region);
+    private sealed record BeneficiaryOption(int Id, string Name);
+    private sealed record ModalStatusDefinition(string CssClass, string Icon, string Title, string Message, string Action);
+    private enum ModalStatus { Information, Success, Warning, Danger }
+    private sealed record PaymentRow(
+        string Reference,
+        string Beneficiary,
+        decimal Amount,
+        string Currency,
+        string Status,
+        string Route,
+        string CreatedBy);
+}

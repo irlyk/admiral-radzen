@@ -1,0 +1,36 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<mask id="mask_215" width="9.333333" height="9.333333" x="9.333313" y="9.333313" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<path id="Mask" d="M14 18.6666C16.5773 18.6666 18.6666 16.5773 18.6666 14C18.6666 11.4227 16.5773 9.33331 14 9.33331C11.4227 9.33331 9.33331 11.4227 9.33331 14C9.33331 16.5773 11.4227 18.6666 14 18.6666Z" fill="rgb(5,48,135)" fill-rule="evenodd" />
+			<path id="Mask" d="M18.6666 14C18.6666 11.4227 16.5773 9.33331 14 9.33331C11.4227 9.33331 9.33331 11.4227 9.33331 14C9.33331 16.5773 11.4227 18.6666 14 18.6666C16.5773 18.6666 18.6666 16.5773 18.6666 14Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_214" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Brazil" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_214)">
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="0.000000" y="4.000000" fill="rgb(5,171,65)" />
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="0.000000" y="4.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 60" d="M3.5317 14.5597C3.1257 14.297 3.1257 13.703 3.5317 13.4403L13.6379 6.90103C13.8582 6.75843 14.1418 6.75843 14.3622 6.90103L24.4683 13.4403C24.8743 13.703 24.8743 14.297 24.4683 14.5597L14.3622 21.099C14.1418 21.2416 13.8582 21.2416 13.6379 21.099L3.5317 14.5597Z" fill="rgb(253,210,22)" fill-rule="evenodd" />
+		<path id="Rectangle 60" d="M13.6379 6.90103C13.8582 6.75843 14.1418 6.75843 14.3622 6.90103L24.4683 13.4403C24.8743 13.703 24.8743 14.297 24.4683 14.5597L14.3622 21.099C14.1418 21.2416 13.8582 21.2416 13.6379 21.099L3.5317 14.5597C3.1257 14.297 3.1257 13.703 3.5317 13.4403L13.6379 6.90103Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<g id="Oval 2">
+			<path id="Mask" d="M14 18.6666C16.5773 18.6666 18.6666 16.5773 18.6666 14C18.6666 11.4227 16.5773 9.33331 14 9.33331C11.4227 9.33331 9.33331 11.4227 9.33331 14C9.33331 16.5773 11.4227 18.6666 14 18.6666Z" fill="rgb(5,48,135)" fill-rule="evenodd" />
+			<path id="Mask" d="M18.6666 14C18.6666 11.4227 16.5773 9.33331 14 9.33331C11.4227 9.33331 9.33331 11.4227 9.33331 14C9.33331 16.5773 11.4227 18.6666 14 18.6666C16.5773 18.6666 18.6666 16.5773 18.6666 14Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+			<g mask="url(#mask_215)">
+				<path id="Line" d="M0 0.391604C0.666667 -0.275062 3.07682 0.0367868 5.33333 0.391604C7.58984 0.746422 10.0081 1.73306 10.6667 2.3916" fill="rgb(215.985,215.985,215.985)" fill-opacity="0" fill-rule="evenodd" transform="matrix(0.994522,0.104528,-0.104528,0.994522,8.82086,12.3907)" />
+				<path id="Line" d="M0 0.391604C0.666667 -0.275062 3.07682 0.0367868 5.33333 0.391604C7.58984 0.746422 10.0081 1.73306 10.6667 2.3916" fill-rule="evenodd" stroke="rgb(255,255,255)" stroke-linecap="square" stroke-width="1.333333" transform="matrix(0.994522,0.104528,-0.104528,0.994522,8.82086,12.3907)" />
+			</g>
+		</g>
+	</g>
+</svg>

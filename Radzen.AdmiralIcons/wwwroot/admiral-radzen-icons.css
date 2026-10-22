@@ -1,0 +1,25 @@
+.rzi-admiral {
+  background: transparent !important;
+  color: inherit;
+  display: inline-flex;
+  font-family: inherit;
+  justify-content: center;
+  align-items: center;
+  mask: none !important;
+  -webkit-mask: none !important;
+}
+
+.rzi-admiral:not([data-admiral-icon-loaded]) {
+  width: 1em;
+  min-width: 1em;
+  height: 1em;
+  color: transparent !important;
+  line-height: 1;
+}
+
+.rzi-admiral-svg {
+  display: block;
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+}

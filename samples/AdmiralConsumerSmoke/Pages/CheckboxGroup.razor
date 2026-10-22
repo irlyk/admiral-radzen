@@ -1,0 +1,179 @@
+@page "/components/checkbox-group"
+
+<PageTitle>Admiral Checkbox groups</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Checkbox groups"
+        Description="@T("Связанный флажок, вложенные варианты, частичный выбор и размеры M/S.", "Parent and nested checkboxes, partial selection, and M/S sizes.")"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-checkboxcompositegroup--docs" />
+
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <ApiReference Title="AdmiralCheckboxCompositeGroup" Rows="@CompositeRows" />
+        <ApiReference Title="AdmiralCheckboxGroup" Rows="@GroupRows" />
+        <ApiReference Title="AdmiralCheckboxField" Rows="@FieldRows" />
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Value relationships"]</h2>
+            <p>@SmokeL["Как в исходном Admiral, группа задаёт размер и состояние disabled, а значение родительского флажка вычисляется потребителем из дочерних значений. Это оставляет выбор всех пунктов и обработку частичного выбора под контролем приложения."]</p>
+            <p>@SmokeL["Вкладка Radzen показывает прямую композицию без наследования disabled и размера: эти свойства нужно передавать каждому флажку отдельно."]</p>
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenCheckBox + Admiral theme</h2>
+            <p>@SmokeL["Обычные"] <code>RadzenCheckBox</code> @SmokeL["получают цвета и состояния из подключённой темы. Для вложенной группы используются"] <code>RadzenStack</code> @SmokeL["и отступ 32 px; автоматической передачи размера и disabled здесь нет."]</p>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <RadzenStack Gap="1rem">
+                        <label><RadzenCheckBox TValue="bool?" Value="@ThemeParentValue" Change="OnThemeAllChanged" TriState="@ThemePartial" AriaLabel="@SmokeL["Города"]" /> @SmokeL["Города"]</label>
+                        <RadzenStack Gap="1rem" Style="padding-inline-start: 32px">
+                            @for (var i = 0; i < Cities.Length; i++)
+                            {
+                                var index = i;
+                                <label><RadzenCheckBox TValue="bool?" Value="@themeSelected[index]" Change="@((bool? value) => SetThemeCity(index, value))" AriaLabel="@Cities[index]" /> @Cities[index]</label>
+                            }
+                        </RadzenStack>
+                    </RadzenStack>
+                    <span class="admiral-component-page__result" aria-live="polite">@T("Выбрано", "Selected"): @themeSelected.Count(value => value) @T("из", "of") @Cities.Length</span>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@ThemeCode" Title="@SmokeL["Razor · прямой Radzen API"]" />
+            <ApiReference Title="@SmokeL["Параметры RadzenCheckBox + тема"]" Rows="@RadzenRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <AdmiralCheckboxCompositeGroup Dimension="@dimension" Disabled="@disabled" AriaLabel="@SmokeL["Выбор городов"]">
+                        <AdmiralCheckboxField Text="@SmokeL["Города"]" Value="@ParentValue" Indeterminate="@Partial"
+                                              ExtraText="@SmokeL["Выберите один или несколько городов"]" Change="OnAllChanged" />
+                        <AdmiralCheckboxGroup>
+                            @for (var i = 0; i < Cities.Length; i++)
+                            {
+                                var index = i;
+                                <AdmiralCheckboxField Text="@Cities[index]" Value="@selected[index]"
+                                                      Error="@(error && index == 1)"
+                                                      Change="@((bool? value) => SetCity(index, value))" />
+                            }
+                        </AdmiralCheckboxGroup>
+                    </AdmiralCheckboxCompositeGroup>
+                    <span class="admiral-component-page__result" aria-live="polite">@T("Выбрано", "Selected"): @selected.Count(value => value) @T("из", "of") @Cities.Length · @T("Изменений", "Changes"): @changeCount</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Dimension"]</span><select @bind="dimension"><option value="M">M</option><option value="S">S</option></select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="error" /> @SmokeL["Error on item"]</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Admiral scenarios"]</h2>
+            <p>@SmokeL["Родительский флажок показывает indeterminate при частичном выборе; вкладка playground позволяет проверить выбор всех пунктов, disabled, ошибки и оба размера."]</p>
+        </section>
+    }
+</div>
+
+@code {
+    private static string T(string russian, string english) =>
+        System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? russian : english;
+    private const int CityCount = 4;
+    private string[] Cities => [T("Москва", "Moscow"), T("Воронеж", "Voronezh"), T("Самара", "Samara"), T("Омск", "Omsk")];
+    private readonly bool[] selected = new bool[CityCount];
+    private readonly bool[] themeSelected = new bool[CityCount];
+    private string tab = ComponentDocTabs.Admiral;
+    private AdmiralCheckboxDimension dimension = AdmiralCheckboxDimension.M;
+    private bool disabled, error;
+    private int changeCount;
+
+    private bool Partial => selected.Any(value => value) && !selected.All(value => value);
+    private bool? ParentValue => selected.Any(value => value);
+    private bool ThemePartial => themeSelected.Any(value => value) && !themeSelected.All(value => value);
+    private bool? ThemeParentValue => themeSelected.Any(value => value);
+
+    private void OnAllChanged(bool? value)
+    {
+        Array.Fill(selected, !selected.All(item => item));
+        changeCount++;
+    }
+
+    private void SetCity(int index, bool? value)
+    {
+        selected[index] = value == true;
+        changeCount++;
+    }
+
+    private void OnThemeAllChanged(bool? value) => Array.Fill(themeSelected, !themeSelected.All(item => item));
+    private void SetThemeCity(int index, bool? value) => themeSelected[index] = value == true;
+
+    private const string AdmiralCode = """
+        <AdmiralCheckboxCompositeGroup Dimension="AdmiralCheckboxDimension.M" AriaLabel="Города">
+            <AdmiralCheckboxField Text="Города" Value="@anyChecked" Indeterminate="@partiallyChecked" Change="SelectAll" />
+            <AdmiralCheckboxGroup>
+                <AdmiralCheckboxField Text="Москва" @bind-Value="moscow" />
+                <AdmiralCheckboxField Text="Самара" @bind-Value="samara" />
+            </AdmiralCheckboxGroup>
+        </AdmiralCheckboxCompositeGroup>
+        <span role="status">Выбрано: @((moscow == true ? 1 : 0) + (samara == true ? 1 : 0)) из 2</span>
+        @code {
+            private bool? moscow = false, samara = false;
+            private bool? anyChecked => moscow == true || samara == true;
+            private bool partiallyChecked => (moscow == true) != (samara == true);
+            private void SelectAll(bool? value) => moscow = samara = value == true;
+        }
+        """;
+
+    private const string ThemeCode = """
+        <RadzenStack Gap="1rem">
+            <label><RadzenCheckBox TValue="bool?" Value="@anyChecked" Change="SelectAll" TriState="@partiallyChecked" AriaLabel="Города" /> Города</label>
+            <RadzenStack Gap="1rem" Style="padding-inline-start: 32px">
+                <label><RadzenCheckBox TValue="bool?" @bind-Value="moscow" AriaLabel="Москва" /> Москва</label>
+                <label><RadzenCheckBox TValue="bool?" @bind-Value="samara" AriaLabel="Самара" /> Самара</label>
+            </RadzenStack>
+        </RadzenStack>
+        <span role="status">Выбрано: @((moscow == true ? 1 : 0) + (samara == true ? 1 : 0)) из 2</span>
+        @code {
+            private bool? moscow = false, samara = false;
+            private bool? anyChecked => moscow == true || samara == true;
+            private bool partiallyChecked => (moscow == true) != (samara == true);
+            private void SelectAll(bool? value) => moscow = samara = value == true;
+        }
+        """;
+
+    private static readonly IReadOnlyList<ApiReference.Entry> CompositeRows =
+    [
+        new("Dimension / Disabled", "AdmiralCheckboxDimension?; null / bool; false", "Размер M/S и disabled передаются вложенным группам и полям; null наследует контекст либо M."),
+        new("AriaLabel / ChildContent", "string? / RenderFragment?; null", "Доступное имя role=group и вложенная разметка."),
+        new("Class / Style / AdditionalAttributes", "string? / string? / attributes", "Класс, стиль и дополнительные атрибуты внешней группы; значений, событий и методов нет.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> GroupRows =
+    [
+        new("Label / ChildContent", "string? / RenderFragment?; null", "Необязательная видимая подпись и вложенные поля; Label также задаёт aria-label группы."),
+        new("Dimension / Disabled", "AdmiralCheckboxDimension?; null / bool; false", "Переопределяют либо наследуют размер и недоступность родительской группы."),
+        new("Class / Style / AdditionalAttributes", "string? / string? / attributes", "Класс, стиль и дополнительные атрибуты; значений, событий и методов нет.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> FieldRows =
+    [
+        new("Value / ValueChanged", "bool?; null / EventCallback<bool?>", "Значение и двусторонняя привязка поля."),
+        new("Change", "EventCallback<bool?>", "Передаёт новое bool? значение после действия пользователя."),
+        new("Indeterminate", "bool; false", "При true показывает mixed через внутренний RadzenCheckBox; дочерние значения не вычисляет."),
+        new("Text / ChildContent / ExtraText", "string? / RenderFragment? / string?", "Основная подпись или шаблон и дополнительное пояснение."),
+        new("Dimension", "AdmiralCheckboxDimension?; null", "Размер M/S; null наследует группу либо M."),
+        new("Disabled / ReadOnly / Error", "bool; false", "Блокировка, только чтение и визуальная ошибка; Disabled наследуется из группы."),
+        new("InputAttributes", "IReadOnlyDictionary<string, object>?; null", "Дополнительные атрибуты внутреннего RadzenCheckBox."),
+        new("Class / Style / AdditionalAttributes", "string? / string? / attributes", "Класс, стиль и дополнительные атрибуты внешней метки; публичных методов нет.")
+    ];
+
+    private static readonly IReadOnlyList<ApiReference.Entry> RadzenRows =
+    [
+        new("Value / Change", "bool? / EventCallback<bool?>", "Значение и обработчик изменения каждого флажка."),
+        new("TriState", "bool", "Позволяет отобразить частичный выбор через null."),
+        new("Disabled / ReadOnly", "bool", "Недоступное состояние и режим только для чтения."),
+        new("RadzenStack.Gap", "string", "Расстояние между родителем и дочерними пунктами, задаётся вручную.")
+    ];
+}

@@ -1,0 +1,73 @@
+@if (Visible)
+{
+    <div class="@CssClass"
+         role="@Role"
+         aria-live="@AriaLive"
+         @attributes="AdditionalAttributes">
+        @if (DisplayStatusIcon)
+        {
+            <RadzenIcon Icon="@StatusIcon" class="admiral-notification-item__status-icon" />
+        }
+        <div class="admiral-notification-item__message">
+            @if (!string.IsNullOrWhiteSpace(Title))
+            {
+                <div class="admiral-notification-item__title">@Title</div>
+            }
+            @if (ChildContent is not null)
+            {
+                <div class="admiral-notification-item__content">@ChildContent</div>
+            }
+            @if (Actions is not null)
+            {
+                <div class="admiral-notification-item__actions">@Actions</div>
+            }
+        </div>
+        @if (IsClosable)
+        {
+            <RadzenButton Icon="admiral:service/close-outline"
+                          Variant="Variant.Text"
+                          ButtonStyle="ButtonStyle.Base"
+                          Size="ButtonSize.Small"
+                          class="admiral-notification-item__close"
+                          aria-label="@CloseAriaLabel"
+                          Click="@(_ => Close.InvokeAsync())" />
+        }
+    </div>
+}
+
+@code {
+    [Parameter] public AdmiralNotificationStatus Status { get; set; }
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public RenderFragment? Actions { get; set; }
+    [Parameter] public bool DisplayStatusIcon { get; set; }
+    [Parameter] public bool IsClosable { get; set; }
+    [Parameter] public bool IsBorderHidden { get; set; }
+    [Parameter] public bool Elevated { get; set; }
+    [Parameter] public bool Visible { get; set; } = true;
+    [Parameter] public string CloseAriaLabel { get; set; } = "Close notification";
+    [Parameter] public EventCallback Close { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string Role => Status == AdmiralNotificationStatus.Info ? "status" : "alert";
+    private string AriaLive => Status == AdmiralNotificationStatus.Info ? "polite" : "assertive";
+    private string StatusName => Status.ToString().ToLowerInvariant();
+    private string StatusIcon => Status switch
+    {
+        AdmiralNotificationStatus.Warning => "admiral:service/error-solid",
+        AdmiralNotificationStatus.Error => "admiral:service/close-solid",
+        AdmiralNotificationStatus.Success => "admiral:service/check-solid",
+        _ => "admiral:service/info-solid"
+    };
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-notification-item",
+        $"admiral-notification-item--{StatusName}",
+        DisplayStatusIcon ? "admiral-notification-item--with-icon" : null,
+        IsClosable ? "admiral-notification-item--closable" : null,
+        IsBorderHidden ? "admiral-notification-item--borderless" : null,
+        Elevated ? "admiral-notification-item--elevated" : null,
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

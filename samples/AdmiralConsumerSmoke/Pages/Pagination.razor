@@ -1,0 +1,133 @@
+@page "/components/pagination"
+
+<PageTitle>Admiral Pagination</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Pagination"
+        Description="@T("Постраничный переход: полный и компактный PaginationOne, а также индикатор разделов PaginationSimple.", "Page navigation with full and compact PaginationOne modes and the PaginationSimple section indicator.")"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-data-table-paginationone--docs" />
+    <p>@T("Официальный пример показывает PaginationOne. PaginationSimple в React Storybook помечен как устаревший; здесь он сохранён как совместимый компонент для индикатора разделов.", "The official story shows PaginationOne. React Storybook marks PaginationSimple as deprecated; this page retains it as a compatible section indicator.")</p>
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenPager + Admiral theme</h2>
+            <p>@T("Прямой RadzenPager поддерживает собственную нумерацию страниц и параметры PageSizeOptions. Тема меняет оформление, но не добавляет режим Simple или индикатор разделов.", "Direct RadzenPager provides its own page-number controls and PageSizeOptions. The theme styles it but does not add Simple mode or the section indicator.")</p>
+            <div class="admiral-component-playground" data-testid="pagination-radzen-demo">
+                <div class="admiral-component-playground__preview pagination-doc__preview" tabindex="0" aria-label="@T("Прокручиваемый пример RadzenPager", "Scrollable RadzenPager example")">
+                    <RadzenPager Count="93" PageSize="@directPageSize" PageSizeOptions="@pageSizes"
+                                 ShowPagingSummary="true" PageChanged="OnDirectPageChanged"
+                                 PageSizeChanged="OnDirectPageSizeChanged" />
+                    <span class="admiral-component-page__result" role="status">@T("Страница", "Page"): @directPage; @T("размер", "size"): @directPageSize</span>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · Radzen API" />
+            <ApiReference Title="RadzenPager" Rows="@DirectRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Usage"]</h2>
+            <p>@T("У PaginationOne режим Simple скрывает выбор размера и номера страницы, сохраняя диапазон и кнопки перехода. Page и PageSize хранятся в приложении; callbacks возвращают новые значения. PaginationSimple — отдельный индикатор разделов с индексом от нуля.", "PaginationOne Simple hides the page-size and page selectors but keeps the range and navigation buttons. The application owns Page and PageSize; callbacks return new values. PaginationSimple is a separate section indicator with a zero-based index.")</p>
+            <p>@T("При смене размера страницы компонент сначала вызывает PageSizeChanged, а если текущая страница не первая — затем PageChanged(1). Обработчики приложения должны сохранить оба значения; сам компонент не меняет управляемые параметры Page и PageSize. Программная установка параметров не вызывает callbacks.", "When page size changes, the component calls PageSizeChanged first and, if the current page was not the first, then PageChanged(1). Application handlers must retain both values; the component does not mutate the controlled Page and PageSize parameters. Setting parameters programmatically does not invoke callbacks.")</p>
+            <p>@T("В закреплённой React-версии есть showPageNumberInput и preselectedModeActive. У AdmiralPaginationOne пока нет их аналогов: номер выбирается из списка, а режим предварительного выбора не поддерживается.", "The pinned React version has showPageNumberInput and preselectedModeActive. AdmiralPaginationOne currently has no equivalents: users select page numbers from a list, and preselected mode is unavailable.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralPaginationOne" Rows="@Rows" />
+            <ApiReference Title="AdmiralPaginationSimple" Rows="@SimpleRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground" data-testid="pagination-admiral-demo">
+                <div class="admiral-component-playground__preview pagination-doc__preview" tabindex="0" aria-label="@T("Прокручиваемый пример PaginationOne", "Scrollable PaginationOne example")">
+                    <AdmiralPaginationOne @bind-Page="page" @bind-PageSize="pageSize" TotalItems="93"
+                                          PageSizeOptions="@pageSizes" Simple="@simple" Size="@size"
+                                          ItemsPerPageText="@T("Элементов на странице", "Items per page")"
+                                          ItemRangeFormat="@T("{0}–{1} из {2}", "{0}–{1} of {2}")"
+                                          PageRangeFormat="@T("из {0} страниц", "of {0} pages")"
+                                          AriaLabel="@T("Страницы результатов", "Result pages")"
+                                          PreviousPageAriaLabel="@T("Предыдущая страница", "Previous page")"
+                                          NextPageAriaLabel="@T("Следующая страница", "Next page")"
+                                          PageSelectAriaLabelFormat="@T("Страница {0} из {1}", "Page {0} of {1}")"
+                                          PageSizeAriaLabel="@T("Элементов на странице", "Items per page")" />
+                    <span class="admiral-component-page__result" role="status">@T("Страница", "Page"): @(page); @T("размер", "size"): @pageSize</span>
+                    <AdmiralPaginationSimple Count="4" @bind-CurrentIndex="sectionIndex"
+                                             AriaLabel="@T("Разделы", "Sections")"
+                                             ItemAriaLabelFormat="@T("Раздел {0}", "Section {0}")" />
+                    <span class="admiral-component-page__result" role="status">@T("Раздел", "Section"): @(sectionIndex + 1)</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="simple" /> Simple</label>
+                    <label><span>@SmokeL["Size"]</span><select @bind="size"><option value="Medium">Medium</option><option value="Small">Small</option></select></label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <p>@T("На узком экране прокрутите пример по горизонтали, чтобы увидеть все элементы полного режима.", "On a narrow screen, scroll the example horizontally to reach every control in full mode.")</p>
+            <p><a href="/tables">@T("Посмотреть оба режима в таблице", "See both modes in Table")</a></p>
+        </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private int page = 1, pageSize = 10, sectionIndex, directPage = 1, directPageSize = 10;
+    private bool simple;
+    private AdmiralPaginationSize size = AdmiralPaginationSize.Medium;
+    private readonly int[] pageSizes = [10, 20, 50];
+    private static bool IsRussian => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru";
+    private static string T(string ru, string en) => IsRussian ? ru : en;
+    private void OnDirectPageChanged(PagerEventArgs args) => directPage = args.PageIndex + 1;
+    private void OnDirectPageSizeChanged(int value) { directPageSize = value; directPage = 1; }
+
+    private string AdmiralCode => $$"""
+        <AdmiralPaginationOne @bind-Page="page" @bind-PageSize="pageSize"
+                              TotalItems="93" PageSizeOptions="@(new[] { 10, 20, 50 })"
+                              Simple="false"
+                              ItemsPerPageText="{{T("Элементов на странице", "Items per page")}}"
+                              ItemRangeFormat="{{T("{0}–{1} из {2}", "{0}–{1} of {2}")}}"
+                              PageRangeFormat="{{T("из {0} страниц", "of {0} pages")}}"
+                              AriaLabel="{{T("Страницы результатов", "Result pages")}}"
+                              PreviousPageAriaLabel="{{T("Предыдущая страница", "Previous page")}}"
+                              NextPageAriaLabel="{{T("Следующая страница", "Next page")}}"
+                              PageSelectAriaLabelFormat="{{T("Страница {0} из {1}", "Page {0} of {1}")}}"
+                              PageSizeAriaLabel="{{T("Элементов на странице", "Items per page")}}" />
+        <AdmiralPaginationSimple Count="4" @bind-CurrentIndex="sectionIndex"
+                                 AriaLabel="{{T("Разделы", "Sections")}}"
+                                 ItemAriaLabelFormat="{{T("Раздел {0}", "Section {0}")}}" />
+        <span role="status">{{T("Страница", "Page")}} @(page) · {{T("Раздел", "Section")}} @(sectionIndex + 1)</span>
+        @code { private int page = 1, pageSize = 10, sectionIndex; }
+        """;
+    private const string DirectCode = """
+        <RadzenPager Count="93" PageSize="10" PageSizeOptions="@(new[] { 10, 20, 50 })"
+                     ShowPagingSummary="true" PageChanged="OnPageChanged" />
+        <span role="status">Page @(page)</span>
+        @code {
+            private int page = 1;
+            private void OnPageChanged(PagerEventArgs args) => page = args.PageIndex + 1;
+        }
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> Rows =
+    [
+        new("Page / PageChanged", "int; 1 / EventCallback<int>", "One-based current page and change callback."),
+        new("PageSize / PageSizeChanged", "int; 10 / EventCallback<int>", "Items per page and change callback; a size change resets the page to 1."),
+        new("TotalItems / PageSizeOptions", "int; 0 / IReadOnlyList<int>; [10,20,50,100]", "Total result count and available sizes."),
+        new("Simple / Size", "bool; false / AdmiralPaginationSize; Medium", "Compact mode and Small or Medium geometry."),
+        new("PageSelectDisabled / PageSizeSelectDisabled", "bool; false", "Disable either selector without disabling previous/next buttons."),
+        new("AriaLabel / PreviousPageAriaLabel / NextPageAriaLabel", "string", "Accessible names for navigation and buttons.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> SimpleRows =
+    [
+        new("Count / CurrentIndex", "int; 1 / int; 0", "Section count and zero-based selected index."),
+        new("CurrentIndexChanged", "EventCallback<int>", "Reports the selected section index."),
+        new("AriaLabel / ItemAriaLabelFormat", "string", "Accessible names for the indicator and its buttons.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> DirectRows =
+    [
+        new("Count / PageSize / PageSizeOptions", "int / int / IEnumerable<int>", "Total item count and direct Radzen page-size controls."),
+        new("PageChanged / PageSizeChanged", "EventCallback<PagerEventArgs> / EventCallback<int>", "Radzen events; PageIndex in PagerEventArgs is zero-based."),
+        new("ShowPagingSummary", "bool; false", "Displays the Radzen summary text.")
+    ];
+}

@@ -1,0 +1,59 @@
+@inject TooltipService TooltipService
+
+<span @ref="target" class="@CssClass" tabindex="@TabIndex"
+      @onmouseenter="MouseEnter" @onmouseleave="MouseLeave"
+      @onfocusin="FocusIn" @onfocusout="FocusOut" @onkeydown="HandleKeyDown"
+      @attributes="AdditionalAttributes">@ChildContent</span>
+
+@code {
+    private ElementReference target;
+    private bool hovered;
+    private bool focused;
+
+    [Parameter, EditorRequired] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? Text { get; set; }
+    [Parameter] public RenderFragment? Content { get; set; }
+    [Parameter] public AdmiralTooltipDimension Dimension { get; set; }
+    [Parameter] public AdmiralTooltipPosition Position { get; set; } = AdmiralTooltipPosition.Bottom;
+    [Parameter] public int Delay { get; set; } = 1500;
+    [Parameter] public int? Duration { get; set; }
+    [Parameter] public bool Focusable { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private int? TabIndex => Focusable ? 0 : null;
+    private TooltipPosition RadzenPosition => Position switch
+    {
+        AdmiralTooltipPosition.Top => TooltipPosition.Top,
+        AdmiralTooltipPosition.Right => TooltipPosition.Right,
+        AdmiralTooltipPosition.Left => TooltipPosition.Left,
+        _ => TooltipPosition.Bottom
+    };
+
+    private void MouseEnter() { hovered = true; Open(); }
+    private void MouseLeave() { hovered = false; CloseIfInactive(); }
+    private void FocusIn() { focused = true; Open(); }
+    private void FocusOut() { focused = false; CloseIfInactive(); }
+    private void CloseIfInactive() { if (!hovered && !focused) TooltipService.Close(); }
+    private void HandleKeyDown(KeyboardEventArgs args) { if (args.Key == "Escape") TooltipService.Close(); }
+
+    private void Open()
+    {
+        TooltipService.Close();
+        var options = new TooltipOptions
+        {
+            Position = RadzenPosition,
+            Delay = focused ? 0 : Delay,
+            Duration = Duration,
+            CloseTooltipOnDocumentClick = false,
+            CssClass = Dimension == AdmiralTooltipDimension.S ? "admiral-tooltip--small" : "admiral-tooltip--medium"
+        };
+
+        if (Content is not null)
+            TooltipService.Open(target, _ => Content, options);
+        else if (!string.IsNullOrWhiteSpace(Text))
+            TooltipService.Open(target, Text, options);
+    }
+
+    private string CssClass => string.Join(' ', new[] { "admiral-tooltip-target", Class }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

@@ -1,0 +1,23 @@
+<RadzenLayout @attributes="AdditionalAttributes" class="@CssClass" Style="@CombinedStyle">
+    <CascadingValue Value="@layoutContext">
+        @if (Header is not null)
+        {
+            <RadzenHeader class="@HeaderCssClass" Style="@HeaderStyle">
+                <AdmiralGrid Class="admiral-layout__header-grid">@Header</AdmiralGrid>
+            </RadzenHeader>
+        }
+
+        @if (HasSideMenu)
+        {
+            <RadzenSidebar id="@SideMenuId" class="@SideMenuCssClass" Style="@SideMenuStyle" Responsive="false" Expanded="true"
+                           aria-label="@SideMenuAriaLabel">
+                <div class="admiral-layout__side-menu-inner">@SideMenu</div>
+            </RadzenSidebar>
+            <button type="button" class="admiral-layout__overlay" aria-label="@CloseMenuAriaLabel" @onclick="CloseMenu"></button>
+        }
+
+        <RadzenBody class="@BodyCssClass" Style="@BodyStyle">
+            <AdmiralGrid Class="admiral-layout__body-grid">@(Content ?? ChildContent)</AdmiralGrid>
+        </RadzenBody>
+    </CascadingValue>
+</RadzenLayout>

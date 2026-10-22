@@ -1,0 +1,38 @@
+<div class="@CssClass" style="--admiral-side-menu-level:@Depth" @attributes="AdditionalAttributes">
+    <div class="admiral-side-menu-item__row">
+        @if (!string.IsNullOrWhiteSpace(Href) && !Disabled)
+        {
+            <NavLink href="@Href" Match="@Match" ActiveClass="admiral-side-menu-item__link--active"
+                     class="admiral-side-menu-item__link" aria-label="@EffectiveAriaLabel"
+                     @onclick="HandleNavigateAsync">
+                @ItemContent
+            </NavLink>
+        }
+        else
+        {
+            <button type="button" class="admiral-side-menu-item__link" disabled="@Disabled"
+                    aria-label="@EffectiveAriaLabel" aria-expanded="@(HasChildren ? (expanded ? "true" : "false") : null)"
+                    aria-controls="@(HasChildren ? childrenId : null)" @onclick="ToggleExpandedAsync">
+                @ItemContent
+            </button>
+        }
+
+        @if (HasChildren && !string.IsNullOrWhiteSpace(Href))
+        {
+            <button type="button" class="admiral-side-menu-item__expand"
+                    aria-label="@ExpandAriaLabel" aria-expanded="@(expanded ? "true" : "false")" aria-controls="@childrenId"
+                    disabled="@Disabled" @onclick="ToggleExpandedAsync">
+                <AdmiralIcon Icon="admiral:system/chevron-down-outline" />
+            </button>
+        }
+    </div>
+
+    @if (HasChildren)
+    {
+        <div id="@childrenId" class="admiral-side-menu-item__children">
+            <CascadingValue Name="AdmiralMenuDepth" Value="@(Depth + 1)">
+                @ChildContent
+            </CascadingValue>
+        </div>
+    }
+</div>

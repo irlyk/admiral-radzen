@@ -1,0 +1,50 @@
+<div class="@CssClass" role="group" @attributes="AdditionalAttributes">
+    @foreach (var item in VisibleItems)
+    {
+        <AdmiralAvatar Name="@item.Name"
+                       Initials="@item.Initials"
+                       ImageUrl="@item.ImageUrl"
+                       Icon="@item.Icon"
+                       Size="@Size"
+                       Appearance="@(item.Appearance ?? Appearance)"
+                       Status="@(Items.Count == 1 ? item.Status : AdmiralAvatarStatus.None)"
+                       WithActivityRing="@WithActivityRing"
+                       ShowActivityRing="@item.ShowActivityRing"
+                       Disabled="@item.Disabled"
+                       Click="@(_ => SelectItem(item))" />
+    }
+    @if (HiddenCount > 0)
+    {
+        <AdmiralAvatar Name="@string.Format(System.Globalization.CultureInfo.CurrentCulture, OverflowAriaLabel, HiddenCount)"
+                       Initials="@($"+{HiddenCount}")"
+                       Size="@Size"
+                       Appearance="@Appearance"
+                       WithActivityRing="@WithActivityRing"
+                       ShowTooltip="false"
+                       Click="@(_ => OverflowClick.InvokeAsync())" />
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<AdmiralAvatarItem> Items { get; set; } = [];
+    [Parameter] public AdmiralAvatarSize Size { get; set; } = AdmiralAvatarSize.Xl;
+    [Parameter] public AdmiralAvatarAppearance Appearance { get; set; } = AdmiralAvatarAppearance.Neutral2;
+    [Parameter] public bool WithActivityRing { get; set; }
+    [Parameter] public int MaxVisible { get; set; } = int.MaxValue;
+    [Parameter] public string OverflowAriaLabel { get; set; } = "{0} hidden users";
+    [Parameter] public EventCallback<AdmiralAvatarItem> ItemClick { get; set; }
+    [Parameter] public EventCallback OverflowClick { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private int VisibleCount => Math.Min(Items.Count, Math.Max(0, MaxVisible - (Items.Count > MaxVisible ? 1 : 0)));
+    private int HiddenCount => Items.Count - VisibleCount;
+    private IEnumerable<AdmiralAvatarItem> VisibleItems => Items.Take(VisibleCount);
+    private Task SelectItem(AdmiralAvatarItem item) => ItemClick.InvokeAsync(item);
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-avatar-group",
+        WithActivityRing ? "admiral-avatar-group--activity" : null,
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

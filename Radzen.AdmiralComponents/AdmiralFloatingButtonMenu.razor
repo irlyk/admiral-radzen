@@ -1,0 +1,73 @@
+@using Radzen.Admiral.Components.Internal
+
+@if (EffectiveOpen)
+{
+    <button type="button" class="admiral-floating-button-menu__backdrop"
+            aria-label="@CloseMenuAriaLabel" @onclick="Close"></button>
+}
+<div class="@CssClass" style="@Style" @onkeydown="OnKeyDown" @attributes="AdditionalAttributes">
+    <div id="@menuId" class="admiral-floating-button-menu__items" aria-hidden="@(EffectiveOpen ? "false" : "true")" inert="@(!EffectiveOpen)">
+        <CascadingValue Value="@Context" IsFixed="false">@ChildContent</CascadingValue>
+    </div>
+    <AdmiralFloatingButton @ref="trigger" Icon="@(EffectiveOpen ? CloseIcon : Icon)" AriaLabel="@AriaLabel"
+                           Size="@Size" Appearance="@Appearance" Fixed="false"
+                           BadgeCount="@BadgeCount" BadgeDot="@BadgeDot" BadgeAppearance="@BadgeAppearance"
+                           Disabled="@Disabled" Click="Toggle"
+                           aria-expanded="@(EffectiveOpen ? "true" : "false")" aria-controls="@menuId" />
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Icon { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string AriaLabel { get; set; } = string.Empty;
+    [Parameter] public string CloseIcon { get; set; } = "admiral:service/close-outline";
+    [Parameter] public string CloseMenuAriaLabel { get; set; } = "Close menu";
+    [Parameter] public AdmiralFloatingButtonSize Size { get; set; } = AdmiralFloatingButtonSize.Medium;
+    [Parameter] public AdmiralFloatingButtonAppearance Appearance { get; set; }
+    [Parameter] public AdmiralFloatingButtonBadgeAppearance BadgeAppearance { get; set; }
+    [Parameter] public int? BadgeCount { get; set; }
+    [Parameter] public bool BadgeDot { get; set; }
+    [Parameter] public bool Fixed { get; set; } = true;
+    [Parameter] public bool Mobile { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool IsOpen { get; set; }
+    [Parameter] public EventCallback<bool> IsOpenChanged { get; set; }
+    [Parameter] public EventCallback<bool> OpenChanged { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private readonly string menuId = $"admiral-floating-button-menu-{Guid.NewGuid():N}";
+    private bool internalOpen;
+    private AdmiralFloatingButton? trigger;
+    private bool EffectiveOpen => !Disabled && (IsOpenChanged.HasDelegate ? IsOpen : internalOpen);
+    private AdmiralFloatingButtonMenuContext Context => new(Size);
+    private Task Toggle(MouseEventArgs _) => SetOpen(!EffectiveOpen);
+    private Task Close() => SetOpen(false);
+    private async Task OnKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key != "Escape" || !EffectiveOpen) return;
+        // Collapsed actions become inert, so return focus before the browser
+        // drops it to body. Mouse outside-clicks should not steal focus.
+        if (trigger is not null) await trigger.FocusAsync();
+        await Close();
+    }
+
+    private async Task SetOpen(bool value)
+    {
+        if (Disabled || value == EffectiveOpen) return;
+        if (!IsOpenChanged.HasDelegate) internalOpen = value;
+        await IsOpenChanged.InvokeAsync(value);
+        await OpenChanged.InvokeAsync(value);
+    }
+
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-floating-button-menu",
+        Size == AdmiralFloatingButtonSize.Xl ? "admiral-floating-button-menu--xl" : "admiral-floating-button-menu--m",
+        Fixed ? "admiral-floating-button-menu--fixed" : "admiral-floating-button-menu--inline",
+        Mobile ? "admiral-floating-button-menu--mobile" : null,
+        EffectiveOpen ? "admiral-floating-button-menu--open" : null,
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

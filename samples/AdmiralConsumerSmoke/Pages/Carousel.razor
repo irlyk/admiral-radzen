@@ -1,0 +1,206 @@
+@page "/components/carousel"
+
+<PageTitle>Admiral Carousel</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Carousel"
+        Description="@T("Внутренняя и внешняя навигация, перелистывание, автосмена и индикаторы слайдов.", "Inner and outer navigation, manual and automatic slide changes, and pagination indicators.")"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-carousel--docs" />
+
+    <ComponentDocTabs @bind-Value="documentationTab" />
+    @if (documentationTab == ComponentDocTabs.Api)
+    {
+        <ApiReference Title="AdmiralCarousel" Rows="@AdmiralRows" />
+        <ApiReference Title="AdmiralCarouselItem" Rows="@ItemRows" />
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Behavior and limitations"]</h2>
+            <p>@SmokeL["Содержимое задаётся через"] <code>Items</code> @SmokeL["и"] <code>AdmiralCarouselItem</code>@SmokeL[". Высоту области задавайте явно для собственного содержимого. На последнем слайде стрелка Radzen циклически возвращает к первому; скрытие конечной стрелки пока не реализовано."]</p>
+            <p>@SmokeL["Официальный Admiral также выделяет"] <a href="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-carouselslider--docs" target="_blank" rel="noreferrer">CarouselSlider</a> @SmokeL["как отдельный компонент индикаторов. Здесь индикаторы встроены в карусель Radzen."]</p>
+        </section>
+    }
+    else if (documentationTab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenCarousel + Admiral theme</h2>
+            <p>@SmokeL["Прямой Radzen API остаётся доступным: внешний вид задают классы"] <code>admiral-carousel</code> @SmokeL["и"] <code>admiral-carousel--inner|outer</code>@SmokeL[". Этот пример не использует Admiral-обёртку."]</p>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <RadzenCarousel @bind-SelectedIndex="radzenIndex" Auto="@radzenAuto" Interval="@radzenInterval"
+                                    AllowNavigation="@radzenNavigation" AllowPaging="@radzenPaging" AllowScroll="true"
+                                    PagerOverlay="@(!radzenOuter)" PagerPosition="PagerPosition.Bottom"
+                                    PrevText="" NextText="" AnimationDuration="300"
+                                    class="@(radzenOuter ? "admiral-carousel admiral-carousel--outer" : "admiral-carousel admiral-carousel--inner")"
+                                    Style="height: 16rem; width: 100%;">
+                        <Items>
+                            @foreach (var slide in Slides)
+                            {
+                                <RadzenCarouselItem @key="slide.Title">
+                                    <article class="@(radzenOuter ? "admiral-carousel-slide" : "admiral-carousel-slide admiral-carousel-slide--accent")">
+                                        <p class="admiral-carousel-slide__eyebrow">@slide.Eyebrow</p>
+                                        <h3 class="admiral-carousel-slide__title">@slide.Title</h3>
+                                        <p class="admiral-carousel-slide__body">@slide.Description</p>
+                                    </article>
+                                </RadzenCarouselItem>
+                            }
+                        </Items>
+                    </RadzenCarousel>
+                    <span class="admiral-component-page__result" aria-live="polite">SelectedIndex: @radzenIndex</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="radzenOuter" /> Outer</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="radzenNavigation" /> AllowNavigation</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="radzenPaging" /> AllowPaging</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="radzenAuto" /> Auto</label>
+                    <label><span>@SmokeL["Interval, ms"]</span><input type="number" min="1000" step="500" @bind="radzenInterval" /></label>
+                    <label><span>SelectedIndex</span><input type="number" min="0" max="2" @bind="radzenIndex" /></label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@ThemeCode" Title="@SmokeL["Razor · прямой Radzen API"]" />
+            <ApiReference Title="@SmokeL["Параметры RadzenCarousel + тема"]" Rows="@RadzenRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <AdmiralCarousel @bind-SelectedIndex="selectedIndex" Change="OnChange"
+                                     Appearance="@appearance" Auto="@auto" Interval="@interval"
+                                     AllowNavigation="@navigation" AllowPaging="@paging" AllowScroll="@scroll"
+                                     Height="16rem" PreviousText="@T("Предыдущий слайд", "Previous slide")"
+                                     NextText="@T("Следующий слайд", "Next slide")" PagerButtonAriaLabelFormat="@T("Перейти к слайду {0}", "Go to slide {0}")">
+                        <Items>
+                            @foreach (var slide in Slides)
+                            {
+                                <AdmiralCarouselItem @key="slide.Title">
+                                    <article class="@(appearance == AdmiralCarouselAppearance.Outer ? "admiral-carousel-slide" : "admiral-carousel-slide admiral-carousel-slide--accent")">
+                                        <p class="admiral-carousel-slide__eyebrow">@slide.Eyebrow</p>
+                                        <h3 class="admiral-carousel-slide__title">@slide.Title</h3>
+                                        <p class="admiral-carousel-slide__body">@slide.Description</p>
+                                    </article>
+                                </AdmiralCarouselItem>
+                            }
+                        </Items>
+                    </AdmiralCarousel>
+                    <span class="admiral-component-page__result" aria-live="polite">SelectedIndex: @selectedIndex · Change: @lastChange</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Appearance"]</span><select @bind="appearance"><option value="Inner">Inner</option><option value="Outer">Outer</option></select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="navigation" /> AllowNavigation</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="paging" /> AllowPaging</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="scroll" /> AllowScroll</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="auto" /> Auto</label>
+                    <label><span>@SmokeL["Interval, ms"]</span><input type="number" min="1000" step="500" @bind="interval" /></label>
+                    <label><span>SelectedIndex</span><input type="number" min="0" max="2" @bind="selectedIndex" /></label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="@SmokeL["Razor · текущая конфигурация"]" />
+        </section>
+
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Admiral scenarios"]</h2>
+            <p>@SmokeL["Отдельно сравните внутреннюю навигацию на акцентном фоне и внешнюю навигацию на обычной поверхности; в playground доступны автосмена и ручной выбор слайда."]</p>
+            <div class="admiral-gallery__form-grid">
+                <AdmiralCarousel Appearance="AdmiralCarouselAppearance.Inner" Height="16rem" Auto="false">
+                    <Items>
+                        <AdmiralCarouselItem><article class="admiral-carousel-slide admiral-carousel-slide--accent"><h3 class="admiral-carousel-slide__title">@SmokeL["Inner navigation"]</h3><p class="admiral-carousel-slide__body">@SmokeL["Стрелки и индикаторы находятся поверх слайда."]</p></article></AdmiralCarouselItem>
+                        <AdmiralCarouselItem><article class="admiral-carousel-slide admiral-carousel-slide--accent"><h3 class="admiral-carousel-slide__title">@SmokeL["Second slide"]</h3></article></AdmiralCarouselItem>
+                    </Items>
+                </AdmiralCarousel>
+                <AdmiralCarousel Appearance="AdmiralCarouselAppearance.Outer" Height="16rem" Auto="false">
+                    <Items>
+                        <AdmiralCarouselItem><article class="admiral-carousel-slide"><h3 class="admiral-carousel-slide__title">@SmokeL["Outer navigation"]</h3><p class="admiral-carousel-slide__body">@SmokeL["Стрелки и индикаторы вынесены за содержимое."]</p></article></AdmiralCarouselItem>
+                        <AdmiralCarouselItem><article class="admiral-carousel-slide"><h3 class="admiral-carousel-slide__title">@SmokeL["Second slide"]</h3></article></AdmiralCarouselItem>
+                    </Items>
+                </AdmiralCarousel>
+            </div>
+        </section>
+    }
+</div>
+
+@code {
+    private readonly record struct Slide(string Eyebrow, string Title, string Description);
+    private static string T(string russian, string english) =>
+        System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? russian : english;
+    private Slide[] Slides =>
+    [
+        new(T("Платежи", "Payments"), T("Быстрые переводы", "Fast transfers"), T("Создавайте и подтверждайте платежи в одном месте.", "Create and approve payments in one place.")),
+        new(T("Аналитика", "Analytics"), T("Движение средств", "Cash flow"), T("Следите за поступлениями и расходами по периодам.", "Track income and spending by period.")),
+        new(T("Документы", "Documents"), T("Выписки готовы", "Statements are ready"), T("Загрузите актуальные документы и отчёты.", "Download current statements and reports."))
+    ];
+
+    private string documentationTab = ComponentDocTabs.Admiral;
+    private AdmiralCarouselAppearance appearance = AdmiralCarouselAppearance.Outer;
+    private bool navigation = true, paging = true, scroll = true, auto;
+    private int selectedIndex, lastChange = -1;
+    private double interval = 4000;
+    private bool radzenOuter = true, radzenNavigation = true, radzenPaging = true, radzenAuto;
+    private int radzenIndex;
+    private double radzenInterval = 4000;
+
+    private void OnChange(int index) => lastChange = index;
+
+    private string AdmiralCode => $$"""
+        <AdmiralCarousel Appearance="AdmiralCarouselAppearance.{{appearance}}"
+                         @bind-SelectedIndex="selectedIndex" Change="OnChange"
+                         Auto="{{auto.ToString().ToLowerInvariant()}}" Interval="{{interval}}"
+                         AllowNavigation="{{navigation.ToString().ToLowerInvariant()}}"
+                         AllowPaging="{{paging.ToString().ToLowerInvariant()}}"
+                         AllowScroll="{{scroll.ToString().ToLowerInvariant()}}" Height="16rem">
+            <Items>
+                <AdmiralCarouselItem>Первый слайд</AdmiralCarouselItem>
+                <AdmiralCarouselItem>Второй слайд</AdmiralCarouselItem>
+            </Items>
+        </AdmiralCarousel>
+        <span role="status">Selected: @selectedIndex · Change: @lastChange</span>
+        @code {
+            private int selectedIndex, lastChange = -1;
+            private void OnChange(int index) => lastChange = index;
+        }
+        """;
+
+    private string ThemeCode => $$"""
+        <RadzenCarousel @bind-SelectedIndex="radzenIndex" Auto="{{radzenAuto.ToString().ToLowerInvariant()}}"
+                        Interval="{{radzenInterval}}" AllowNavigation="{{radzenNavigation.ToString().ToLowerInvariant()}}"
+                        AllowPaging="{{radzenPaging.ToString().ToLowerInvariant()}}" AllowScroll="true"
+                        PagerOverlay="{{(!radzenOuter).ToString().ToLowerInvariant()}}"
+                        PagerPosition="PagerPosition.Bottom"
+                        class="admiral-carousel admiral-carousel--{{(radzenOuter ? "outer" : "inner")}}" Style="height:16rem">
+            <Items><RadzenCarouselItem>Первый слайд</RadzenCarouselItem><RadzenCarouselItem>Второй слайд</RadzenCarouselItem></Items>
+        </RadzenCarousel>
+        <span role="status">Selected: @radzenIndex</span>
+        @code { private int radzenIndex; }
+        """;
+
+    private static readonly IReadOnlyList<ApiReference.Entry> AdmiralRows =
+    [
+        new("Items", "RenderFragment?; null", "Child markup containing AdmiralCarouselItem components, not an IEnumerable data source."),
+        new("SelectedIndex / SelectedIndexChanged", "int; 0 / EventCallback<int>", "Zero-based selected slide and two-way binding callback."),
+        new("Change", "EventCallback<int>", "Reports the selected slide index after navigation."),
+        new("Appearance", "AdmiralCarouselAppearance; Inner", "Inner overlays navigation; Outer places controls outside the slide."),
+        new("Auto / Interval", "bool; false / double; 4000", "Automatic slide advance and interval in milliseconds."),
+        new("AnimationDuration", "double?; 300", "Radzen slide animation duration in milliseconds; null is forwarded."),
+        new("AllowNavigation / AllowPaging / AllowScroll", "bool; true", "Arrows, pager buttons and swipe/scroll navigation."),
+        new("ItemsPerPage", "int; 1", "Number of items Radzen renders per carousel page."),
+        new("PagerButtonAriaLabelFormat", "string; Go to slide {0}", "Accessible pager button name with one index placeholder."),
+        new("PreviousText / NextText", "string; Previous slide / Next slide", "Accessible navigation button text."),
+        new("Height", "string; 16rem", "CSS height applied to the carousel."),
+        new("Class / Style / AdditionalAttributes", "string? / string? / attributes", "Additional CSS and unmatched attributes forwarded to RadzenCarousel; no public imperative methods.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> ItemRows =
+    [
+        new("ChildContent", "RenderFragment?; null", "Slide markup; consumers supply their own content and sizing."),
+        new("AdditionalAttributes", "IDictionary<string, object>?; null", "Unmatched attributes forwarded to the Radzen carousel item. No events or methods.")
+    ];
+
+    private static readonly IReadOnlyList<ApiReference.Entry> RadzenRows =
+    [
+        new("Items / RadzenCarouselItem", "RenderFragment", "Разметка слайдов без Admiral-компонентов."),
+        new("SelectedIndex / SelectedIndexChanged", "int / EventCallback<int>", "Текущая страница и двусторонняя привязка."),
+        new("Auto / Interval", "bool / double", "Автосмена слайдов и интервал в миллисекундах."),
+        new("AllowNavigation / AllowPaging / AllowScroll", "bool", "Стрелки, индикаторы и жест прокрутки."),
+        new("PagerOverlay / PagerPosition", "bool / PagerPosition", "Расположение индикаторов внутри или снаружи слайда."),
+        new("class", "admiral-carousel + admiral-carousel--inner|outer", "Точные классы Admiral theme для геометрии и цветов.")
+    ];
+}

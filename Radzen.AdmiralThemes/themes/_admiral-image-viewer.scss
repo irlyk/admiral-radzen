@@ -1,0 +1,56 @@
+// Static-on-dark colors and geometry from React ImageViewer/constants + theme Special/Opacity tokens.
+.admiral-image-viewer,
+.admiral-image-viewer__overlay {
+  --admiral-image-color: var(--admiral-color-Special_DarkStaticNeutral70, #A8ABAF);
+  --admiral-image-hover: var(--admiral-color-Special_DarkStaticNeutral80, #C9CACD);
+  --admiral-image-active: var(--admiral-color-Special_DarkStaticNeutral90, #E3E5E7);
+  --admiral-image-disabled: var(--admiral-color-Special_DarkStaticNeutral50, #82868B);
+  --admiral-image-modal: var(--admiral-color-Opacity_Modal, rgb(0 0 0 / 60%));
+  --admiral-image-static-white: var(--admiral-color-Special_StaticWhite, var(--rz-white));
+}
+.admiral-image-viewer { display: flex; flex-wrap: wrap; gap: 8px; }
+.admiral-image-viewer--xxs { --miniature-size: 40px; }
+.admiral-image-viewer--xs { --miniature-size: 56px; }
+.admiral-image-viewer--s { --miniature-size: 72px; }
+.admiral-image-viewer--m { --miniature-size: 96px; }
+.admiral-image-viewer--l { --miniature-size: 128px; }
+.admiral-image-viewer--xl { --miniature-size: 192px; }
+.admiral-image-viewer__miniature { position: relative; flex: none; width: var(--miniature-size); height: var(--miniature-size); padding: 0; overflow: hidden; border: 0; border-radius: var(--rz-border-radius-2); background: var(--rz-base-200); cursor: pointer; }
+.admiral-image-viewer__miniature img { width: 100%; height: 100%; object-fit: cover; }
+.admiral-image-viewer__miniature-hover { position: absolute; inset: 0; display: grid; place-items: center; color: var(--admiral-image-static-white); background: var(--admiral-image-modal); opacity: 0; transition: opacity .15s; }
+.admiral-image-viewer__miniature:hover .admiral-image-viewer__miniature-hover,
+.admiral-image-viewer__miniature:focus-visible .admiral-image-viewer__miniature-hover { opacity: 1; }
+.admiral-image-viewer__miniature:focus-visible,
+.admiral-image-viewer__toolbar button:focus-visible,
+.admiral-image-viewer__close:focus-visible { outline: var(--rz-outline-focus); outline-offset: 2px; }
+.admiral-image-viewer__empty { color: var(--rz-text-secondary-color); }
+.admiral-image-viewer__overlay { position: fixed; inset: 0; z-index: 2100; display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; border: 0; padding: 0 0 64px; overflow: hidden; touch-action: none; color: var(--admiral-image-static-white); background: var(--admiral-image-modal); outline: none; }
+.admiral-image-viewer__overlay:not([open]) { display: none; }
+.admiral-image-viewer__overlay::backdrop { background: transparent; }
+.admiral-image-viewer__scrim { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: transparent; cursor: default; }
+.admiral-image-viewer__surface { position: absolute; inset: 0 0 64px; display: grid; place-items: center; pointer-events: none; }
+.admiral-image-viewer__preview { position: relative; max-width: min(90vw, 1200px); max-height: 70vh; object-fit: contain; transition: transform .15s; pointer-events: auto; touch-action: none; user-select: none; }
+.admiral-image-viewer__surface[data-pannable="true"] .admiral-image-viewer__preview { cursor: grab; }
+.admiral-image-viewer__surface[data-dragging="true"] .admiral-image-viewer__preview { cursor: grabbing; transition: none; }
+.admiral-image-viewer__close { position: absolute; z-index: 1; top: 18px; right: 22px; display: grid; place-items: center; width: 24px; height: 24px; padding: 0; margin: 6px; border: 0; border-radius: var(--rz-border-radius-2); color: var(--admiral-image-static-white); background: transparent; cursor: pointer; overflow: visible; }
+.admiral-image-viewer__close > * { pointer-events: none; }
+.admiral-image-viewer__close::before { content: ''; position: absolute; inset: -6px; border-radius: 50%; background: transparent; pointer-events: none; }
+.admiral-image-viewer__close:hover:not(:focus-visible)::before { background: var(--admiral-color-Opacity_DarkStaticHover, rgb(255 255 255 / 6%)); }
+.admiral-image-viewer__close:active:not(:focus-visible)::before { background: var(--admiral-color-Opacity_DarkStaticPress, rgb(255 255 255 / 12%)); }
+.admiral-image-viewer__bottom { position: absolute; z-index: 1; bottom: 24px; left: 50%; display: flex; flex-direction: column; align-items: center; gap: 8px; transform: translateX(-50%); }
+.admiral-image-viewer__toolbar { display: flex; align-items: center; height: 44px; padding: 2px 12px; border-radius: 24px; background: var(--admiral-image-modal); white-space: nowrap; }
+.admiral-image-viewer__toolbar button { display: grid; flex: 0 0 40px; place-items: center; width: 40px; height: 40px; padding: 0; border: 0; border-radius: var(--rz-border-radius-2); color: var(--admiral-image-color); background: transparent; cursor: pointer; }
+.admiral-image-viewer__toolbar button:hover:not(:disabled) { color: var(--admiral-image-hover); }
+.admiral-image-viewer__toolbar button:active:not(:disabled) { color: var(--admiral-image-active); }
+.admiral-image-viewer__toolbar button:disabled { color: var(--admiral-image-disabled); opacity: 1; cursor: not-allowed; }
+.admiral-image-viewer__divider { flex: none; width: 1px; height: 16px; margin-inline: 7px 8px; background: var(--admiral-image-disabled); }
+.admiral-image-viewer__counter { color: var(--admiral-image-static-white); font-size: 14px; line-height: 20px; }
+.admiral-image-viewer__message { position: absolute; padding: 12px 16px; border-radius: var(--rz-border-radius); background: var(--admiral-image-modal); }
+@media (max-width: 700px) {
+  .admiral-image-viewer__toolbar { padding-inline: 4px; }
+  .admiral-image-viewer__toolbar button { flex-basis: 32px; width: 32px; height: 36px; }
+  .admiral-image-viewer__divider { margin-inline: 2px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .admiral-image-viewer__preview, .admiral-image-viewer__miniature-hover { transition: none; }
+}

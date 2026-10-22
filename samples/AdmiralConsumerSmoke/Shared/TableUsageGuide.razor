@@ -1,0 +1,151 @@
+<section class="admiral-component-page__section">
+    <h2>@SmokeL["Использование Table"]</h2>
+    <p>@SmokeL["AdmiralDataGrid объединяет таблицу, панель действий, поиск, выбор колонок, локализацию и пагинацию. Для собственного интерфейса с прямым RadzenDataGrid используйте соседнюю вкладку «Radzen + тема»."]</p>
+    <h3>@SmokeL["Клиентские данные, колонки и действия в разметке"]</h3>
+    <CopyableRazorExample Code="@ClientExample" Title="Razor · Admiral API" />
+    <h3>@SmokeL["Серверная загрузка"]</h3>
+    <p>@SmokeL["Data содержит только текущую страницу, Count — общее число найденных строк. Обрабатывайте Skip, Top, Filter и OrderBy в API. Поиск из toolbar приходит отдельно через SearchValueChanged: сохраните его для запроса LoadData; toolbar сам сбрасывает страницу. При внешнем фильтре используйте GoToPage(1) и Reload(). Не включайте LoadData, если весь набор уже загружен на клиент."]</p>
+    <CopyableRazorExample Code="@ServerExample" Title="Razor · server data" />
+    <ApiReference Title="@SmokeL["Данные, поиск и пагинация"]" Rows="@DataApi" />
+    <p>@SmokeL["PaginationOne is the full variant with page-size and page selectors, item range, and previous/next buttons. PaginationOneSimple keeps the range and buttons but omits both selectors. Set Pagination on AdmiralDataGrid; for standalone AdmiralPaginationOne set Simple=true for the compact variant."]</p>
+    <ApiReference Title="@SmokeL["Геометрия и взаимодействия"]" Rows="@ViewApi" />
+    <ApiReference Title="@SmokeL["Шаблоны, действия, события и расширение"]" Rows="@TemplateApi" />
+    <ApiReference Title="AdmiralDataGridColumn / RadzenDataGridColumn" Rows="@ColumnApi" />
+    <p>@SmokeL["AdmiralDataGridColumn наследует API RadzenDataGridColumn. Часть контрактов таблицы пока использует типы Radzen (LoadDataArgs, TextAlign, FilterMode и другие); в таком примере нужен using Radzen. Дополнительные параметры внутренней таблицы можно передать через GridAttributes. Значения явно заданных параметров обёртки имеют приоритет — GridAttributes не заменяет их."]</p>
+    <p>@SmokeL["При выборе строк используйте Value / ValueChanged или bind-Value. При перестановке строк обработчик RowReordered должен сохранить новый порядок в вашей модели/API. Тема сама не сохраняет данные. Виртуализация требует ограниченной высоты GridStyle и проверки совместимости с деталями и группировкой."]</p>
+    <h3>@SmokeL["Клавиатура и детали строк"]</h3>
+    <p>@SmokeL["Стрелки вверх/вниз перемещают фокус по строкам. Без Template / DetailTemplate стрелки влево/вправо выделяют отдельную ячейку; при подключённом шаблоне деталей Radzen использует эти клавиши для сворачивания/раскрытия строки. ShowExpandColumn скрывает только колонку с кнопкой — не отключает шаблон и не меняет назначение клавиш. Для режима без деталей передавайте null вместо пустого RenderFragment."]</p>
+</section>
+@code {
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private string ClientExample => $$"""
+        @using Radzen
+        @using Radzen.Admiral.Components
+        @using Radzen.Admiral.Components.Models
+
+        <AdmiralDataGrid TItem="Payment" Data="payments" PageSize="5"
+                         Size="AdmiralDataGridSize.Small" WrapCells="true"
+                         Pagination="AdmiralDataGridPagination.PaginationTwo">
+            <ColumnContent>
+                <AdmiralDataGridColumn TItem="Payment" Property="Id" Title="{{T("Номер", "Number")}}" Width="7rem" />
+                <AdmiralDataGridColumn TItem="Payment" Property="Name" Title="{{T("Получатель", "Beneficiary")}}">
+                    <Template Context="row"><strong>@row.Name</strong></Template>
+                </AdmiralDataGridColumn>
+            </ColumnContent>
+            <Actions>
+                <AdmiralDataGridRowAction TItem="Payment" Icon="admiral:system/edit-outline"
+                    AriaLabel="{{T("Редактировать", "Edit")}}" Click="EditPayment" />
+            </Actions>
+        </AdmiralDataGrid>
+        <p>@message</p>
+        @code {
+            private record Payment(int Id, string Name);
+            private Payment[] payments = [new(1, "{{T("ООО Пример", "Example LLC")}}"), new(2, "{{T("АО Компания", "Company Inc.")}}")];
+            private string message = "";
+            private void EditPayment(Payment row) => message = $"{{T("Редактирование", "Editing")}}: {row.Name}";
+        }
+        """;
+    private string ServerExample => $$"""
+        @using Radzen
+        @using Radzen.Admiral.Components
+
+        <AdmiralDataGrid TItem="Payment" Data="rows" Count="total"
+            LoadData="LoadAsync" IsLoading="loading" ShowToolbar="false"
+            AllowSorting="false" PageSize="10">
+            <ColumnContent>
+                <AdmiralDataGridColumn TItem="Payment" Property="Id" Title="ID" />
+                <AdmiralDataGridColumn TItem="Payment" Property="Name" Title="{{T("Название", "Name")}}" />
+            </ColumnContent>
+        </AdmiralDataGrid>
+        @code {
+            private record Payment(int Id, string Name);
+            private IEnumerable<Payment> rows = [];
+            private int total;
+            private bool loading;
+            private async Task LoadAsync(LoadDataArgs args)
+            {
+                loading = true;
+                try
+                {
+                    // {{T("Демонстрация API: замените на запрос с skip/take.", "API demonstration: replace this with a skip/take request.")}}
+                    await Task.Delay(300);
+                    total = 42;
+                    rows = Enumerable.Range(1, total)
+                        .Skip(args.Skip ?? 0).Take(args.Top ?? 10)
+                        .Select(i => new Payment(i, $"{{T("Запись", "Record")}} {i}")).ToArray();
+                }
+                finally { loading = false; }
+            }
+        }
+        """;
+    private static readonly ApiReference.Entry[] DataApi = [
+        new("TItem / Data", "тип строки / IEnumerable<TItem> = []", "Тип и строки таблицы. Без LoadData сортировка, поиск и paging работают с полным Data на клиенте."),
+        new("Columns / ColumnContent", "список = [] / RenderFragment?", "Определения колонок из кода либо AdmiralDataGridColumn в разметке. Выберите один подход."),
+        new("LoadData / Count / IsLoading", "EventCallback<LoadDataArgs> / int = 0 / bool = false", "Серверная загрузка страницы, общий результат запроса и индикатор загрузки."),
+        new("AllowPaging / PageSize", "bool = true / int = 10", "Включение пагинации и количество строк."),
+        new("Pagination", "AdmiralDataGridPagination = PaginationTwo", "None, PaginationTwo, PaginationOne, PaginationOneSimple. Это варианты обёртки, а не CSS-параметр Radzen."),
+        new("PaginationSize / PageSizeOptions", "Medium / [10, 20, 50, 100]", "Размер пагинатора и доступное количество строк."),
+        new("Page / PageSizeChanged", "EventCallback<PagerEventArgs> / EventCallback<int>", "Изменение страницы и размера страницы."),
+        new("SearchValue / SearchValueChanged", "string = пусто / EventCallback<string>", "Текст поиска toolbar и его изменение; поддерживает bind-SearchValue."),
+        new("SearchPredicate", "Func<TItem, string, bool>? = null", "Своя логика клиентского поиска. Не заменяет фильтры вашего серверного API."),
+        new("Localization", "AdmiralDataGridLocalization? = null", "Переопределение текстов поиска, фильтров, пустого состояния и пагинации; по умолчанию берётся текущая культура.")
+    ];
+    private static readonly ApiReference.Entry[] ViewApi = [
+        new("Size", "AdmiralDataGridSize = Medium", "Small, Medium, Large, ExtraLarge — геометрия таблицы."),
+        new("GridLines", "DataGridGridLines = Horizontal", "None, Horizontal, Vertical, Both — внутренние границы."),
+        new("GreyHeader / NoBorder", "bool = false", "Серый заголовок / отсутствие внешней рамки."),
+        new("WrapHeaders / WrapCells", "bool = false", "Перенос текста в заголовках / ячейках."),
+        new("AllowAlternatingRows", "bool = false", "Чередование фона строк."),
+        new("AllowSorting / AllowMultiColumnSorting", "true / false", "Сортировка и разрешение сортировки по нескольким колонкам."),
+        new("AllowFiltering / FilterMode", "false / Advanced", "Фильтры колонок и режим их отображения."),
+        new("FilterDelay / FilterAsYouType", "300 мс / false", "Задержка фильтра и применение при вводе."),
+        new("FilterDateFormat / AllowFilterDateInput", "string? = null / true", "Формат даты в фильтре и возможность вводить её вручную."),
+        new("AllowColumnResize / AllowColumnReorder", "bool = false", "Изменение ширины / порядка колонок пользователем."),
+        new("AllowColumnPicking / AllowPickAllColumns / ColumnsPickerAllowFiltering", "false / true / false", "Штатный выбор колонок Radzen, выбор всех и поиск; не включайте одновременно с аналогичной панелью Admiral без необходимости."),
+        new("AllowGrouping / GroupPanelText", "false / string? = null", "Группировка и подпись области группировки."),
+        new("HideGroupedColumn / GroupFootersAlwaysVisible", "bool = false", "Скрытие сгруппированной колонки / постоянный footer группы."),
+        new("Responsive / ColumnWidth", "true / string? = null", "Адаптивность и базовая ширина колонок. Для горизонтального скролла задавайте достаточные Width / MinWidth."),
+        new("AllowVirtualization / VirtualizationOverscanCount", "false / 3", "Виртуализация строк и число дополнительных строк за пределами viewport."),
+        new("ShowHeader / ShowEmptyMessage", "bool = true", "Отображение заголовка и пустого состояния."),
+        new("ShowCellDataAsTooltip / ShowColumnTitleAsTooltip", "bool = false", "Подсказки содержимого и названий колонок."),
+        new("ShowExpandColumn / ShowExpandAll / ShowGroupExpandColumn", "false / false / true", "Контролы раскрытия деталей и групп; стрелки групп по умолчанию видны."),
+        new("AllGroupsExpanded / AllGroupsExpandedChanged", "bool? = null / EventCallback<bool?>", "Управляемое раскрытие всех групп; null оставляет индивидуальное состояние каждой группы."),
+        new("ExpandMode", "DataGridExpandMode = Multiple", "Одновременно одна или несколько раскрытых строк."),
+        new("AllowRowSelectOnRowClick / SelectionMode", "false / Single", "Выделение по клику и одиночный/множественный выбор."),
+        new("Value / ValueChanged", "IList<TItem>? / EventCallback<IList<TItem>>", "Выбранные строки; поддерживает bind-Value."),
+        new("AllowRowReorder / RowKey", "false / Func<TItem, string>?", "Перестановка строк; RowKey должен возвращать стабильный уникальный ключ."),
+        new("KeyProperty / GotoFirstPageOnSort", "string? = null / true", "Имя ключевого свойства и сброс страницы при сортировке.")
+    ];
+    private static readonly ApiReference.Entry[] TemplateApi = [
+        new("ShowToolbar / ShowSettings", "true / false", "Панель Admiral и кнопка настроек; SettingsClicked обрабатывает её нажатие."),
+        new("ToolbarActions / ToolbarActionClicked", "IReadOnlyList<AdmiralActionItem> / callback", "Действия над таблицей и обработчик выбранного действия."),
+        new("RowActions / RowActionClicked", "IReadOnlyList<AdmiralDataGridAction<TItem>> / callback", "Действия строки из кода и общий обработчик; действие может иметь собственный callback."),
+        new("Actions", "RenderFragment<TItem>?", "Декларативные AdmiralDataGridRowAction с индивидуальными Click."),
+        new("ActionColumnWidth", "string = 5rem", "Ширина колонки действий."),
+        new("Template / DetailTemplate", "RenderFragment<TItem>?", "Раскрываемое содержимое строки. DetailTemplate — альтернативный параметр."),
+        new("HeaderTemplate / FooterTemplate / EmptyTemplate", "RenderFragment?", "Шаблоны шапки, footer и пустого состояния."),
+        new("EditTemplate / EditMode", "RenderFragment<TItem>? / Single", "Шаблон редактирования и режим редактирования строк."),
+        new("RowClick / RowDoubleClick", "EventCallback<DataGridRowMouseEventArgs<TItem>>", "Нажатие / двойное нажатие на строку."),
+        new("RowSelect / RowDeselect / RowExpand / RowCollapse", "EventCallback<TItem>", "Изменение выделения / раскрытия строки."),
+        new("RowEdit / RowUpdate / RowCreate", "EventCallback<TItem>", "Начало редактирования, сохранение и создание строки."),
+        new("RowReordered / RowReorderAriaLabel", "callback / Переместить строку", "Результат перестановки строк и доступное имя контролов."),
+        new("ColumnReordering / ColumnReordered / ColumnResized / Group", "типизированные callback Radzen", "Перестановка, изменение ширины и группировка колонок."),
+        new("VisibleColumnsChanged", "EventCallback<IReadOnlyList<AdmiralPaneColumn>>", "Изменение видимости колонок через панель Admiral."),
+        new("RowRender", "Action<RowRenderEventArgs<TItem>>?", "Настройка атрибутов и доступности раскрытия при отрисовке строки."),
+        new("Class / Style", "string?", "CSS-класс и стиль внешнего контейнера, включая toolbar и пагинацию."),
+        new("GridClass / GridStyle", "string?", "Класс и стиль только внутреннего RadzenDataGrid."),
+        new("GridAttributes / AdditionalAttributes", "словарь атрибутов", "Дополнительные параметры Radzen и HTML-атрибуты. Предпочитайте явно объявленные параметры обёртки.")
+    ];
+    private static readonly ApiReference.Entry[] ColumnApi = [
+        new("Property / Title / Type", "string / string / Type", "Свойство данных, заголовок и тип для операций колонки."),
+        new("Width / MinWidth / MaxWidth", "string", "CSS-размеры колонки, например 12rem. Минимальная ширина предотвращает наложение текста."),
+        new("Visible / Pickable", "bool", "Видимость и доступность в выборе колонок."),
+        new("Sortable / Filterable / Groupable / Reorderable / Resizable", "bool", "Возможности конкретной колонки; глобальная возможность должна быть включена в таблице."),
+        new("FormatString / TextAlign", "string / TextAlign", "Формат значения и выравнивание. Например {0:N2} и Right для суммы."),
+        new("Template / EditTemplate", "RenderFragment<TItem>", "Отображение и редактор ячейки с контекстом текущей строки."),
+        new("HeaderTemplate / FooterTemplate / FilterTemplate", "RenderFragment", "Содержимое заголовка, footer и собственный контрол фильтра."),
+        new("FilterValue / FilterOperator", "object / FilterOperator", "Значение и оператор фильтра колонки."),
+        new("Frozen / FrozenPosition", "bool / FrozenColumnPosition", "Закрепление слева или справа при горизонтальном скролле."),
+        new("CssClass / HeaderCssClass / FooterCssClass", "string", "Дополнительные классы ячейки, заголовка и footer.")
+    ];
+}

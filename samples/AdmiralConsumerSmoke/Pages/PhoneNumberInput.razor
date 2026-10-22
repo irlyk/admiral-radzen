@@ -1,0 +1,143 @@
+@page "/components/phone-number-input"
+
+<PageTitle>Admiral PhoneNumberInput</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="PhoneNumberInput / PhoneInputField"
+        Description="@T("Поле телефона с выбором страны, флагом и заменой телефонного кода. Поиск в списке — дополнительная возможность Blazor-компонента.", "Phone input with country selection, a flag and dial-code replacement. Country search is an additional Blazor feature.")"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-input-phonenumberinput--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Theme)
+    {
+        <ThemeComponentPlayground Component="PhoneNumberInput" />
+        <ComponentDocNotes Title="@SmokeL["Direct Radzen differences"]">
+            <p>@T("Прямой пример объединяет RadzenDropDown и RadzenTextBox. Тема оформляет оба элемента, но приложение должно само связывать выбор страны с заменой кода, определять страну по номеру, выводить флаги и реализовывать режимы Formatted/Digits.", "The direct example composes RadzenDropDown and RadzenTextBox. The theme styles both controls; the application must implement dial-code replacement, country detection, flag templates and Formatted/Digits value modes itself.")</p>
+        </ComponentDocNotes>
+    }
+    else if (tab == ComponentDocTabs.Api)
+    {
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · AdmiralPhoneNumberInputField" />
+        <ApiReference Title="PhoneNumberInput / PhoneInputField" Rows="@UsageRows" />
+        <ComponentDocNotes Title="@SmokeL["Behavior and limits"]">
+            <p><a href="https://github.com/AdmiralDS/react-ui/blob/4721c1b326ac17fb7b08e915adfce5b8dced0664/src/components/input/PhoneNumberInput/index.tsx" target="_blank" rel="noopener noreferrer">@T("Закреплённый исходный код AdmiralDS React", "Pinned AdmiralDS React source")</a></p>
+            <p>@T("Country — код ISO 3166-1 alpha-3, например RUS, KAZ или BLR. По умолчанию доступны только восемь стран: RUS, BLR, KAZ, UZB, TJK, ARM, GBR и USA. Передайте Countries для собственного списка. У RUS и KAZ общий код +7: при вводе номера выбранная страна сохраняется.", "Country is an ISO 3166-1 alpha-3 code such as RUS, KAZ or BLR. The default list contains only eight countries: RUS, BLR, KAZ, UZB, TJK, ARM, GBR and USA. Supply Countries for a custom list. RUS and KAZ share +7; typing a number preserves the selected country.")</p>
+            <p>@T("В режиме Formatted привязанное Value хранит введённый текст; компонент не накладывает маску при каждом нажатии. В режиме Digits Value содержит только цифры, а поле форматирует отображение по выбранной стране. Выбор страны может вызвать CountryChanged и ValueChanged. Поиск в списке и режимы значения — возможности Blazor-обёртки, которых нет в закреплённом React API.", "In Formatted mode the bound Value retains the text as typed; the component does not apply a mask on each keystroke. In Digits mode Value contains digits only and the field formats their display for the selected country. Country selection can invoke both CountryChanged and ValueChanged. Popup search and value modes are Blazor wrapper features absent from the pinned React API.")</p>
+            <p>@T("Popup имеет минимальную ширину 18rem на широком экране и ограничивается шириной viewport на узком. Сейчас он не растягивается точно на ширину всего поля, как в закреплённом React-эталоне. Status=Error показывает ошибку, но не проверяет номер; правила проверки задаёт приложение.", "The popup has an 18rem minimum width on a wide screen and is constrained to the viewport on a narrow screen. It does not currently match the full field width used by the pinned React reference. Status=Error displays an error but does not validate a number; the application supplies validation rules.")</p>
+        </ComponentDocNotes>
+    }
+    else
+    {
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Playground"]</AdmiralText>
+        <div class="admiral-component-playground">
+            <div class="admiral-component-playground__preview"><AdmiralPhoneNumberInputField Label="@SmokeL["Phone"]" Size="@playgroundSize" Status="@playgroundStatus" ValueMode="@playgroundMode" DisplayClearIcon="@playgroundClear" AllowCountrySearch="@playgroundSearch" Loading="@playgroundLoading" Disabled="@playgroundDisabled" ReadOnly="@playgroundReadOnly" Skeleton="@playgroundSkeleton" Value="@playgroundPhone" ValueChanged="@OnPlaygroundPhoneChanged" Country="@playgroundCountry" CountryChanged="@OnPlaygroundCountryChanged" /><span class="admiral-component-page__result" role="status">@SmokeL["Value"]: @playgroundPhone · @SmokeL["Country"]: @playgroundCountry · @SmokeL["Changes"]: @playgroundChanges · @T("Последнее событие", "Last event"): @playgroundLastEvent</span></div>
+            <div class="admiral-component-controls">
+                <label><span>@SmokeL["Size"]</span><select @bind="playgroundSize">@foreach (var item in Enum.GetValues<AdmiralInputSize>()) { <option value="@item">@item</option> }</select></label>
+                <label><span>@SmokeL["Status"]</span><select @bind="playgroundStatus">@foreach (var item in Enum.GetValues<AdmiralInputStatus>()) { <option value="@item">@item</option> }</select></label>
+                <label><span>@SmokeL["Value mode"]</span><select @bind="playgroundMode">@foreach (var item in Enum.GetValues<AdmiralPhoneValueMode>()) { <option value="@item">@item</option> }</select></label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundSearch" /> @SmokeL["Country search"]</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundClear" /> @SmokeL["Clear"]</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundLoading" /> Loading</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundDisabled" /> Disabled</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundReadOnly" /> @SmokeL["Read only"]</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundSkeleton" /> Skeleton</label>
+            </div>
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Dimensions"]</AdmiralText>
+        <div class="admiral-input-gallery__grid">
+            <AdmiralPhoneNumberInputField Label="@SmokeL["Small"]" AdditionalLabel="S · 32 px" Size="AdmiralInputSize.Small"
+                                          @bind-Value="smallPhone" @bind-Country="smallCountry" />
+            <AdmiralPhoneNumberInputField Label="@SmokeL["Medium"]" AdditionalLabel="M · 40 px"
+                                          @bind-Value="phone" @bind-Country="country" DisplayClearIcon="true" />
+            <AdmiralPhoneNumberInputField Label="@SmokeL["Extra large"]" AdditionalLabel="XL · 56 px" Size="AdmiralInputSize.ExtraLarge"
+                                          @bind-Value="largePhone" @bind-Country="largeCountry" />
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Bound value modes"]</AdmiralText>
+        <div class="admiral-input-gallery__grid">
+            <div>
+                <AdmiralPhoneNumberInputField Label="@SmokeL["Formatted Value"]" ValueMode="AdmiralPhoneValueMode.Formatted"
+                                              @bind-Value="formattedPhone" @bind-Country="formattedCountry" />
+                <AdmiralText Typography="AdmiralTypography.Caption1">Value: @formattedPhone</AdmiralText>
+            </div>
+            <div>
+                <AdmiralPhoneNumberInputField Label="@SmokeL["Digits Value"]" ValueMode="AdmiralPhoneValueMode.Digits"
+                                              @bind-Value="digitsPhone" @bind-Country="digitsCountry" />
+                <AdmiralText Typography="AdmiralTypography.Caption1">Value: @digitsPhone</AdmiralText>
+            </div>
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["States"]</AdmiralText>
+        <div class="admiral-input-gallery__grid">
+            <AdmiralPhoneNumberInputField Label="Error" Status="AdmiralInputStatus.Error"
+                                          ExtraText="@SmokeL["Enter a complete phone number"]" Value="+7 999" />
+            <AdmiralPhoneNumberInputField Label="Disabled" Disabled="true" Value="+7 999 123-45-67" />
+            <AdmiralPhoneNumberInputField Label="@SmokeL["Read only"]" ReadOnly="true" Value="+375 29 123-45-67" Country="BLR" />
+            <AdmiralPhoneNumberInputField Label="Loading" Loading="true" Value="+7 999 123-45-67" />
+            <AdmiralPhoneNumberInputField Label="Skeleton" Skeleton="true" />
+        </div>
+    </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static bool IsRussian => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru";
+    private static string T(string ru, string en) => IsRussian ? ru : en;
+    private const string AdmiralCode = """
+        <AdmiralPhoneNumberInputField Label="Phone" ValueMode="AdmiralPhoneValueMode.Digits"
+                                      AllowCountrySearch="true" DisplayClearIcon="true"
+                                      Value="@phone" ValueChanged="OnPhoneChanged"
+                                      Country="@country" CountryChanged="OnCountryChanged" />
+        <span role="status">Phone: @phone · Country: @country</span>
+        @code {
+            private string? phone = "79991234567";
+            private string? country = "RUS";
+            private void OnPhoneChanged(string? value) => phone = value;
+            private void OnCountryChanged(string? iso3) => country = iso3;
+        }
+        """;
+    private IReadOnlyList<ApiReference.Entry> UsageRows =>
+    [
+        new("Value / ValueChanged / ValueExpression", "string?; null / EventCallback<string?> / Expression<Func<string?>>?", T("Управляемое значение, callback и выражение для форм Blazor; вид Value зависит от ValueMode.", "Controlled value, callback and Blazor form expression; Value representation depends on ValueMode.")),
+        new("Country / CountryChanged", "string?; RUS / EventCallback<string?>", T("Выбранный код ISO3 и callback; страна с тем же телефонным кодом сохраняется при вводе.", "Selected ISO3 code and callback; typing preserves a selected country that shares a dial code.")),
+        new("Countries", "IEnumerable<AdmiralPhoneCountry>?; null", T("При null используются восемь встроенных стран. Собственный список заменяет их целиком.", "Null uses the eight built-in countries. A custom list replaces them entirely.")),
+        new("ValueMode", "AdmiralPhoneValueMode; Formatted", T("Formatted передаёт введённый текст; Digits передаёт только цифры и форматирует отображение.", "Formatted passes through typed text; Digits emits digits only and formats the display.")),
+        new("AllowCountrySearch / CountrySearchPlaceholder", "bool; true / string; Search country", T("Поиск в popup доступен у AdmiralPhoneNumberInput. PhoneNumberInputField передаёт AllowCountrySearch, но не раскрывает CountrySearchPlaceholder.", "Popup search is available on AdmiralPhoneNumberInput. PhoneNumberInputField forwards AllowCountrySearch but does not expose CountrySearchPlaceholder.")),
+        new("DisplayClearIcon", "bool; false", T("Кнопка очистки номера у обоих компонентов.", "Phone clear action on both components.")),
+        new("MaxLength", "long?; 24", T("Доступен только у AdmiralPhoneNumberInput; PhoneNumberInputField не раскрывает этот параметр.", "Available only on AdmiralPhoneNumberInput; PhoneNumberInputField does not expose this parameter.")),
+        new("Name / Id / Placeholder", "string?; null / string?; null / string?; +7 999 999-99-99", T("Атрибуты поля ввода. PhoneNumberInputField сам создаёт Id для связи подписи, если Id не задан.", "Input attributes. PhoneNumberInputField generates an Id to associate its label when Id is omitted.")),
+        new("Size / Status", "AdmiralInputSize; Medium / AdmiralInputStatus; Default", T("Размер и визуальный статус; Error не выполняет проверку номера.", "Size and visual status; Error does not validate the number.")),
+        new("Disabled / ReadOnly / Loading / Skeleton", "bool; false", T("Состояния взаимодействия и отображения.", "Interaction and display states.")),
+        new("Label / AdditionalLabel / ExtraText / Required", "string?; null / string?; null / string?; null / bool; false", T("Доступны только у PhoneNumberInputField; Required добавляет оформление, правила валидации задаёт приложение.", "Available only on PhoneNumberInputField; Required adds presentation and the application supplies validation rules.")),
+        new("Class", "string?; null", T("Дополнительный CSS-класс корневого элемента.", "Additional CSS class on the root element."))
+    ];
+    private string? playgroundPhone = "+7 999 123-45-67";
+    private string? playgroundCountry = "RUS";
+    private int playgroundChanges;
+    private string playgroundLastEvent = "—";
+    private void OnPlaygroundPhoneChanged(string? next) { playgroundPhone = next; playgroundChanges++; playgroundLastEvent = "ValueChanged"; }
+    private void OnPlaygroundCountryChanged(string? next) { playgroundCountry = next; playgroundChanges++; playgroundLastEvent = "CountryChanged"; }
+    private AdmiralInputSize playgroundSize = AdmiralInputSize.Medium;
+    private AdmiralInputStatus playgroundStatus;
+    private AdmiralPhoneValueMode playgroundMode;
+    private bool playgroundSearch = true;
+    private bool playgroundClear = true;
+    private bool playgroundLoading;
+    private bool playgroundDisabled;
+    private bool playgroundReadOnly;
+    private bool playgroundSkeleton;
+    private string? smallPhone = "+998 ";
+    private string? smallCountry = "UZB";
+    private string? phone = "+7 999 123-45-67";
+    private string? country = "RUS";
+    private string? largePhone = "+44 ";
+    private string? largeCountry = "GBR";
+    private string? formattedPhone = "+7 999 123-45-67";
+    private string? formattedCountry = "RUS";
+    private string? digitsPhone = "79991234567";
+    private string? digitsCountry = "RUS";
+}

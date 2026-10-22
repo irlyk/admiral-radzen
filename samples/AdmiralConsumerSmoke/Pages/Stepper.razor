@@ -1,0 +1,104 @@
+@page "/components/stepper"
+<PageTitle>Admiral Stepper</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Stepper / ProgressStepper" Description="Horizontal, vertical and mobile step navigation with progress and state examples."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-stepper--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@T("Использование и ограничения", "Usage and limitations")</h2>
+            <p>@T("AdmiralStepper принимает дочерние AdmiralStep и индекс ActiveStep (по умолчанию -1). Нажатие на завершённый доступный шаг вызывает Click и может изменить ActiveStepChanged; будущие шаги не активируются нажатием. Error, Warning, Redo и Disabled задаются шагу.", "AdmiralStepper takes AdmiralStep children and ActiveStep index (default -1). Activating an available completed step invokes Click and can update ActiveStepChanged; future steps cannot be activated by click. Error, Warning, Redo and Disabled belong to each step.")</p>
+            <p>@T("AdmiralProgressStepper принимает список названий Steps и SelectedIndex (с нуля). SelectedIndexChanged сообщает переход кнопками при ShowActions=true. Mobile меняет компоновку. CounterFormat, NextStepFormat, AriaValueFormat, PreviousText и NextText настраивают текст; индекс для отображения ограничивается длиной списка.", "AdmiralProgressStepper takes a list of step names and zero-based SelectedIndex. SelectedIndexChanged reports action-button changes when ShowActions=true. Mobile changes layout. CounterFormat, NextStepFormat, AriaValueFormat, PreviousText and NextText customize labels; the displayed index is clamped to the list length.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · AdmiralStepper" /><CopyableRazorExample Code="@ProgressCode" Title="Razor · AdmiralProgressStepper" />
+            <ApiReference Title="AdmiralStepper / AdmiralStep" Rows="@StepperRows" /><ApiReference Title="AdmiralProgressStepper" Rows="@ProgressRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenSteps + Admiral theme</h2>
+            <p>@T("Прямой RadzenSteps использует SelectedIndex и RadzenStepsItem. Тема оформляет шаги, но не добавляет состояния Redo/Warning дочернего AdmiralStep и индикатор AdmiralProgressStepper с его текстовыми форматами.", "Direct RadzenSteps uses SelectedIndex and RadzenStepsItem. The theme styles steps but does not add AdmiralStep Redo/Warning states or AdmiralProgressStepper's progress indicator and label formats.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <RadzenSteps @bind-SelectedIndex="directIndex"><Steps><RadzenStepsItem Text="Details" /><RadzenStepsItem Text="Documents" /><RadzenStepsItem Text="Complete" /></Steps></RadzenSteps>
+                <output aria-live="polite">SelectedIndex: @directIndex</output>
+            </div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@T("Интерактивный пример", "Interactive playground")</h2>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <AdmiralStepper ActiveStep="@activeStep" ActiveStepChanged="@OnActiveStepChanged" Orientation="@orientation" Mobile="@mobile" HideLastStepLine="true">
+                    <AdmiralStep Click="@OnStepClick">Details</AdmiralStep><AdmiralStep Click="@OnStepClick">Documents</AdmiralStep><AdmiralStep>Confirmation</AdmiralStep><AdmiralStep>Complete</AdmiralStep>
+                </AdmiralStepper>
+                <div class="admiral-component-row"><AdmiralButton Text="Previous" Appearance="AdmiralButtonAppearance.Secondary" Dimension="AdmiralButtonDimension.S" Click="@(_ => SetStep(-1))" Disabled="@(activeStep == 0)" /><AdmiralButton Text="Next" Dimension="AdmiralButtonDimension.S" Click="@(_ => SetStep(1))" Disabled="@(activeStep == 3)" /></div>
+                <output aria-live="polite">ActiveStep: @activeStep · @lastEvent</output>
+            </div><div class="admiral-component-controls">
+                <label><span>@SmokeL["Orientation"]</span><select @bind="orientation">@foreach (var value in Enum.GetValues<AdmiralStepperOrientation>()) { <option value="@value">@value</option> }</select></label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="mobile" /> Mobile</label>
+            </div></div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · AdmiralStepper" />
+        </section>
+        <section class="admiral-component-page__section"><h2>@T("Состояния шагов", "Step states")</h2><AdmiralStepper Orientation="AdmiralStepperOrientation.Vertical" ActiveStep="2" HideLastStepLine="true" StepWidth="18rem"><AdmiralStep Completed="true">Completed</AdmiralStep><AdmiralStep Completed="true" Redo="true">Redo</AdmiralStep><AdmiralStep Error="true">Error</AdmiralStep><AdmiralStep Warning="true" Active="false">Warning</AdmiralStep><AdmiralStep Disabled="true">Disabled</AdmiralStep></AdmiralStepper></section>
+        <section class="admiral-component-page__section"><h2>ProgressStepper</h2>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <AdmiralProgressStepper Steps="@Steps" SelectedIndex="@progressIndex" SelectedIndexChanged="@OnProgressChanged" Mobile="@progressMobile" ShowActions="@showActions" />
+                <output aria-live="polite">SelectedIndex: @progressIndex · @progressEvent</output>
+            </div><div class="admiral-component-controls"><label class="admiral-component-controls__check"><input type="checkbox" @bind="progressMobile" /> Mobile</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="showActions" /> ShowActions</label><label><span>SelectedIndex</span><input type="number" min="0" max="3" @bind="progressIndex" /></label></div></div>
+            <CopyableRazorExample Code="@ProgressCode" Title="Razor · AdmiralProgressStepper" />
+        </section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private static readonly IReadOnlyList<string> Steps = ["Details", "Documents", "Confirmation", "Complete"];
+    private int activeStep = 1, progressIndex = 1, directIndex;
+    private bool mobile, progressMobile = true, showActions = true;
+    private AdmiralStepperOrientation orientation;
+    private string lastEvent = "—", progressEvent = "—";
+    private void SetStep(int offset) { activeStep = Math.Clamp(activeStep + offset, 0, 3); lastEvent = $"Navigation: {activeStep}"; }
+    private void OnActiveStepChanged(int value) { activeStep = value; lastEvent = $"ActiveStepChanged: {value}"; }
+    private void OnStepClick(AdmiralStepClickEventArgs args) => lastEvent = $"Click: {args.Index}";
+    private void OnProgressChanged(int value) { progressIndex = value; progressEvent = $"SelectedIndexChanged: {value}"; }
+    private static readonly IReadOnlyList<ApiReference.Entry> StepperRows = [
+        new("ActiveStep / ActiveStepChanged", "int / -1; EventCallback<int>", "Zero-based active index and change callback."),
+        new("Orientation / Mobile", "Horizontal / false", "Vertical or mobile layout."),
+        new("LineClamp / StepWidth / HideLastStepLine", "3 / null / false", "Label wrapping and track geometry."),
+        new("AdmiralStep: Click / Link", "EventCallback<AdmiralStepClickEventArgs> / null", "Completed available step activation or navigation."),
+        new("AdmiralStep: Completed / Error / Warning / Redo / Disabled", "bool? or bool / null or false", "Per-step visual and interaction state.")];
+    private static readonly IReadOnlyList<ApiReference.Entry> ProgressRows = [
+        new("Steps / SelectedIndex", "IReadOnlyList<string> / []; int / 0", "Labels and zero-based selected step."),
+        new("SelectedIndexChanged", "EventCallback<int>", "Fires when built-in actions select another index."),
+        new("Mobile / ShowActions", "bool / false", "Mobile layout and Previous/Next buttons."),
+        new("CounterFormat / NextStepFormat", "Step {0} of {1} / Next: {0}", "Counter and next-step labels."),
+        new("PreviousText / NextText / AriaValueFormat", "Previous / Next / Step {0}: {1}", "Button and accessible progress text.")];
+    private const string AdmiralCode = """
+        <AdmiralStepper @bind-ActiveStep="activeStep" HideLastStepLine="true">
+            <AdmiralStep Click="@(_ => selected++)">Details</AdmiralStep>
+            <AdmiralStep Click="@(_ => selected++)">Documents</AdmiralStep>
+            <AdmiralStep>Complete</AdmiralStep>
+        </AdmiralStepper>
+        <output aria-live="polite">Active: @activeStep · Clicks: @selected</output>
+        @code { private int activeStep = 1, selected; }
+        """;
+    private const string ProgressCode = """
+        <AdmiralProgressStepper Steps="@steps" @bind-SelectedIndex="selectedIndex"
+            Mobile="true" ShowActions="true" />
+        <output aria-live="polite">SelectedIndex: @selectedIndex</output>
+        @code {
+            private IReadOnlyList<string> steps = ["Details", "Documents", "Complete"];
+            private int selectedIndex;
+        }
+        """;
+    private const string DirectCode = """
+        <RadzenSteps @bind-SelectedIndex="selectedIndex">
+            <Steps><RadzenStepsItem Text="Details" /><RadzenStepsItem Text="Documents" /><RadzenStepsItem Text="Complete" /></Steps>
+        </RadzenSteps>
+        <output aria-live="polite">SelectedIndex: @selectedIndex</output>
+        @code { private int selectedIndex; }
+        """;
+}

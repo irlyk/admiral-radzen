@@ -1,0 +1,26 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_72" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="27.500000" height="19.500000" x="0.250000" y="4.250000" rx="2.750000" stroke="rgb(245,245,245)" stroke-width="0.500000" />
+		</g>
+	</mask>
+	<rect id="Panama" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="27.500000" height="19.500000" x="0.250000" y="4.250000" rx="2.750000" stroke="rgb(214,216,221)" stroke-width="0.500000" />
+	<g mask="url(#mask_72)">
+		<path id="Combined Shape" d="M28 13.3333L13.3333 13.3333L13.3333 4L28 4L28 13.3333Z" fill="rgb(229,36,72)" fill-rule="evenodd" />
+		<path id="Combined Shape" d="M28 13.3333L13.3333 13.3333L13.3333 4L28 4L28 13.3333Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Combined Shape" d="M13.3333 24L0 24L0 13.3334L13.3333 13.3334L13.3333 24Z" fill="rgb(19,103,174)" fill-rule="evenodd" />
+		<path id="Combined Shape" d="M13.3333 24L0 24L0 13.3334L13.3333 13.3334L13.3333 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Star 33" d="M6.66667 9.76L5.09924 10.824L5.62684 9.00453L4.13052 7.84262L6.02402 7.78214L6.66667 6L7.30931 7.78214L9.20282 7.84262L7.70649 9.00453L8.23409 10.824L6.66667 9.76Z" fill="rgb(19,103,174)" fill-rule="evenodd" />
+		<path id="Star 33" d="M5.09924 10.824L5.62684 9.00453L4.13052 7.84262L6.02402 7.78214L6.66667 6L7.30931 7.78214L9.20282 7.84262L7.70649 9.00453L8.23409 10.824L6.66667 9.76L5.09924 10.824Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Star 33" d="M20.6667 19.76L19.0992 20.824L19.6268 19.0045L18.1305 17.8426L20.024 17.7821L20.6667 16L21.3093 17.7821L23.2028 17.8426L21.7065 19.0045L22.2341 20.824L20.6667 19.76Z" fill="rgb(229,36,72)" fill-rule="evenodd" />
+		<path id="Star 33" d="M19.0992 20.824L19.6268 19.0045L18.1305 17.8426L20.024 17.7821L20.6667 16L21.3093 17.7821L23.2028 17.8426L21.7065 19.0045L22.2341 20.824L20.6667 19.76L19.0992 20.824Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	</g>
+</svg>

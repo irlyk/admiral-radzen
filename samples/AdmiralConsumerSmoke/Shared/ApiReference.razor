@@ -1,0 +1,19 @@
+@inject IStringLocalizer<SharedResource> L
+
+<div class="component-doc-api">
+    <table>
+        <caption>@L[Title]</caption>
+        <thead><tr><th scope="col">@L["Parameter"]</th><th scope="col">@L["Type / default"]</th><th scope="col">@L["Description"]</th></tr></thead>
+        <tbody>
+            @foreach (var row in Rows)
+            {
+                <tr><th scope="row"><code>@row.Name</code></th><td>@row.Default</td><td>@L[row.Description]</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+@code {
+    [Parameter] public string Title { get; set; } = "API";
+    [Parameter] public IReadOnlyList<Entry> Rows { get; set; } = [];
+    public record Entry(string Name, string Default, string Description);
+}

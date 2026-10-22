@@ -1,0 +1,113 @@
+@page "/components/checkbox"
+
+<PageTitle>Admiral Checkbox</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Checkbox"
+        Description="Single checkbox states, sizes and value changes. For parent and nested selection, see Checkbox groups."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-atoms-checkbox--docs"
+        SourceLabel="Open the official Admiral Checkbox story" />
+
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Usage"]</h2>
+            <p>@SmokeL["The field wraps RadzenCheckBox with Admiral size, error and label styling. ValueChanged and Change both report a nullable Boolean value. Use Checkbox groups for linked parent and child values."]</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralCheckboxField" Rows="@AdmiralRows" />
+        </section>
+        <ComponentDocNotes Title="@SmokeL["Behavior and limitations"]">
+            <p>@T("Indeterminate меняет отображаемое состояние. Синхронизируйте nullable-значение с моделью приложения. Для связи родительского и дочерних флажков используйте Checkbox groups. Прямой RadzenCheckBox получает стили темы, но не добавляет композицию метки, подсказки и ошибки AdmiralCheckboxField.", "Indeterminate changes the displayed state; keep the bound nullable value in sync with your application model. Use Checkbox groups for parent and child selection. Direct RadzenCheckBox receives theme styling but does not supply AdmiralCheckboxField label, helper text or error composition.")</p>
+        </ComponentDocNotes>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenCheckBox + Admiral theme</h2>
+            <p>@SmokeL["This example uses RadzenCheckBox directly. The packaged theme styles its states; the application supplies its label and event handler."]</p>
+            <div class="admiral-component-playground" data-testid="checkbox-radzen-demo">
+                <div class="admiral-component-playground__preview">
+                    <label><RadzenCheckBox TValue="bool?" Value="@radzenValue" Change="OnRadzenChange" Disabled="@radzenDisabled" AriaLabel="@SmokeL["Checkbox"]" /> @SmokeL["Checkbox"]</label>
+                    <span class="admiral-component-page__result" data-testid="checkbox-radzen-result" role="status">@SmokeL["Value"]: @ValueLabel(radzenValue) · @SmokeL["Changes"]: @radzenChanges</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="radzenDisabled" /> @SmokeL["Disabled"]</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@RadzenCode" Title="@SmokeL["Razor · прямой Radzen API"]" />
+            <ApiReference Title="RadzenCheckBox" Rows="@RadzenRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground" data-testid="checkbox-admiral-demo">
+                <div class="admiral-component-playground__preview">
+                    <AdmiralCheckboxField Text="@SmokeL["Checkbox"]" ExtraText="@SmokeL["A standalone field"]"
+                                          Value="@value" Change="OnChange" Dimension="@dimension"
+                                          Disabled="@disabled" ReadOnly="@readOnly" Error="@error" Indeterminate="@indeterminate" />
+                    <span class="admiral-component-page__result" data-testid="checkbox-admiral-result" role="status">@SmokeL["Value"]: @ValueLabel(value) · @SmokeL["Changes"]: @changes</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Dimension"]</span><select @bind="dimension"><option value="M">M</option><option value="S">S</option></select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> @SmokeL["Disabled"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="readOnly" /> @SmokeL["Read-only"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="error" /> @SmokeL["Error"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="indeterminate" /> @SmokeL["Indeterminate"]</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <p><a href="/components/checkbox-group">@SmokeL["Checkbox groups"]</a></p>
+        </section>
+    }
+</div>
+
+@code {
+    private static string T(string russian, string english) =>
+        System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? russian : english;
+    private string tab = ComponentDocTabs.Admiral;
+    private bool? value = false, radzenValue = false;
+    private bool disabled, readOnly, error, indeterminate, radzenDisabled;
+    private int changes, radzenChanges;
+    private AdmiralCheckboxDimension dimension = AdmiralCheckboxDimension.M;
+
+    private void OnChange(bool? next) { value = next; changes++; }
+    private void OnRadzenChange(bool? next) { radzenValue = next; radzenChanges++; }
+    private string ValueLabel(bool? current) => current switch { true => SmokeL["Checked"], false => SmokeL["Unchecked"], null => SmokeL["Indeterminate"] };
+
+    private const string AdmiralCode = """
+        <AdmiralCheckboxField Text="Subscribe" @bind-Value="subscribed"
+                              Dimension="AdmiralCheckboxDimension.M"
+                              Change="OnSubscriptionChanged" />
+        <p role="status">Value: @subscribed · Changes: @changes</p>
+        @code {
+            private bool? subscribed = false;
+            private int changes;
+            private void OnSubscriptionChanged(bool? value) => changes++;
+        }
+        """;
+    private const string RadzenCode = """
+        <label><RadzenCheckBox TValue="bool?" @bind-Value="subscribed" Change="OnSubscriptionChanged" AriaLabel="Subscribe" /> Subscribe</label>
+        <p role="status">Value: @subscribed · Changes: @changes</p>
+        @code {
+            private bool? subscribed = false;
+            private int changes;
+            private void OnSubscriptionChanged(bool? value) => changes++;
+        }
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> AdmiralRows =
+    [
+        new("Value / ValueChanged / Change", "bool? / EventCallback<bool?>", "Current value, two-way binding and observable change callback."),
+        new("Text / ChildContent / ExtraText", "string? / RenderFragment? / string?", "Visible label, custom label content and helper text."),
+        new("Dimension", "AdmiralCheckboxDimension? = M", "M or S; inherits a group dimension when omitted."),
+        new("Disabled / ReadOnly / Error / Indeterminate", "bool = false", "Interaction and visual states. Indeterminate displays the mixed state."),
+        new("InputAttributes", "IReadOnlyDictionary<string, object>?", "HTML and ARIA attributes for the inner checkbox input.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> RadzenRows =
+    [
+        new("Value / ValueChanged / Change", "bool? / EventCallback<bool?>", "Current value, binding and change callback."),
+        new("Disabled / ReadOnly / TriState", "bool", "Disabled, read-only and mixed states; supply layout and label in application markup.")
+    ];
+}

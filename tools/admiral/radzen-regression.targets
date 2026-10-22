@@ -1,0 +1,8 @@
+<Project>
+  <Import Project="$(AdmiralUpstreamTargets)" Condition="'$(AdmiralUpstreamTargets)' != '' and Exists('$(AdmiralUpstreamTargets)')" />
+  <!-- Inject test-only static web assets without modifying the Radzen checkout. -->
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'RadzenBlazorDemos'">
+    <ProjectReference Include="$(AdmiralPackageRoot)/Radzen.AdmiralThemes/Radzen.AdmiralThemes.csproj" />
+    <ProjectReference Include="$(AdmiralPackageRoot)/Radzen.AdmiralIcons/Radzen.AdmiralIcons.csproj" />
+  </ItemGroup>
+</Project>

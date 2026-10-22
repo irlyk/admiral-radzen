@@ -1,0 +1,26 @@
+@page "/pagination-regression"
+
+<link data-testid="pagination-theme-link" href="@themeCss" rel="stylesheet" />
+<h1>Pagination callback regression</h1>
+<button type="button" data-testid="pagination-theme-toggle" @onclick="ToggleTheme">Switch pagination theme</button>
+<output data-testid="pagination-theme">@theme</output>
+<AdmiralPaginationOne Page="@(page)" PageChanged="OnPageChanged"
+                      PageSize="@pageSize" PageSizeChanged="OnPageSizeChanged"
+                      TotalItems="15" PageSizeOptions="@(new[] { 10, 20 })"
+                      AriaLabel="Pagination reset regression" />
+<output data-testid="pagination-model" role="status">Page: @(page) · PageSize: @pageSize · PageChanged: @pageChanges · PageSizeChanged: @pageSizeChanges</output>
+
+@code {
+    private int page = 2;
+    private int pageSize = 10;
+    private int pageChanges;
+    private int pageSizeChanges;
+    private string theme = "Light";
+    private string themeCss => theme == "Light"
+        ? "_content/Radzen.Admiral.Themes/css/admiral-base.css"
+        : "_content/Radzen.Admiral.Themes/css/admiral-dark-base.css";
+
+    private void OnPageChanged(int next) { page = next; pageChanges++; }
+    private void OnPageSizeChanged(int next) { pageSize = next; pageSizeChanges++; }
+    private void ToggleTheme() => theme = theme == "Light" ? "Dark" : "Light";
+}

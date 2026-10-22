@@ -1,0 +1,136 @@
+@page "/components/text-area"
+
+<PageTitle>Admiral TextArea</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="TextArea"
+        Description="Многострочный ввод Admiral: размеры S/M/XL, статусы, очистка, копирование и изменение высоты."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-input-textarea--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        <ApiReference Title="AdmiralTextAreaField" Rows="@AdmiralRows" />
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Behavior and limitations"]</h2>
+            <p><code>Value</code>/<code>ValueChanged</code> @SmokeL["позволяют использовать"] <code>@@bind-Value</code>. <code>Immediate</code> @SmokeL["обновляет значение при вводе;"] <code>Copied</code> @SmokeL["вызывается после успешной записи в буфер обмена."]</p>
+            <p><code>AutoHeight</code> @SmokeL["использует CSS"] <code>field-sizing: content</code>@SmokeL[". В браузере без его поддержки остаётся обычная высота"] <code>Rows</code>@SmokeL["; ручное изменение размера доступно через"] <code>Resizable</code>@SmokeL[". Сложные маски ввода и управление позицией курсора из React TextArea пока не перенесены."]</p>
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenTextArea + Admiral theme</h2>
+            <p>@SmokeL["Прямой Radzen API остаётся доступен. Класс"] <code>admiral-text-area-control</code> @SmokeL["задаёт геометрию, а"] <code>--s</code>, <code>--m</code>, <code>--xl</code> @SmokeL["— размер. Очистка, копирование и"] <code>Copied</code> @SmokeL["относятся только к Admiral-обёртке."]</p>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview" style="display:block;width:100%;max-width:34rem">
+                    <RadzenTextArea @bind-Value="radzenValue" Rows="@radzenRows" Immediate="true"
+                                    Placeholder="@SmokeL["Прямой RadzenTextArea"]" Disabled="@radzenDisabled"
+                                    class="@($"admiral-text-area-control admiral-text-area-control--{radzenSize}")" />
+                    <span class="admiral-component-page__result">Radzen Value: @radzenValue</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Dimension"]</span><select @bind="radzenSize"><option value="s">S</option><option value="m">M</option><option value="xl">XL</option></select></label>
+                    <label><span>@SmokeL["Rows"]</span><input type="number" min="1" max="10" @bind="radzenRows" /></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="radzenDisabled" /> Disabled</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@ThemeCode" Title="@SmokeL["Razor · прямой Radzen API"]" />
+            <ApiReference Title="@SmokeL["RadzenTextArea + тема"]" Rows="@RadzenRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview" style="display:block;width:100%;max-width:34rem">
+                    <AdmiralTextAreaField Label="@SmokeL["Комментарий"]" ExtraText="@SmokeL["Содержимое можно очистить или скопировать"]"
+                                          @bind-Value="value" Copied="OnCopied" Size="@size" Status="@status"
+                                          Rows="@rows" MinRows="2" MaxRows="7" MaxLength="500"
+                                          AutoHeight="@autoHeight" Resizable="@resizable"
+                                          DisplayClearIcon="@showClear" DisplayCopyIcon="@showCopy"
+                                          Disabled="@disabled" ReadOnly="@readOnly" Skeleton="@skeleton"
+                                          Placeholder="@SmokeL["Введите комментарий"]" />
+                    <span class="admiral-component-page__result" aria-live="polite">Value: @value · @copyResult</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Dimension"]</span><select @bind="size"><option value="Small">S</option><option value="Medium">M</option><option value="ExtraLarge">XL</option></select></label>
+                    <label><span>@SmokeL["Status"]</span><select @bind="status"><option value="Default">Default</option><option value="Error">Error</option><option value="Success">@SmokeL["Success"]</option></select></label>
+                    <label><span>@SmokeL["Rows"]</span><input type="number" min="1" max="10" @bind="rows" /></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="autoHeight" /> AutoHeight</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="resizable" /> Resizable</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="showClear" /> @SmokeL["Clear"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="showCopy" /> @SmokeL["Copy"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="readOnly" /> ReadOnly</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="skeleton" /> Skeleton</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Size comparison"]</h2>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:1rem">
+                <AdmiralTextAreaField Label="@SmokeL["S · компактный"]" Size="AdmiralInputSize.Small" Value="Короткое замечание" />
+                <AdmiralTextAreaField Label="@SmokeL["M · стандартный"]" Size="AdmiralInputSize.Medium" Value="Несколько строк текста для проверки отступов." />
+                <AdmiralTextAreaField Label="@SmokeL["XL · крупный"]" Size="AdmiralInputSize.ExtraLarge" Value="Крупное поле для подробного комментария." />
+            </div>
+        </section>
+    }
+</div>
+
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private string? value = "Комментарий к операции";
+    private string? radzenValue = "Прямое использование Radzen";
+    private string copyResult = "копирования ещё не было";
+    private AdmiralInputSize size = AdmiralInputSize.Medium;
+    private AdmiralInputStatus status;
+    private int rows = 3, radzenRows = 3;
+    private string radzenSize = "m";
+    private bool autoHeight, resizable, showClear = true, showCopy = true, disabled, readOnly, skeleton, radzenDisabled;
+    private Task OnCopied() { copyResult = "скопировано"; return Task.CompletedTask; }
+
+    private const string AdmiralCode = """
+        <AdmiralTextAreaField Label="Комментарий" @bind-Value="comment"
+                              Size="AdmiralInputSize.Medium" Rows="3"
+                              DisplayClearIcon="true" DisplayCopyIcon="true"
+                              Copied="OnCopied" />
+        <span role="status">@comment · @copyResult</span>
+
+        @code {
+            private string? comment = "Начальный текст";
+            private string copyResult = "Ещё не скопировано";
+            private void OnCopied() => copyResult = "Скопировано";
+        }
+        """;
+    private const string ThemeCode = """
+        <RadzenTextArea @bind-Value="comment" Rows="3" Immediate="true"
+                        class="admiral-text-area-control admiral-text-area-control--m" />
+        <span role="status">@comment</span>
+
+        @code { private string? comment; }
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> AdmiralRows =
+    [
+        new("Value / ValueChanged / ValueExpression", "string? / EventCallback<string?> / Expression", "Значение, двусторонняя привязка и интеграция с EditForm."),
+        new("Copied", "EventCallback", "Срабатывает после успешного копирования значения."),
+        new("Size / Status", "AdmiralInputSize / AdmiralInputStatus", "По умолчанию Medium / Default; размеры Small, Medium, ExtraLarge и статусы Default, Error, Success."),
+        new("Rows / MinRows / MaxRows", "int / 3 / 3 / 8", "Начальная высота и границы автоматической высоты."),
+        new("AutoHeight / Resizable", "bool / false", "Автоматический рост через CSS field-sizing и ручное изменение высоты."),
+        new("DisplayClearIcon / DisplayCopyIcon", "bool / false", "Показывают встроенные действия очистки и копирования."),
+        new("Immediate / MaxLength", "bool / true · long? / null", "Изменение при вводе и необязательный предел длины."),
+        new("Disabled / ReadOnly / Loading / Skeleton", "bool / false", "Состояния ввода; Skeleton заменяет поле заглушкой."),
+        new("Label / AdditionalLabel / ExtraText", "string? / null", "Подписи и пояснение поля.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> RadzenRows =
+    [
+        new("Value / ValueChanged", "string / null", "Содержимое и событие изменения; поддерживают @bind-Value."),
+        new("Rows", "int / 2", "Начальная высота в строках."),
+        new("Immediate", "bool / false", "Обновлять Value при вводе, а не при потере фокуса."),
+        new("MaxLength", "long? / null", "Ограничение длины ввода."),
+        new("class", "CSS / —", "admiral-text-area-control и модификатор размера --s/--m/--xl.")
+    ];
+}

@@ -1,0 +1,50 @@
+@if (ChildContent is null)
+{
+    <RadzenBadge Text="@Text" BadgeStyle="@RadzenStyle" class="@CssClass"
+                 aria-label="@EffectiveAriaLabel" @attributes="AdditionalAttributes" />
+}
+else
+{
+    <RadzenBadge BadgeStyle="@RadzenStyle" class="@CssClass"
+                 aria-label="@EffectiveAriaLabel" @attributes="AdditionalAttributes">@ChildContent</RadzenBadge>
+}
+
+@code {
+    [Parameter] public string? Text { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public AdmiralBadgeAppearance Appearance { get; set; }
+    [Parameter] public AdmiralBadgeDimension Dimension { get; set; }
+    [Parameter] public string AmountAriaLabel { get; set; } = "Amount";
+    [Parameter] public string? AriaLabel { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private BadgeStyle RadzenStyle => Appearance switch
+    {
+        AdmiralBadgeAppearance.Info => BadgeStyle.Info,
+        AdmiralBadgeAppearance.Warning => BadgeStyle.Warning,
+        AdmiralBadgeAppearance.Success => BadgeStyle.Success,
+        AdmiralBadgeAppearance.Error => BadgeStyle.Danger,
+        AdmiralBadgeAppearance.Grey => BadgeStyle.Secondary,
+        AdmiralBadgeAppearance.Dark => BadgeStyle.Dark,
+        _ => BadgeStyle.Base
+    };
+
+    private string? EffectiveAriaLabel => AriaLabel ?? (Text is null ? null : $"{AmountAriaLabel} {Text}");
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-badge",
+        Dimension == AdmiralBadgeDimension.S ? "admiral-badge--s" : null,
+        Appearance switch
+        {
+            AdmiralBadgeAppearance.LightInactive => "admiral-badge--inactive",
+            AdmiralBadgeAppearance.LightDisabled => "admiral-badge--disabled",
+            AdmiralBadgeAppearance.White => "admiral-badge--white",
+            AdmiralBadgeAppearance.WhiteInactive => "admiral-badge--white-inactive",
+            AdmiralBadgeAppearance.WhiteDisabled => "admiral-badge--white-disabled",
+            AdmiralBadgeAppearance.WhiteBlue => "admiral-badge--white-blue",
+            _ => null
+        },
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

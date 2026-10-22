@@ -1,0 +1,7 @@
+@import 'variables';
+@import 'mixins';
+$admiral: true;
+$theme-dark: true;
+$theme-name: admiral-dark;
+
+@import 'admiral-dark-base';

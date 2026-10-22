@@ -1,0 +1,890 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Theme" xml:space="preserve"><value>Тема</value></data>
+  <data name="Language" xml:space="preserve"><value>Язык</value></data>
+  <data name="Russian" xml:space="preserve"><value>Русский</value></data>
+  <data name="English" xml:space="preserve"><value>Английский</value></data>
+  <data name="Switch Admiral color theme" xml:space="preserve"><value>Переключить цветовую тему Admiral</value></data>
+  <data name="Gallery sections" xml:space="preserve"><value>Разделы галереи</value></data>
+  <data name="Components" xml:space="preserve"><value>Компоненты</value></data>
+  <data name="Icons" xml:space="preserve"><value>Иконки</value></data>
+  <data name="Coverage" xml:space="preserve"><value>Покрытие</value></data>
+  <data name="Tables" xml:space="preserve"><value>Таблицы</value></data>
+  <data name="Admiral table gallery" xml:space="preserve"><value>Галерея таблиц Admiral</value></data>
+  <data name="Four table sizes, three pagination patterns, wrapping content and action-column scenarios." xml:space="preserve"><value>Четыре размера таблицы, три варианта пагинации, перенос содержимого и разные сценарии колонки действий.</value></data>
+  <data name="Async table inside Accordion" xml:space="preserve"><value>Асинхронная таблица внутри Accordion</value></data>
+  <data name="Open the item to reproduce first-load rendering. The Admiral edit icon must never appear as its text identifier." xml:space="preserve"><value>Откройте элемент для проверки первой загрузки. Иконка редактирования Admiral не должна появляться в виде текстового идентификатора.</value></data>
+  <data name="Load payment table" xml:space="preserve"><value>Загрузить таблицу платежей</value></data>
+  <data name="Loading table…" xml:space="preserve"><value>Загрузка таблицы…</value></data>
+  <data name="The table will load after opening this item." xml:space="preserve"><value>Таблица загрузится после открытия этого элемента.</value></data>
+  <data name="Table S with PaginationTwo S" xml:space="preserve"><value>Таблица S с PaginationTwo S</value></data>
+  <data name="Table M with PaginationTwo M" xml:space="preserve"><value>Таблица M с PaginationTwo M</value></data>
+  <data name="Table L with PaginationOne and wrapping" xml:space="preserve"><value>Таблица L с PaginationOne и переносом текста</value></data>
+  <data name="Table XL with compact pagination" xml:space="preserve"><value>Таблица XL с компактной пагинацией</value></data>
+  <data name="Plain header, no outer border and no internal grid lines." xml:space="preserve"><value>Обычный заголовок, без внешней рамки и внутренних линий сетки.</value></data>
+  <data name="Payment reference and creation channel" xml:space="preserve"><value>Номер платежа и канал создания</value></data>
+  <data name="Beneficiary and payment destination" xml:space="preserve"><value>Получатель и направление платежа</value></data>
+  <data name="Long payment purpose that can wrap onto multiple lines" xml:space="preserve"><value>Длинное назначение платежа с переносом на несколько строк</value></data>
+  <data name="Items per page" xml:space="preserve"><value>Записей на странице</value></data>
+  <data name="{0}–{1} of {2} items" xml:space="preserve"><value>{0}–{1} из {2} записей</value></data>
+  <data name="of {0} pages" xml:space="preserve"><value>из {0} страниц</value></data>
+  <data name="Page {0} of {1}" xml:space="preserve"><value>Страница {0} из {1}</value></data>
+  <data name="PaginationOne" xml:space="preserve"><value>PaginationOne</value></data>
+  <data name="Compact PaginationOne" xml:space="preserve"><value>Компактная PaginationOne</value></data>
+  <data name="PaginationSimple sections" xml:space="preserve"><value>Секции PaginationSimple</value></data>
+  <data name="Section {0}" xml:space="preserve"><value>Секция {0}</value></data>
+  <data name="Actions" xml:space="preserve"><value>Действия</value></data>
+  <data name="Purpose" xml:space="preserve"><value>Назначение</value></data>
+  <data name="Open" xml:space="preserve"><value>Открыть</value></data>
+  <data name="Admiral component coverage" xml:space="preserve"><value>Покрытие компонентов Admiral</value></data>
+  <data name="Live view of the repository coverage matrix. Use the filters to find completed and remaining component work." xml:space="preserve"><value>Актуальная таблица покрытия из репозитория. Фильтры помогают находить завершённые компоненты и оставшиеся задачи.</value></data>
+  <data name="Coverage matrix" xml:space="preserve"><value>Таблица покрытия</value></data>
+  <data name="{0} of {1} tracked component families" xml:space="preserve"><value>{0} из {1} отслеживаемых групп компонентов</value></data>
+  <data name="Related Admiral Storybook pages are grouped into families here. This matrix is not yet a complete inventory; unlisted components are not counted as Not started." xml:space="preserve"><value>Связанные страницы Admiral Storybook объединены в группы. Таблица пока не охватывает весь каталог: отсутствующие компоненты не учтены как «Не начато».</value></data>
+  <data name="Coverage summary" xml:space="preserve"><value>Сводка покрытия</value></data>
+  <data name="Search components" xml:space="preserve"><value>Поиск компонентов</value></data>
+  <data name="All statuses" xml:space="preserve"><value>Все статусы</value></data>
+  <data name="Verified" xml:space="preserve"><value>Проверено</value></data>
+  <data name="Implemented" xml:space="preserve"><value>Реализовано</value></data>
+  <data name="Partial" xml:space="preserve"><value>Частично</value></data>
+  <data name="Not started" xml:space="preserve"><value>Не начато</value></data>
+  <data name="No direct mapping" xml:space="preserve"><value>Нет прямого аналога</value></data>
+  <data name="Admiral component" xml:space="preserve"><value>Компонент Admiral</value></data>
+  <data name="Radzen mapping" xml:space="preserve"><value>Аналог Radzen</value></data>
+  <data name="Light" xml:space="preserve"><value>Светлая</value></data>
+  <data name="Dark" xml:space="preserve"><value>Тёмная</value></data>
+  <data name="Notes" xml:space="preserve"><value>Примечания</value></data>
+  <data name="The coverage matrix could not be loaded: {0}" xml:space="preserve"><value>Не удалось загрузить таблицу покрытия: {0}</value></data>
+  <data name="Admiral icon gallery" xml:space="preserve"><value>Галерея иконок Admiral</value></data>
+  <data name="Browse all packaged Admiral SVG icons, filter them by path and copy a value ready for any Radzen Icon parameter." xml:space="preserve"><value>Просматривайте все SVG-иконки Admiral из пакета, фильтруйте их по пути и копируйте готовое значение для любого параметра Icon в Radzen.</value></data>
+  <data name="{0} of {1} icons" xml:space="preserve"><value>{0} из {1} иконок</value></data>
+  <data name="Search icons" xml:space="preserve"><value>Поиск иконок</value></data>
+  <data name="Clear icon search" xml:space="preserve"><value>Очистить поиск иконок</value></data>
+  <data name="Icon category" xml:space="preserve"><value>Категория иконок</value></data>
+  <data name="Selected icon" xml:space="preserve"><value>Выбранная иконка</value></data>
+  <data name="Copied" xml:space="preserve"><value>Скопировано</value></data>
+  <data name="Copy value" xml:space="preserve"><value>Копировать значение</value></data>
+  <data name="Loading icon manifest…" xml:space="preserve"><value>Загрузка списка иконок…</value></data>
+  <data name="No icons match the current filters." xml:space="preserve"><value>По текущим фильтрам иконки не найдены.</value></data>
+  <data name="Reset filters" xml:space="preserve"><value>Сбросить фильтры</value></data>
+  <data name="Admiral icons" xml:space="preserve"><value>Иконки Admiral</value></data>
+  <data name="All categories" xml:space="preserve"><value>Все категории</value></data>
+  <data name="The icon manifest could not be loaded: {0}" xml:space="preserve"><value>Не удалось загрузить список иконок: {0}</value></data>
+  <data name="Radzen Admiral component gallery" xml:space="preserve"><value>Галерея компонентов AdmiralRadzen</value></data>
+  <data name="Radzen extension packages" xml:space="preserve"><value>Пакеты расширений Radzen</value></data>
+  <data name="Admiral component gallery" xml:space="preserve"><value>Галерея компонентов Admiral</value></data>
+  <data name="Package-consumer smoke test for the Admiral dark theme and lazy SVG icon adapter." xml:space="preserve"><value>Проверочное consumer-приложение для темы Admiral и адаптера с ленивой загрузкой SVG-иконок.</value></data>
+  <data name="Buttons and icons" xml:space="preserve"><value>Кнопки и иконки</value></data>
+  <data name="Admiral appearances, four dimensions, icon-only and text buttons." xml:space="preserve"><value>Варианты Admiral, четыре размера, кнопки только с иконкой и текстовые кнопки.</value></data>
+  <data name="Primary" xml:space="preserve"><value>Основная</value></data>
+  <data name="Secondary" xml:space="preserve"><value>Вторичная</value></data>
+  <data name="Tertiary" xml:space="preserve"><value>Третичная</value></data>
+  <data name="Ghost" xml:space="preserve"><value>Прозрачная</value></data>
+  <data name="White" xml:space="preserve"><value>Белая</value></data>
+  <data name="Submit" xml:space="preserve"><value>Отправить</value></data>
+  <data name="Loading" xml:space="preserve"><value>Загрузка</value></data>
+  <data name="Text primary" xml:space="preserve"><value>Основная текстовая</value></data>
+  <data name="Text secondary" xml:space="preserve"><value>Вторичная текстовая</value></data>
+  <data name="Small text" xml:space="preserve"><value>Маленькая текстовая</value></data>
+  <data name="Button groups" xml:space="preserve"><value>Группы кнопок</value></data>
+  <data name="Primary button group" xml:space="preserve"><value>Основная группа кнопок</value></data>
+  <data name="Secondary button group" xml:space="preserve"><value>Вторичная группа кнопок</value></data>
+  <data name="Tertiary button group" xml:space="preserve"><value>Третичная группа кнопок</value></data>
+  <data name="Create" xml:space="preserve"><value>Создать</value></data>
+  <data name="Day" xml:space="preserve"><value>День</value></data>
+  <data name="Week" xml:space="preserve"><value>Неделя</value></data>
+  <data name="Month" xml:space="preserve"><value>Месяц</value></data>
+  <data name="Center" xml:space="preserve"><value>По центру</value></data>
+  <data name="Print" xml:space="preserve"><value>Печать</value></data>
+  <data name="Share" xml:space="preserve"><value>Поделиться</value></data>
+  <data name="Open messages" xml:space="preserve"><value>Открыть сообщения</value></data>
+  <data name="Messages unavailable" xml:space="preserve"><value>Сообщения недоступны</value></data>
+  <data name="Links, anchors and dividers" xml:space="preserve"><value>Ссылки, якоря и разделители</value></data>
+  <data name="Admiral Link M/S states, a scroll-aware nested Anchor and all Divider appearances." xml:space="preserve"><value>Состояния Link Admiral M/S, многоуровневый Anchor со слежением за прокруткой и все варианты Divider.</value></data>
+  <data name="Links" xml:space="preserve"><value>Ссылки</value></data>
+  <data name="Primary link" xml:space="preserve"><value>Основная ссылка</value></data>
+  <data name="Secondary with icon" xml:space="preserve"><value>Вторичная с иконкой</value></data>
+  <data name="Small with end icon" xml:space="preserve"><value>Маленькая с иконкой справа</value></data>
+  <data name="Disabled link" xml:space="preserve"><value>Недоступная ссылка</value></data>
+  <data name="Dividers" xml:space="preserve"><value>Разделители</value></data>
+  <data name="Before" xml:space="preserve"><value>До</value></data>
+  <data name="After" xml:space="preserve"><value>После</value></data>
+  <data name="Page anchor" xml:space="preserve"><value>Якорная навигация</value></data>
+  <data name="Avatars and groups" xml:space="preserve"><value>Аватары и группы</value></data>
+  <data name="Initials, image, icon, statuses, activity ring and compact overflow group." xml:space="preserve"><value>Инициалы, изображение, иконка, статусы, кольцо активности и компактная группа с переполнением.</value></data>
+  <data name="Project participants" xml:space="preserve"><value>Участники проекта</value></data>
+  <data name="Active participants" xml:space="preserve"><value>Активные участники</value></data>
+  <data name="{0} hidden users" xml:space="preserve"><value>Скрытых участников: {0}</value></data>
+  <data name="Spinner sizes" xml:space="preserve"><value>Размеры индикатора загрузки</value></data>
+  <data name="Status indicators" xml:space="preserve"><value>Индикаторы статуса</value></data>
+  <data name="In processing" xml:space="preserve"><value>В обработке</value></data>
+  <data name="Requires attention" xml:space="preserve"><value>Требует внимания</value></data>
+  <data name="Compact status" xml:space="preserve"><value>Компактный статус</value></data>
+  <data name="Outlined dark" xml:space="preserve"><value>Тёмная с обводкой</value></data>
+  <data name="Text dark" xml:space="preserve"><value>Тёмная текстовая</value></data>
+  <data name="Admiral icon" xml:space="preserve"><value>Иконка Admiral</value></data>
+  <data name="Add" xml:space="preserve"><value>Добавить</value></data>
+  <data name="Disabled" xml:space="preserve"><value>Недоступно</value></data>
+  <data name="Checkbox and switch states" xml:space="preserve"><value>Состояния флажков и переключателей</value></data>
+  <data name="Unchecked" xml:space="preserve"><value>Не отмечено</value></data>
+  <data name="Checked" xml:space="preserve"><value>Отмечено</value></data>
+  <data name="Indeterminate" xml:space="preserve"><value>Неопределённое состояние</value></data>
+  <data name="Disabled checked" xml:space="preserve"><value>Недоступно и отмечено</value></data>
+  <data name="Switch off" xml:space="preserve"><value>Переключатель выключен</value></data>
+  <data name="Switch on" xml:space="preserve"><value>Переключатель включён</value></data>
+  <data name="Disabled off" xml:space="preserve"><value>Недоступен и выключен</value></data>
+  <data name="Disabled on" xml:space="preserve"><value>Недоступен и включён</value></data>
+  <data name="Alerts" xml:space="preserve"><value>Уведомления</value></data>
+  <data name="Informational filled alert" xml:space="preserve"><value>Информационное заполненное уведомление</value></data>
+  <data name="Successful outlined alert" xml:space="preserve"><value>Успешное уведомление с обводкой</value></data>
+  <data name="Warning outlined alert" xml:space="preserve"><value>Предупреждение с обводкой</value></data>
+  <data name="Dark outlined alert" xml:space="preserve"><value>Тёмное уведомление с обводкой</value></data>
+  <data name="Form controls" xml:space="preserve"><value>Элементы формы</value></data>
+  <data name="Account name" xml:space="preserve"><value>Название счёта</value></data>
+  <data name="Admiral account" xml:space="preserve"><value>Счёт Admiral</value></data>
+  <data name="Enter a name" xml:space="preserve"><value>Введите название</value></data>
+  <data name="Transfer date" xml:space="preserve"><value>Дата перевода</value></data>
+  <data name="Currency" xml:space="preserve"><value>Валюта</value></data>
+  <data name="Amount" xml:space="preserve"><value>Сумма</value></data>
+  <data name="Disabled value" xml:space="preserve"><value>Недоступное значение</value></data>
+  <data name="Invalid field" xml:space="preserve"><value>Поле с ошибкой</value></data>
+  <data name="Confirmed" xml:space="preserve"><value>Подтверждено</value></data>
+  <data name="Notifications" xml:space="preserve"><value>Уведомления</value></data>
+  <data name="Popup and selection states" xml:space="preserve"><value>Выпадающие элементы и состояния выбора</value></data>
+  <data name="Open the calendar and selects to verify elevation, hover, selected, disabled and filtered states." xml:space="preserve"><value>Откройте календарь и списки, чтобы проверить тени, наведение, выбор, недоступные и отфильтрованные состояния.</value></data>
+  <data name="Payment date" xml:space="preserve"><value>Дата платежа</value></data>
+  <data name="Searchable currency" xml:space="preserve"><value>Валюта с поиском</value></data>
+  <data name="Settlement currencies" xml:space="preserve"><value>Валюты расчёта</value></data>
+  <data name="Disabled select" xml:space="preserve"><value>Недоступный список</value></data>
+  <data name="Feedback and loading" xml:space="preserve"><value>Обратная связь и загрузка</value></data>
+  <data name="Modal dialog" xml:space="preserve"><value>Модальное окно</value></data>
+  <data name="Admiral size, status, scrolling and responsive action scenarios." xml:space="preserve"><value>Размеры Admiral, статусы, прокрутка и адаптивное расположение действий.</value></data>
+  <data name="Small" xml:space="preserve"><value>Маленькое</value></data>
+  <data name="Medium" xml:space="preserve"><value>Среднее</value></data>
+  <data name="Large" xml:space="preserve"><value>Большое</value></data>
+  <data name="Extra large" xml:space="preserve"><value>Очень большое</value></data>
+  <data name="Status modal" xml:space="preserve"><value>Окно со статусом</value></data>
+  <data name="Scrolling modal" xml:space="preserve"><value>Окно с прокруткой</value></data>
+  <data name="Navigation and compact status" xml:space="preserve"><value>Навигация и компактные статусы</value></data>
+  <data name="Overview" xml:space="preserve"><value>Обзор</value></data>
+  <data name="Summary content for the selected tab." xml:space="preserve"><value>Сводное содержимое выбранной вкладки.</value></data>
+  <data name="Transactions" xml:space="preserve"><value>Операции</value></data>
+  <data name="Transaction history content." xml:space="preserve"><value>Содержимое истории операций.</value></data>
+  <data name="Settings" xml:space="preserve"><value>Настройки</value></data>
+  <data name="Account settings content." xml:space="preserve"><value>Содержимое настроек счёта.</value></data>
+  <data name="Active" xml:space="preserve"><value>Активен</value></data>
+  <data name="Pending" xml:space="preserve"><value>Ожидает</value></data>
+  <data name="Rejected" xml:space="preserve"><value>Отклонён</value></data>
+  <data name="Completed" xml:space="preserve"><value>Выполнен</value></data>
+  <data name="Business" xml:space="preserve"><value>Бизнес</value></data>
+  <data name="Removable" xml:space="preserve"><value>Можно удалить</value></data>
+  <data name="Breadcrumb and accordion" xml:space="preserve"><value>Хлебные крошки и аккордеон</value></data>
+  <data name="Home" xml:space="preserve"><value>Главная</value></data>
+  <data name="Payments" xml:space="preserve"><value>Платежи</value></data>
+  <data name="Payment ADM-1042" xml:space="preserve"><value>Платёж ADM-1042</value></data>
+  <data name="Payment details" xml:space="preserve"><value>Детали платежа</value></data>
+  <data name="Northern Star LLC · 128 400 RUB · scheduled for processing today." xml:space="preserve"><value>Northern Star LLC · 128 400 RUB · запланирован к обработке сегодня.</value></data>
+  <data name="Recipient and bank" xml:space="preserve"><value>Получатель и банк</value></data>
+  <data name="Recipient and routing information are available to authorized operators." xml:space="preserve"><value>Данные получателя и реквизиты доступны авторизованным операторам.</value></data>
+  <data name="Unavailable section" xml:space="preserve"><value>Недоступный раздел</value></data>
+  <data name="This content is unavailable." xml:space="preserve"><value>Это содержимое недоступно.</value></data>
+  <data name="Drawer and side menu" xml:space="preserve"><value>Drawer и боковое меню</value></data>
+  <data name="Admiral large SideMenu geometry inside a collapsible Sider, plus a right-side Drawer composition with backdrop." xml:space="preserve"><value>Геометрия большого SideMenu Admiral внутри сворачиваемого Sider и правый Drawer с затемнением фона.</value></data>
+  <data name="Toggle side menu" xml:space="preserve"><value>Свернуть боковое меню</value></data>
+  <data name="Open drawer" xml:space="preserve"><value>Открыть Drawer</value></data>
+  <data name="Payments workspace" xml:space="preserve"><value>Рабочая область платежей</value></data>
+  <data name="Incoming" xml:space="preserve"><value>Входящие</value></data>
+  <data name="Outgoing" xml:space="preserve"><value>Исходящие</value></data>
+  <data name="Documents" xml:space="preserve"><value>Документы</value></data>
+  <data name="Unavailable" xml:space="preserve"><value>Недоступно</value></data>
+  <data name="Payment overview" xml:space="preserve"><value>Обзор платежа</value></data>
+  <data name="The content area expands when the SideMenu is collapsed." xml:space="preserve"><value>Область содержимого расширяется при сворачивании SideMenu.</value></data>
+  <data name="Tooltip and hint" xml:space="preserve"><value>Tooltip и Hint</value></data>
+  <data name="Hover the compact controls to compare Tooltip dimensions and positions. Click the help controls to open an interactive Hint card." xml:space="preserve"><value>Наведите указатель на компактные элементы для сравнения размеров и позиций Tooltip. Нажмите кнопку помощи, чтобы открыть интерактивную карточку Hint.</value></data>
+  <data name="Top medium" xml:space="preserve"><value>Сверху, средний</value></data>
+  <data name="Bottom small" xml:space="preserve"><value>Снизу, маленький</value></data>
+  <data name="Left" xml:space="preserve"><value>Слева</value></data>
+  <data name="Right" xml:space="preserve"><value>Справа</value></data>
+  <data name="Medium hint" xml:space="preserve"><value>Средний Hint</value></data>
+  <data name="Large hint" xml:space="preserve"><value>Большой Hint</value></data>
+  <data name="Slider and range" xml:space="preserve"><value>Слайдер и диапазон</value></data>
+  <data name="Admiral XL and M handles, clickable tick labels, disabled state and Radzen's native two-handle range." xml:space="preserve"><value>Маркеры Admiral XL и M, кликабельные отметки, недоступное состояние и штатный диапазон Radzen с двумя маркерами.</value></data>
+  <data name="Amount · XL" xml:space="preserve"><value>Сумма · XL</value></data>
+  <data name="Amount marks" xml:space="preserve"><value>Отметки суммы</value></data>
+  <data name="Compact · M" xml:space="preserve"><value>Компактный · M</value></data>
+  <data name="Price range" xml:space="preserve"><value>Диапазон цены</value></data>
+  <data name="Tree" xml:space="preserve"><value>Дерево</value></data>
+  <data name="Admiral M and S dimensions with nested expansion, selection, packaged SVG chevrons and propagated checkbox state." xml:space="preserve"><value>Размеры Admiral M и S с вложенным раскрытием, выбором, SVG-шевронами из пакета и распространением состояния флажков.</value></data>
+  <data name="Navigation · M" xml:space="preserve"><value>Навигация · M</value></data>
+  <data name="Statements" xml:space="preserve"><value>Выписки</value></data>
+  <data name="August 2026" xml:space="preserve"><value>Август 2026</value></data>
+  <data name="July 2026" xml:space="preserve"><value>Июль 2026</value></data>
+  <data name="Acts" xml:space="preserve"><value>Акты</value></data>
+  <data name="Access · S with checkboxes" xml:space="preserve"><value>Доступ · S с флажками</value></data>
+  <data name="Payment permissions" xml:space="preserve"><value>Права на платежи</value></data>
+  <data name="View payments" xml:space="preserve"><value>Просмотр платежей</value></data>
+  <data name="Create payments" xml:space="preserve"><value>Создание платежей</value></data>
+  <data name="Approve payments" xml:space="preserve"><value>Подтверждение платежей</value></data>
+  <data name="Reports" xml:space="preserve"><value>Отчёты</value></data>
+  <data name="Monthly reports" xml:space="preserve"><value>Ежемесячные отчёты</value></data>
+  <data name="Export statements" xml:space="preserve"><value>Экспорт выписок</value></data>
+  <data name="Archived reports" xml:space="preserve"><value>Архивные отчёты</value></data>
+  <data name="Carousel" xml:space="preserve"><value>Карусель</value></data>
+  <data name="Previous slide" xml:space="preserve"><value>Предыдущий слайд</value></data>
+  <data name="Next slide" xml:space="preserve"><value>Следующий слайд</value></data>
+  <data name="Go to slide {0}" xml:space="preserve"><value>Перейти к слайду {0}</value></data>
+  <data name="Admiral inner/default and outer/primary slider appearances with 56 px navigation zones, keyboard focus and swipe support." xml:space="preserve"><value>Внутренний/default и внешний/primary варианты слайдера Admiral с зонами навигации 56 px, фокусом с клавиатуры и свайпами.</value></data>
+  <data name="Inner slider" xml:space="preserve"><value>Внутренний слайдер</value></data>
+  <data name="Fast transfers" xml:space="preserve"><value>Быстрые переводы</value></data>
+  <data name="Create and approve business payments in one workspace." xml:space="preserve"><value>Создавайте и подтверждайте бизнес-платежи в одной рабочей области.</value></data>
+  <data name="Analytics" xml:space="preserve"><value>Аналитика</value></data>
+  <data name="Cash flow overview" xml:space="preserve"><value>Обзор денежных потоков</value></data>
+  <data name="Track incoming and outgoing operations by period." xml:space="preserve"><value>Отслеживайте входящие и исходящие операции по периодам.</value></data>
+  <data name="Statements are ready" xml:space="preserve"><value>Выписки готовы</value></data>
+  <data name="Download the latest account documents and reports." xml:space="preserve"><value>Скачайте последние документы и отчёты по счёту.</value></data>
+  <data name="Outer slider" xml:space="preserve"><value>Внешний слайдер</value></data>
+  <data name="Account" xml:space="preserve"><value>Счёт</value></data>
+  <data name="Operating balance" xml:space="preserve"><value>Доступный остаток</value></data>
+  <data name="2 480 600 ₽ available for payments today." xml:space="preserve"><value>2 480 600 ₽ доступно для платежей сегодня.</value></data>
+  <data name="Schedule" xml:space="preserve"><value>Расписание</value></data>
+  <data name="Three payments pending" xml:space="preserve"><value>Три платежа ожидают</value></data>
+  <data name="The next payment is scheduled for 14:30." xml:space="preserve"><value>Следующий платёж запланирован на 14:30.</value></data>
+  <data name="Team" xml:space="preserve"><value>Команда</value></data>
+  <data name="Approvals configured" xml:space="preserve"><value>Подтверждения настроены</value></data>
+  <data name="Two operators can approve outgoing payments." xml:space="preserve"><value>Два оператора могут подтверждать исходящие платежи.</value></data>
+  <data name="File uploader" xml:space="preserve"><value>Загрузка файлов</value></data>
+  <data name="AdmiralDataGrid unified API" xml:space="preserve"><value>Единый API AdmiralDataGrid</value></data>
+  <data name="Small dropdown" xml:space="preserve"><value>Маленький выпадающий список</value></data>
+  <data name="Toolbar, search, column picker, filters, localization, pagination and executable row actions are configured by one component." xml:space="preserve"><value>Панель, поиск, выбор столбцов, фильтры, локализация, пагинация и исполняемые действия строк настраиваются одним компонентом.</value></data>
+  <data name="Admiral XL and M file inputs with drag-and-drop, keyboard focus, selected files and representative upload states." xml:space="preserve"><value>Загрузчики Admiral XL и M с перетаскиванием, фокусом с клавиатуры, выбранными файлами и характерными состояниями загрузки.</value></data>
+  <data name="XL · multiple files" xml:space="preserve"><value>XL · несколько файлов</value></data>
+  <data name="XL · live upload" xml:space="preserve"><value>XL · живая загрузка</value></data>
+  <data name="Drop a file here or click to select" xml:space="preserve"><value>Перетащите файл сюда или нажмите для выбора</value></data>
+  <data name="Send file" xml:space="preserve"><value>Отправить файл</value></data>
+  <data name="Reset" xml:space="preserve"><value>Сбросить</value></data>
+  <data name="Simulate server error" xml:space="preserve"><value>Имитировать ошибку сервера</value></data>
+  <data name="Ready to upload" xml:space="preserve"><value>Готов к загрузке</value></data>
+  <data name="Uploaded" xml:space="preserve"><value>Загружен</value></data>
+  <data name="PDF · 842 KB · Uploaded" xml:space="preserve"><value>PDF · 842 КБ · Загружен</value></data>
+  <data name="Remove uploaded file" xml:space="preserve"><value>Удалить загруженный файл</value></data>
+  <data name="The server rejected the test upload" xml:space="preserve"><value>Сервер отклонил тестовую загрузку</value></data>
+  <data name="Drop files here or click to select" xml:space="preserve"><value>Перетащите файлы сюда или нажмите для выбора</value></data>
+  <data name="Remove file" xml:space="preserve"><value>Удалить файл</value></data>
+  <data name="PDF, DOCX, PNG or JPG · up to 10 MB" xml:space="preserve"><value>PDF, DOCX, PNG или JPG · до 10 МБ</value></data>
+  <data name="M · disabled" xml:space="preserve"><value>M · недоступен</value></data>
+  <data name="File selection is unavailable" xml:space="preserve"><value>Выбор файлов недоступен</value></data>
+  <data name="The disabled state keeps the same compact geometry." xml:space="preserve"><value>Недоступное состояние сохраняет ту же компактную геометрию.</value></data>
+  <data name="File upload state examples" xml:space="preserve"><value>Примеры состояний загрузки файлов</value></data>
+  <data name="PDF · 2.4 MB · Loading" xml:space="preserve"><value>PDF · 2,4 МБ · Загрузка</value></data>
+  <data name="Cancel upload" xml:space="preserve"><value>Отменить загрузку</value></data>
+  <data name="The file exceeds the 10 MB limit" xml:space="preserve"><value>Файл превышает ограничение 10 МБ</value></data>
+  <data name="Remove failed file" xml:space="preserve"><value>Удалить файл с ошибкой</value></data>
+  <data name="Global search" xml:space="preserve"><value>Глобальный поиск</value></data>
+  <data name="Admiral search composition with prefix, clear and submit actions, suggestions and keyboard navigation." xml:space="preserve"><value>Композиция поиска Admiral с префиксом, очисткой, отправкой, подсказками и навигацией с клавиатуры.</value></data>
+  <data name="Reference, company or account" xml:space="preserve"><value>Номер, компания или счёт</value></data>
+  <data name="Clear search" xml:space="preserve"><value>Очистить поиск</value></data>
+  <data name="Search" xml:space="preserve"><value>Искать</value></data>
+  <data name="No matches" xml:space="preserve"><value>Совпадений нет</value></data>
+  <data name="Payment · 128 400 RUB" xml:space="preserve"><value>Платёж · 128 400 RUB</value></data>
+  <data name="Payment · 2 850 USD" xml:space="preserve"><value>Платёж · 2 850 USD</value></data>
+  <data name="Operating account · 40702" xml:space="preserve"><value>Расчётный счёт · 40702</value></data>
+  <data name="Account · RUB" xml:space="preserve"><value>Счёт · RUB</value></data>
+  <data name="Beneficiary" xml:space="preserve"><value>Получатель</value></data>
+  <data name="August payment register" xml:space="preserve"><value>Реестр платежей за август</value></data>
+  <data name="Document · PDF" xml:space="preserve"><value>Документ · PDF</value></data>
+  <data name="Action bar and group actions" xml:space="preserve"><value>Панель и группы действий</value></data>
+  <data name="Admiral icon action groups, logical dividers, overflow menu and a table action pane with expandable search." xml:space="preserve"><value>Группы действий Admiral с иконками, разделителями, overflow-меню и панелью таблицы с раскрываемым поиском.</value></data>
+  <data name="Document actions" xml:space="preserve"><value>Действия с документом</value></data>
+  <data name="Edit" xml:space="preserve"><value>Редактировать</value></data>
+  <data name="Copy" xml:space="preserve"><value>Копировать</value></data>
+  <data name="Download" xml:space="preserve"><value>Скачать</value></data>
+  <data name="Delete" xml:space="preserve"><value>Удалить</value></data>
+  <data name="More actions" xml:space="preserve"><value>Другие действия</value></data>
+  <data name="Export" xml:space="preserve"><value>Экспортировать</value></data>
+  <data name="Duplicate" xml:space="preserve"><value>Дублировать</value></data>
+  <data name="Compact actions" xml:space="preserve"><value>Компактные действия</value></data>
+  <data name="Approve" xml:space="preserve"><value>Подтвердить</value></data>
+  <data name="Reject" xml:space="preserve"><value>Отклонить</value></data>
+  <data name="Archive" xml:space="preserve"><value>Архивировать</value></data>
+  <data name="Search table" xml:space="preserve"><value>Поиск по таблице</value></data>
+  <data name="Close search" xml:space="preserve"><value>Закрыть поиск</value></data>
+  <data name="Open search" xml:space="preserve"><value>Открыть поиск</value></data>
+  <data name="Configure columns" xml:space="preserve"><value>Настроить столбцы</value></data>
+  <data name="Table settings" xml:space="preserve"><value>Настройки таблицы</value></data>
+  <data name="Visible columns" xml:space="preserve"><value>Видимые столбцы</value></data>
+  <data name="Reference" xml:space="preserve"><value>Номер</value></data>
+  <data name="Created by" xml:space="preserve"><value>Создал</value></data>
+  <data name="Progress stepper and page progress" xml:space="preserve"><value>Пошаговый и страничный прогресс</value></data>
+  <data name="Radzen step navigation plus Admiral desktop/mobile progress summaries and primary/error page progress." xml:space="preserve"><value>Пошаговая навигация Radzen, сводки прогресса Admiral для desktop/mobile и страничный прогресс primary/error.</value></data>
+  <data name="Details" xml:space="preserve"><value>Детали</value></data>
+  <data name="Enter payment details." xml:space="preserve"><value>Введите данные платежа.</value></data>
+  <data name="Review" xml:space="preserve"><value>Проверка</value></data>
+  <data name="Review the payment before approval." xml:space="preserve"><value>Проверьте платёж перед подтверждением.</value></data>
+  <data name="Approval" xml:space="preserve"><value>Подтверждение</value></data>
+  <data name="Approve the payment." xml:space="preserve"><value>Подтвердите платёж.</value></data>
+  <data name="Complete" xml:space="preserve"><value>Готово</value></data>
+  <data name="The payment is ready for processing." xml:space="preserve"><value>Платёж готов к обработке.</value></data>
+  <data name="Step {0} of {1}" xml:space="preserve"><value>Шаг {0} из {1}</value></data>
+  <data name="Step {0}: {1}" xml:space="preserve"><value>Шаг {0}: {1}</value></data>
+  <data name="Next: {0}" xml:space="preserve"><value>Далее: {0}</value></data>
+  <data name="Previous" xml:space="preserve"><value>Назад</value></data>
+  <data name="Next" xml:space="preserve"><value>Далее</value></data>
+  <data name="Uploading documents…" xml:space="preserve"><value>Загрузка документов…</value></data>
+  <data name="Upload failed" xml:space="preserve"><value>Ошибка загрузки</value></data>
+  <data name="Data table" xml:space="preserve"><value>Таблица данных</value></data>
+  <data name="Rows are selectable; columns support sorting and filtering to expose Admiral interaction states." xml:space="preserve"><value>Строки можно выбирать; столбцы поддерживают сортировку и фильтрацию для проверки состояний взаимодействия Admiral.</value></data>
+  <data name="Status" xml:space="preserve"><value>Статус</value></data>
+  <data name="Close drawer" xml:space="preserve"><value>Закрыть Drawer</value></data>
+  <data name="Review the payment information before sending it for processing." xml:space="preserve"><value>Проверьте данные платежа перед отправкой в обработку.</value></data>
+  <data name="The payment will be processed today." xml:space="preserve"><value>Платёж будет обработан сегодня.</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Подтвердить</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Отмена</value></data>
+  <data name="Caption tooltip" xml:space="preserve"><value>Компактный Tooltip</value></data>
+  <data name="Admiral tooltip" xml:space="preserve"><value>Tooltip Admiral</value></data>
+  <data name="Payment processing" xml:space="preserve"><value>Обработка платежа</value></data>
+  <data name="The payment is validated before it is sent to the bank. You can continue working while processing is in progress." xml:space="preserve"><value>Платёж проверяется перед отправкой в банк. Пока идёт обработка, можно продолжать работу.</value></data>
+  <data name="Close hint" xml:space="preserve"><value>Закрыть Hint</value></data>
+  <data name="{0} payment modal" xml:space="preserve"><value>Платёж: окно «{0}»</value></data>
+  <data name="Send 128 400 RUB to Northern Star LLC? You can review the payment before confirmation." xml:space="preserve"><value>Отправить 128 400 RUB компании Northern Star LLC? Перед подтверждением можно проверить платёж.</value></data>
+  <data name="Payment completed" xml:space="preserve"><value>Платёж выполнен</value></data>
+  <data name="The payment was accepted and sent for processing." xml:space="preserve"><value>Платёж принят и отправлен в обработку.</value></data>
+  <data name="Done" xml:space="preserve"><value>Готово</value></data>
+  <data name="Information" xml:space="preserve"><value>Информация</value></data>
+  <data name="Success" xml:space="preserve"><value>Успех</value></data>
+  <data name="Warning" xml:space="preserve"><value>Предупреждение</value></data>
+  <data name="Danger" xml:space="preserve"><value>Ошибка</value></data>
+  <data name="Payment information" xml:space="preserve"><value>Информация о платеже</value></data>
+  <data name="The payment is ready for review." xml:space="preserve"><value>Платёж готов к проверке.</value></data>
+  <data name="Payment requires confirmation" xml:space="preserve"><value>Платёж требует подтверждения</value></data>
+  <data name="The recipient details have changed. Review them before continuing." xml:space="preserve"><value>Реквизиты получателя изменились. Проверьте их перед продолжением.</value></data>
+  <data name="Payment rejected" xml:space="preserve"><value>Платёж отклонён</value></data>
+  <data name="The bank rejected the payment. Correct the details and try again." xml:space="preserve"><value>Банк отклонил платёж. Исправьте реквизиты и повторите попытку.</value></data>
+  <data name="Try again" xml:space="preserve"><value>Повторить</value></data>
+  <data name="Payment conditions" xml:space="preserve"><value>Условия платежа</value></data>
+  <data name="Accept" xml:space="preserve"><value>Принять</value></data>
+  <data name="Payment orders are processed after the available balance and recipient details are verified." xml:space="preserve"><value>Платёжные поручения обрабатываются после проверки доступного остатка и реквизитов получателя.</value></data>
+  <data name="The execution date can change when a payment is created outside the recipient bank's operating hours." xml:space="preserve"><value>Дата исполнения может измениться, если платёж создан вне операционного времени банка получателя.</value></data>
+  <data name="Currency conversion uses the rate available when the payment reaches processing." xml:space="preserve"><value>Конвертация валюты выполняется по курсу, действующему на момент поступления платежа в обработку.</value></data>
+  <data name="A completed payment can be reviewed in the transaction history together with its reference number." xml:space="preserve"><value>Выполненный платёж можно посмотреть в истории операций вместе с его номером.</value></data>
+  <data name="If compliance review is required, the payment remains pending until the requested documents are supplied." xml:space="preserve"><value>Если требуется комплаенс-проверка, платёж останется в ожидании до предоставления запрошенных документов.</value></data>
+  <data name="By accepting these conditions you confirm that the recipient information has been checked." xml:space="preserve"><value>Принимая эти условия, вы подтверждаете, что данные получателя проверены.</value></data>
+  <data name="Date range" xml:space="preserve"><value>Диапазон дат</value></data>
+  <data name="Choose consecutive dates" xml:space="preserve"><value>Выберите последовательные даты</value></data>
+  <data name="Choose a date range" xml:space="preserve"><value>Выберите диапазон дат</value></data>
+  <data name="Open date range calendar" xml:space="preserve"><value>Открыть календарь диапазона дат</value></data>
+  <data name="Date range calendar" xml:space="preserve"><value>Календарь диапазона дат</value></data>
+  <data name="Payment date and time" xml:space="preserve"><value>Дата и время платежа</value></data>
+  <data name="Payment time" xml:space="preserve"><value>Время платежа</value></data>
+  <data name="Grouped currency" xml:space="preserve"><value>Валюта с группами</value></data>
+  <data name="Virtualized beneficiary" xml:space="preserve"><value>Получатель с виртуализацией</value></data>
+  <data name="Search 250 companies" xml:space="preserve"><value>Поиск по 250 компаниям</value></data>
+  <data name="Search options" xml:space="preserve"><value>Поиск вариантов</value></data>
+  <data name="Clear selection" xml:space="preserve"><value>Очистить выбор</value></data>
+  <data name="Loading options…" xml:space="preserve"><value>Загрузка вариантов…</value></data>
+  <data name="No matching options" xml:space="preserve"><value>Подходящих вариантов нет</value></data>
+  <data name="Could not load options" xml:space="preserve"><value>Не удалось загрузить варианты</value></data>
+  <data name="Retry" xml:space="preserve"><value>Повторить</value></data>
+  <data name="Europe" xml:space="preserve"><value>Европа</value></data>
+  <data name="Asia" xml:space="preserve"><value>Азия</value></data>
+  <data name="Americas" xml:space="preserve"><value>Америка</value></data>
+  <data name="Russian ruble" xml:space="preserve"><value>Российский рубль</value></data>
+  <data name="Euro" xml:space="preserve"><value>Евро</value></data>
+  <data name="Pound sterling" xml:space="preserve"><value>Фунт стерлингов</value></data>
+  <data name="Chinese yuan" xml:space="preserve"><value>Китайский юань</value></data>
+  <data name="Japanese yen" xml:space="preserve"><value>Японская иена</value></data>
+  <data name="Indian rupee" xml:space="preserve"><value>Индийская рупия</value></data>
+  <data name="US dollar" xml:space="preserve"><value>Доллар США</value></data>
+  <data name="Canadian dollar" xml:space="preserve"><value>Канадский доллар</value></data>
+  <data name="Brazilian real" xml:space="preserve"><value>Бразильский реал</value></data>
+  <data name="The extended grid supports grouping, resizing, reordering, column picking, expandable rows and semantic row backgrounds." xml:space="preserve"><value>Расширенная таблица поддерживает группировку, изменение ширины, перестановку и выбор столбцов, раскрытие строк и семантические фоны.</value></data>
+  <data name="Drag a column header here to group" xml:space="preserve"><value>Перетащите сюда заголовок столбца для группировки</value></data>
+  <data name="Payment route" xml:space="preserve"><value>Маршрут платежа</value></data>
+  <data name="Filter" xml:space="preserve"><value>Фильтр</value></data>
+  <data name="And" xml:space="preserve"><value>И</value></data>
+  <data name="Or" xml:space="preserve"><value>Или</value></data>
+  <data name="Apply" xml:space="preserve"><value>Применить</value></data>
+  <data name="Clear" xml:space="preserve"><value>Очистить</value></data>
+  <data name="Equals" xml:space="preserve"><value>Равно</value></data>
+  <data name="Not equals" xml:space="preserve"><value>Не равно</value></data>
+  <data name="Less than" xml:space="preserve"><value>Меньше</value></data>
+  <data name="Less than or equals" xml:space="preserve"><value>Меньше или равно</value></data>
+  <data name="Greater than" xml:space="preserve"><value>Больше</value></data>
+  <data name="Greater than or equals" xml:space="preserve"><value>Больше или равно</value></data>
+  <data name="Starts with" xml:space="preserve"><value>Начинается с</value></data>
+  <data name="Ends with" xml:space="preserve"><value>Заканчивается на</value></data>
+  <data name="Contains" xml:space="preserve"><value>Содержит</value></data>
+  <data name="Does not contain" xml:space="preserve"><value>Не содержит</value></data>
+  <data name="In" xml:space="preserve"><value>В списке</value></data>
+  <data name="Not in" xml:space="preserve"><value>Не в списке</value></data>
+  <data name="Is null" xml:space="preserve"><value>Не задано</value></data>
+  <data name="Is not null" xml:space="preserve"><value>Задано</value></data>
+  <data name="Is empty" xml:space="preserve"><value>Пустая строка</value></data>
+  <data name="Is not empty" xml:space="preserve"><value>Непустая строка</value></data>
+  <data name="Custom" xml:space="preserve"><value>Пользовательский</value></data>
+  <data name="First page" xml:space="preserve"><value>Первая страница</value></data>
+  <data name="Previous page" xml:space="preserve"><value>Предыдущая страница</value></data>
+  <data name="Next page" xml:space="preserve"><value>Следующая страница</value></data>
+  <data name="Last page" xml:space="preserve"><value>Последняя страница</value></data>
+  <data name="Page {0}" xml:space="preserve"><value>Страница {0}</value></data>
+  <data name="Go to page {0}" xml:space="preserve"><value>Перейти на страницу {0}</value></data>
+  <data name="Choice controls" xml:space="preserve"><value>Компоненты выбора</value></data>
+  <data name="Admiral radio sizes and states with SegmentedControl and ContentSwitcher mappings over Radzen SelectBar." xml:space="preserve"><value>Размеры и состояния RadioButton Admiral, а также SegmentedControl и ContentSwitcher на основе Radzen SelectBar.</value></data>
+  <data name="Radio button M" xml:space="preserve"><value>Radio button M</value></data>
+  <data name="Radio button S" xml:space="preserve"><value>Radio button S</value></data>
+  <data name="Card" xml:space="preserve"><value>Карта</value></data>
+  <data name="Bank transfer" xml:space="preserve"><value>Банковский перевод</value></data>
+  <data name="Cash" xml:space="preserve"><value>Наличные</value></data>
+  <data name="Standard" xml:space="preserve"><value>Стандартная</value></data>
+  <data name="Express" xml:space="preserve"><value>Экспресс</value></data>
+  <data name="Segmented control" xml:space="preserve"><value>Сегментированный переключатель</value></data>
+  <data name="List" xml:space="preserve"><value>Список</value></data>
+  <data name="Cards" xml:space="preserve"><value>Карточки</value></data>
+  <data name="Sort" xml:space="preserve"><value>Сортировка</value></data>
+  <data name="Group" xml:space="preserve"><value>Группировка</value></data>
+  <data name="Content switcher" xml:space="preserve"><value>Переключатель содержимого</value></data>
+  <data name="History" xml:space="preserve"><value>История</value></data>
+  <data name="Archived" xml:space="preserve"><value>Архивные</value></data>
+  <data name="Header progress" xml:space="preserve"><value>Прогресс в заголовке</value></data>
+  <data name="Primary header progress" xml:space="preserve"><value>Основной прогресс в заголовке</value></data>
+  <data name="Error header progress" xml:space="preserve"><value>Прогресс с ошибкой в заголовке</value></data>
+  <data name="Advance progress" xml:space="preserve"><value>Продвинуть прогресс</value></data>
+  <data name="Error" xml:space="preserve"><value>Ошибка</value></data>
+  <data name="Detailed notifications" xml:space="preserve"><value>Расширенные уведомления</value></data>
+  <data name="Close notification" xml:space="preserve"><value>Закрыть уведомление</value></data>
+  <data name="Horizontal tabs L" xml:space="preserve"><value>Горизонтальные вкладки L</value></data>
+  <data name="Horizontal tabs M adaptive" xml:space="preserve"><value>Адаптивные горизонтальные вкладки M</value></data>
+  <data name="Active items" xml:space="preserve"><value>Активные элементы</value></data>
+  <data name="Archived items" xml:space="preserve"><value>Архивные элементы</value></data>
+  <data name="Badges and dots" xml:space="preserve"><value>Бейджи и точечные индикаторы</value></data>
+  <data name="Amount: 8" xml:space="preserve"><value>Количество: 8</value></data>
+  <data name="Information status" xml:space="preserve"><value>Информационный статус</value></data>
+  <data name="Success status" xml:space="preserve"><value>Успешный статус</value></data>
+  <data name="Warning status" xml:space="preserve"><value>Предупреждающий статус</value></data>
+  <data name="Error status" xml:space="preserve"><value>Статус ошибки</value></data>
+  <data name="Chips" xml:space="preserve"><value>Чипсы</value></data>
+  <data name="Tags" xml:space="preserve"><value>Теги</value></data>
+  <data name="Outlined" xml:space="preserve"><value>С обводкой</value></data>
+  <data name="Selected" xml:space="preserve"><value>Выбран</value></data>
+  <data name="Remove" xml:space="preserve"><value>Удалить</value></data>
+  <data name="Neutral" xml:space="preserve"><value>Нейтральный</value></data>
+  <data name="Inputs" xml:space="preserve"><value>Поля ввода</value></data>
+  <data name="Admiral input gallery" xml:space="preserve"><value>Галерея полей ввода Admiral</value></data>
+  <data name="External labels are the primary Admiral pattern. Floating Radzen FormField remains available as an alternative." xml:space="preserve"><value>Внешняя подпись — основной паттерн Admiral. Плавающий Radzen FormField остаётся доступной альтернативой.</value></data>
+  <data name="Input sizes" xml:space="preserve"><value>Размеры полей ввода</value></data>
+  <data name="Admiral defines S, M and XL input dimensions: 32, 40 and 56 pixels." xml:space="preserve"><value>В Admiral предусмотрены размеры S, M и XL: 32, 40 и 56 пикселей.</value></data>
+  <data name="Small input" xml:space="preserve"><value>Малое поле</value></data>
+  <data name="Medium input" xml:space="preserve"><value>Среднее поле</value></data>
+  <data name="Extra large input" xml:space="preserve"><value>Очень большое поле</value></data>
+  <data name="Enter a value" xml:space="preserve"><value>Введите значение</value></data>
+  <data name="Compact controls and dense forms" xml:space="preserve"><value>Компактные элементы и плотные формы</value></data>
+  <data name="Default Admiral input size" xml:space="preserve"><value>Основной размер поля Admiral</value></data>
+  <data name="Prominent forms and touch layouts" xml:space="preserve"><value>Акцентные формы и сенсорные интерфейсы</value></data>
+  <data name="Field labels and states" xml:space="preserve"><value>Подписи и состояния полей</value></data>
+  <data name="Required field" xml:space="preserve"><value>Обязательное поле</value></data>
+  <data name="Helper text is displayed below the control" xml:space="preserve"><value>Вспомогательный текст расположен под контролом</value></data>
+  <data name="Validation error" xml:space="preserve"><value>Ошибка проверки</value></data>
+  <data name="Enter at least three characters" xml:space="preserve"><value>Введите не менее трёх символов</value></data>
+  <data name="Successful validation" xml:space="preserve"><value>Успешная проверка</value></data>
+  <data name="The value has been verified" xml:space="preserve"><value>Значение успешно проверено</value></data>
+  <data name="Disabled field" xml:space="preserve"><value>Отключённое поле</value></data>
+  <data name="Editing is unavailable" xml:space="preserve"><value>Редактирование недоступно</value></data>
+  <data name="Read-only field" xml:space="preserve"><value>Поле только для чтения</value></data>
+  <data name="The value can be selected and copied" xml:space="preserve"><value>Значение можно выделить и скопировать</value></data>
+  <data name="Long field label that can wrap onto a second line" xml:space="preserve"><value>Длинная подпись поля, которая может переноситься на вторую строку</value></data>
+  <data name="Optional" xml:space="preserve"><value>Необязательно</value></data>
+  <data name="Long helper text also wraps without changing the input geometry" xml:space="preserve"><value>Длинная подсказка также переносится, не изменяя геометрию самого поля</value></data>
+  <data name="Placeholder" xml:space="preserve"><value>Подсказка</value></data>
+  <data name="Other Radzen input controls" xml:space="preserve"><value>Другие поля ввода Radzen</value></data>
+  <data name="The same field composition and dimensions can wrap numeric, date and select controls." xml:space="preserve"><value>Та же композиция и размеры применяются к числовому полю, дате и списку выбора.</value></data>
+  <data name="Floating FormField alternative" xml:space="preserve"><value>Альтернатива с плавающим FormField</value></data>
+  <data name="This Radzen composition is still themed and supported, but it is not the primary Admiral InputField layout." xml:space="preserve"><value>Эта композиция Radzen по-прежнему стилизована и поддерживается, но не является основной компоновкой InputField в Admiral.</value></data>
+  <data name="Table filters, column reorder and grouping" xml:space="preserve"><value>Фильтры, перестановка столбцов и группировка</value></data>
+  <data name="Use the header filter buttons, drag headers to reorder them, or drop a header into the group panel." xml:space="preserve"><value>Используйте кнопки фильтра в заголовках, перетаскивайте столбцы для изменения порядка или переносите заголовок в панель группировки.</value></data>
+  <data name="Drag and filter actions will be reported here." xml:space="preserve"><value>Результат перемещения и фильтрации будет отображён здесь.</value></data>
+  <data name="Column {0} moved from position {1} to {2}." xml:space="preserve"><value>Столбец «{0}» перемещён с позиции {1} на позицию {2}.</value></data>
+  <data name="Grouping by {0} was removed." xml:space="preserve"><value>Группировка по столбцу «{0}» удалена.</value></data>
+  <data name="Table grouped by {0}." xml:space="preserve"><value>Таблица сгруппирована по столбцу «{0}».</value></data>
+  <data name="Open navigation" xml:space="preserve"><value>Открыть навигацию</value></data>
+  <data name="Close navigation" xml:space="preserve"><value>Закрыть навигацию</value></data>
+  <data name="Collapse navigation" xml:space="preserve"><value>Свернуть навигацию</value></data>
+  <data name="Expand navigation" xml:space="preserve"><value>Развернуть навигацию</value></data>
+  <data name="Grid layout" xml:space="preserve"><value>Модульная сетка</value></data>
+  <data name="Admiral modular grid" xml:space="preserve"><value>Модульная сетка Admiral</value></data>
+  <data name="Resize the browser to inspect the active 4, 8 or 12 column grid and responsive side menu." xml:space="preserve"><value>Изменяйте ширину браузера, чтобы проверить активную сетку на 4, 8 или 12 колонок и адаптивное боковое меню.</value></data>
+  <data name="Active modular columns" xml:space="preserve"><value>Активные колонки модульной сетки</value></data>
+  <data name="Responsive grid rules" xml:space="preserve"><value>Правила адаптивной сетки</value></data>
+  <data name="side padding" xml:space="preserve"><value>боковой отступ</value></data>
+  <data name="Alternative compact grid" xml:space="preserve"><value>Альтернативная компактная сетка</value></data>
+  <data name="The alternative grid uses 16, 24 and 32 pixel edge padding and gutters at the same breakpoints." xml:space="preserve"><value>Альтернативная сетка использует боковые отступы и интервалы 16, 24 и 32 пикселя на тех же брейкпоинтах.</value></data>
+  <data name="Side menu width" xml:space="preserve"><value>Ширина меню</value></data>
+  <data name="Collapse mode" xml:space="preserve"><value>Режим сворачивания</value></data>
+  <data name="Icons only" xml:space="preserve"><value>Только иконки</value></data>
+  <data name="Hide completely" xml:space="preserve"><value>Скрыть полностью</value></data>
+  <data name="Button controlled" xml:space="preserve"><value>Управление кнопкой</value></data>
+  <data name="Markup columns and nested template" xml:space="preserve"><value>Колонки в разметке и вложенный шаблон</value></data>
+  <data name="Columns can use regular Radzen markup, cell and header templates. Expand a row to inspect its nested content." xml:space="preserve"><value>Колонки поддерживают обычную разметку Radzen, шаблоны ячеек и заголовков. Раскройте строку, чтобы проверить вложенное содержимое.</value></data>
+  <data name="Payment reference" xml:space="preserve"><value>Идентификатор платежа</value></data>
+  <data name="Row drag and drop" xml:space="preserve"><value>Перетаскивание строк</value></data>
+  <data name="Drag the six-dot handle. RowReordered reports the final position and the application updates its controlled list." xml:space="preserve"><value>Перетащите шеститочечный маркер. RowReordered сообщает итоговую позицию, после чего приложение обновляет управляемый список.</value></data>
+  <data name="Move row" xml:space="preserve"><value>Переместить строку</value></data>
+  <data name="Row {0} moved from position {1} to {2}." xml:space="preserve"><value>Строка «{0}» перемещена с позиции {1} на позицию {2}.</value></data>
+  <data name="Buttons with seven appearances, four dimensions, icons and service states." xml:space="preserve"><value>Кнопки с семью вариантами оформления, четырьмя размерами, иконками и служебными состояниями.</value></data>
+  <data name="Compact icon actions in four dimensions and two appearances." xml:space="preserve"><value>Компактные действия с иконками в четырёх размерах и двух вариантах оформления.</value></data>
+  <data name="Text actions in M and S dimensions with optional icons." xml:space="preserve"><value>Текстовые действия размеров M и S с необязательными иконками.</value></data>
+  <data name="Open the official Admiral story" xml:space="preserve"><value>Открыть официальный пример Admiral</value></data>
+  <data name="Click count" xml:space="preserve"><value>Количество нажатий</value></data>
+  <data name="Text" xml:space="preserve"><value>Текст</value></data>
+  <data name="Square" xml:space="preserve"><value>Квадратная</value></data>
+  <data name="Appearances" xml:space="preserve"><value>Варианты оформления</value></data>
+  <data name="Dimensions" xml:space="preserve"><value>Размеры</value></data>
+  <data name="Icons and states" xml:space="preserve"><value>Иконки и состояния</value></data>
+  <data name="Appearances and states" xml:space="preserve"><value>Оформление и состояния</value></data>
+  <data name="Dimensions and appearances" xml:space="preserve"><value>Размеры и оформление</value></data>
+  <data name="Service states" xml:space="preserve"><value>Служебные состояния</value></data>
+  <data name="Loading by appearance" xml:space="preserve"><value>Loading для каждого варианта оформления</value></data>
+  <data name="The controls follow the Admiral Table hierarchy: geometry first, then content behavior, followed by interactive and advanced scenarios." xml:space="preserve"><value>Настройки следуют структуре Admiral Table: сначала геометрия, затем поведение содержимого, интерактивные и расширенные сценарии.</value></data>
+  <data name="Selected rows" xml:space="preserve"><value>Выбрано строк</value></data>
+  <data name="Geometry and pagination" xml:space="preserve"><value>Геометрия и пагинация</value></data>
+  <data name="Grey header" xml:space="preserve"><value>Серый заголовок</value></data>
+  <data name="No outer border" xml:space="preserve"><value>Без внешней границы</value></data>
+  <data name="Content and rows" xml:space="preserve"><value>Содержимое и строки</value></data>
+  <data name="Wrap headers" xml:space="preserve"><value>Перенос заголовков</value></data>
+  <data name="Wrap cells" xml:space="preserve"><value>Перенос текста ячеек</value></data>
+  <data name="Alternating rows" xml:space="preserve"><value>Чередование строк</value></data>
+  <data name="Detail rows" xml:space="preserve"><value>Детализация строк</value></data>
+  <data name="Row selection" xml:space="preserve"><value>Выбор строк</value></data>
+  <data name="Row actions" xml:space="preserve"><value>Действия строки</value></data>
+  <data name="Toolbar actions" xml:space="preserve"><value>Действия панели</value></data>
+  <data name="Sorting" xml:space="preserve"><value>Сортировка</value></data>
+  <data name="Filtering" xml:space="preserve"><value>Фильтрация</value></data>
+  <data name="Column resize" xml:space="preserve"><value>Изменение ширины столбцов</value></data>
+  <data name="Column reorder" xml:space="preserve"><value>Перестановка столбцов</value></data>
+  <data name="Grouping" xml:space="preserve"><value>Группировка</value></data>
+  <data name="Row reorder" xml:space="preserve"><value>Перестановка строк</value></data>
+  <data name="Documentation section" xml:space="preserve"><value>Раздел документации</value></data>
+  <data name="Radzen + theme" xml:space="preserve"><value>Radzen + тема</value></data>
+  <data name="Usage and API" xml:space="preserve"><value>Использование и API</value></data>
+  <data name="Parameter" xml:space="preserve"><value>Параметр</value></data>
+  <data name="Type / default" xml:space="preserve"><value>Тип / по умолчанию</value></data>
+  <data name="Description" xml:space="preserve"><value>Назначение</value></data>
+  <data name="Admiral components" xml:space="preserve"><value>Компоненты Admiral</value></data>
+  <data name="Size" xml:space="preserve"><value>Размер</value></data>
+  <data name="Pagination" xml:space="preserve"><value>Пагинация</value></data>
+  <data name="Pagination size" xml:space="preserve"><value>Размер пагинации</value></data>
+  <data name="Grid lines" xml:space="preserve"><value>Линии таблицы</value></data>
+  <data name="Page size" xml:space="preserve"><value>Строк на странице</value></data>
+  <data name="Empty data" xml:space="preserve"><value>Пустые данные</value></data>
+  <data name="Toolbar" xml:space="preserve"><value>Панель действий</value></data>
+  <data name="Current playground configuration" xml:space="preserve"><value>Текущая конфигурация playground</value></data>
+  <data name="Sizes, column behavior, states, actions, detail rows and pagination in one configurable AdmiralDataGrid." xml:space="preserve"><value>Размеры, поведение столбцов, состояния, действия, вложенные строки и пагинация в настраиваемом AdmiralDataGrid.</value></data>
+  <data name="Joined button groups with group-level appearance and dimension settings." xml:space="preserve"><value>Объединённые группы кнопок с общими настройками вида и размера.</value></data>
+  <data name="Outlined and filled chips with selection, icons, badges, removal, disabled and read-only states." xml:space="preserve"><value>Контурные и заполненные чипы: выбор, иконки, бейджи, удаление, отключённое состояние и режим чтения.</value></data>
+  <data name="All Admiral badge appearances in M and S dimensions, plus BadgeDot dimensions and semantic colors." xml:space="preserve"><value>Варианты бейджей Admiral размеров M/S, размеры BadgeDot и семантические цвета.</value></data>
+  <data name="One declarative menu model shared by button, icon, text, split-button and tag triggers." xml:space="preserve"><value>Декларативное меню с триггерами: кнопка, иконка, текст, разделённая кнопка и тег.</value></data>
+  <data name="Phone number input with searchable country selector, flags and country-code replacement." xml:space="preserve"><value>Ввод номера телефона с поиском страны, флагами и заменой кода страны.</value></data>
+  <data name="Numeric input with constraints, precision, formatting and increment controls." xml:space="preserve"><value>Числовой ввод: ограничения, точность, форматирование и кнопки изменения значения.</value></data>
+  <data name="Primary and secondary links in M and S dimensions, with icons and disabled state." xml:space="preserve"><value>Основные и вторичные ссылки размеров M/S, иконки и отключённое состояние.</value></data>
+  <data name="Ordered and unordered typography lists with M/S dimensions, nested content and customizable markers." xml:space="preserve"><value>Нумерованные и ненумерованные списки размеров M/S, вложенные элементы и настраиваемые маркеры.</value></data>
+  <data name="The exported Admiral skeleton primitives used inside loading buttons and other controls." xml:space="preserve"><value>Примитивы skeleton Admiral для кнопок загрузки и других компонентов.</value></data>
+  <data name="Horizontal, vertical and mobile step navigation with active, completed, error, warning and redo states." xml:space="preserve"><value>Горизонтальная, вертикальная и мобильная навигация по шагам: текущий, завершённый, ошибка, предупреждение и повтор.</value></data>
+  <data name="Compact 16 px status indicators, optional icons, interactive semantics and wrapping groups." xml:space="preserve"><value>Компактные индикаторы статуса 16 px, иконки, интерактивные состояния и группы с переносом.</value></data>
+  <data name="Admiral-prefixed select with custom values, filtering, groups and themed popup states." xml:space="preserve"><value>Выбор Admiral с произвольными значениями, фильтрацией, группами и состояниями всплывающего списка.</value></data>
+  <data name="Markup-first tooltip trigger with M/S dimensions, four positions, delay and custom content." xml:space="preserve"><value>Подсказка из Razor-разметки: размеры M/S, четыре положения, задержка и произвольное содержимое.</value></data>
+  <data name="All current Admiral 2.1 typography tokens with semantic HTML tags, custom color and skeleton state." xml:space="preserve"><value>Токены типографики Admiral 2.1, семантические HTML-теги, произвольный цвет и skeleton.</value></data>
+  <data name="Container with native vertical and horizontal scrolling styled with Admiral geometry and theme colors." xml:space="preserve"><value>Контейнер с нативной вертикальной и горизонтальной прокруткой, геометрией и цветами Admiral.</value></data>
+  <data name="Text input and labelled field with Admiral dimensions, semantic states, icons and built-in actions." xml:space="preserve"><value>Текстовый ввод и поле с подписью: размеры Admiral, семантические состояния, иконки и встроенные действия.</value></data>
+  <data name="Native Radzen date range" xml:space="preserve"><value>Нативный диапазон дат Radzen</value></data>
+  <data name="Radzen 12 already includes a native range picker with two months, interval highlighting and a hover preview. This independent example uses the installed package, not the Admiral wrapper." xml:space="preserve"><value>В Radzen 12 уже есть нативный выбор диапазона: два месяца, выделение интервала и предварительный просмотр при наведении. Этот независимый пример использует установленный пакет, а не обёртку Admiral.</value></data>
+  <data name="Usage" xml:space="preserve"><value>Использование</value></data>
+  <data name="The preferred API uses Admiral-prefixed components. Open the Radzen + theme tab for the direct Radzen API and packaged theme classes." xml:space="preserve"><value>Предпочтительный API использует компоненты с префиксом Admiral. Для прямого Radzen API и классов темы откройте вкладку «Radzen + тема».</value></data>
+  <data name="Direct equivalent" xml:space="preserve"><value>Прямой эквивалент</value></data>
+  <data name="The Divider theme provides classes for a plain HTML element; wrapper parameters must be applied manually." xml:space="preserve"><value>Для Divider тема предоставляет классы обычному HTML-элементу; параметры обёртки нужно задать вручную.</value></data>
+  <data name="The theme changes Radzen geometry, colors and states, but does not add Admiral wrapper parameters or templates." xml:space="preserve"><value>Тема меняет геометрию, цвета и состояния Radzen-компонента, но не добавляет параметры и шаблоны Admiral-обёртки.</value></data>
+  <data name="Both variants require" xml:space="preserve"><value>Для обоих вариантов подключите</value></data>
+  <data name="Icons also require" xml:space="preserve"><value>Иконкам также нужны</value></data>
+  <data name="Interactions" xml:space="preserve"><value>Взаимодействия</value></data>
+  <data name="Dimension" xml:space="preserve"><value>Размер</value></data>
+  <data name="Appearance" xml:space="preserve"><value>Вариант</value></data>
+  <data name="State" xml:space="preserve"><value>Состояние</value></data>
+  <data name="Position" xml:space="preserve"><value>Положение</value></data>
+  <data name="Orientation" xml:space="preserve"><value>Ориентация</value></data>
+  <data name="Length" xml:space="preserve"><value>Длина</value></data>
+  <data name="Width" xml:space="preserve"><value>Ширина</value></data>
+  <data name="Trigger" xml:space="preserve"><value>Триггер</value></data>
+  <data name="Rows" xml:space="preserve"><value>Строки</value></data>
+  <data name="Progress" xml:space="preserve"><value>Прогресс</value></data>
+  <data name="Value mode" xml:space="preserve"><value>Режим значения</value></data>
+  <data name="Text before" xml:space="preserve"><value>Текст до значения</value></data>
+  <data name="Text after" xml:space="preserve"><value>Текст после значения</value></data>
+  <data name="Pane size" xml:space="preserve"><value>Размер панели</value></data>
+  <data name="Interval, ms" xml:space="preserve"><value>Интервал, мс</value></data>
+  <data name="Behavior" xml:space="preserve"><value>Поведение</value></data>
+  <data name="Limitations" xml:space="preserve"><value>Ограничения</value></data>
+  <data name="Setup" xml:space="preserve"><value>Подключение</value></data>
+  <data name="Arbitrary trigger" xml:space="preserve"><value>Произвольный триггер</value></data>
+  <data name="Focus and dismissal" xml:space="preserve"><value>Фокус и закрытие</value></data>
+  <data name="Admiral scenarios" xml:space="preserve"><value>Сценарии Admiral</value></data>
+  <data name="Admiral variants" xml:space="preserve"><value>Варианты Admiral</value></data>
+  <data name="Behavior and limitations" xml:space="preserve"><value>Поведение и ограничения</value></data>
+  <data name="Behavior and compatibility" xml:space="preserve"><value>Поведение и совместимость</value></data>
+  <data name="Markup and accessibility" xml:space="preserve"><value>Разметка и доступность</value></data>
+  <data name="Differences from React Admiral" xml:space="preserve"><value>Отличия от React Admiral</value></data>
+  <data name="Size comparison" xml:space="preserve"><value>Сравнение размеров</value></data>
+  <data name="Statuses and sizes" xml:space="preserve"><value>Статусы и размеры</value></data>
+  <data name="Surface" xml:space="preserve"><value>Поверхность</value></data>
+  <data name="Side" xml:space="preserve"><value>Сторона</value></data>
+  <data name="API integration" xml:space="preserve"><value>Подключение к API</value></data>
+  <data name="Unbound state" xml:space="preserve"><value>Без привязки состояния</value></data>
+  <data name="Local state · without bind" xml:space="preserve"><value>Локальное состояние · без bind</value></data>
+  <data name="Mark culture" xml:space="preserve"><value>Локаль отметок</value></data>
+  <data name="Offset minimum and off-step bound" xml:space="preserve"><value>Смещённый минимум и граница вне шага</value></data>
+  <data name="Compatibility: integer AdmiralSlider" xml:space="preserve"><value>Совместимость: целочисленный AdmiralSlider</value></data>
+  <data name="Value relationships" xml:space="preserve"><value>Связь значений</value></data>
+  <data name="Inner navigation" xml:space="preserve"><value>Внутренняя навигация</value></data>
+  <data name="Outer navigation" xml:space="preserve"><value>Внешняя навигация</value></data>
+  <data name="First slide" xml:space="preserve"><value>Первый слайд</value></data>
+  <data name="Second slide" xml:space="preserve"><value>Второй слайд</value></data>
+  <data name="First block" xml:space="preserve"><value>Первый блок</value></data>
+  <data name="Second block" xml:space="preserve"><value>Второй блок</value></data>
+  <data name="Load error" xml:space="preserve"><value>Ошибка загрузки</value></data>
+  <data name="Select application sections" xml:space="preserve"><value>Выбор разделов приложения</value></data>
+  <data name="Radzen position" xml:space="preserve"><value>Позиция Radzen</value></data>
+  <data name="Radzen size" xml:space="preserve"><value>Размер Radzen</value></data>
+  <data name="Radzen side" xml:space="preserve"><value>Сторона Radzen</value></data>
+  <data name="Radzen + theme · independent playground" xml:space="preserve"><value>Radzen + тема · независимый playground</value></data>
+  <data name="ActionBar · responsive playground" xml:space="preserve"><value>ActionBar · адаптивный пример</value></data>
+  <data name="Only RadzenDataGrid and RadzenDataGridColumn. All shown classes ship with the theme. Paging and column selection are native Radzen features, without AdmiralGroupActionsPane." xml:space="preserve"><value>Только RadzenDataGrid и RadzenDataGridColumn. Все показанные классы поставляются в пакете темы. Пагинация и выбор колонок здесь штатные, без AdmiralGroupActionsPane.</value></data>
+  <data name="Last row clicked" xml:space="preserve"><value>Последнее нажатие на строку</value></data>
+  <data name="Wrap headers and cells" xml:space="preserve"><value>Перенос заголовков и ячеек</value></data>
+  <data name="Detailed payment purpose" xml:space="preserve"><value>Подробное назначение платежа</value></data>
+  <data name="The current value; supports two-way binding with ValueChanged." xml:space="preserve"><value>Текущее значение компонента; поддерживает двустороннее связывание вместе с ValueChanged.</value></data>
+  <data name="Reports a controlled value change; use with binding or as a standalone callback." xml:space="preserve"><value>Событие изменения управляемого значения; используйте вместе с bind-параметром или отдельно.</value></data>
+  <data name="Arbitrary Razor content inside the component." xml:space="preserve"><value>Произвольная Razor-разметка внутри компонента.</value></data>
+  <data name="The visible component label." xml:space="preserve"><value>Видимая подпись компонента.</value></data>
+  <data name="The Admiral visual or semantic appearance." xml:space="preserve"><value>Визуальный или семантический вариант Admiral.</value></data>
+  <data name="Shows partial selection; the application computes the parent value from its children." xml:space="preserve"><value>Показывает частичный выбор; значение родителя вычисляет приложение по дочерним пунктам.</value></data>
+  <data name="Controls menu visibility; supports @bind-IsOpen with IsOpenChanged." xml:space="preserve"><value>Показывает раскрытое меню; вместе с IsOpenChanged поддерживает @bind-IsOpen.</value></data>
+  <data name="Reports visibility changes, including clicks outside the menu." xml:space="preserve"><value>Событие изменения видимости меню, в том числе при клике снаружи.</value></data>
+  <data name="The main button icon while the menu is open." xml:space="preserve"><value>Иконка основной кнопки при открытом меню.</value></data>
+  <data name="Pins the action group to a viewport corner; false keeps it in the page flow." xml:space="preserve"><value>Закрепляет группу кнопок в углу окна; false оставляет её в потоке страницы.</value></data>
+  <data name="Uses a 16 px mobile inset instead of the 28 px desktop inset." xml:space="preserve"><value>Использует мобильный отступ 16 px вместо десктопных 28 px.</value></data>
+  <data name="Additional helper text below the component." xml:space="preserve"><value>Дополнительная подсказка под компонентом.</value></data>
+  <data name="Returns validated IBrowserFile selection. A rejected selection clears the previous selection and returns an empty list. The application performs the upload." xml:space="preserve"><value>Возвращает новый выбор IBrowserFile после проверки. При отклонении очищает прежний выбор и возвращает пустой список; отправку выполняет приложение.</value></data>
+  <data name="Reports which IBrowserFile was removed from the built-in list." xml:space="preserve"><value>Сообщает приложению, какой IBrowserFile удалён из внутреннего списка.</value></data>
+  <data name="Comma-separated file extensions or MIME types; used by the file dialog and validated again by the component." xml:space="preserve"><value>Список расширений или MIME-типов через запятую; применяется к диалогу выбора и повторно проверяется компонентом.</value></data>
+  <data name="Maximum files per selection; defaults to 10." xml:space="preserve"><value>Максимальное число файлов за один выбор; по умолчанию 10.</value></data>
+  <data name="Maximum size of one file in bytes; null disables the limit." xml:space="preserve"><value>Максимальный размер одного файла в байтах; null снимает проверку.</value></data>
+  <data name="Localizable text for the corresponding selection error." xml:space="preserve"><value>Локализуемый текст соответствующей ошибки выбора.</value></data>
+  <data name="Accessible name of the remove button in the built-in file list." xml:space="preserve"><value>Доступное имя кнопки удаления файла во встроенном списке.</value></data>
+  <data name="Applies the checkbox error appearance." xml:space="preserve"><value>Применяет оформление ошибки к флажку.</value></data>
+  <data name="HTML and aria attributes of the inner RadzenCheckBox input." xml:space="preserve"><value>HTML- и aria-атрибуты внутреннего input RadzenCheckBox.</value></data>
+  <data name="Zero-based active slide index; supports @bind-SelectedIndex with SelectedIndexChanged." xml:space="preserve"><value>Номер активного слайда, начиная с нуля; вместе с SelectedIndexChanged поддерживает @bind-SelectedIndex.</value></data>
+  <data name="Reports the index after selecting a different slide." xml:space="preserve"><value>Вызывается после выбора другого слайда и передаёт его индекс.</value></data>
+  <data name="Enables automatic slide switching." xml:space="preserve"><value>Включает автоматическое переключение слайдов.</value></data>
+  <data name="Automatic slide interval in milliseconds." xml:space="preserve"><value>Интервал автоматического переключения в миллисекундах.</value></data>
+  <data name="Transition duration in milliseconds." xml:space="preserve"><value>Длительность анимации перехода в миллисекундах.</value></data>
+  <data name="Shows previous and next slide buttons." xml:space="preserve"><value>Показывает кнопки предыдущего и следующего слайда.</value></data>
+  <data name="Shows clickable slide indicators." xml:space="preserve"><value>Показывает кликабельные индикаторы слайдов.</value></data>
+  <data name="Enables swipe navigation on touch screens." xml:space="preserve"><value>Разрешает перелистывание жестом на сенсорных экранах.</value></data>
+  <data name="Slides per page; values greater than one change the navigation step." xml:space="preserve"><value>Число слайдов на странице; больше единицы меняет шаг навигации.</value></data>
+  <data name="Carousel viewport height in CSS units." xml:space="preserve"><value>Высота области карусели в единицах CSS.</value></data>
+  <data name="Accessible arrow label, available to screen readers but visually hidden." xml:space="preserve"><value>Доступная подпись стрелки; видима экранным дикторам, но скрыта визуально.</value></data>
+  <data name="Accessible indicator label format; {0} is the one-based slide number." xml:space="preserve"><value>Формат доступной подписи индикатора, где {0} — номер слайда с единицы.</value></data>
+  <data name="Component size and geometry." xml:space="preserve"><value>Размер и геометрия компонента.</value></data>
+  <data name="Disables interaction and applies the disabled appearance." xml:space="preserve"><value>Отключает взаимодействие и применяет недоступное состояние.</value></data>
+  <data name="Prevents value changes while retaining reading and focus." xml:space="preserve"><value>Запрещает изменение значения, сохраняя возможность чтения и фокуса.</value></data>
+  <data name="Shows loading state and temporarily blocks the action." xml:space="preserve"><value>Показывает состояние загрузки и временно блокирует действие.</value></data>
+  <data name="Shows a skeleton during initial loading." xml:space="preserve"><value>Показывает компонент как skeleton во время первичной загрузки.</value></data>
+  <data name="Additional CSS class on the outer element." xml:space="preserve"><value>Дополнительный CSS-класс внешнего элемента.</value></data>
+  <data name="Unmatched HTML, aria and data attributes on the outer element." xml:space="preserve"><value>Нераспознанные HTML-, aria- и data-атрибуты внешнего элемента.</value></data>
+  <data name="Handles the component's primary action." xml:space="preserve"><value>Обработчик основного действия компонента.</value></data>
+  <data name="Icon name, for example admiral:system/star-solid." xml:space="preserve"><value>Имя иконки, например admiral:system/star-solid.</value></data>
+  <data name="Hint displayed in an empty input." xml:space="preserve"><value>Подсказка в пустом поле.</value></data>
+  <data name="Input semantic state: default, success or error." xml:space="preserve"><value>Семантическое состояние поля: обычное, success или error.</value></data>
+  <data name="Tag semantic status: Neutral, Success, Primary, Danger or Warning." xml:space="preserve"><value>Семантический статус Tag: Neutral, Success, Primary, Danger или Warning.</value></data>
+  <data name="Horizontal or vertical divider axis." xml:space="preserve"><value>Горизонтальная или вертикальная ось разделителя.</value></data>
+  <data name="Divider length in CSS units on the chosen axis; defaults to 100%." xml:space="preserve"><value>Длина разделителя в единицах CSS по выбранной оси; по умолчанию 100%.</value></data>
+  <data name="Custom CSS color instead of Appearance." xml:space="preserve"><value>Произвольный CSS-цвет вместо варианта Appearance.</value></data>
+  <data name="Shows status using a background and border instead of a colored dot." xml:space="preserve"><value>Отображает статус через фон и границу вместо цветной точки.</value></data>
+  <data name="Hides the background Tag border." xml:space="preserve"><value>Скрывает границу фонового Tag.</value></data>
+  <data name="Tag width in CSS units; long text is truncated with an ellipsis." xml:space="preserve"><value>CSS-ширина Tag; длинный текст обрезается многоточием.</value></data>
+  <data name="Custom dot or background color, depending on StatusViaBackground." xml:space="preserve"><value>Пользовательский цвет точки или фона — в зависимости от StatusViaBackground.</value></data>
+  <data name="Custom border color for a background Tag." xml:space="preserve"><value>Пользовательский цвет границы для фонового Tag.</value></data>
+  <data name="Custom hover background for an interactive Tag." xml:space="preserve"><value>Пользовательский цвет фона интерактивного Tag при наведении.</value></data>
+  <data name="Full text in the browser's native tooltip." xml:space="preserve"><value>Полный текст во всплывающей подсказке браузера.</value></data>
+  <data name="The component's item source." xml:space="preserve"><value>Источник элементов компонента.</value></data>
+  <data name="Checked tree IDs; cascading mode includes normalized parent IDs." xml:space="preserve"><value>Набор отмеченных Id дерева; при каскаде включает нормализованных родителей.</value></data>
+  <data name="Reports checked IDs; supports @bind-CheckedValues." xml:space="preserve"><value>Новый набор отмеченных Id. Поддерживает @bind-CheckedValues.</value></data>
+  <data name="Expanded branches; local initial state without binding or controlled state with a callback." xml:space="preserve"><value>Набор раскрытых веток; начальное состояние без bind или управляемое с callback.</value></data>
+  <data name="Reports expanded IDs after a user action; supports @bind-ExpandedValues." xml:space="preserve"><value>Набор раскрытых Id после действия пользователя; @bind-ExpandedValues.</value></data>
+  <data name="Shows checkboxes; defaults to true in AdmiralTree." xml:space="preserve"><value>Показывает checkbox-ы; в AdmiralTree по умолчанию true.</value></data>
+  <data name="Independent checkboxes without cascading; defaults to false." xml:space="preserve"><value>Независимые checkbox-ы без каскада; по умолчанию false.</value></data>
+  <data name="Leading menu icon size; defaults to Large (24 px). Small ActionBar uses Medium (20 px)." xml:space="preserve"><value>Размер ведущей иконки меню; по умолчанию Large (24px), Small ActionBar использует Medium (20px).</value></data>
+  <data name="Toolbar actions: Id, Text, Icon, Disabled and DividerBefore." xml:space="preserve"><value>Действия панели: Id, Text, Icon, Disabled и DividerBefore.</value></data>
+  <data name="Returns the selected AdmiralActionItem; disabled actions do not invoke the callback." xml:space="preserve"><value>Возвращает выбранный AdmiralActionItem; отключённые действия не вызывают callback.</value></data>
+  <data name="Column menu entries: Id, Text, Visible and Disabled." xml:space="preserve"><value>Колонки для меню: Id, Text, Visible и Disabled.</value></data>
+  <data name="Reports the updated AdmiralPaneColumn list; supports @bind-Columns." xml:space="preserve"><value>Новый список AdmiralPaneColumn после изменения видимости; используйте @bind-Columns.</value></data>
+  <data name="Search text; the application applies it to its data." xml:space="preserve"><value>Строка поиска; приложение применяет её к своим данным.</value></data>
+  <data name="Reports search text changes; closing search clears it." xml:space="preserve"><value>Изменение строки поиска; закрытие поиска очищает её.</value></data>
+  <data name="Shows the settings button; defaults to true." xml:space="preserve"><value>Показывает кнопку настроек (по умолчанию true).</value></data>
+  <data name="Requests settings; the application provides the settings UI." xml:space="preserve"><value>Запрос открыть настройки; содержимое настроек реализует приложение.</value></data>
+  <data name="Rendering template with the current item as its context." xml:space="preserve"><value>Шаблон отображения с контекстом текущего элемента.</value></data>
+  <data name="Inline CSS on the outer element." xml:space="preserve"><value>Inline CSS внешнего элемента.</value></data>
+  <data name="Reports changes to the corresponding parameter." xml:space="preserve"><value>Событие изменения соответствующего параметра.</value></data>
+  <data name="Accessible name or text for screen readers." xml:space="preserve"><value>Доступное имя или текст для экранных дикторов.</value></data>
+  <data name="Configures the corresponding component behavior. Type and default are shown alongside." xml:space="preserve"><value>Настраивает соответствующее поведение компонента. Тип и значение по умолчанию указаны рядом.</value></data>
+  <data name="Column selection" xml:space="preserve"><value>Выбор колонок</value></data>
+  <data name="Drag a column header here" xml:space="preserve"><value>Перетащите сюда заголовок колонки</value></data>
+  <data name="Playground" xml:space="preserve"><value>Интерактивный пример</value></data>
+  <data name="Start icon" xml:space="preserve"><value>Иконка в начале</value></data>
+  <data name="End icon" xml:space="preserve"><value>Иконка в конце</value></data>
+  <data name="Square button" xml:space="preserve"><value>Квадратная кнопка</value></data>
+  <data name="Visual disabled" xml:space="preserve"><value>Визуальное отключение</value></data>
+  <data name="White loading" xml:space="preserve"><value>Белый вариант с загрузкой</value></data>
+  <data name="ButtonGroup appearances" xml:space="preserve"><value>Варианты ButtonGroup</value></data>
+  <data name="Official IconButtonGroup story" xml:space="preserve"><value>Официальный пример IconButtonGroup</value></data>
+  <data name="Error on item" xml:space="preserve"><value>Ошибка у пункта</value></data>
+  <data name="Variants" xml:space="preserve"><value>Варианты</value></data>
+  <data name="Selection" xml:space="preserve"><value>Выбор</value></data>
+  <data name="Content" xml:space="preserve"><value>Содержимое</value></data>
+  <data name="Read only" xml:space="preserve"><value>Только чтение</value></data>
+  <data name="Selectable outlined" xml:space="preserve"><value>Контурный с выбором</value></data>
+  <data name="Selectable filled" xml:space="preserve"><value>Залитый с выбором</value></data>
+  <data name="Selected disabled" xml:space="preserve"><value>Выбран и недоступен</value></data>
+  <data name="Continue" xml:space="preserve"><value>Продолжить</value></data>
+  <data name="Messages" xml:space="preserve"><value>Сообщения</value></data>
+  <data name="A very long chip label that is truncated" xml:space="preserve"><value>Очень длинная подпись чипа, которая обрезается</value></data>
+  <data name="Restore removable chip" xml:space="preserve"><value>Восстановить удаляемый чип</value></data>
+  <data name="Queue" xml:space="preserve"><value>В очереди</value></data>
+  <data name="Custom trigger" xml:space="preserve"><value>Свой триггер</value></data>
+  <data name="Mobile offset" xml:space="preserve"><value>Отступ на мобильном</value></data>
+  <data name="Appearances and dimensions" xml:space="preserve"><value>Оформление и размеры</value></data>
+  <data name="Ordered markers" xml:space="preserve"><value>Нумерованные маркеры</value></data>
+  <data name="Second item with multiline content that demonstrates the natural wrapping behavior of an Admiral list." xml:space="preserve"><value>Второй пункт с длинным текстом, демонстрирующим естественный перенос строк в списке Admiral.</value></data>
+  <data name="Third item" xml:space="preserve"><value>Третий пункт</value></data>
+  <data name="Unordered markers and dimensions" xml:space="preserve"><value>Маркеры и размеры</value></data>
+  <data name="Colored bullet" xml:space="preserve"><value>Цветной маркер</value></data>
+  <data name="Default M typography" xml:space="preserve"><value>Стандартная типографика M</value></data>
+  <data name="Small list with a dash" xml:space="preserve"><value>Маленький список с тире</value></data>
+  <data name="Second item" xml:space="preserve"><value>Второй пункт</value></data>
+  <data name="Custom icon marker" xml:space="preserve"><value>Свой маркер-иконка</value></data>
+  <data name="Another icon" xml:space="preserve"><value>Другая иконка</value></data>
+  <data name="Nested list" xml:space="preserve"><value>Вложенный список</value></data>
+  <data name="Parent item" xml:space="preserve"><value>Родительский пункт</value></data>
+  <data name="Nested item" xml:space="preserve"><value>Вложенный пункт</value></data>
+  <data name="Second parent item" xml:space="preserve"><value>Второй родительский пункт</value></data>
+  <data name="Keep checked item selected" xml:space="preserve"><value>Сохранять выбранный пункт отмеченным</value></data>
+  <data name="Trigger variants" xml:space="preserve"><value>Варианты триггера</value></data>
+  <data name="Item content and states" xml:space="preserve"><value>Содержимое и состояния пунктов</value></data>
+  <data name="More payment actions" xml:space="preserve"><value>Другие действия с платежом</value></data>
+  <data name="Payment status" xml:space="preserve"><value>Статус платежа</value></data>
+  <data name="Create payment" xml:space="preserve"><value>Создать платёж</value></data>
+  <data name="Overflow menu" xml:space="preserve"><value>Меню дополнительных действий</value></data>
+  <data name="Open item examples" xml:space="preserve"><value>Открыть примеры пунктов</value></data>
+  <data name="Edit payment" xml:space="preserve"><value>Редактировать платёж</value></data>
+  <data name="Pin in recent" xml:space="preserve"><value>Закрепить в недавних</value></data>
+  <data name="Current operation" xml:space="preserve"><value>Текущая операция</value></data>
+  <data name="Unavailable action" xml:space="preserve"><value>Недоступное действие</value></data>
+  <data name="Plus/minus" xml:space="preserve"><value>Плюс/минус</value></data>
+  <data name="Formatting and constraints" xml:space="preserve"><value>Форматирование и ограничения</value></data>
+  <data name="States" xml:space="preserve"><value>Состояния</value></data>
+  <data name="Rate" xml:space="preserve"><value>Ставка</value></data>
+  <data name="Without step buttons" xml:space="preserve"><value>Без кнопок шага</value></data>
+  <data name="Enter integer" xml:space="preserve"><value>Введите целое число</value></data>
+  <data name="Text before and after" xml:space="preserve"><value>Текст до и после</value></data>
+  <data name="Value is outside the allowed range" xml:space="preserve"><value>Значение вне допустимого диапазона</value></data>
+  <data name="Country search" xml:space="preserve"><value>Поиск страны</value></data>
+  <data name="Bound value modes" xml:space="preserve"><value>Форматы привязанного значения</value></data>
+  <data name="Phone" xml:space="preserve"><value>Телефон</value></data>
+  <data name="Formatted Value" xml:space="preserve"><value>Форматированное значение</value></data>
+  <data name="Digits Value" xml:space="preserve"><value>Только цифры</value></data>
+  <data name="Enter a complete phone number" xml:space="preserve"><value>Введите полный номер телефона</value></data>
+  <data name="Status examples" xml:space="preserve"><value>Примеры статусов</value></data>
+  <data name="Content and interaction" xml:space="preserve"><value>Содержимое и взаимодействие</value></data>
+  <data name="Favorite" xml:space="preserve"><value>Избранное</value></data>
+  <data name="Open details" xml:space="preserve"><value>Открыть подробности</value></data>
+  <data name="Long status label" xml:space="preserve"><value>Длинная подпись статуса</value></data>
+  <data name="Vertical scrolling" xml:space="preserve"><value>Вертикальная прокрутка</value></data>
+  <data name="Horizontal scrolling" xml:space="preserve"><value>Горизонтальная прокрутка</value></data>
+  <data name="Both axes" xml:space="preserve"><value>Обе оси</value></data>
+  <data name="Content and states" xml:space="preserve"><value>Содержимое и состояния</value></data>
+  <data name="Cities" xml:space="preserve"><value>Города</value></data>
+  <data name="City" xml:space="preserve"><value>Город</value></data>
+  <data name="Searchable city" xml:space="preserve"><value>Город с поиском</value></data>
+  <data name="Choose city" xml:space="preserve"><value>Выберите город</value></data>
+  <data name="Grouped" xml:space="preserve"><value>С группировкой</value></data>
+  <data name="Custom selected value" xml:space="preserve"><value>Свой шаблон выбранного значения</value></data>
+  <data name="Multiple with custom values" xml:space="preserve"><value>Множественный выбор со своим шаблоном</value></data>
+  <data name="Select a city" xml:space="preserve"><value>Выберите город</value></data>
+  <data name="Button appearances" xml:space="preserve"><value>Варианты кнопок</value></data>
+  <data name="Horizontal" xml:space="preserve"><value>Горизонтально</value></data>
+  <data name="Customer details" xml:space="preserve"><value>Данные клиента</value></data>
+  <data name="Documents and verification" xml:space="preserve"><value>Документы и проверка</value></data>
+  <data name="Confirmation" xml:space="preserve"><value>Подтверждение</value></data>
+  <data name="States and vertical orientation" xml:space="preserve"><value>Состояния и вертикальное расположение</value></data>
+  <data name="Redo" xml:space="preserve"><value>Повторить</value></data>
+  <data name="Progress mode" xml:space="preserve"><value>Режим прогресса</value></data>
+  <data name="Without icon" xml:space="preserve"><value>Без иконки</value></data>
+  <data name="Search icon" xml:space="preserve"><value>Иконка поиска</value></data>
+  <data name="Password" xml:space="preserve"><value>Пароль</value></data>
+  <data name="Content and actions" xml:space="preserve"><value>Содержимое и действия</value></data>
+  <data name="Input without field" xml:space="preserve"><value>Поле без обёртки</value></data>
+  <data name="Text input" xml:space="preserve"><value>Текстовый ввод</value></data>
+  <data name="Enter value" xml:space="preserve"><value>Введите значение</value></data>
+  <data name="Leading icon and clear action" xml:space="preserve"><value>Начальная иконка и очистка</value></data>
+  <data name="Search by name" xml:space="preserve"><value>Поиск по имени</value></data>
+  <data name="Trailing contextual icon" xml:space="preserve"><value>Контекстная иконка в конце</value></data>
+  <data name="Account number" xml:space="preserve"><value>Номер счёта</value></data>
+  <data name="Show or hide the entered value" xml:space="preserve"><value>Показать или скрыть введённое значение</value></data>
+  <data name="Limited value" xml:space="preserve"><value>Ограниченная длина</value></data>
+  <data name="Required value" xml:space="preserve"><value>Обязательное значение</value></data>
+  <data name="Helper text is displayed below" xml:space="preserve"><value>Подсказка отображается снизу</value></data>
+  <data name="Standalone TextInput" xml:space="preserve"><value>Самостоятельный TextInput</value></data>
+  <data name="Top right" xml:space="preserve"><value>Справа сверху</value></data>
+  <data name="Bottom right" xml:space="preserve"><value>Справа снизу</value></data>
+  <data name="Bottom left" xml:space="preserve"><value>Слева снизу</value></data>
+  <data name="Status icon" xml:space="preserve"><value>Иконка статуса</value></data>
+  <data name="Positions" xml:space="preserve"><value>Расположение</value></data>
+  <data name="Dimensions and content" xml:space="preserve"><value>Размеры и содержимое</value></data>
+  <data name="Custom tooltip" xml:space="preserve"><value>Своя подсказка</value></data>
+  <data name="RenderFragment content" xml:space="preserve"><value>Содержимое RenderFragment</value></data>
+  <data name="Plain text target" xml:space="preserve"><value>Обычный текст</value></data>
+  <data name="Small caption tooltip" xml:space="preserve"><value>Маленькая подсказка</value></data>
+  <data name="Small tooltip" xml:space="preserve"><value>Маленькая подсказка</value></data>
+  <data name="Custom content" xml:space="preserve"><value>Своё содержимое</value></data>
+  <data name="Keyboard-focusable target" xml:space="preserve"><value>Элемент с фокусом с клавиатуры</value></data>
+  <data name="Empty" xml:space="preserve"><value>Пустое состояние</value></data>
+  <data name="Checkboxes" xml:space="preserve"><value>Флажки</value></data>
+  <data name="Read-only" xml:space="preserve"><value>Только чтение</value></data>
+  <data name="Panels" xml:space="preserve"><value>Панели</value></data>
+  <data name="Headers" xml:space="preserve"><value>Заголовки</value></data>
+  <data name="Text styles" xml:space="preserve"><value>Текстовые стили</value></data>
+  <data name="States and semantics" xml:space="preserve"><value>Состояния и семантика</value></data>
+  <data name="Custom semantic paragraph" xml:space="preserve"><value>Абзац со своим семантическим тегом</value></data>
+  <data name="Skeleton text example" xml:space="preserve"><value>Пример skeleton для текста</value></data>
+  <data name="Chinese and Korean fallback" xml:space="preserve"><value>Резервные шрифты для китайского и корейского</value></data>
+  <data name="These samples use the packaged CJK fonts even when the operating system has no Chinese or Korean fonts. Check both weights in light and dark themes." xml:space="preserve"><value>Эти примеры используют шрифты CJK из пакета, даже если в ОС нет китайских и корейских шрифтов. Проверьте оба начертания в светлой и тёмной темах.</value></data>
+  <data name="Marker" xml:space="preserve"><value>Маркер</value></data>
+  <data name="Height, rem" xml:space="preserve"><value>Высота, rem</value></data>
+  <data name="No components found" xml:space="preserve"><value>Компоненты не найдены</value></data>
+  <data name="Checkbox" xml:space="preserve"><value>Флажок</value></data>
+  <data name="A standalone field" xml:space="preserve"><value>Отдельный флажок</value></data>
+  <data name="Value" xml:space="preserve"><value>Значение</value></data>
+  <data name="Changes" xml:space="preserve"><value>Изменений</value></data>
+  <data name="Single checkbox states, sizes and value changes. For parent and nested selection, see Checkbox groups." xml:space="preserve"><value>Состояния, размеры и события отдельного флажка. Для вложенного выбора см. группы флажков.</value></data>
+  <data name="The field wraps RadzenCheckBox with Admiral size, error and label styling. ValueChanged and Change both report a nullable Boolean value. Use Checkbox groups for linked parent and child values." xml:space="preserve"><value>Поле оборачивает RadzenCheckBox и добавляет размер, ошибку и подпись Admiral. ValueChanged и Change передают значение bool?. Для связанного выбора используйте группу флажков.</value></data>
+  <data name="This example uses RadzenCheckBox directly. The packaged theme styles its states; the application supplies its label and event handler." xml:space="preserve"><value>В этом примере RadzenCheckBox используется напрямую. Тема оформляет состояния, а приложение задаёт подпись и обработчик события.</value></data>
+  <data name="PaginationOne is the full variant: it shows page-size and page selectors, the item range, and previous/next buttons." xml:space="preserve"><value>PaginationOne — полный вариант: выбор размера и номера страницы, диапазон записей и кнопки перехода назад/вперёд.</value></data>
+  <data name="PaginationOneSimple is the compact variant: it shows the item range and previous/next buttons without page-size or page selectors. The standalone AdmiralPaginationOne example below uses Simple=true." xml:space="preserve"><value>PaginationOneSimple — компактный вариант: диапазон записей и кнопки назад/вперёд без выбора размера и номера страницы. Отдельный пример AdmiralPaginationOne ниже использует Simple=true.</value></data>
+  <data name="PaginationOne is the full variant with page-size and page selectors, item range, and previous/next buttons. PaginationOneSimple keeps the range and buttons but omits both selectors. Set Pagination on AdmiralDataGrid; for standalone AdmiralPaginationOne set Simple=true for the compact variant." xml:space="preserve"><value>PaginationOne содержит выбор размера и номера страницы, диапазон записей и кнопки назад/вперёд. PaginationOneSimple сохраняет диапазон и кнопки, но скрывает оба списка. Для AdmiralDataGrid задайте Pagination; для отдельного AdmiralPaginationOne используйте Simple=true.</value></data>
+  <data name="Open the official Admiral Checkbox story" xml:space="preserve"><value>Открыть официальный пример Checkbox в Admiral</value></data>
+  <data name="Text / Value" xml:space="preserve"><value>Текст / значение</value></data>
+  <data name="Use AdmiralIcon for a sized Admiral token. The direct RadzenIcon accepts the same admiral: name through the packaged icon adapter; set its geometry with CSS." xml:space="preserve"><value>AdmiralIcon выводит иконку Admiral заданного размера. Прямой RadzenIcon принимает то же имя admiral: через адаптер пакета; размеры задаются CSS.</value></data>
+  <data name="Decorative icons should carry aria-hidden; give an interactive parent an accessible name. The icon adapter loads SVG assets lazily." xml:space="preserve"><value>Декоративной иконке задавайте aria-hidden, а интерактивному родительскому элементу — доступное имя. Адаптер загружает SVG по мере необходимости.</value></data>
+  <data name="Direct RadzenIcon with packaged Admiral icon assets" xml:space="preserve"><value>Прямой RadzenIcon с иконками пакета Admiral</value></data>
+  <data name="AdmiralIcon size" xml:space="preserve"><value>Размер AdmiralIcon</value></data>
+</root>

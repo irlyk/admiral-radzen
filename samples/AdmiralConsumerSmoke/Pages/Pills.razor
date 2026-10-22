@@ -1,0 +1,77 @@
+@page "/components/pills"
+
+<PageTitle>Admiral Pills</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Pills"
+        Description="Compact 16 px status indicators, optional icons, interactive semantics and wrapping groups."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-pills--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section"><h2>@T("Использование и ограничения", "Usage and limitations")</h2>
+            <p>@T("Pill показывает компактный статус. Если задан Click, он становится действием с клавиатурной активацией и MouseEventArgs; без Click остаётся индикатором. AdmiralPills только группирует элементы и переносит их по ширине. Tooltip помогает прочесть длинную подпись.", "Pill shows a compact status. With Click it becomes a keyboard-activatable action with MouseEventArgs; without Click it remains an indicator. AdmiralPills only groups and wraps children. Tooltip helps read long labels.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" /><ApiReference Title="AdmiralPill / AdmiralPills" Rows="@ApiRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section"><h2>RadzenBadge + Admiral theme</h2>
+            <p>@T("Прямой RadzenBadge показывает статус в цветах темы. Он не добавляет семантику действия Pill, Click, IconStart/IconEnd и автоматический перенос AdmiralPills; для действия используйте отдельный доступный контрол.", "Direct RadzenBadge displays a themed status. It does not add Pill action semantics, Click, IconStart/IconEnd or AdmiralPills wrapping; use a separate accessible control for an action.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><RadzenBadge Text="@text" BadgeStyle="@badgeStyle" /></div><div class="admiral-component-controls"><label><span>Text</span><input @bind="text" /></label><label><span>BadgeStyle</span><select @bind="badgeStyle">@foreach (var value in Enum.GetValues<BadgeStyle>()) { <option value="@value">@value</option> }</select></label></div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
+        </section>
+    }
+    else
+    {
+    <section class="admiral-component-page__section"><h2>@T("Интерактивный пример", "Interactive playground")</h2>
+        <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><AdmiralPills><AdmiralPill Text="@text" Appearance="@appearance" IconEnd="admiral:system/arrow-right-outline" Click="@(_ => clickCount++)" /></AdmiralPills><output aria-live="polite">@T("Нажатия", "Clicks"): @clickCount</output></div><div class="admiral-component-controls"><label><span>Text</span><input @bind="text" /></label><label><span>@SmokeL["Appearance"]</span><select @bind="appearance">@foreach (var value in Enum.GetValues<AdmiralPillAppearance>()) { <option value="@value">@value</option> }</select></label></div></div>
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Status examples"]</AdmiralText>
+        <AdmiralPills>
+            @foreach (var appearance in Enum.GetValues<AdmiralPillAppearance>())
+            {
+                <AdmiralPill Text="@appearance.ToString()" Appearance="@appearance" />
+            }
+        </AdmiralPills>
+    </section>
+
+    <section class="admiral-component-page__section">
+        <AdmiralText Typography="AdmiralTypography.HeaderH4" Tag="AdmiralTextTag.H2">@SmokeL["Content and interaction"]</AdmiralText>
+        <AdmiralPills>
+            <AdmiralPill Text="@SmokeL["Favorite"]" Appearance="AdmiralPillAppearance.Success" IconStart="admiral:system/star-outline" />
+            <AdmiralPill Text="@SmokeL["Open details"]" Appearance="AdmiralPillAppearance.Special" IconEnd="admiral:system/arrow-right-outline" Click="OnClick" />
+            <AdmiralPill Text="@SmokeL["Long status label"]" Appearance="AdmiralPillAppearance.Warning" Tooltip="Long status label" />
+        </AdmiralPills>
+        <AdmiralText Typography="AdmiralTypography.Body2Long" Color="var(--rz-text-secondary-color)" aria-live="polite">Click count: @clickCount</AdmiralText>
+    </section>
+    }
+</div>
+
+@code {
+    private int clickCount;
+    private void OnClick() => clickCount++;
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private string text = "Details";
+    private AdmiralPillAppearance appearance = AdmiralPillAppearance.Special;
+    private BadgeStyle badgeStyle = BadgeStyle.Info;
+    private static readonly IReadOnlyList<ApiReference.Entry> ApiRows = [
+        new("Pill: Text / ChildContent", "string? / null; RenderFragment? / null", "Status label or custom content."),
+        new("Pill: Appearance", "AdmiralPillAppearance / default", "Semantic status color."),
+        new("Pill: IconStart / IconEnd / Tooltip", "string? / null", "Decorative icons and full label hint."),
+        new("Pill: Click", "EventCallback<MouseEventArgs>", "Optional action callback; adds interactive semantics."),
+        new("Pills: ChildContent", "RenderFragment? / null", "Group of pill elements that wraps by width.")];
+    private const string AdmiralCode = """
+        <AdmiralPills><AdmiralPill Text="Details" Appearance="AdmiralPillAppearance.Special"
+            Click="@(_ => clicks++)" /></AdmiralPills>
+        <output aria-live="polite">Clicks: @clicks</output>
+        @code { private int clicks; }
+        """;
+    private const string DirectCode = """
+        <RadzenBadge Text="Active" BadgeStyle="BadgeStyle.Info" />
+        """;
+}

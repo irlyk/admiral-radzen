@@ -1,0 +1,15 @@
+<span class="@CssClass" aria-hidden="true" @attributes="AdditionalAttributes"></span>
+
+@code {
+    [Parameter] public AdmiralButtonDimension Dimension { get; set; } = AdmiralButtonDimension.M;
+    [Parameter] public AdmiralButtonAppearance Appearance { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-pseudo-icon",
+        Dimension == AdmiralButtonDimension.S ? "admiral-pseudo--s" : null,
+        $"admiral-pseudo--{Appearance.ToString().ToLowerInvariant()}", Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

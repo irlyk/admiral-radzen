@@ -1,0 +1,247 @@
+﻿@inherits LayoutComponentBase
+@implements IDisposable
+@inject ThemeService ThemeService
+@inject IStringLocalizer<SharedResource> L
+@inject NavigationManager NavigationManager
+
+<AdmiralServices />
+<AdmiralToastHost AriaLabel="@L["Notifications"]" CloseAriaLabel="@L["Close notification"]" />
+
+<AdmiralLayout SideMenuWidth="@sideMenuWidth"
+               DesktopCollapseTarget="@desktopCollapseTarget"
+               SideMenuShadow="false"
+               SideMenuAriaLabel="@L["Gallery sections"]"
+               CloseMenuAriaLabel="@L["Close navigation"]">
+    <Header>
+        <AdmiralLayoutHeader OpenNavigationAriaLabel="@L["Open navigation"]"
+                             ToggleNavigationAriaLabel="@L["Collapse navigation"]">
+            <Brand>
+                <div class="admiral-consumer-brand">
+                    <AdmiralText Typography="AdmiralTypography.Subtitle2">AdmiralRadzen</AdmiralText>
+                    <AdmiralText Typography="AdmiralTypography.Caption1">@L["Theme"]: @ThemeService.Theme</AdmiralText>
+                </div>
+            </Brand>
+            <Actions>
+                <label class="admiral-consumer-menu-size">
+                    <span>@L["Side menu width"]</span>
+                    <select @bind="sideMenuWidth" aria-label="@L["Side menu width"]">
+                        <option value="@AdmiralSideMenuWidth.Small">240 px</option>
+                        <option value="@AdmiralSideMenuWidth.Medium">288 px</option>
+                        <option value="@AdmiralSideMenuWidth.Large">336 px</option>
+                    </select>
+                </label>
+                <label class="admiral-consumer-menu-size">
+                    <span>@L["Collapse mode"]</span>
+                    <select @bind="desktopCollapseTarget" aria-label="@L["Collapse mode"]">
+                        <option value="@AdmiralSideMenuState.IconsOnly">@L["Icons only"]</option>
+                        <option value="@AdmiralSideMenuState.Hidden">@L["Button controlled"]</option>
+                    </select>
+                </label>
+                <div class="admiral-language-switcher" role="group" aria-label="@L["Language"]">
+                    <button type="button" class="@LanguageButtonClass("ru")" aria-pressed="@(CurrentCulture == "ru")"
+                            title="@L["Russian"]" @onclick='@(() => ChangeCulture("ru"))'>
+                        <AdmiralIcon Icon="admiral:flags/russian-federation" /><span>RU</span>
+                    </button>
+                    <button type="button" class="@LanguageButtonClass("en")" aria-pressed="@(CurrentCulture == "en")"
+                            title="@L["English"]" @onclick='@(() => ChangeCulture("en"))'>
+                        <AdmiralIcon Icon="admiral:flags/united-kingdom-of-great-britain-and-northern-ireland" /><span>EN</span>
+                    </button>
+                </div>
+                <RadzenToggleButton Value="@IsLightTheme" Change="@ChangeTheme"
+                                    Icon="@(IsLightTheme ? "dark_mode" : "light_mode")"
+                                    Variant="Variant.Text" ButtonStyle="ButtonStyle.Base"
+                                    AriaLabel="@L["Switch Admiral color theme"]" />
+            </Actions>
+        </AdmiralLayoutHeader>
+    </Header>
+
+    <SideMenu>
+        <AdmiralSideMenu AriaLabel="@L["Gallery sections"]" CloseAriaLabel="@L["Close navigation"]">
+            <AdmiralSideMenuItem Text="@L["Components"]" Icon="admiral:system/home-outline" Href="/" Match="NavLinkMatch.All" />
+            <div class="admiral-consumer-component-search">
+                <input type="search" data-testid="component-search" value="@componentSearch" @ref="componentSearchInput"
+                       @oninput="OnComponentSearch" aria-label="@L["Search components"]"
+                       placeholder="@L["Search components"]" />
+                @if (!string.IsNullOrEmpty(componentSearch))
+                {
+                    <button type="button" data-testid="component-search-clear" aria-label="@L["Clear search"]"
+                            @onclick="ClearComponentSearch">×</button>
+                }
+            </div>
+            @if (FilteredComponents.Count > 0)
+            {
+                @foreach (var category in Categories)
+                {
+                    var components = FilteredComponents.Where(item => category.Hrefs.Contains(item.Href)).ToArray();
+                    if (components.Length == 0) continue;
+                    <AdmiralSideMenuItem @key="(category.Name, !string.IsNullOrWhiteSpace(componentSearch))" Text="@CategoryName(category)" Icon="@category.Icon"
+                                         Expanded="@(category.Name == "Actions" || !string.IsNullOrWhiteSpace(componentSearch))">
+                    @foreach (var component in components)
+                    {
+                        <AdmiralSideMenuItem @key="component.Href" Text="@component.Text" Href="@component.Href" />
+                    }
+                    </AdmiralSideMenuItem>
+                }
+            }
+            else
+            {
+                <p class="admiral-consumer-component-search__empty" data-testid="component-search-empty" role="status">@L["No components found"]</p>
+            }
+            <AdmiralSideMenuItem Text="@L["Examples"]" Icon="admiral:redact/list-bulleted-outline" Expanded="true">
+                <AdmiralSideMenuItem Text="@RegressionOverviewLabel" Href="/regression/overview" />
+                <AdmiralSideMenuItem Text="@L["Inputs"]" Href="/regression/inputs" />
+                <AdmiralSideMenuItem Text="@L["Grid layout"]" Href="/regression/layout" />
+            </AdmiralSideMenuItem>
+            <AdmiralSideMenuItem Text="@L["Icons"]" Icon="admiral:system/star-outline" Href="/icons" />
+            <AdmiralSideMenuItem Text="@L["Coverage"]" Icon="admiral:service/info-outline" Href="/coverage" />
+            <AdmiralSideMenuItem Text="@IntegrationLabel" Icon="admiral:system/settings-outline" Href="/guide/integration" />
+        </AdmiralSideMenu>
+    </SideMenu>
+
+    <Content>@Body</Content>
+</AdmiralLayout>
+
+@code {
+    private string CurrentCulture => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    private bool IsLightTheme => ThemeService.Theme != "admiral-dark";
+    private void ChangeTheme(bool lightTheme) => ThemeService.SetTheme(lightTheme ? "admiral" : "admiral-dark");
+    private AdmiralSideMenuWidth sideMenuWidth = AdmiralSideMenuWidth.Small;
+    private AdmiralSideMenuState desktopCollapseTarget = AdmiralSideMenuState.IconsOnly;
+    private string componentSearch = string.Empty;
+    private ElementReference componentSearchInput;
+    private static readonly (string Text, string Href)[] Components =
+    [
+        ("Button", "/components/button"), ("IconButton", "/components/icon-button"),
+        ("TextButton", "/components/text-button"), ("Button groups", "/components/button-groups"),
+        ("FloatingButtonMenu", "/components/floating-button-menu"), ("Typography", "/components/typography"),
+        ("Divider", "/components/divider"), ("Drawer", "/components/drawer"),
+        ("Link", "/components/link"), ("Badge", "/components/badge"),
+        ("Chips", "/components/chips"), ("Pills", "/components/pills"),
+        ("Tag", "/components/tag"), ("Skeleton", "/components/skeleton"),
+        ("Tooltip", "/components/tooltip"), ("Hint", "/components/hint"),
+        ("Stepper", "/components/stepper"), ("Carousel", "/components/carousel"),
+        ("ImageViewer", "/components/image-viewer"), ("ActionBar / GroupActionsPane", "/components/action-bar"),
+        ("Toast", "/components/toast"), ("FileInput", "/components/file-input"),
+        ("Checkbox", "/components/checkbox"), ("Checkbox groups", "/components/checkbox-group"),
+        ("Lists", "/components/lists"), ("ScrollContainer", "/components/scroll-container"),
+        ("TextInput", "/components/text-input"), ("TextArea", "/components/text-area"),
+        ("NumberInput", "/components/number-input"), ("Select", "/components/select"),
+        ("InputField", "/components/input-field"), ("DropDown", "/components/drop-down"),
+        ("DateRangePicker", "/components/date-range-picker"),
+        ("TreeSelect", "/components/tree-select"), ("Tree", "/components/tree"),
+        ("Slider / Range", "/components/slider"), ("PhoneNumberInput", "/components/phone-number-input"),
+        ("Menu", "/components/menu"), ("Table", "/tables"),
+        ("Pagination", "/components/pagination"), ("Avatar", "/components/avatar"),
+        ("GlobalSearch", "/components/global-search"), ("Progress", "/components/progress"),
+        ("Spinner", "/components/spinner"), ("StatusIndicator", "/components/status-indicator"),
+        ("Grid", "/components/grid")
+    ];
+    private static readonly (string Name, string Russian, string Icon, string[] Hrefs)[] Categories =
+    [
+        ("Actions", "Действия", "admiral:system/edit-outline", [
+            "/components/button", "/components/icon-button", "/components/text-button", "/components/button-groups",
+            "/components/floating-button-menu", "/components/action-bar"]),
+        ("Inputs", "Поля ввода", "admiral:system/search-outline", [
+            "/components/checkbox", "/components/checkbox-group", "/components/text-input", "/components/text-area",
+            "/components/number-input", "/components/select", "/components/input-field", "/components/drop-down",
+            "/components/date-range-picker", "/components/tree-select", "/components/slider",
+            "/components/phone-number-input", "/components/file-input", "/components/global-search"]),
+        ("Navigation", "Навигация", "admiral:system/arrow-right-outline", [
+            "/components/link", "/components/menu", "/components/drawer", "/components/stepper", "/components/tree", "/components/pagination"]),
+        ("Data Display", "Отображение данных", "admiral:category/grid-outline", [
+            "/components/typography", "/components/divider", "/components/badge", "/components/chips",
+            "/components/pills", "/components/tag", "/components/lists", "/components/scroll-container",
+            "/components/carousel", "/components/image-viewer", "/tables", "/components/avatar", "/components/status-indicator", "/components/grid"]),
+        ("Feedback", "Обратная связь", "admiral:service/info-outline", [
+            "/components/skeleton", "/components/tooltip", "/components/hint", "/components/toast", "/components/progress", "/components/spinner"])
+    ];
+    private string CategoryName((string Name, string Russian, string Icon, string[] Hrefs) category) =>
+        CurrentCulture == "ru" ? category.Russian : category.Name;
+    private string RegressionOverviewLabel => CurrentCulture == "ru" ? "Регрессионная галерея" : "Regression gallery";
+    private string IntegrationLabel => CurrentCulture == "ru" ? "Подключение" : "Integration";
+    private static readonly IReadOnlyDictionary<string, string> ComponentSearchAliases =
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["/components/button"] = "кнопка",
+            ["/components/icon-button"] = "кнопка с иконкой иконка",
+            ["/components/text-button"] = "текстовая кнопка",
+            ["/components/button-groups"] = "группы кнопок",
+            ["/components/floating-button-menu"] = "плавающая кнопка меню",
+            ["/components/typography"] = "типографика текст",
+            ["/components/divider"] = "разделитель",
+            ["/components/drawer"] = "боковая панель шторка",
+            ["/components/link"] = "ссылка",
+            ["/components/badge"] = "бейдж счетчик",
+            ["/components/chips"] = "чипы фильтры",
+            ["/components/pills"] = "плашки статусы",
+            ["/components/tag"] = "тег метка",
+            ["/components/skeleton"] = "скелетон загрузка",
+            ["/components/tooltip"] = "всплывающая подсказка",
+            ["/components/hint"] = "подсказка",
+            ["/components/stepper"] = "шаги",
+            ["/components/carousel"] = "карусель",
+            ["/components/image-viewer"] = "просмотр изображений картинок",
+            ["/components/action-bar"] = "панель действий",
+            ["/components/toast"] = "уведомление",
+            ["/components/file-input"] = "загрузка файлов файл",
+            ["/components/checkbox"] = "флажок чекбокс",
+            ["/components/checkbox-group"] = "группа флажков чекбоксов",
+            ["/components/lists"] = "список списки",
+            ["/components/scroll-container"] = "прокрутка контейнер",
+            ["/components/text-input"] = "текстовое поле ввод",
+            ["/components/text-area"] = "многострочное поле ввод",
+            ["/components/number-input"] = "числовое поле ввод",
+            ["/components/select"] = "выбор список",
+            ["/components/input-field"] = "поле ввода подпись форма",
+            ["/components/drop-down"] = "выпадающий список выбор",
+            ["/components/date-range-picker"] = "диапазон дат календарь",
+            ["/components/tree-select"] = "выбор дерева дерево",
+            ["/components/tree"] = "дерево иерархия",
+            ["/components/slider"] = "ползунок диапазон",
+            ["/components/phone-number-input"] = "телефон номер",
+            ["/components/menu"] = "меню",
+            ["/tables"] = "таблица таблицы сетка данных datagrid",
+            ["/components/pagination"] = "пагинация страницы навигация",
+            ["/components/avatar"] = "аватар группа аватаров",
+            ["/components/global-search"] = "глобальный поиск подсказки",
+            ["/components/progress"] = "прогресс загрузка прогрессбар",
+            ["/components/spinner"] = "спиннер индикатор загрузки",
+            ["/components/status-indicator"] = "индикатор статуса состояние",
+            ["/components/grid"] = "сетка колонки адаптивный layout"
+        };
+    private IReadOnlyList<(string Text, string Href)> FilteredComponents =>
+        string.IsNullOrWhiteSpace(componentSearch) ? Components :
+        Components.Where(MatchesComponentSearch).ToArray();
+    private bool MatchesComponentSearch((string Text, string Href) item)
+    {
+        var query = componentSearch.Trim();
+        return item.Text.Contains(query, StringComparison.CurrentCultureIgnoreCase)
+            || L[item.Text].Value.Contains(query, StringComparison.CurrentCultureIgnoreCase)
+            || ComponentSearchAliases[item.Href].Contains(query, StringComparison.CurrentCultureIgnoreCase);
+    }
+    private void OnComponentSearch(ChangeEventArgs args) => componentSearch = args.Value?.ToString() ?? string.Empty;
+    private async Task ClearComponentSearch()
+    {
+        componentSearch = string.Empty;
+        await InvokeAsync(StateHasChanged);
+        await componentSearchInput.FocusAsync();
+    }
+
+    protected override void OnInitialized() => ThemeService.ThemeChanged += OnThemeChanged;
+    private void OnThemeChanged() => InvokeAsync(StateHasChanged);
+
+    private string LanguageButtonClass(string culture) => CurrentCulture == culture
+        ? "admiral-language-switcher__button admiral-language-switcher__button--active"
+        : "admiral-language-switcher__button";
+
+    private void ChangeCulture(string culture)
+    {
+        if (CurrentCulture == culture) return;
+        var currentUri = new Uri(NavigationManager.Uri);
+        var redirectUri = $"{currentUri.AbsolutePath}{currentUri.Query}";
+        var theme = ThemeService.Theme is "admiral" or "admiral-dark" ? ThemeService.Theme : "admiral-dark";
+        NavigationManager.NavigateTo($"culture/{culture}?redirectUri={Uri.EscapeDataString(redirectUri)}&theme={Uri.EscapeDataString(theme)}", forceLoad: true);
+    }
+
+    public void Dispose() => ThemeService.ThemeChanged -= OnThemeChanged;
+}

@@ -1,0 +1,7 @@
+<AdmiralIcon Icon="@Icon" Size="AdmiralIconSize.Medium" Color="@Color" Class="admiral-list-icon" aria-hidden="true" @attributes="AdditionalAttributes" />
+
+@code {
+    [Parameter, EditorRequired] public string Icon { get; set; } = string.Empty;
+    [Parameter] public string? Color { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+}

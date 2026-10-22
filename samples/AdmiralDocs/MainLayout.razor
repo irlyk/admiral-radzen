@@ -1,0 +1,53 @@
+@inherits LayoutComponentBase
+@inject IJSRuntime JS
+@inject NavigationManager Navigation
+
+<AdmiralServices />
+<AdmiralToastHost />
+<div class="docs-shell">
+    <header class="docs-header">
+        <a href="" class="docs-brand">AdmiralRadzen</a>
+        <div class="docs-preferences">
+            <button type="button" aria-pressed="@(culture == "ru")" @onclick='() => SetCulture("ru")'>RU</button>
+            <button type="button" aria-pressed="@(culture == "en")" @onclick='() => SetCulture("en")'>EN</button>
+            <button type="button" @onclick="ToggleTheme" aria-label="@(culture == "ru" ? "Переключить тему" : "Switch theme")">@(dark ? "☀" : "☾")</button>
+        </div>
+    </header>
+    <div class="docs-columns">
+        <nav class="docs-nav" aria-label="@(culture == "ru" ? "Компоненты" : "Components")">
+            <a href="components/button">Button</a>
+            <a href="components/checkbox">Checkbox</a>
+            <a href="components/select">Select</a>
+            <a href="components/phone-number-input">PhoneNumberInput</a>
+            <a href="tables">Table</a>
+            <a href="components/tooltip">Tooltip</a>
+        </nav>
+        <main id="main-content">@Body</main>
+    </div>
+</div>
+
+@code {
+    private string culture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    private bool dark;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            dark = await JS.InvokeAsync<bool>("admiralDocs.isDark");
+            StateHasChanged();
+        }
+    }
+
+    private async Task SetCulture(string value)
+    {
+        await JS.InvokeVoidAsync("admiralDocs.setCulture", value);
+        Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
+    }
+
+    private async Task ToggleTheme()
+    {
+        dark = !dark;
+        await JS.InvokeVoidAsync("admiralDocs.setTheme", dark ? "admiral-dark" : "admiral");
+    }
+}

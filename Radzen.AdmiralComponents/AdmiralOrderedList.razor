@@ -1,0 +1,14 @@
+<ol class="@CssClass" style="@CssStyle" data-dimension="@Dimension.ToString().ToLowerInvariant()"
+    data-style="@StyleType.ToString().ToLowerInvariant()" @attributes="AdditionalAttributes">@ChildContent</ol>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public AdmiralListDimension Dimension { get; set; }
+    [Parameter] public AdmiralOrderedListStyle StyleType { get; set; }
+    [Parameter] public string Gap { get; set; } = "8px";
+    [Parameter] public string? MarkerColor { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+    private string CssClass => string.Join(' ', new[] { "admiral-list admiral-list--ordered", Class }.Where(value => !string.IsNullOrWhiteSpace(value)));
+    private string CssStyle => $"--admiral-list-gap:{Gap};--admiral-list-marker-color:{MarkerColor ?? "currentColor"};";
+}

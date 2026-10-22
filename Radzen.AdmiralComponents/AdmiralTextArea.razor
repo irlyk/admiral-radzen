@@ -1,0 +1,89 @@
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
+
+<div class="@ContainerClass" data-status="@Status.ToString().ToLowerInvariant()" aria-busy="@(Loading ? "true" : null)">
+    <RadzenTextArea Value="@Value" ValueChanged="@HandleValueChanged" ValueExpression="@ValueExpression"
+                    Name="@Name" Placeholder="@Placeholder" Disabled="@(Disabled || Loading)" ReadOnly="@ReadOnly"
+                    Rows="@Rows" MaxLength="@MaxLength" Immediate="@Immediate"
+                    Style="@ControlStyle" class="@ControlClass" @attributes="@ControlAttributes" />
+    @if (HasActions)
+    {
+        <div class="admiral-text-area__actions">
+            @if (ShowClear)
+            {
+                <button type="button" class="admiral-text-area__action" aria-label="@ClearAriaLabel"
+                        @onmousedown:preventDefault @onclick="ClearAsync">
+                    <AdmiralIcon Icon="admiral:service/close-outline" Size="@IconSize" aria-hidden="true" />
+                </button>
+            }
+            @if (DisplayCopyIcon && !string.IsNullOrEmpty(Value))
+            {
+                <button type="button" class="admiral-text-area__action" aria-label="@CopyAriaLabel"
+                        @onmousedown:preventDefault @onclick="CopyAsync">
+                    <AdmiralIcon Icon="admiral:documents/copy-outline" Size="@IconSize" aria-hidden="true" />
+                </button>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+    [Parameter] public System.Linq.Expressions.Expression<Func<string?>>? ValueExpression { get; set; }
+    [Parameter] public EventCallback Copied { get; set; }
+    [Parameter] public string? Name { get; set; }
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public string? Placeholder { get; set; }
+    [Parameter] public AdmiralInputSize Size { get; set; } = AdmiralInputSize.Medium;
+    [Parameter] public AdmiralInputStatus Status { get; set; }
+    [Parameter] public int Rows { get; set; } = 3;
+    [Parameter] public int MinRows { get; set; } = 3;
+    [Parameter] public int MaxRows { get; set; } = 8;
+    [Parameter] public long? MaxLength { get; set; }
+    [Parameter] public bool AutoHeight { get; set; }
+    [Parameter] public bool Resizable { get; set; }
+    [Parameter] public bool DisplayClearIcon { get; set; }
+    [Parameter] public bool DisplayCopyIcon { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool ReadOnly { get; set; }
+    [Parameter] public bool Loading { get; set; }
+    [Parameter] public bool Skeleton { get; set; }
+    [Parameter] public bool Immediate { get; set; } = true;
+    [Parameter] public string ClearAriaLabel { get; set; } = "Clear value";
+    [Parameter] public string CopyAriaLabel { get; set; } = "Copy value";
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private bool ShowClear => DisplayClearIcon && !string.IsNullOrEmpty(Value) && !Disabled && !ReadOnly && !Loading;
+    private int ActionCount => (ShowClear ? 1 : 0) + (DisplayCopyIcon && !string.IsNullOrEmpty(Value) && !Disabled && !Loading ? 1 : 0);
+    private bool HasActions => ActionCount > 0;
+    private AdmiralIconSize IconSize => Size == AdmiralInputSize.Small ? AdmiralIconSize.Medium : AdmiralIconSize.Large;
+    private string SizeName => Size switch { AdmiralInputSize.Small => "s", AdmiralInputSize.ExtraLarge => "xl", _ => "m" };
+    private string ContainerClass => string.Join(' ', new[] { "admiral-text-area", Skeleton ? "admiral-text-area--skeleton rz-skeleton" : null, Class }.Where(x => !string.IsNullOrWhiteSpace(x)));
+    private string ControlClass => string.Join(' ', new[] { "admiral-text-area-control", $"admiral-text-area-control--{SizeName}", AutoHeight ? "admiral-text-area-control--auto" : null, Resizable && !AutoHeight ? "admiral-text-area-control--resizable" : null, HasActions ? $"admiral-text-area-control--actions-{ActionCount}" : null, Status == AdmiralInputStatus.Default ? null : $"admiral-text-area-control--{Status.ToString().ToLowerInvariant()}" }.Where(x => !string.IsNullOrWhiteSpace(x)));
+    private string ControlStyle => $"--admiral-text-area-min-rows:{Math.Max(1, MinRows)};--admiral-text-area-max-rows:{Math.Max(Math.Max(1, MinRows), MaxRows)};{Style}";
+    private IReadOnlyDictionary<string, object> ControlAttributes
+    {
+        get
+        {
+            var attributes = AdditionalAttributes is null ? new Dictionary<string, object>() : new Dictionary<string, object>(AdditionalAttributes);
+            if (!string.IsNullOrWhiteSpace(Id)) attributes["id"] = Id;
+            if (Status == AdmiralInputStatus.Error && !attributes.ContainsKey("aria-invalid")) attributes["aria-invalid"] = "true";
+            return attributes;
+        }
+    }
+
+    private Task HandleValueChanged(string value) => ValueChanged.InvokeAsync(value);
+    private Task ClearAsync() => ValueChanged.InvokeAsync(string.Empty);
+    private async Task CopyAsync()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("navigator.clipboard.writeText", Value ?? string.Empty);
+            await Copied.InvokeAsync();
+        }
+        catch (JSException) { /* Clipboard access can be denied by browser permissions. */ }
+    }
+}

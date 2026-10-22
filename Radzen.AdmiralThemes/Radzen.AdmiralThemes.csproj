@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PackageId>Radzen.Admiral.Themes</PackageId>
+    <AssemblyName>Radzen.Admiral.Themes</AssemblyName>
+    <RootNamespace>Radzen.Admiral.Themes</RootNamespace>
+    <Title>Radzen Admiral Themes</Title>
+    <Description>Admiral Design System light and dark themes for Radzen Blazor.</Description>
+    <IsPackable>true</IsPackable>
+    <Version>1.1.2</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Authors>irlyk</Authors>
+    <Copyright>Copyright (c) 2026 irlyk</Copyright>
+    <PackageLicenseExpression>MIT AND OFL-1.1 AND Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/irlyk/admiral-radzen</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/irlyk/admiral-radzen.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="README.md" Pack="true" PackagePath="\" />
+    <Content Include="../THIRD_PARTY_NOTICES.md" Pack="true" PackagePath="THIRD_PARTY_NOTICES.md" />
+    <Content Include="../LICENSE" Pack="true" PackagePath="\" />
+    <None Include="themes\**\*.scss" Pack="true" PackagePath="themes\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

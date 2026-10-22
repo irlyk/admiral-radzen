@@ -1,0 +1,28 @@
+<svg viewBox="0 0 30 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30.000000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_211" width="28.000000" height="20.000000" x="2.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="2.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="2.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Belarus" width="28.000000" height="28.000000" x="2.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="2.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="2.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_211)">
+		<path id="Rectangle 2" d="M2 17.3333L30 17.3333L30 4L2 4L2 17.3333Z" fill="rgb(229,66,82)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M30 17.3333L30 4L2 4L2 17.3333L30 17.3333Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M2 24L30 24L30 17.3333L2 17.3333L2 24Z" fill="rgb(92,190,107)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M30 24L30 17.3333L2 17.3333L2 24L30 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 1512" d="M6 4L6 7L5.33333 8L6 9L6 11L5.33333 12L6 13L6 15L5.33333 16L6 17L6 19L5.33333 20L6 21L6 24L2 24L2 4L6 4Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Rectangle 1512" d="M6 4L6 7L5.33333 8L6 9L6 11L5.33333 12L6 13L6 15L5.33333 16L6 17L6 19L5.33333 20L6 21L6 24L2 24L2 4L6 4Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 1513" d="M0 8L1.33333 6L2.66667 8L1.33333 10L0 8ZM1.33333 14L2.66667 12L1.33333 10L0 12L1.33333 14ZM1.33333 18L0 16L1.33333 14L2.66667 16L1.33333 18ZM1.33333 18L2.66667 20L1.33333 22L0 20L1.33333 18Z" fill="rgb(229,66,82)" fill-rule="evenodd" />
+		<path id="Rectangle 1513" d="M0 8L1.33333 6L2.66667 8L1.33333 10L0 8ZM1.33333 14L2.66667 12L1.33333 10L0 12L1.33333 14ZM1.33333 18L0 16L1.33333 14L2.66667 16L1.33333 18ZM1.33333 18L2.66667 20L1.33333 22L0 20L1.33333 18Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 1513" d="M4.00002 4L2.66669 6L4.00002 8L2.66669 10L4.00002 12L2.66669 14L4.00002 16L2.66669 18L4.00002 20L2.66669 22L4.00002 24L5.33335 22L4.00002 20L5.33335 18L4.00002 16L5.33335 14L4.00002 12L5.33335 10L4.00002 8L5.33335 6L4.00002 4Z" fill="rgb(229,66,82)" fill-rule="evenodd" />
+		<path id="Rectangle 1513" d="M4.00002 4L2.66669 6L4.00002 8L2.66669 10L4.00002 12L2.66669 14L4.00002 16L2.66669 18L4.00002 20L2.66669 22L4.00002 24L5.33335 22L4.00002 20L5.33335 18L4.00002 16L5.33335 14L4.00002 12L5.33335 10L4.00002 8L5.33335 6L4.00002 4Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	</g>
+</svg>

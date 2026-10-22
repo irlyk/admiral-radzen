@@ -1,0 +1,129 @@
+@page "/inputs"
+@page "/regression/inputs"
+@inject IStringLocalizer<SharedResource> L
+
+<PageTitle>@L["Admiral input gallery"]</PageTitle>
+
+<div class="admiral-gallery">
+    <header class="admiral-gallery__hero">
+        <RadzenText TextStyle="TextStyle.Overline">Admiral InputField → Radzen controls</RadzenText>
+        <RadzenText TextStyle="TextStyle.H2" TagName="TagName.H1">@L["Admiral input gallery"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body1">
+            @L["External labels are the primary Admiral pattern. Floating Radzen FormField remains available as an alternative."]
+        </RadzenText>
+    </header>
+
+    <section class="admiral-gallery__section" aria-labelledby="input-sizes-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="input-sizes-heading">@L["Input sizes"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">@L["Admiral defines S, M and XL input dimensions: 32, 40 and 56 pixels."]</RadzenText>
+        <div class="admiral-input-gallery__grid">
+            <AdmiralInputField Label="@L["Small input"]" AdditionalLabel="S · 32 px"
+                               ExtraText="@L["Compact controls and dense forms"]"
+                               Size="AdmiralInputSize.Small" For="input-small">
+                <RadzenTextBox id="input-small" @bind-Value="smallValue" Placeholder="@L["Enter a value"]" />
+            </AdmiralInputField>
+            <AdmiralInputField Label="@L["Medium input"]" AdditionalLabel="M · 40 px"
+                               ExtraText="@L["Default Admiral input size"]" For="input-medium">
+                <RadzenTextBox id="input-medium" @bind-Value="mediumValue" Placeholder="@L["Enter a value"]" />
+            </AdmiralInputField>
+            <AdmiralInputField Label="@L["Extra large input"]" AdditionalLabel="XL · 56 px"
+                               ExtraText="@L["Prominent forms and touch layouts"]"
+                               Size="AdmiralInputSize.ExtraLarge" For="input-xl">
+                <RadzenTextBox id="input-xl" @bind-Value="extraLargeValue" Placeholder="@L["Enter a value"]" />
+            </AdmiralInputField>
+        </div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="input-states-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="input-states-heading">@L["Field labels and states"]</RadzenText>
+        <div class="admiral-input-gallery__grid">
+            <AdmiralInputField Label="@L["Required field"]" Required="true" For="input-required"
+                               ExtraText="@L["Helper text is displayed below the control"]">
+                <RadzenTextBox id="input-required" @bind-Value="requiredValue" aria-required="true" />
+            </AdmiralInputField>
+            <AdmiralInputField Label="@L["Validation error"]" Status="AdmiralInputStatus.Error" For="input-error"
+                               ExtraText="@L["Enter at least three characters"]">
+                <RadzenTextBox id="input-error" @bind-Value="errorValue" aria-invalid="true" />
+            </AdmiralInputField>
+            <AdmiralInputField Label="@L["Successful validation"]" Status="AdmiralInputStatus.Success" For="input-success"
+                               ExtraText="@L["The value has been verified"]">
+                <RadzenTextBox id="input-success" @bind-Value="successValue" />
+            </AdmiralInputField>
+            <AdmiralInputField Label="@L["Disabled field"]" ExtraText="@L["Editing is unavailable"]" For="input-disabled">
+                <RadzenTextBox id="input-disabled" Value="@L["Disabled value"]" Disabled="true" />
+            </AdmiralInputField>
+            <AdmiralInputField Label="@L["Read-only field"]" ExtraText="@L["The value can be selected and copied"]" For="input-readonly">
+                <RadzenTextBox id="input-readonly" Value="ADM-1042" ReadOnly="true" />
+            </AdmiralInputField>
+            <AdmiralInputField Label="@L["Long field label that can wrap onto a second line"]"
+                               AdditionalLabel="@L["Optional"]"
+                               ExtraText="@L["Long helper text also wraps without changing the input geometry"]"
+                               For="input-long-label">
+                <RadzenTextBox id="input-long-label" Placeholder="@L["Placeholder"]" />
+            </AdmiralInputField>
+        </div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="input-controls-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="input-controls-heading">@L["Other Radzen input controls"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">@L["The same field composition and dimensions can wrap numeric, date and select controls."]</RadzenText>
+        <div class="admiral-input-gallery__grid">
+            <AdmiralInputField Label="@L["Small dropdown"]" AdditionalLabel="S · 32 px"
+                               Size="AdmiralInputSize.Small" For="input-currency-small">
+                <RadzenDropDown id="input-currency-small" @bind-Value="smallCurrency" Data="currencies" />
+            </AdmiralInputField>
+            <AdmiralInputField Label="@L["Amount"]" Size="AdmiralInputSize.Small" For="input-amount">
+                <RadzenNumeric id="input-amount" @bind-Value="amount" Min="0" Step="100" />
+            </AdmiralInputField>
+            <AdmiralInputField Label="@L["Transfer date"]" For="input-date">
+                <RadzenDatePicker id="input-date" @bind-Value="transferDate" DateFormat="dd.MM.yyyy" ShowTime="false" />
+            </AdmiralInputField>
+            <AdmiralInputField Label="@L["Currency"]" Size="AdmiralInputSize.ExtraLarge" For="input-currency">
+                <RadzenDropDown id="input-currency" @bind-Value="currency" Data="currencies" />
+            </AdmiralInputField>
+        </div>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="native-range-heading">
+        <h2 id="native-range-heading">@L["Native Radzen date range"]</h2>
+        <p>@L["Radzen 12 already includes a native range picker with two months, interval highlighting and a hover preview. This independent example uses the installed package, not the Admiral wrapper."]</p>
+        <div class="admiral-input-gallery__grid">
+            <AdmiralInputField Label="@L["Date range"]" For="input-native-range">
+                <RadzenDateRangePicker id="input-native-range" @bind-Value="nativeRange" DateFormat="dd.MM.yyyy"
+                                       DisplayMonths="2" AllowClear="true" AllowInput="true" />
+            </AdmiralInputField>
+        </div>
+        <pre class="component-doc-code"><code>@NativeRangeMarkup</code></pre>
+    </section>
+
+    <section class="admiral-gallery__section" aria-labelledby="floating-field-heading">
+        <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="floating-field-heading">@L["Floating FormField alternative"]</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">@L["This Radzen composition is still themed and supported, but it is not the primary Admiral InputField layout."]</RadzenText>
+        <div class="admiral-input-gallery__grid">
+            <RadzenFormField Text="@L["Account name"]" Variant="Variant.Outlined">
+                <RadzenTextBox @bind-Value="floatingValue" Placeholder="@L["Enter a name"]" />
+            </RadzenFormField>
+        </div>
+    </section>
+</div>
+
+@code {
+    private DateRange nativeRange = new(DateTime.Today, DateTime.Today.AddDays(7));
+    private const string NativeRangeMarkup = """
+        <RadzenDateRangePicker @bind-Value="range" DateFormat="dd.MM.yyyy"
+                               DisplayMonths="2" AllowClear="true" AllowInput="true" />
+        @code { DateRange range = new(DateTime.Today, DateTime.Today.AddDays(7)); }
+        """;
+    private string? smallValue;
+    private string? mediumValue = "Admiral";
+    private string? extraLargeValue;
+    private string? requiredValue;
+    private string? errorValue = "A";
+    private string? successValue = "Проверено";
+    private string? floatingValue;
+    private decimal amount = 12500;
+    private DateTime? transferDate = DateTime.Today;
+    private string currency = "RUB";
+    private string smallCurrency = "EUR";
+    private readonly string[] currencies = ["RUB", "USD", "EUR", "CNY"];
+}

@@ -1,0 +1,15 @@
+@inject IStringLocalizer<SharedResource> L
+
+<header class="admiral-component-page__header">
+    <AdmiralText Typography="AdmiralTypography.Caption1" Class="admiral-component-page__eyebrow">Admiral 2.1</AdmiralText>
+    <AdmiralText Typography="AdmiralTypography.HeaderHl3" Tag="AdmiralTextTag.H1">@Title</AdmiralText>
+    <AdmiralText Typography="AdmiralTypography.Body1Long" Tag="AdmiralTextTag.Paragraph" Color="var(--rz-text-secondary-color)">@L[Description]</AdmiralText>
+    <AdmiralLink Path="@SourceUrl" Target="_blank" IconEnd="admiral:system/link-outline">@L[SourceLabel]</AdmiralLink>
+</header>
+
+@code {
+    [Parameter, EditorRequired] public string Title { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string Description { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string SourceUrl { get; set; } = string.Empty;
+    [Parameter] public string SourceLabel { get; set; } = "Open the official Admiral story";
+}

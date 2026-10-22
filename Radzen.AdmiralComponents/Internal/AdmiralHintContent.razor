@@ -1,0 +1,24 @@
+@namespace Radzen.Admiral.Components.Internal
+
+<div class="admiral-hint__dialog" role="dialog" aria-labelledby="@TitleId"
+     tabindex="-1">
+    <div class="admiral-hint__content">
+        <div class="admiral-hint__title" id="@TitleId">@Title</div>
+        @ChildContent
+    </div>
+    @if (ShowClose)
+    {
+        <button type="button" class="admiral-hint__close" aria-label="@CloseAriaLabel" @onclick="@(() => Closed.InvokeAsync())">
+            <AdmiralIcon Icon="admiral:service/close-outline" Size="AdmiralIconSize.Medium" />
+        </button>
+    }
+</div>
+
+@code {
+    [Parameter] public string TitleId { get; set; } = string.Empty;
+    [Parameter] public string Title { get; set; } = string.Empty;
+    [Parameter] public string CloseAriaLabel { get; set; } = string.Empty;
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public EventCallback Closed { get; set; }
+    [Parameter] public bool ShowClose { get; set; } = true;
+}

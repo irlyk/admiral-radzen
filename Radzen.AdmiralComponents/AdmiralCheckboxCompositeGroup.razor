@@ -1,0 +1,26 @@
+@using Radzen.Admiral.Components.Internal
+
+<div class="@CssClass" style="@Style" role="group" aria-label="@AriaLabel" @attributes="AdditionalAttributes">
+    <CascadingValue Value="@Context" IsFixed="false">@ChildContent</CascadingValue>
+</div>
+
+@code {
+    [CascadingParameter] internal AdmiralCheckboxGroupContext? ParentContext { get; set; }
+    [Parameter] public AdmiralCheckboxDimension? Dimension { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public string? AriaLabel { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private AdmiralCheckboxDimension EffectiveDimension => Dimension ?? ParentContext?.Dimension ?? AdmiralCheckboxDimension.M;
+    private bool EffectiveDisabled => Disabled || ParentContext?.Disabled == true;
+    private AdmiralCheckboxGroupContext Context => new(EffectiveDimension, EffectiveDisabled);
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-checkbox-composite-group",
+        EffectiveDimension == AdmiralCheckboxDimension.S ? "admiral-checkbox-composite-group--s" : "admiral-checkbox-composite-group--m",
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

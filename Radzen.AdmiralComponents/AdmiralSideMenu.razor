@@ -1,0 +1,24 @@
+@using Radzen.Admiral.Components.Internal
+
+<nav class="@CssClass" aria-label="@AriaLabel" @attributes="AdditionalAttributes">
+    @if (Layout is not null)
+    {
+        <button type="button" class="admiral-side-menu__close" aria-label="@CloseAriaLabel"
+                @onclick="Layout.CloseOverlayAsync">
+            <AdmiralIcon Icon="admiral:service/close-outline" />
+        </button>
+    }
+    <div class="admiral-side-menu__items">@ChildContent</div>
+</nav>
+
+@code {
+    [CascadingParameter] internal AdmiralLayoutContext? Layout { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string AriaLabel { get; set; } = "Main navigation";
+    [Parameter] public string CloseAriaLabel { get; set; } = "Close navigation";
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => string.Join(' ', new[] { "admiral-side-menu", Class }
+        .Where(value => !string.IsNullOrWhiteSpace(value)));
+}

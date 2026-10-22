@@ -1,0 +1,208 @@
+@page "/components/action-bar"
+@using Radzen.Admiral.Components.Models
+
+<PageTitle>Admiral ActionBar</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="ActionBar"
+        Description="@T("ActionBar и GroupActionsPane: автоматическое меню переполнения и панель поиска, колонок и настроек.", "ActionBar and GroupActionsPane: automatic overflow and a panel for search, columns, and settings.")"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-actionbar--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section">
+            <ApiReference Title="AdmiralActionBar" Rows="@ActionRows" />
+            <ApiReference Title="AdmiralActionItem" Rows="@ItemRows" />
+            <ApiReference Title="AdmiralGroupActionsPane" Rows="@PaneRows" />
+            <ApiReference Title="AdmiralPaneColumn" Rows="@PaneColumnRows" />
+            <h2>@SmokeL["Behavior and limitations"]</h2>
+            <p>@SmokeL["Как в React Admiral, в строке остаётся начальная часть Items, а не поместившийся хвост переходит в меню. Приоритетов нет. OverflowItems всегда остаётся в меню после автоматически скрытых действий. Размер кнопки меню также учитывается при расчёте. Для доступной ширины меньше одной кнопки задайте родителю минимальную ширину 32/40/48/56px соответственно размеру."]</p>
+            <p>@SmokeL["AutoOverflow=true растягивает панель по доступной ширине; ResizeObserver реагирует на окно, sidebar и изменение родителя. AutoOverflow=false сохраняет ручное разделение Items/OverflowItems и ширину по содержимому. JS только измеряет контейнер и восстанавливает фокус, распределение и callbacks остаются в C#."]</p>
+            <p>@SmokeL["DividerBefore сохранён для совместимости нашего API: разделитель перед действием, а не после, как withDivider в React. В начале строки и меню он не рисуется. Указывайте уникальные Id. Disabled блокирует действие и в строке, и в меню."]</p>
+            <p>@SmokeL["Tab проходит по доступным кнопкам, Enter/Space выполняют действие. В меню ↑/↓, Home/End перемещают фокус, Escape закрывает меню и возвращает фокус. Если при сужении выбранная кнопка исчезла, фокус переходит на меню. При изменении состава видимой части открытое меню закрывается."]</p>
+            <p>@SmokeL["Стили кнопок повторно используются из AdmiralIconButton: Secondary, hover/press, квадратный focus и disabled, включая сочетание hover + focus. Произвольные React render-функции заменены моделью AdmiralActionItem; собственные панели можно собрать из AdmiralIconButton и AdmiralMenu. GroupActionsPane не заменяет ActionBar: он содержит текстовые действия и инструменты таблицы, а не автоматическое меню переполнения."]</p>
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["Radzen + theme · independent playground"]</h2>
+            <p>@SmokeL["Тема оформляет RadzenButton; автоматический overflow — поведение AdmiralActionBar, CSS его не добавляет. В этом примере меню настроено вручную через RadzenSplitButton."]</p>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    <div class="admiral-action-bar admiral-action-bar--m" role="toolbar" aria-label="@T("Прямой Radzen", "Direct Radzen")">
+                        <RadzenButton Icon="admiral:system/search-outline" Variant="Variant.Text" ButtonStyle="ButtonStyle.Secondary"
+                            Size="ButtonSize.Small" class="admiral-icon-button admiral-icon-button--secondary admiral-action-bar__item"
+                            Disabled="@themeDisabled" aria-label="@T("Найти", "Search")" Click="@(_ => result = T("Radzen: найти", "Radzen: search"))" />
+                        <span class="admiral-action-bar__divider" aria-hidden="true"></span>
+                        <RadzenSplitButton Text="@SmokeL["Ещё"]" Size="ButtonSize.Small" Disabled="@themeDisabled"
+                            Click="@((RadzenSplitButtonItem? item) => result = $"Radzen: {item?.Text ?? T("основное действие", "main action")}")">
+                            <RadzenSplitButtonItem Text="@SmokeL["Редактировать"]" Value="edit" />
+                            <RadzenSplitButtonItem Text="@SmokeL["Удалить"]" Value="delete" />
+                        </RadzenSplitButton>
+                    </div>
+                    <output>@result</output>
+                </div>
+                <div class="admiral-component-controls">
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="themeDisabled" /> Disabled</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@ThemeCode" Title="@SmokeL["Razor · прямой Radzen"]" />
+            <ApiReference Title="@SmokeL["Классы и параметры темы"]" Rows="@ThemeRows" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@SmokeL["ActionBar · responsive playground"]</h2>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview action-bar-demo-preview">
+                    <div class="action-bar-demo-host" style="@($"width:{width}px")">
+                        <AdmiralActionBar Items="@Actions" OverflowItems="@(manualOverflow ? MenuActions : EmptyActions)"
+                            Size="@size" AutoOverflow="@autoOverflow" ActionClicked="HandleAction"
+                            AriaLabel="@SmokeL["Действия с документом"]" OverflowAriaLabel="@SmokeL["Ещё действия"]" />
+                    </div>
+                    <output class="action-bar-demo-result" aria-live="polite">@result</output>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Size"]</span><select @bind="size"><option value="Small">S · 32px</option><option value="Medium">M · 40px</option><option value="Large">L · 48px</option><option value="ExtraLarge">XL · 56px</option></select></label>
+                    <label><span>@T("Ширина", "Width") · @width px</span><input aria-label="@T("Ширина панели", "Panel width")" type="range" min="64" max="640" step="4" @bind="width" @bind:event="oninput" /></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="autoOverflow" /> AutoOverflow</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="manualOverflow" /> @SmokeL["Постоянные действия в меню"]</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="compactItems" /> @SmokeL["Сократить Items до двух"]</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral" />
+        </section>
+        <section class="admiral-component-page__section">
+            <h2>GroupActionsPane</h2>
+            <a href="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-data-table-groupactionspane--docs" target="_blank" rel="noreferrer">@SmokeL["Оригинальные сценарии GroupActionsPane"]</a>
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview action-bar-demo-preview">
+                    <AdmiralGroupActionsPane Actions="@Actions.Take(2).ToArray()" Size="@paneSize"
+                        @bind-SearchValue="search" @bind-Columns="columns" ShowSettings="true"
+                        ActionClicked="HandleAction" SettingsClicked="@(() => result = T("Открыть настройки", "Open settings"))"
+                        OpenSearchAriaLabel="@SmokeL["Открыть поиск"]" CloseSearchAriaLabel="@SmokeL["Закрыть поиск"]" SearchAriaLabel="@SmokeL["Поиск"]"
+                        SearchPlaceholder="@SmokeL["Поиск…"]" ConfigureColumnsAriaLabel="@SmokeL["Выбрать колонки"]" VisibleColumnsAriaLabel="@SmokeL["Колонки"]" SettingsAriaLabel="@SmokeL["Настройки"]" />
+                    <output aria-live="polite">@result · @T("Поиск", "Search"): @search · @T("Колонки", "Columns"): @string.Join(", ", columns.Where(item => item.Visible).Select(item => item.Text))</output>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@SmokeL["Pane size"]</span><select @bind="paneSize"><option value="Small">S</option><option value="Medium">M</option><option value="Large">L</option><option value="ExtraLarge">XL</option></select></label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@PaneCode" Title="Razor · GroupActionsPane" />
+        </section>
+    }
+</div>
+
+@code {
+    private static string T(string russian, string english) =>
+        System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? russian : english;
+    private string tab = ComponentDocTabs.Admiral;
+    private string result = T("Действие ещё не выбрано", "No action selected"), search = string.Empty;
+    private AdmiralActionBarSize size = AdmiralActionBarSize.ExtraLarge;
+    private AdmiralGroupActionsPaneSize paneSize = AdmiralGroupActionsPaneSize.ExtraLarge;
+    private int width = 400;
+    private bool autoOverflow = true, manualOverflow, disabled, compactItems, themeDisabled;
+    private IReadOnlyList<AdmiralPaneColumn> columns = [new("name", T("Название", "Name"), true), new("date", T("Дата", "Date"), true), new("comment", T("Комментарий", "Comment"), false)];
+    private IReadOnlyList<AdmiralActionItem> Actions => (compactItems ? AllActions.Take(2) : AllActions)
+        .Select(item => disabled ? item with { Disabled = true } : item).ToArray();
+    private static readonly IReadOnlyList<AdmiralActionItem> EmptyActions = [];
+    private IReadOnlyList<AdmiralActionItem> MenuActions => [new("settings", T("Настройки документа", "Document settings"), "admiral:system/settings-outline")];
+    private IReadOnlyList<AdmiralActionItem> AllActions =>
+    [
+        new("search", T("Найти", "Search"), "admiral:system/search-outline"),
+        new("edit", T("Редактировать", "Edit"), "admiral:system/edit-outline"),
+        new("copy", T("Копировать", "Copy"), "admiral:documents/copy-outline", DividerBefore: true),
+        new("download", T("Скачать", "Download"), "admiral:system/download-outline"),
+        new("delete", T("Удалить", "Delete"), "admiral:system/delete-outline", Disabled: true, DividerBefore: true)
+    ];
+    private void HandleAction(AdmiralActionItem item) => result = $"{T("Действие", "Action")}: {item.Id}";
+    private const string AdmiralCode = """
+        <AdmiralActionBar Items="@actions" Size="AdmiralActionBarSize.Medium"
+                         AutoOverflow="true" ActionClicked="HandleAction"
+                         AriaLabel="Действия" OverflowAriaLabel="Ещё действия" />
+        <span role="status">@result</span>
+        @code {
+            private string result = "—";
+            IReadOnlyList<AdmiralActionItem> actions = [
+                new("search", "Найти", "admiral:system/search-outline"),
+                new("copy", "Копировать", "admiral:documents/copy-outline", DividerBefore: true)];
+            void HandleAction(AdmiralActionItem item) => result = item.Id;
+        }
+        """;
+    private const string ThemeCode = """
+        <div class="admiral-action-bar admiral-action-bar--m" role="toolbar" aria-label="Действия">
+            <RadzenButton Icon="admiral:system/search-outline" Size="ButtonSize.Small"
+                Variant="Variant.Text" ButtonStyle="ButtonStyle.Secondary" aria-label="Найти"
+                class="admiral-icon-button admiral-icon-button--secondary admiral-action-bar__item"
+                Click="Search" />
+            <RadzenSplitButton Text="Ещё" Size="ButtonSize.Small" Click="HandleAction">
+                <RadzenSplitButtonItem Text="Редактировать" Value="edit" />
+            </RadzenSplitButton>
+        </div>
+        <span role="status">@result</span>
+        @code {
+            private string result = "—";
+            private void Search(MouseEventArgs _) => result = "search";
+            private void HandleAction(RadzenSplitButtonItem? item) => result = item?.Value?.ToString() ?? "main";
+        }
+        """;
+    private const string PaneCode = """
+        <AdmiralGroupActionsPane Actions="@actions" Size="AdmiralGroupActionsPaneSize.Medium"
+            @bind-SearchValue="search" @bind-Columns="columns" ShowSettings="true"
+            ActionClicked="HandleAction" SettingsClicked="OpenSettings" />
+        <span role="status">@result · @search</span>
+        @code {
+            private string search = "", result = "—";
+            private IReadOnlyList<AdmiralActionItem> actions = [new("edit", "Редактировать", "admiral:system/edit-outline")];
+            private IReadOnlyList<AdmiralPaneColumn> columns = [new("name", "Название", true)];
+            private void HandleAction(AdmiralActionItem item) => result = item.Id;
+            private void OpenSettings() => result = "settings";
+        }
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> PaneRows =
+    [
+        new("Actions / ActionClicked", "IReadOnlyList<AdmiralActionItem>; [] / EventCallback<AdmiralActionItem>", "Text actions and the selected item callback; disabled items do not invoke it."),
+        new("SearchValue / SearchValueChanged", "string; empty / EventCallback<string>", "Search text and two-way binding callback. The consumer filters its own data."),
+        new("Columns / ColumnsChanged", "IReadOnlyList<AdmiralPaneColumn>; [] / EventCallback<IReadOnlyList<AdmiralPaneColumn>>", "Column visibility list and updated selection callback."),
+        new("ShowSettings / SettingsClicked", "bool; true / EventCallback", "Settings action visibility and request callback. The consumer supplies its UI."),
+        new("Size", "AdmiralGroupActionsPaneSize; ExtraLarge", "Small, Medium, Large or ExtraLarge geometry."),
+        new("SearchPlaceholder / SearchAriaLabel", "string; Search", "Placeholder and accessible name of the search field."),
+        new("OpenSearchAriaLabel / CloseSearchAriaLabel", "string; Open search / Close search", "Accessible names for search controls."),
+        new("ConfigureColumnsAriaLabel / VisibleColumnsAriaLabel", "string; Configure columns / Visible columns", "Accessible names for the columns popup."),
+        new("SettingsAriaLabel", "string; Settings", "Accessible name of the settings button."),
+        new("Class / AdditionalAttributes", "string? / attributes", "Additional CSS class and unmatched attributes on the root pane. No public imperative methods.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> PaneColumnRows =
+    [
+        new("Id / Text", "string / required", "Unique key and visible column label."),
+        new("Visible / Disabled", "bool; true / false", "Current visibility and whether the checkbox can be changed.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> ActionRows =
+    [
+        new("Items", "IReadOnlyList<AdmiralActionItem> / []", "Действия по порядку; не поместившийся хвост переходит в меню."),
+        new("OverflowItems", "IReadOnlyList<AdmiralActionItem> / []", "Всегда в меню после скрытого хвоста Items."),
+        new("AutoOverflow", "bool / true", "Измерение доступной ширины. False — ручной overflow и ширина по содержимому."),
+        new("Size", "AdmiralActionBarSize / ExtraLarge", "Small=32, Medium=40, Large=48, ExtraLarge=56px. Иконка S=20, остальные=24px."),
+        new("ActionClicked", "EventCallback<AdmiralActionItem>", "Выполненное действие из строки или меню; disabled не вызывает событие."),
+        new("AriaLabel / OverflowAriaLabel", "string / Actions / More actions", "Локализуемые доступные подписи toolbar и меню."),
+        new("OverflowIcon", "string / admiral:system/more-horizontal-outline", "Иконка кнопки меню."),
+        new("UpdateAvailableWidth(width)", "Task; double", "Публичный JS interop callback ResizeObserver; нормальному потребителю не требуется вызывать его вручную. Отрицательные и нечисловые значения игнорируются."),
+        new("Class / AdditionalAttributes", "string? / IReadOnlyDictionary<string, object>?", "Класс и атрибуты корневого toolbar, включая style.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> ItemRows =
+    [
+        new("Id / Text / Icon", "string / обязательные", "Уникальный Id, подпись для меню/title и адрес иконки."),
+        new("Disabled", "bool / false", "Отключает пункт в обоих представлениях."),
+        new("DividerBefore", "bool / false", "Разделитель перед пунктом; не отображается перед первым видимым пунктом."),
+        new("AriaLabel", "string? / null", "Доступная подпись иконки, по умолчанию Text.")
+    ];
+    private static readonly IReadOnlyList<ApiReference.Entry> ThemeRows =
+    [
+        new("admiral-action-bar / --s / --m / --l / --xl", "CSS", "Flex-контейнер и высота S/M/L/XL. Без --adaptive ширина по содержимому."),
+        new("admiral-action-bar__item + admiral-icon-button + admiral-icon-button--secondary", "CSS + RadzenButton", "Размер слота, Secondary иконка и состояния hover/press/focus/disabled."),
+        new("admiral-action-bar__divider", "CSS + span", "Разделитель; 16px в S, 20px в остальных размерах."),
+        new("RadzenSplitButton / Items / Click / Disabled", "Radzen API", "Ручное меню; автоматического распределения действий тема не добавляет.")
+    ];
+}

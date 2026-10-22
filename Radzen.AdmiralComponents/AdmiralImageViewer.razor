@@ -1,0 +1,66 @@
+<div class="@CssClass" style="@Style" @attributes="AdditionalAttributes">
+    @if (Items.Count == 0)
+    {
+        <span class="admiral-image-viewer__empty">@EmptyText</span>
+    }
+    else
+    {
+        @for (var index = 0; index < Items.Count; index++)
+        {
+            if (!Multiple && index != SafeActiveIndex) continue;
+            var itemIndex = index;
+            var item = Items[index];
+            <button type="button" class="admiral-image-viewer__miniature" aria-label="@($"{OpenText}: {item.Alt}")" @onclick="() => Open(itemIndex)">
+                <img src="@item.Src" alt="@item.Alt" loading="lazy" />
+                <span class="admiral-image-viewer__miniature-hover"><AdmiralIcon Icon="admiral:service/eye-outline" Style="@MiniatureIconStyle" /></span>
+            </button>
+        }
+    }
+</div>
+
+@if (EffectiveVisible && Items.Count > 0)
+{
+    <dialog class="admiral-image-viewer__overlay" aria-modal="true" aria-label="@DialogAriaLabel"
+         tabindex="-1" @ref="dialog" @onkeydown="OnKeyDown">
+        <button type="button" class="admiral-image-viewer__scrim" aria-hidden="true" tabindex="-1" @onclick="Close"></button>
+        <button type="button" class="admiral-image-viewer__close" aria-label="@CloseText" title="@CloseText" @onclick="Close">
+            <AdmiralIcon Icon="admiral:service/close-outline" />
+        </button>
+        <div @ref="surface" class="admiral-image-viewer__surface">
+        @if (imageFailed)
+        {
+            <div class="admiral-image-viewer__message" role="alert">@ErrorText</div>
+        }
+        else
+        {
+            <img @key="SafeActiveIndex" class="admiral-image-viewer__preview" src="@Items[SafeActiveIndex].Src"
+                 alt="@Items[SafeActiveIndex].Alt" style="@TransformStyle" draggable="false" @onerror="PreviewError" @onload="PreviewLoaded" />
+            @if (imageLoading)
+            {
+                <div class="admiral-image-viewer__message" role="status">@LoadingText</div>
+            }
+        }
+        </div>
+        <div class="admiral-image-viewer__bottom">
+            <div class="admiral-image-viewer__toolbar" role="toolbar" aria-label="@ToolbarAriaLabel">
+                <button type="button" title="@FlipHorizontalText" aria-label="@FlipHorizontalText" disabled="@ActionsDisabled" @onclick="FlipHorizontal"><AdmiralIcon Icon="admiral:system/arrows-horizontal-outline" /></button>
+                <button type="button" title="@FlipVerticalText" aria-label="@FlipVerticalText" disabled="@ActionsDisabled" @onclick="FlipVertical"><AdmiralIcon Icon="admiral:system/arrows-vertical-outline" /></button>
+                <button type="button" title="@RotateLeftText" aria-label="@RotateLeftText" disabled="@ActionsDisabled" @onclick="RotateLeft"><AdmiralIcon Icon="admiral:documents/rotate-left-outline" /></button>
+                <button type="button" title="@RotateRightText" aria-label="@RotateRightText" disabled="@ActionsDisabled" @onclick="RotateRight"><AdmiralIcon Icon="admiral:documents/rotate-right-outline" /></button>
+                <span class="admiral-image-viewer__divider"></span>
+                <button type="button" title="@ZoomOutText" aria-label="@ZoomOutText" disabled="@(ActionsDisabled || scale <= MinScale)" @onclick="ZoomOut"><AdmiralIcon Icon="admiral:system/zoom-out-outline" /></button>
+                <button type="button" title="@ZoomInText" aria-label="@ZoomInText" disabled="@(ActionsDisabled || scale >= MaxScale)" @onclick="ZoomIn"><AdmiralIcon Icon="admiral:system/zoom-in-outline" /></button>
+                @if (ShowNavigation && Items.Count > 1)
+                {
+                    <span class="admiral-image-viewer__divider"></span>
+                    <button type="button" title="@PreviousText" aria-label="@PreviousText" disabled="@(SafeActiveIndex == 0)" @onclick="Previous"><AdmiralIcon Icon="admiral:system/arrow-left-outline" /></button>
+                    <button type="button" title="@NextText" aria-label="@NextText" disabled="@(SafeActiveIndex == Items.Count - 1)" @onclick="Next"><AdmiralIcon Icon="admiral:system/arrow-right-outline" /></button>
+                }
+            </div>
+            @if (ShowCounter && Items.Count > 1)
+            {
+                <span class="admiral-image-viewer__counter">@(SafeActiveIndex + 1) / @Items.Count</span>
+            }
+        </div>
+    </dialog>
+}

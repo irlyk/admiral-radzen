@@ -1,0 +1,21 @@
+.slider-gallery {
+    container-type: inline-size;
+}
+
+.admiral-component-playground__preview {
+    min-width: 0;
+}
+
+.slider-playground__sample {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 32rem;
+    min-width: 0;
+    padding-block: 1rem;
+}
+
+@container (max-width: 48rem) {
+    .admiral-component-playground {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

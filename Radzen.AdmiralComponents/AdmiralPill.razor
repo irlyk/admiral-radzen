@@ -1,0 +1,47 @@
+@if (Click.HasDelegate)
+{
+    <button type="button" class="@CssClass" title="@Tooltip" @onclick="Click" @attributes="AdditionalAttributes">@Content</button>
+}
+else
+{
+    <span class="@CssClass" title="@Tooltip" @attributes="AdditionalAttributes">@Content</span>
+}
+
+@code {
+    [Parameter] public string? Text { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public AdmiralPillAppearance Appearance { get; set; }
+    [Parameter] public string? IconStart { get; set; }
+    [Parameter] public string? IconEnd { get; set; }
+    [Parameter] public string? Tooltip { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> Click { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private RenderFragment Content => builder =>
+    {
+        var sequence = 0;
+        if (!string.IsNullOrWhiteSpace(IconStart))
+        {
+            builder.OpenComponent<AdmiralIcon>(sequence++);
+            builder.AddAttribute(sequence++, nameof(AdmiralIcon.Icon), IconStart);
+            builder.AddAttribute(sequence++, nameof(AdmiralIcon.Size), AdmiralIconSize.Small);
+            builder.CloseComponent();
+        }
+        if (ChildContent is not null) builder.AddContent(sequence++, ChildContent);
+        else builder.AddContent(sequence++, Text);
+        if (!string.IsNullOrWhiteSpace(IconEnd))
+        {
+            builder.OpenComponent<AdmiralIcon>(sequence++);
+            builder.AddAttribute(sequence++, nameof(AdmiralIcon.Icon), IconEnd);
+            builder.AddAttribute(sequence++, nameof(AdmiralIcon.Size), AdmiralIconSize.Small);
+            builder.CloseComponent();
+        }
+    };
+
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-pill", $"admiral-pill--{Appearance.ToString().ToLowerInvariant()}",
+        Click.HasDelegate ? "admiral-pill--interactive" : null, Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

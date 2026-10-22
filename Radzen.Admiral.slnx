@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/samples/">
+    <Project Path="samples/AdmiralConsumerSmoke/AdmiralConsumerSmoke.csproj" />
+  </Folder>
+  <Project Path="Radzen.AdmiralIcons/Radzen.AdmiralIcons.csproj" />
+  <Project Path="Radzen.AdmiralComponents/Radzen.AdmiralComponents.csproj" />
+  <Project Path="Radzen.AdmiralThemes/Radzen.AdmiralThemes.csproj" />
+</Solution>

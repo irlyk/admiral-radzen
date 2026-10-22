@@ -1,0 +1,76 @@
+@page "/components/text-button"
+<PageTitle>Admiral TextButton</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="TextButton" Description="Text actions in M and S dimensions with optional icons."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-text-button--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section">
+            <h2>@T("Использование и ограничения", "Usage and limitations")</h2>
+            <p>@T("TextButton — действие, а не ссылка. Для перехода по адресу используйте AdmiralLink. IconStart и IconEnd размещают иконку по сторонам текста. Disabled, Loading и Skeleton блокируют Click; Skeleton показывает заглушку.", "TextButton is an action, not a link. Use AdmiralLink for navigation. IconStart and IconEnd place an icon beside the text. Disabled, Loading and Skeleton block Click; Skeleton shows a placeholder.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralTextButton" Rows="@ApiRows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenButton + Admiral theme</h2>
+            <p>@T("Для прямого Radzen используйте Variant.Text, ButtonStyle, Size и Icon. У RadzenButton одна позиция иконки, а AdmiralTextButton поддерживает IconStart и IconEnd; Skeleton также относится к обёртке.", "For direct Radzen use Variant.Text, ButtonStyle, Size and Icon. RadzenButton has one icon placement while AdmiralTextButton supports IconStart and IconEnd; Skeleton also belongs to the wrapper.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <RadzenButton Text="Details" Icon="admiral:system/arrow-right-outline" Variant="Variant.Text" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" Disabled="@directDisabled" IsBusy="@directLoading" Click="@(_ => directClicks++)" />
+                <output aria-live="polite">@T("Нажатия Radzen", "Radzen clicks"): @directClicks</output>
+            </div><div class="admiral-component-controls"><label class="admiral-component-controls__check"><input type="checkbox" @bind="directDisabled" /> Disabled</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="directLoading" /> IsBusy</label></div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@T("Интерактивный пример", "Interactive playground")</h2>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+                <AdmiralTextButton Text="Details" IconEnd="admiral:system/arrow-right-outline" Appearance="@appearance" Dimension="@dimension" Disabled="@disabled" Loading="@loading" Click="@(_ => clicks++)" />
+                <output aria-live="polite">@T("Нажатия", "Clicks"): @clicks</output>
+            </div><div class="admiral-component-controls">
+                <label><span>@SmokeL["Dimension"]</span><select @bind="dimension">@foreach (var value in Enum.GetValues<AdmiralTextButtonDimension>()) { <option value="@value">@value</option> }</select></label>
+                <label><span>@SmokeL["Appearance"]</span><select @bind="appearance">@foreach (var value in Enum.GetValues<AdmiralTextButtonAppearance>()) { <option value="@value">@value</option> }</select></label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label><label class="admiral-component-controls__check"><input type="checkbox" @bind="loading" /> Loading</label>
+            </div></div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+        <section class="admiral-component-page__section"><h2>@T("Размеры и состояния", "Dimensions and states")</h2><div class="admiral-component-row">
+            <AdmiralTextButton Text="Primary M" IconStart="admiral:system/search-outline" Click="@(_ => clicks++)" />
+            <AdmiralTextButton Text="Primary S" Dimension="AdmiralTextButtonDimension.S" Click="@(_ => clicks++)" />
+            <AdmiralTextButton Text="Secondary M" Appearance="AdmiralTextButtonAppearance.Secondary" Click="@(_ => clicks++)" />
+            <AdmiralTextButton Text="Loading" Loading="true" /><AdmiralTextButton Text="Disabled" Disabled="true" /><AdmiralTextButton Text="Skeleton" Skeleton="true" />
+        </div></section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private AdmiralTextButtonAppearance appearance;
+    private AdmiralTextButtonDimension dimension = AdmiralTextButtonDimension.M;
+    private bool disabled, loading, directDisabled, directLoading;
+    private int clicks, directClicks;
+    private static readonly IReadOnlyList<ApiReference.Entry> ApiRows = [
+        new("Text / ChildContent", "string? / null; RenderFragment? / null", "Visible label or custom content."),
+        new("IconStart / IconEnd", "string? / null", "Admiral icon tokens before or after content."),
+        new("Appearance / Dimension", "Primary / M", "Primary or Secondary; M or S."),
+        new("Disabled / Loading / Skeleton", "bool / false", "Prevent activation; Skeleton renders a placeholder."),
+        new("Click", "EventCallback<MouseEventArgs>", "Fires for an enabled action on pointer or keyboard activation.")];
+    private const string AdmiralCode = """
+        <AdmiralTextButton Text="Details" IconEnd="admiral:system/arrow-right-outline"
+            Appearance="AdmiralTextButtonAppearance.Secondary" Click="@(_ => clicks++)" />
+        <output aria-live="polite">Clicks: @clicks</output>
+        @code { private int clicks; }
+        """;
+    private const string DirectCode = """
+        <RadzenButton Text="Details" Icon="admiral:system/arrow-right-outline"
+            Variant="Variant.Text" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small"
+            Click="@(_ => clicks++)" />
+        <output aria-live="polite">Clicks: @clicks</output>
+        @code { private int clicks; }
+        """;
+}

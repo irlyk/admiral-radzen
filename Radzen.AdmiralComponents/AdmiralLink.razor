@@ -1,0 +1,37 @@
+<RadzenLink Path="@Path" Target="@Target" Match="@Match" Disabled="@Disabled"
+            class="@CssClass" @onclick="HandleClick"
+            aria-disabled="@(Disabled ? "true" : null)" @attributes="AdditionalAttributes">
+    @if (IconStartContent is not null) { @IconStartContent }
+    else if (!string.IsNullOrWhiteSpace(IconStart)) { <AdmiralIcon Icon="@IconStart" Size="@IconSize" aria-hidden="true" /> }
+    <span class="admiral-link__text">@if (ChildContent is not null) { @ChildContent } else { @Text }</span>
+    @if (IconEndContent is not null) { @IconEndContent }
+    else if (!string.IsNullOrWhiteSpace(IconEnd)) { <AdmiralIcon Icon="@IconEnd" Size="@IconSize" aria-hidden="true" /> }
+</RadzenLink>
+
+@code {
+    [Parameter] public string? Text { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string Path { get; set; } = string.Empty;
+    [Parameter] public string? Target { get; set; }
+    [Parameter] public NavLinkMatch Match { get; set; } = NavLinkMatch.Prefix;
+    [Parameter] public AdmiralLinkAppearance Appearance { get; set; }
+    [Parameter] public AdmiralLinkDimension Dimension { get; set; }
+    [Parameter] public string? IconStart { get; set; }
+    [Parameter] public string? IconEnd { get; set; }
+    [Parameter] public RenderFragment? IconStartContent { get; set; }
+    [Parameter] public RenderFragment? IconEndContent { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> Click { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private AdmiralIconSize IconSize => Dimension == AdmiralLinkDimension.S ? AdmiralIconSize.Medium : AdmiralIconSize.Large;
+    private Task HandleClick(MouseEventArgs args) => Disabled ? Task.CompletedTask : Click.InvokeAsync(args);
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-link",
+        Appearance == AdmiralLinkAppearance.Secondary ? "admiral-link--secondary" : null,
+        Dimension == AdmiralLinkDimension.S ? "admiral-link--s" : null,
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

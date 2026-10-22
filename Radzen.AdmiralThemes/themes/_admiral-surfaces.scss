@@ -1,0 +1,9 @@
+$theme-dark: false !default;
+
+:root {
+  --admiral-background-primary: #{if($theme-dark, #252627, #FFFFFF)};
+  --admiral-background-secondary: #{if($theme-dark, #1F2024, #F5F5F6)};
+}
+
+.admiral-background-primary { background-color: var(--admiral-background-primary) !important; }
+.admiral-background-secondary { background-color: var(--admiral-background-secondary) !important; }

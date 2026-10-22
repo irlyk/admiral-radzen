@@ -1,0 +1,51 @@
+@page "/layout"
+@page "/regression/layout"
+@inject IStringLocalizer<SharedResource> L
+
+<div class="admiral-grid-page__intro">
+    <span class="admiral-gallery__eyebrow">Admiral Grid → AdmiralLayout</span>
+    <RadzenText TextStyle="TextStyle.H2" TagName="TagName.H1">@L["Admiral modular grid"]</RadzenText>
+    <RadzenText TextStyle="TextStyle.Body1">@L["Resize the browser to inspect the active 4, 8 or 12 column grid and responsive side menu."]</RadzenText>
+</div>
+
+<div class="admiral-grid-guide" aria-label="@L["Active modular columns"]">
+    @for (var index = 1; index <= 12; index++)
+    {
+        var column = index;
+        <AdmiralGridItem MobileSpan="1" TabletSpan="1" DesktopSpan="1" Class="admiral-grid-guide__column">
+            <span>@column</span>
+        </AdmiralGridItem>
+    }
+</div>
+
+<section class="admiral-gallery__section admiral-grid-page__details" aria-labelledby="grid-rules-heading">
+    <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="grid-rules-heading">@L["Responsive grid rules"]</RadzenText>
+    <div class="admiral-grid-page__rule-list">
+        <div><strong>320–767</strong><span>4 × 16 px · @L["side padding"] 16 px</span></div>
+        <div><strong>768–1023</strong><span>8 × 24 px · @L["side padding"] 64 px</span></div>
+        <div><strong>1024–1279</strong><span>12 × 32 px · icons-only 56 px · @L["side padding"] 36 px</span></div>
+        <div><strong>1280–1599</strong><span>12 × 32 px · menu 240/288/336 px · @L["side padding"] 56 px</span></div>
+        <div><strong>1600+</strong><span>12 × 32 px · flex · @L["side padding"] 72 px</span></div>
+    </div>
+</section>
+
+<section class="admiral-gallery__section admiral-grid-page__details" aria-labelledby="layout-api-heading">
+    <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="layout-api-heading">@L["Declarative layout API"]</RadzenText>
+    <RadzenText TextStyle="TextStyle.Body2">
+        @L["The page shell now comes from the component package: the header controls navigation automatically, nested menu items preserve their active branch, and the consumer only supplies header, menu and content blocks."]
+    </RadzenText>
+</section>
+
+<section class="admiral-gallery__section admiral-grid-page__details" aria-labelledby="alternative-grid-heading">
+    <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H2" id="alternative-grid-heading">@L["Alternative compact grid"]</RadzenText>
+    <RadzenText TextStyle="TextStyle.Body2">@L["The alternative grid uses 16, 24 and 32 pixel edge padding and gutters at the same breakpoints."]</RadzenText>
+    <AdmiralGrid Variant="AdmiralGridVariant.Alternative" Class="admiral-grid-page__alternative">
+        @for (var index = 1; index <= 12; index++)
+        {
+            var column = index;
+            <AdmiralGridItem MobileSpan="1" TabletSpan="1" DesktopSpan="1" Class="admiral-grid-guide__column">
+                <span>@column</span>
+            </AdmiralGridItem>
+        }
+    </AdmiralGrid>
+</section>

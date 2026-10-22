@@ -1,0 +1,32 @@
+<div class="@CssClass" role="toolbar" aria-label="@AriaLabel" @ref="element" @attributes="AdditionalAttributes">
+    @for (var index = 0; index < visibleItems.Count; index++)
+    {
+        var item = visibleItems[index];
+        @if (index > 0 && item.DividerBefore)
+        {
+            <span class="admiral-action-bar__divider" aria-hidden="true"></span>
+        }
+        <AdmiralIconButton @key="item.Id" Class="admiral-action-bar__item" Icon="@item.Icon"
+                           Dimension="@ButtonDimension" Disabled="@item.Disabled"
+                           AriaLabel="@(item.AriaLabel ?? item.Text)" title="@item.Text"
+                           Click="@(_ => InvokeAction(item))" />
+    }
+    @if (overflowItems.Count > 0)
+    {
+        <AdmiralMenu AriaLabel="@OverflowAriaLabel" Class="@($"admiral-action-bar-menu admiral-action-bar-menu--{ButtonDimension.ToString().ToLowerInvariant()}")" @bind-Open="overflowOpen">
+            <Trigger>
+                <AdmiralIconButton Class="admiral-action-bar__item" Icon="@OverflowIcon"
+                                   Dimension="@ButtonDimension" AriaLabel="@OverflowAriaLabel" />
+            </Trigger>
+            <ChildContent>
+                @for (var index = 0; index < overflowItems.Count; index++)
+                {
+                    var item = overflowItems[index];
+                    <AdmiralMenuItem @key="item.Id" Text="@item.Text" Icon="@item.Icon" IconSize="@(Size == AdmiralActionBarSize.Small ? AdmiralIconSize.Medium : AdmiralIconSize.Large)"
+                                     Disabled="@item.Disabled" DividerBefore="@(index > 0 && item.DividerBefore)"
+                                     Click="@(() => InvokeAction(item))" />
+                }
+            </ChildContent>
+        </AdmiralMenu>
+    }
+</div>

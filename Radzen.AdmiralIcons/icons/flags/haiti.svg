@@ -1,0 +1,50 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<mask id="mask_148" width="9.333333" height="8.000000" x="9.333313" y="10.666626" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="9.333333" height="8.000000" x="9.333313" y="10.666626" rx="0.666667" fill="url(#paint_linear_56)" />
+			<rect id="Mask" width="9.333333" height="8.000000" x="9.333313" y="10.666626" rx="0.666667" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+		<linearGradient id="paint_linear_55" x1="9.33331299" x2="9.33331299" y1="10.666626" y2="18.666626" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(255,255,255)" offset="0" stop-opacity="1" />
+			<stop stop-color="rgb(239.7,239.7,239.7)" offset="1" stop-opacity="1" />
+		</linearGradient>
+		<linearGradient id="paint_linear_56" x1="9.33331299" x2="9.33331299" y1="10.666626" y2="18.666626" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(255,255,255)" offset="0" stop-opacity="1" />
+			<stop stop-color="rgb(239.7,239.7,239.7)" offset="1" stop-opacity="1" />
+		</linearGradient>
+	</defs>
+	<mask id="mask_147" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Haiti" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_147)">
+		<path id="Rectangle 2" d="M0 13.3333L28 13.3333L28 4L0 4L0 13.3333Z" fill="rgb(17,46,188)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 13.3333L28 4L0 4L0 13.3333L28 13.3333Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M0 24L28 24L28 13.3334L0 13.3334L0 24Z" fill="rgb(227,38,74)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 24L28 13.3334L0 13.3334L0 24L28 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<g id="Rectangle 180">
+			<rect id="Mask" width="9.333333" height="8.000000" x="9.333313" y="10.666626" rx="0.666667" fill="url(#paint_linear_55)" />
+			<rect id="Mask" width="9.333333" height="8.000000" x="9.333313" y="10.666626" rx="0.666667" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+			<g mask="url(#mask_148)">
+				<path id="Rectangle 181" d="M9.33331 17.3333L11.4369 16.2815C11.8072 16.0964 12.2155 16 12.6295 16L15.3705 16C15.7845 16 16.1928 16.0964 16.563 16.2815L18.6666 17.3333L18.6666 18.6667L9.33331 18.6667L9.33331 17.3333Z" fill="rgb(170,188,174)" fill-rule="evenodd" />
+				<path id="Rectangle 181" d="M11.4369 16.2815L9.33331 17.3333L9.33331 18.6667L18.6666 18.6667L18.6666 17.3333L16.563 16.2815C16.1928 16.0964 15.7845 16 15.3705 16L12.6295 16C12.2155 16 11.8072 16.0964 11.4369 16.2815ZM18 17.7454L16.2649 16.8778C16.1241 16.8074 15.9792 16.7546 15.8301 16.7195C15.6811 16.6843 15.5278 16.6667 15.3705 16.6667L12.6295 16.6667C12.4721 16.6667 12.3189 16.6843 12.1698 16.7195C12.0207 16.7546 11.8758 16.8074 11.7351 16.8778L9.99998 17.7454L9.99998 18L18 18L18 17.7454Z" fill="rgb(54,108,20)" fill-rule="evenodd" />
+				<path id="Oval 6" d="M14 16C15.1046 16 16 15.1046 16 14C16 12.8954 15.1046 12 14 12C12.8954 12 12 12.8954 12 14C12 15.1046 12.8954 16 14 16Z" fill="rgb(212,184,114)" fill-rule="evenodd" />
+				<path id="Oval 6" d="M16 14C16 12.8954 15.1046 12 14 12C12.8954 12 12 12.8954 12 14C12 15.1046 12.8954 16 14 16C15.1046 16 16 15.1046 16 14Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+				<path id="Rectangle 182" d="M10.6666 15.3871C10.6666 14.8281 11.3132 14.5173 11.7498 14.8665L13.5835 16.3335C13.827 16.5283 14.1729 16.5283 14.4164 16.3335L16.2502 14.8665C16.6867 14.5173 17.3333 14.8281 17.3333 15.3871L17.3333 16.6667C17.3333 17.0348 17.0348 17.3333 16.6666 17.3333L11.3333 17.3333C10.9651 17.3333 10.6666 17.0348 10.6666 16.6667L10.6666 15.3871Z" fill="rgb(194,131,33)" fill-rule="evenodd" />
+				<path id="Rectangle 182" d="M11.7498 14.8665C11.3132 14.5173 10.6666 14.8281 10.6666 15.3871L10.6666 16.6667C10.6666 17.0348 10.9651 17.3333 11.3333 17.3333L16.6666 17.3333C17.0348 17.3333 17.3333 17.0348 17.3333 16.6667L17.3333 15.3871C17.3333 14.8281 16.6867 14.5173 16.2502 14.8665L14.4164 16.3335C14.1729 16.5283 13.827 16.5283 13.5835 16.3335L11.7498 14.8665ZM12.9328 16.6667L11.3333 15.3871L11.3333 16.6667L12.9328 16.6667ZM15.0671 16.6667L16.6666 16.6667L16.6666 15.3871L15.0671 16.6667Z" fill="rgb(13,52,136)" fill-rule="evenodd" />
+				<path id="Rectangle 183" d="M12.569 12.569C12.359 12.359 12.5078 12 12.8047 12L15.1953 12C15.4922 12 15.641 12.359 15.431 12.569L14.2357 13.7643C14.1055 13.8945 13.8945 13.8945 13.7643 13.7643L12.569 12.569Z" fill="rgb(33,108,48)" fill-rule="evenodd" />
+				<path id="Rectangle 183" d="M15.1953 12C15.4922 12 15.641 12.359 15.431 12.569L14.2357 13.7643C14.1055 13.8945 13.8945 13.8945 13.7643 13.7643L12.569 12.569C12.359 12.359 12.5078 12 12.8047 12L15.1953 12Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+			</g>
+		</g>
+	</g>
+</svg>

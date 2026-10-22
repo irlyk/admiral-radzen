@@ -1,0 +1,24 @@
+<svg viewBox="0 0 29.3333 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="29.333328" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_160" width="28.000000" height="20.000000" x="1.333328" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="1.333328" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="1.333328" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Guyana" width="28.000000" height="28.000000" x="1.333328" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="1.333328" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="1.333328" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_160)">
+		<rect id="Mask" width="28.000000" height="20.000000" x="1.333328" y="4.000000" fill="rgb(8,197,95)" />
+		<rect id="Mask" width="28.000000" height="20.000000" x="1.333328" y="4.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 1134" d="M1.52588e-05 24L1.52588e-05 4L1.33335 4L29.3333 13.3333L29.3333 14.6667L1.33335 24L1.52588e-05 24Z" fill="rgb(255,216,49)" fill-rule="evenodd" />
+		<path id="Rectangle 1134" d="M1.52588e-05 4L1.52588e-05 24L1.33335 24L29.3333 14.6667L29.3333 13.3333L1.33335 4L1.52588e-05 4ZM1.33335 5.40546L1.33335 22.5945L27.117 14L1.33335 5.40546Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Rectangle 1134" d="M1.52588e-05 24L1.52588e-05 4L1.33335 4L16.6667 14L1.33335 24L1.52588e-05 24Z" fill="rgb(233,32,52)" fill-rule="evenodd" />
+		<path id="Rectangle 1134" d="M1.52588e-05 4L1.52588e-05 24L1.33335 24L15.4463 14.7959L16.6667 14L15.4463 13.2041L1.33335 4L1.52588e-05 4ZM1.33335 5.59183L1.33335 22.4082L14.2259 14L1.33335 5.59183Z" fill="rgb(38,38,38)" fill-rule="evenodd" />
+	</g>
+</svg>

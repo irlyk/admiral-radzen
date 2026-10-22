@@ -1,0 +1,62 @@
+@page "/components/status-indicator"
+
+<PageTitle>Admiral StatusIndicator</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="StatusIndicator" Description="@T("Компактная метка статуса с иконкой, вариантами цвета и размера.", "Compact status text with optional icon, appearance and size.")"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-statusindicator--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <section class="admiral-component-page__section"><h2>@SmokeL["Usage"]</h2>
+            <p>@T("StatusIndicator только отображает состояние и не имеет callback изменения. Передавайте новые Text или Appearance из состояния приложения. Иконку загружает пакет Admiral Icons.", "StatusIndicator is presentational and exposes no change callback. Supply updated Text or Appearance from application state. Its icon uses the packaged Admiral icon adapter.")</p>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+            <ApiReference Title="AdmiralStatusIndicator" Rows="@Rows" />
+        </section>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section"><h2>Radzen + Admiral theme</h2>
+            <p>@T("RadzenBadge может показать короткую метку с цветами темы, но не реализует контракт расположения иконки и вариантов StatusIndicator.", "RadzenBadge can display a short state label with theme colors, but it does not implement StatusIndicator's icon position or appearance contract.")</p>
+            <div class="admiral-component-playground"><div class="admiral-component-playground__preview"><RadzenBadge Text="@text" /><span role="status">@text</span></div>
+                <div class="admiral-component-controls"><label><span>@SmokeL["Text"]</span><input @bind="text" /></label></div></div>
+            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section"><h2>@SmokeL["Playground"]</h2>
+            <div class="admiral-component-playground" data-testid="status-indicator-admiral-demo"><div class="admiral-component-playground__preview">
+                <AdmiralStatusIndicator Text="@text" Size="@size" Appearance="@appearance" Icon="@(withIcon ? "admiral:system/check-outline" : null)" IconAtEnd="@iconAtEnd" />
+                <span class="admiral-component-page__result" role="status">@text · @appearance</span>
+            </div><div class="admiral-component-controls">
+                <label><span>@SmokeL["Text"]</span><input @bind="text" /></label>
+                <label><span>@SmokeL["Size"]</span><select @bind="size">@foreach (var option in Enum.GetValues<AdmiralStatusIndicatorSize>()) { <option value="@option">@option</option> }</select></label>
+                <label><span>@SmokeL["Appearance"]</span><select @bind="appearance">@foreach (var option in Enum.GetValues<AdmiralStatusIndicatorAppearance>()) { <option value="@option">@option</option> }</select></label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="withIcon" /> Icon</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="iconAtEnd" /> IconAtEnd</label>
+            </div></div>
+            <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        </section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private string text = T("Готово", "Ready");
+    private AdmiralStatusIndicatorSize size = AdmiralStatusIndicatorSize.Medium;
+    private AdmiralStatusIndicatorAppearance appearance;
+    private bool withIcon = true, iconAtEnd;
+    private const string AdmiralCode = """
+        <AdmiralStatusIndicator Text="Ready" Icon="admiral:system/check-outline"
+                                Size="AdmiralStatusIndicatorSize.Medium" />
+        """;
+    private const string DirectCode = """
+        <RadzenBadge Text="Ready" />
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> Rows =
+    [
+        new("Text", "string; required", "Visible status label."),
+        new("Icon / IconAtEnd", "string? / bool; null / false", "Optional Radzen icon name and its position."),
+        new("Size / Appearance", "AdmiralStatusIndicatorSize / AdmiralStatusIndicatorAppearance", "Visual size and semantic color appearance.")
+    ];
+}

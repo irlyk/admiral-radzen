@@ -1,0 +1,34 @@
+<div class="@CssClass"
+     style="@CssStyle"
+     role="separator"
+     aria-orientation="@AriaOrientation"
+     @attributes="AdditionalAttributes"></div>
+
+@code {
+    [Parameter] public AdmiralDividerSize Size { get; set; } = AdmiralDividerSize.Medium;
+    [Parameter] public AdmiralDividerAppearance Appearance { get; set; }
+    [Parameter] public AdmiralDividerOrientation Orientation { get; set; }
+    [Parameter] public string Length { get; set; } = "100%";
+    [Parameter] public string? CustomColor { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => string.Join(' ', new[]
+    {
+        "admiral-divider",
+        Size == AdmiralDividerSize.Small ? "admiral-divider--s" : "admiral-divider--m",
+        Orientation == AdmiralDividerOrientation.Vertical ? "admiral-divider--vertical" : "admiral-divider--horizontal",
+        $"admiral-divider--{Appearance.ToString().ToLowerInvariant()}",
+        Class
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+
+    private string CssStyle => string.Join(' ', new[]
+    {
+        $"--admiral-divider-length: {Length};",
+        string.IsNullOrWhiteSpace(CustomColor) ? null : $"--admiral-divider-color: {CustomColor};",
+        Style
+    }.Where(value => !string.IsNullOrWhiteSpace(value)));
+
+    private string AriaOrientation => Orientation == AdmiralDividerOrientation.Vertical ? "vertical" : "horizontal";
+}

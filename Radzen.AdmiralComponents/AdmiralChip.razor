@@ -1,0 +1,55 @@
+<RadzenChip class="@CssClass" Variant="@RadzenVariant" Size="@RadzenSize"
+            Selected="@(Selected ?? false)" Disabled="@Disabled" Click="@HandleClick"
+            Close="@EffectiveClose" RemoveChipTitle="@RemoveTitle" TabIndex="@(Disabled ? -1 : 0)"
+            title="@Tooltip" @attributes="AdditionalAttributes">
+    <span class="admiral-chip__content">
+        @if (IconStartContent is not null) { @IconStartContent }
+        else if (!string.IsNullOrWhiteSpace(IconStart)) { <AdmiralIcon Icon="@IconStart" Size="@IconSize" aria-hidden="true" /> }
+        <span class="admiral-chip__text">@if (ChildContent is not null) { @ChildContent } else { @Text }</span>
+        @if (Badge is not null) { <AdmiralBadge Text="@Badge.Value.ToString()" Dimension="AdmiralBadgeDimension.S" Appearance="@BadgeAppearance" /> }
+        @if (IconEndContent is not null) { @IconEndContent }
+        else if (!string.IsNullOrWhiteSpace(IconEnd)) { <AdmiralIcon Icon="@IconEnd" Size="@IconSize" aria-hidden="true" /> }
+    </span>
+</RadzenChip>
+
+@code {
+    [Parameter] public string? Text { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public AdmiralChipAppearance Appearance { get; set; }
+    [Parameter] public AdmiralChipDimension Dimension { get; set; }
+    [Parameter] public bool? Selected { get; set; }
+    [Parameter] public EventCallback<bool?> SelectedChanged { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool ReadOnly { get; set; }
+    [Parameter] public string? IconStart { get; set; }
+    [Parameter] public string? IconEnd { get; set; }
+    [Parameter] public RenderFragment? IconStartContent { get; set; }
+    [Parameter] public RenderFragment? IconEndContent { get; set; }
+    [Parameter] public int? Badge { get; set; }
+    [Parameter] public string? Tooltip { get; set; }
+    [Parameter] public string RemoveTitle { get; set; } = "Remove";
+    [Parameter] public EventCallback<MouseEventArgs> Click { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> Close { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private Variant RadzenVariant => Appearance == AdmiralChipAppearance.Filled ? Variant.Filled : Variant.Outlined;
+    private ChipSize RadzenSize => Dimension == AdmiralChipDimension.S ? ChipSize.Small : ChipSize.Medium;
+    private AdmiralIconSize IconSize => Dimension == AdmiralChipDimension.S ? AdmiralIconSize.Small : AdmiralIconSize.Medium;
+    private EventCallback<MouseEventArgs> EffectiveClose => ReadOnly ? default : Close;
+    private AdmiralBadgeAppearance BadgeAppearance => Disabled
+        ? (Selected == true || Appearance == AdmiralChipAppearance.Filled ? AdmiralBadgeAppearance.WhiteDisabled : AdmiralBadgeAppearance.LightDisabled)
+        : Selected == true ? AdmiralBadgeAppearance.WhiteBlue
+        : Appearance == AdmiralChipAppearance.Filled ? AdmiralBadgeAppearance.White
+        : AdmiralBadgeAppearance.Info;
+
+    private async Task HandleClick(MouseEventArgs args)
+    {
+        if (Disabled || ReadOnly) return;
+        if (Selected is not null) await SelectedChanged.InvokeAsync(!Selected.Value);
+        await Click.InvokeAsync(args);
+    }
+
+    private string CssClass => string.Join(' ', new[] { "admiral-chip", Dimension == AdmiralChipDimension.S ? "admiral-chip--s" : null, Class }
+        .Where(value => !string.IsNullOrWhiteSpace(value)));
+}

@@ -1,0 +1,32 @@
+<svg viewBox="0 0 35.8732 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35.873169" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_151" width="28.000000" height="20.000000" x="4.171997" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="4.171997" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="4.171997" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="United Kingdom of Great Britain and Northern Ireland" width="28.000000" height="28.000000" x="4.171997" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="4.171997" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="4.171997" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_151)">
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="4.171997" y="4.000000" fill="rgb(10,23,167)" />
+		<rect id="Mask Copy" width="28.000000" height="20.000000" x="4.171997" y="4.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Rectangle 2" d="M34.9457 23.7057L33.4545 25.9165L21.5054 17.8567L21.5054 25.3333L14.8387 25.3333L14.8387 17.8567L2.88956 25.9165L1.39838 23.7057L10.8458 17.3333L4.17203 17.3333L4.17203 10.6667L10.8458 10.6667L1.39838 4.29432L2.88956 2.08356L14.8387 10.1434L14.8387 2.66667L21.5054 2.66667L21.5054 10.1434L33.4545 2.08356L34.9457 4.29432L25.4983 10.6667L32.172 10.6667L32.172 17.3333L25.4983 17.3333L34.9457 23.7057Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M34.9457 23.7057L33.4545 25.9165L21.5054 17.8567L21.5054 25.3333L14.8387 25.3333L14.8387 17.8567L2.88956 25.9165L1.39838 23.7057L10.8458 17.3333L4.17203 17.3333L4.17203 10.6667L10.8458 10.6667L1.39838 4.29432L2.88956 2.08356L14.8387 10.1434L14.8387 2.66667L21.5054 2.66667L21.5054 10.1434L33.4545 2.08356L34.9457 4.29432L25.4983 10.6667L32.172 10.6667L32.172 17.3333L25.4983 17.3333L34.9457 23.7057Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Line" d="M22.84 10.3322L35.5053 2" fill="rgb(215.985,215.985,215.985)" fill-opacity="0" fill-rule="evenodd" />
+		<path id="Line" d="M22.84 10.3322L35.5053 2" fill-rule="evenodd" stroke="rgb(219,31,53)" stroke-linecap="round" stroke-width="0.666667" />
+		<path id="Line Copy 2" d="M0 7.65283L11.3538 0" fill="rgb(215.985,215.985,215.985)" fill-opacity="0" fill-rule="evenodd" transform="matrix(1,0,0,-1,24.1848,25.3503)" />
+		<path id="Line Copy 2" d="M0 7.65283L11.3538 0" fill-rule="evenodd" stroke="rgb(219,31,53)" stroke-linecap="round" stroke-width="0.666667" transform="matrix(1,0,0,-1,24.1848,25.3503)" />
+		<path id="Line Copy" d="M12.1776 10.3104L0.334534 2.32898" fill="rgb(215.985,215.985,215.985)" fill-opacity="0" fill-rule="evenodd" />
+		<path id="Line Copy" d="M12.1776 10.3104L0.334534 2.32898" fill-rule="evenodd" stroke="rgb(219,31,53)" stroke-linecap="round" stroke-width="0.666667" />
+		<path id="Line Copy 3" d="M13.1275 8.70557L0 0" fill="rgb(215.985,215.985,215.985)" fill-opacity="0" fill-rule="evenodd" transform="matrix(1,0,0,-1,0.334534,26.3104)" />
+		<path id="Line Copy 3" d="M13.1275 8.70557L0 0" fill-rule="evenodd" stroke="rgb(219,31,53)" stroke-linecap="round" stroke-width="0.666667" transform="matrix(1,0,0,-1,0.334534,26.3104)" />
+		<path id="Rectangle 2 Copy 3" d="M4.172 16L16.172 16L16.172 24L20.172 24L20.172 16L32.172 16L32.172 12L20.172 12L20.172 4L16.172 4L16.172 12L4.172 12L4.172 16Z" fill="rgb(230,39,62)" fill-rule="evenodd" />
+		<path id="Rectangle 2 Copy 3" d="M16.172 16L16.172 24L20.172 24L20.172 16L32.172 16L32.172 12L20.172 12L20.172 4L16.172 4L16.172 12L4.172 12L4.172 16L16.172 16Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	</g>
+</svg>

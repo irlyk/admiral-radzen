@@ -1,0 +1,197 @@
+@page "/components/button"
+@inject IStringLocalizer<SharedResource> L
+
+<PageTitle>Admiral Button</PageTitle>
+
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Button"
+        Description="Buttons with seven appearances, four dimensions, icons and service states."
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-button--docs" />
+
+    <ComponentDocTabs @bind-Value="documentationTab" />
+    @if (documentationTab == ComponentDocTabs.Theme)
+    {
+        <ButtonThemePlayground />
+    }
+    else if (documentationTab == ComponentDocTabs.Api)
+    {
+        <ButtonUsageGuide />
+    }
+    else
+    {
+    <section class="admiral-component-page__section" aria-labelledby="button-playground-heading">
+        <h2 id="button-playground-heading">@SmokeL["Playground"]</h2>
+        <div class="admiral-component-playground">
+            <div class="admiral-component-playground__preview">
+                <AdmiralButton Text="@playgroundText"
+                               Appearance="@playgroundAppearance"
+                               Dimension="@playgroundDimension"
+                               IconStart="@(playgroundStartIcon ? "admiral:system/star-solid" : null)"
+                               IconEnd="@(playgroundEndIcon ? "admiral:system/star-solid" : null)"
+                               BadgeCount="@(playgroundBadge ? 5 : null)"
+                               DisplayAsDisabled="@playgroundVisualDisabled"
+                               DisplayAsSquare="@playgroundSquare"
+                               Disabled="@playgroundDisabled"
+                               Loading="@playgroundLoading"
+                               Skeleton="@playgroundSkeleton"
+                               Click="OnPlaygroundClick"
+                               aria-label="@(playgroundSquare ? playgroundText : null)" />
+                <span class="admiral-component-page__result" aria-live="polite">
+                    @L["Click count"]: @clickCount
+                </span>
+            </div>
+            <div class="admiral-component-controls">
+                <label>
+                    <span>@L["Text"]</span>
+                    <input @bind="playgroundText" />
+                </label>
+                <label>
+                    <span>@SmokeL["Appearance"]</span>
+                    <select @bind="playgroundAppearance">
+                        @foreach (var appearance in Enum.GetValues<AdmiralButtonAppearance>())
+                        {
+                            <option value="@appearance">@appearance</option>
+                        }
+                    </select>
+                </label>
+                <label>
+                    <span>@SmokeL["Dimension"]</span>
+                    <select @bind="playgroundDimension">
+                        @foreach (var dimension in Enum.GetValues<AdmiralButtonDimension>().Reverse())
+                        {
+                            <option value="@dimension">@dimension</option>
+                        }
+                    </select>
+                </label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundDisabled" /> @L["Disabled"]</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundLoading" /> Loading</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundSkeleton" /> Skeleton</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundSquare" /> @L["Square"]</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundStartIcon" /> IconStart</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundEndIcon" /> IconEnd</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundBadge" /> BadgeCount = 5</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="playgroundVisualDisabled" /> DisplayAsDisabled</label>
+            </div>
+        </div>
+    </section>
+
+    <CopyableRazorExample Code="@PlaygroundCode" Title="@SmokeL["Razor · текущая конфигурация"]" />
+    <section class="admiral-component-page__section" aria-labelledby="button-appearance-heading">
+        <h2 id="button-appearance-heading">@L["Appearances"]</h2>
+        <div class="admiral-component-row">
+            @foreach (var appearance in Enum.GetValues<AdmiralButtonAppearance>())
+            {
+                @if (appearance == AdmiralButtonAppearance.White)
+                {
+                    <span class="admiral-surface admiral-surface--dark-static admiral-component-page__dark-sample">
+                        <AdmiralButton Text="White" Appearance="@appearance" Dimension="AdmiralButtonDimension.M" />
+                    </span>
+                }
+                else
+                {
+                    <AdmiralButton Text="@appearance.ToString()" Appearance="@appearance" Dimension="AdmiralButtonDimension.M" />
+                }
+            }
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section" aria-labelledby="button-dimension-heading">
+        <h2 id="button-dimension-heading">@L["Dimensions"]</h2>
+        <div class="admiral-component-row admiral-component-row--baseline">
+            <AdmiralButton Text="XL · 56" Dimension="AdmiralButtonDimension.Xl" />
+            <AdmiralButton Text="L · 48" Dimension="AdmiralButtonDimension.L" />
+            <AdmiralButton Text="M · 40" Dimension="AdmiralButtonDimension.M" />
+            <AdmiralButton Text="S · 32" Dimension="AdmiralButtonDimension.S" />
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section" aria-labelledby="button-icon-heading">
+        <h2 id="button-icon-heading">@L["Icons and states"]</h2>
+        <div class="admiral-component-row">
+            <AdmiralButton Text="@SmokeL["Start icon"]" IconStart="admiral:system/star-solid" Dimension="AdmiralButtonDimension.M" />
+            <AdmiralButton Text="@SmokeL["End icon"]" IconEnd="admiral:system/star-solid" Dimension="AdmiralButtonDimension.M" Appearance="AdmiralButtonAppearance.Secondary" />
+            <AdmiralButton IconStart="admiral:system/star-solid" DisplayAsSquare="true" Dimension="AdmiralButtonDimension.M" aria-label="@SmokeL["Square button"]" />
+            <AdmiralButton Text="Loading" Loading="true" Dimension="AdmiralButtonDimension.M" />
+            <AdmiralButton Text="Disabled" Disabled="true" Dimension="AdmiralButtonDimension.M" />
+            <AdmiralButton Text="@SmokeL["Visual disabled"]" DisplayAsDisabled="true" Dimension="AdmiralButtonDimension.M" Click="OnPlaygroundClick" />
+            <AdmiralButton Text="Skeleton" Skeleton="true" Dimension="AdmiralButtonDimension.M" />
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section" aria-labelledby="button-loading-heading">
+        <h2 id="button-loading-heading">@L["Loading by appearance"]</h2>
+        <div class="admiral-component-row">
+            @foreach (var appearance in Enum.GetValues<AdmiralButtonAppearance>())
+            {
+                @if (appearance == AdmiralButtonAppearance.White)
+                {
+                    <span class="admiral-surface admiral-surface--dark-static admiral-component-page__dark-sample">
+                        <AdmiralButton Text="@SmokeL["White loading"]" Appearance="@appearance" Dimension="AdmiralButtonDimension.M" Loading="true" />
+                    </span>
+                }
+                else
+                {
+                    <AdmiralButton Text="@($"{appearance} loading")" Appearance="@appearance" Dimension="AdmiralButtonDimension.M" Loading="true" />
+                }
+            }
+        </div>
+    </section>
+
+    <section class="admiral-component-page__section" aria-labelledby="button-form-states-heading">
+        <h2 id="button-form-states-heading">Form states</h2>
+        <form class="admiral-button-form-regression" @onsubmit="OnRegressionSubmit" @onsubmit:preventDefault>
+            <input aria-label="Form value" value="Original" />
+            <AdmiralButton Text="Active submit" Type="AdmiralButtonType.Submit" />
+            <AdmiralButton Text="Loading submit" Type="AdmiralButtonType.Submit" Loading="true" />
+            <AdmiralButton Text="Skeleton submit" Type="AdmiralButtonType.Submit" Skeleton="true" />
+            <AdmiralButton Text="Disabled submit" Type="AdmiralButtonType.Submit" Disabled="true" />
+            <AdmiralButton Text="Active reset" Type="AdmiralButtonType.Reset" />
+            <AdmiralButton Text="Loading reset" Type="AdmiralButtonType.Reset" Loading="true" />
+            <AdmiralButton Text="Skeleton reset" Type="AdmiralButtonType.Reset" Skeleton="true" />
+            <AdmiralButton Text="Disabled reset" Type="AdmiralButtonType.Reset" Disabled="true" />
+            <span aria-live="polite">Form submit count: @formSubmitCount</span>
+        </form>
+        <AdmiralButton Text="Square action" DisplayAsSquare="true" IconStart="admiral:system/star-solid" />
+    </section>
+
+    <section class="admiral-component-page__section" aria-labelledby="button-badge-heading">
+        <h2 id="button-badge-heading">Badge</h2>
+        <div class="admiral-component-row">
+            <AdmiralButton Text="Primary" BadgeCount="5" Dimension="AdmiralButtonDimension.M" />
+            <AdmiralButton Text="Secondary" BadgeCount="12" Appearance="AdmiralButtonAppearance.Secondary" Dimension="AdmiralButtonDimension.M" />
+            <AdmiralButton Text="Tertiary" BadgeCount="99" Appearance="AdmiralButtonAppearance.Tertiary" Dimension="AdmiralButtonDimension.M" />
+            <AdmiralButton Text="Ghost" BadgeCount="3" Appearance="AdmiralButtonAppearance.Ghost" Dimension="AdmiralButtonDimension.M" />
+            <AdmiralButton Text="Disabled" BadgeCount="5" Disabled="true" Dimension="AdmiralButtonDimension.M" />
+        </div>
+    </section>
+    }
+</div>
+
+@code {
+    private string documentationTab = ComponentDocTabs.Admiral;
+    private bool playgroundStartIcon = true, playgroundEndIcon, playgroundBadge, playgroundVisualDisabled;
+    private string PlaygroundCode => $"""
+        <AdmiralButton Text="{System.Net.WebUtility.HtmlEncode(playgroundText)}"
+            Appearance="AdmiralButtonAppearance.{playgroundAppearance}"
+            Dimension="AdmiralButtonDimension.{playgroundDimension}"
+            IconStart="{(playgroundStartIcon ? "admiral:system/star-solid" : "")}"
+            IconEnd="{(playgroundEndIcon ? "admiral:system/star-solid" : "")}"
+            Disabled="{playgroundDisabled.ToString().ToLowerInvariant()}" Loading="{playgroundLoading.ToString().ToLowerInvariant()}"
+            Skeleton="{playgroundSkeleton.ToString().ToLowerInvariant()}" DisplayAsSquare="{playgroundSquare.ToString().ToLowerInvariant()}"
+            DisplayAsDisabled="{playgroundVisualDisabled.ToString().ToLowerInvariant()}"
+            {(playgroundBadge ? "BadgeCount=\"5\"" : "")} Click="OnClick" aria-label="{System.Net.WebUtility.HtmlEncode(L["Действие"].Value)}" />
+        <output aria-live="polite">Clicks: @clickCount</output>
+        """ + "\n@code { private int clickCount; private void OnClick() => clickCount++; }";
+    private string playgroundText = "Button";
+    private AdmiralButtonAppearance playgroundAppearance;
+    private AdmiralButtonDimension playgroundDimension = AdmiralButtonDimension.Xl;
+    private bool playgroundDisabled;
+    private bool playgroundLoading;
+    private bool playgroundSkeleton;
+    private bool playgroundSquare;
+    private int clickCount;
+    private int formSubmitCount;
+
+    private void OnPlaygroundClick() => clickCount++;
+    private void OnRegressionSubmit() => formSubmitCount++;
+}

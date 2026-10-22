@@ -1,0 +1,36 @@
+<nav class="@CssClass" aria-label="@AriaLabel" @attributes="AdditionalAttributes">
+    <ul>
+        @for (var index = 0; index < Count; index++)
+        {
+            var itemIndex = index;
+            <li aria-current="@(itemIndex == EffectiveIndex ? "page" : null)">
+                <button type="button"
+                        aria-label="@string.Format(ItemAriaLabelFormat, itemIndex + 1)"
+                        aria-pressed="@(itemIndex == EffectiveIndex ? "true" : "false")"
+                        @onclick="() => SelectAsync(itemIndex)">
+                    <span></span>
+                </button>
+            </li>
+        }
+    </ul>
+</nav>
+
+@code {
+    [Parameter] public int Count { get; set; } = 1;
+    [Parameter] public int CurrentIndex { get; set; }
+    [Parameter] public EventCallback<int> CurrentIndexChanged { get; set; }
+    [Parameter] public string AriaLabel { get; set; } = "Sections";
+    [Parameter] public string ItemAriaLabelFormat { get; set; } = "Section {0}";
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private int SafeCount => Math.Max(Count, 0);
+    private int EffectiveIndex => SafeCount == 0 ? 0 : Math.Clamp(CurrentIndex, 0, SafeCount - 1);
+
+    private Task SelectAsync(int index) => index == EffectiveIndex
+        ? Task.CompletedTask
+        : CurrentIndexChanged.InvokeAsync(index);
+
+    private string CssClass => string.Join(' ', new[] { "admiral-pagination-simple", Class }
+        .Where(value => !string.IsNullOrWhiteSpace(value)));
+}

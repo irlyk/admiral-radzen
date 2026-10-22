@@ -1,0 +1,32 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+	</defs>
+	<mask id="mask_239" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="27.500000" height="19.500000" x="0.250000" y="4.250000" rx="2.750000" stroke="rgb(245,245,245)" stroke-width="0.500000" />
+		</g>
+	</mask>
+	<rect id="Netherlands Antilles Country" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="27.500000" height="19.500000" x="0.250000" y="4.250000" rx="2.750000" stroke="rgb(214,216,221)" stroke-width="0.500000" />
+	<g mask="url(#mask_239)">
+		<rect id="Mask" width="6.666667" height="20.000000" x="10.666687" y="4.000000" fill="rgb(214,24,45)" />
+		<rect id="Mask" width="6.666667" height="20.000000" x="10.666687" y="4.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<rect id="Mask" width="28.000000" height="6.666667" x="0.000000" y="10.666687" fill="rgb(20,37,162)" />
+		<rect id="Mask" width="28.000000" height="6.666667" x="0.000000" y="10.666687" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Star 2" d="M11.3334 15.6667L10.8619 15.8048L11 15.3334L10.8619 14.8619L11.3334 15L11.8048 14.8619L11.6667 15.3334L11.8048 15.8048L11.3334 15.6667Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Star 2" d="M10.8619 15.8048L11 15.3334L10.8619 14.8619L11.3334 15L11.8048 14.8619L11.6667 15.3334L11.8048 15.8048L11.3334 15.6667L10.8619 15.8048Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Star 2" d="M16.6667 15.6667L16.1953 15.8048L16.3333 15.3334L16.1953 14.8619L16.6667 15L17.1381 14.8619L17 15.3334L17.1381 15.8048L16.6667 15.6667Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Star 2" d="M16.1953 15.8048L16.3333 15.3334L16.1953 14.8619L16.6667 15L17.1381 14.8619L17 15.3334L17.1381 15.8048L16.6667 15.6667L16.1953 15.8048Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Star 2" d="M8.66667 14.3333L8.19526 14.4714L8.33333 14L8.19526 13.5286L8.66667 13.6666L9.13807 13.5286L9 14L9.13807 14.4714L8.66667 14.3333Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Star 2" d="M8.19526 14.4714L8.33333 14L8.19526 13.5286L8.66667 13.6666L9.13807 13.5286L9 14L9.13807 14.4714L8.66667 14.3333L8.19526 14.4714Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Star 2" d="M19.3334 14.3333L18.8619 14.4714L19 14L18.8619 13.5286L19.3334 13.6666L19.8048 13.5286L19.6667 14L19.8048 14.4714L19.3334 14.3333Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Star 2" d="M18.8619 14.4714L19 14L18.8619 13.5286L19.3334 13.6666L19.8048 13.5286L19.6667 14L19.8048 14.4714L19.3334 14.3333L18.8619 14.4714Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Star 2" d="M14 13L13.5286 13.1381L13.6666 12.6667L13.5286 12.1953L14 12.3333L14.4714 12.1953L14.3333 12.6667L14.4714 13.1381L14 13Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Star 2" d="M13.5286 13.1381L13.6666 12.6667L13.5286 12.1953L14 12.3333L14.4714 12.1953L14.3333 12.6667L14.4714 13.1381L14 13L13.5286 13.1381Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	</g>
+</svg>

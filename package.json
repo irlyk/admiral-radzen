@@ -1,0 +1,36 @@
+{
+  "name": "admiral-radzen-browser-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright browser checks for Radzen Admiral",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "test": "npm run test:affected",
+    "test:affected": "node tools/admiral/run-affected-regressions.mjs",
+    "test:browser": "npm run test:browser:audit && npm run test:browser:checkbox && npm run test:browser:interactions && npm run test:browser:combo && npm run test:browser:drawer && npm run test:browser:hint && npm run test:browser:slider && npm run test:browser:phone-number && npm run test:browser:select && npm run test:browser:visual && npm run test:browser:file-input && npm run test:browser:image-viewer && npm run test:browser:action-bar && npm run test:browser:tree && npm run test:browser:native-date-range && npm run test:browser:layout && npm run test:browser:fonts",
+    "test:browser:fonts": "node tools/admiral/font-distribution-tests.mjs",
+    "test:browser:audit": "node tools/admiral/browser-audit.mjs",
+    "test:browser:checkbox": "node tools/admiral/checkbox-documentation-regression-tests.mjs",
+    "test:browser:interactions": "node tools/admiral/interaction-tests.mjs",
+    "test:browser:combo": "node tools/admiral/combo-interaction-tests.mjs",
+    "test:browser:drawer": "node tools/admiral/drawer-interaction-tests.mjs",
+    "test:browser:hint": "node tools/admiral/hint-interaction-tests.mjs",
+    "test:browser:slider": "node tools/admiral/slider-interaction-tests.mjs",
+    "test:browser:phone-number": "node tools/admiral/phone-number-regression-tests.mjs",
+    "test:browser:select": "node tools/admiral/select-regression-tests.mjs",
+    "test:browser:visual": "node tools/admiral/visual-regression-tests.mjs",
+    "test:browser:file-input": "node tools/admiral/file-input-interaction-tests.mjs",
+    "test:browser:image-viewer": "node tools/admiral/image-viewer-interaction-tests.mjs",
+    "test:browser:action-bar": "node tools/admiral/action-bar-interaction-tests.mjs",
+    "test:browser:tree": "node tools/admiral/tree-interaction-tests.mjs",
+    "test:browser:native-date-range": "node tools/admiral/native-date-range-tests.mjs",
+    "test:browser:layout": "node tools/admiral/smoke-layout-audit.mjs",
+    "test:wasm": "node tools/admiral/wasm-static-host-tests.mjs",
+    "test:radzen-demos": "node tools/admiral/radzen-regression-tests.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.55.1"
+  }
+}

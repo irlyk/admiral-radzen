@@ -1,0 +1,29 @@
+[features]
+multi_agent = true
+
+[agents]
+max_threads = 3
+
+[agents.component]
+description = "Investigates and fixes Blazor component behavior and Admiral API regressions."
+config_file = "agents/component.toml"
+
+[agents.theme]
+description = "Investigates and fixes SCSS/CSS and visual regressions, including direct Radzen compatibility."
+config_file = "agents/theme.toml"
+
+[agents.qa]
+description = "Read-only QA before fixes and after implementation; verifies behavior, visuals, accessibility, tests, and documentation."
+config_file = "agents/qa.toml"
+
+[agents.upstream]
+description = "Read-only comparison with pinned AdmiralDS React and Radzen sources."
+config_file = "agents/upstream.toml"
+
+[agents.test-engineer]
+description = "Develops Playwright browser checks for behavior, visuals, keyboard use, and Radzen compatibility."
+config_file = "agents/test-engineer.toml"
+
+[agents.docs-gallery]
+description = "Improves the existing consumer smoke app as interactive component documentation."
+config_file = "agents/docs-gallery.toml"

@@ -1,0 +1,44 @@
+<div @ref="element" class="@CssClass" role="tree" aria-label="@AriaLabel" aria-disabled="@(Disabled ? "true" : null)"
+     tabindex="@(visibleNodes.All(node => node.Disabled) ? "0" : null)" @onkeydown="KeyDown" @attributes="AdditionalAttributes">
+    @foreach (var node in visibleNodes)
+    {
+        var expanded = expandedIds.Contains(node.Item.Id);
+        var check = CheckState(node.Item.Id);
+        <div @key="node.Item.Id" class="admiral-tree-view__row" role="treeitem" data-tree-id="@node.Item.Id"
+             tabindex="@(!node.Disabled && activeId == node.Item.Id ? 0 : -1)" aria-label="@node.Item.Text"
+             aria-level="@(node.Depth + 1)" aria-setsize="@node.SetSize" aria-posinset="@node.Position"
+             aria-selected="@(SelectedValue == node.Item.Id ? "true" : "false")" aria-disabled="@(node.Disabled ? "true" : null)"
+             aria-checked="@(AllowCheckBoxes ? check is null ? "mixed" : check.Value ? "true" : "false" : null)"
+             aria-expanded="@(node.Item.Children.Count > 0 ? expanded ? "true" : "false" : null)"
+             style="@($"--admiral-tree-depth:{node.Depth + (node.Item.Children.Count == 0 ? 1 : 0)}")"
+             @onfocus="() => activeId = node.Item.Id" @onclick="() => SelectNode(node.Item.Id)">
+            @if (node.Item.Children.Count > 0)
+            {
+                <button type="button" class="admiral-tree-view__expand" tabindex="-1" disabled="@node.Disabled"
+                        aria-label="@($"{(expanded ? CollapseAriaLabel : ExpandAriaLabel)}: {node.Item.Text}")"
+                        @onclick="() => ToggleExpanded(node.Item.Id)" @onclick:stopPropagation>
+                    <AdmiralIcon Icon="admiral:system/chevron-right-outline" Size="@IconSize" />
+                </button>
+            }
+            @if (AllowCheckBoxes)
+            {
+                <span class="admiral-tree-view__checkbox" aria-hidden="true" @onclick:stopPropagation>
+                    <RadzenCheckBox TValue="bool?" Value="@check" TriState="false" TabIndex="-1" Disabled="@node.Disabled"
+                                    InputAttributes="@(new Dictionary<string, object> { ["aria-label"] = node.Item.Text })"
+                                    Change="@(_ => SelectNode(node.Item.Id))" />
+                </span>
+            }
+            @if (node.Item.Icon is not null)
+            {
+                <AdmiralIcon Icon="@node.Item.Icon" Size="@IconSize" Class="admiral-tree-view__icon" aria-hidden="true" />
+            }
+            <span class="admiral-tree-view__label">
+                @if (ItemTemplate is not null) { @ItemTemplate(node.Item) } else { @node.Item.Text }
+            </span>
+        </div>
+    }
+    @if (visibleNodes.Count == 0)
+    {
+        <span class="admiral-tree-view__empty">@EmptyText</span>
+    }
+</div>

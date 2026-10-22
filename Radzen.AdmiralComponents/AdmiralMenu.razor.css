@@ -1,0 +1,27 @@
+.admiral-menu-root {
+    position: relative;
+    display: inline-flex;
+    max-width: 100%;
+}
+
+.admiral-menu__trigger {
+    display: inline-flex;
+    max-width: 100%;
+}
+
+.admiral-menu__popup {
+    position: absolute;
+    z-index: 1100;
+    inset-block-start: calc(100% + 0.5rem);
+    inset-inline-start: 0;
+    width: auto;
+    min-width: 12rem;
+    max-width: min(24rem, calc(100vw - 2rem));
+    border-radius: var(--rz-border-radius-2);
+    background: var(--admiral-background-primary, var(--rz-body-background-color));
+    box-shadow: var(--rz-shadow-8);
+}
+
+.admiral-menu__popup--match-trigger {
+    width: 100%;
+}

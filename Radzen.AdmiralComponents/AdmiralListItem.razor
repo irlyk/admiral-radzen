@@ -1,0 +1,8 @@
+<li class="@CssClass" @attributes="AdditionalAttributes"><div class="admiral-list-item__content">@ChildContent</div></li>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+    private string CssClass => string.Join(' ', new[] { "admiral-list-item", Class }.Where(value => !string.IsNullOrWhiteSpace(value)));
+}

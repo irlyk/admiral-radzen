@@ -1,0 +1,52 @@
+<svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.000000" height="28.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_alpha">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+		<g id="pixso_custom_effect_9">
+			<effect x="0.000000" y="0.000000" visibility="visible" fill="rgb(0,0,0)" fill-opacity="0.0599999987" effectType="dropShadow" showShadowBehind="1" stdDeviation="0" radius="0" />
+			<effect x="0.000000" y="1.000000" visibility="hidden" fill="rgb(255,216.88,100.278)" fill-opacity="1" effectType="innerShadow" showShadowBehind="1" stdDeviation="0" radius="0" />
+		</g>
+		<filter id="filter_9" width="28.000000" height="6.666656" x="0.000000" y="10.666656" filterUnits="userSpaceOnUse" customEffect="url(#pixso_custom_effect_9)" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix" />
+			<feOffset dx="0.000000" dy="0.000000" in="SourceAlpha" />
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0 " />
+			<feBlend result="effect_dropShadow_1" in2="BackgroundImageFix" mode="normal" />
+			<feBlend result="shape" in="SourceGraphic" in2="effect_dropShadow_1" mode="normal" />
+		</filter>
+		<g id="pixso_custom_effect_10">
+			<effect x="0.000000" y="0.000000" visibility="visible" fill="rgb(0,0,0)" fill-opacity="0.0599999987" effectType="dropShadow" showShadowBehind="1" stdDeviation="0" radius="0" />
+			<effect x="0.000000" y="1.000000" visibility="hidden" fill="rgb(255,216.88,100.278)" fill-opacity="1" effectType="innerShadow" showShadowBehind="1" stdDeviation="0" radius="0" />
+		</g>
+		<filter id="filter_10" width="28.000000" height="6.666656" x="0.000000" y="17.333344" filterUnits="userSpaceOnUse" customEffect="url(#pixso_custom_effect_10)" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix" />
+			<feOffset dx="0.000000" dy="0.000000" in="SourceAlpha" />
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0 " />
+			<feBlend result="effect_dropShadow_1" in2="BackgroundImageFix" mode="normal" />
+			<feBlend result="shape" in="SourceGraphic" in2="effect_dropShadow_1" mode="normal" />
+		</filter>
+	</defs>
+	<mask id="mask_118" width="28.000000" height="20.000000" x="0.000000" y="4.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_alpha)">
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+			<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+	</mask>
+	<rect id="Libya" width="28.000000" height="28.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" fill="rgb(255,255,255)" />
+	<rect id="Mask" width="28.000000" height="20.000000" x="0.000000" y="4.000000" rx="3.000000" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	<g mask="url(#mask_118)">
+		<g filter="url(#filter_9)">
+			<path id="Rectangle 2" d="M0 17.3334L28 17.3334L28 10.6667L0 10.6667L0 17.3334Z" fill="rgb(38,38,38)" fill-rule="evenodd" />
+			<path id="Rectangle 2" d="M28 17.3334L28 10.6667L0 10.6667L0 17.3334L28 17.3334Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+		<g filter="url(#filter_10)">
+			<path id="Rectangle 2" d="M0 24L28 24L28 17.3333L0 17.3333L0 24Z" fill="rgb(52,184,87)" fill-rule="evenodd" />
+			<path id="Rectangle 2" d="M28 24L28 17.3333L0 17.3333L0 24L28 24Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		</g>
+		<path id="Rectangle 2" d="M0 10.6667L28 10.6667L28 4L0 4L0 10.6667Z" fill="rgb(244,31,52)" fill-rule="evenodd" />
+		<path id="Rectangle 2" d="M28 10.6667L28 4L0 4L0 10.6667L28 10.6667Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+		<path id="Oval 68" d="M14 16C14.4113 16 14.7936 15.8759 15.1114 15.663C15.0746 15.6654 15.0374 15.6667 15 15.6667C14.0795 15.6667 13.3333 14.9205 13.3333 14C13.3333 13.0795 14.0795 12.3333 15 12.3333C15.0374 12.3333 15.0746 12.3346 15.1114 12.337C14.7936 12.1241 14.4113 12 14 12C12.8954 12 12 12.8954 12 14C12 15.1046 12.8954 16 14 16ZM16 14C16 14.3682 15.7015 14.6667 15.3333 14.6667C14.9651 14.6667 14.6667 14.3682 14.6667 14C14.6667 13.6318 14.9651 13.3333 15.3333 13.3333C15.7015 13.3333 16 13.6318 16 14Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Oval 68" d="M14 16C14.4113 16 14.7936 15.8759 15.1114 15.663C15.0746 15.6654 15.0374 15.6667 15 15.6667C14.0795 15.6667 13.3333 14.9205 13.3333 14C13.3333 13.0795 14.0795 12.3333 15 12.3333C15.0374 12.3333 15.0746 12.3346 15.1114 12.337C14.7936 12.1241 14.4113 12 14 12C12.8954 12 12 12.8954 12 14C12 15.1046 12.8954 16 14 16ZM16 14C16 14.3682 15.7015 14.6667 15.3333 14.6667C14.9651 14.6667 14.6667 14.3682 14.6667 14C14.6667 13.6318 14.9651 13.3333 15.3333 13.3333C15.7015 13.3333 16 13.6318 16 14Z" fill-rule="evenodd" stroke="rgb(150.96,150.96,150.96)" stroke-opacity="0" stroke-width="0.000000" />
+	</g>
+</svg>

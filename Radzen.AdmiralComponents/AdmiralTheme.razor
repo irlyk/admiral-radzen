@@ -1,0 +1,11 @@
+<RadzenTheme Theme="@ThemeName"
+             CssPath="_content/Radzen.Admiral.Themes/css"
+             PreloadIconFont="false"
+             Wcag="@Wcag" />
+
+@code {
+    [Parameter] public AdmiralThemeMode Mode { get; set; } = AdmiralThemeMode.Light;
+    [Parameter] public bool Wcag { get; set; }
+
+    private string ThemeName => Mode == AdmiralThemeMode.Dark ? "admiral-dark" : "admiral";
+}
