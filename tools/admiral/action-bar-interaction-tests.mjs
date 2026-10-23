@@ -175,16 +175,47 @@ try {
             await page.goto(base + '/tables');
             const panes = page.locator('.admiral-group-actions-pane');
             await panes.first().waitFor();
+            await page.waitForTimeout(250);
             for (const pane of await panes.all()) {
                 const action = pane.locator('.admiral-group-actions-pane__actions > button').first();
-                if (!await action.count()) continue;
+                if (!await action.count() || !await action.isVisible()) continue;
                 await action.focus();
                 const focus = await action.evaluate(element => ({
                     visible: element.matches(':focus-visible'),
                     offset: parseFloat(getComputedStyle(element).outlineOffset),
-                    gap: element.getBoundingClientRect().left - element.parentElement.getBoundingClientRect().left
+                    gap: element.getBoundingClientRect().left - element.closest('.admiral-group-actions-pane').getBoundingClientRect().left,
+                    height: element.getBoundingClientRect().height,
+                    paneHeight: element.closest('.admiral-group-actions-pane').getBoundingClientRect().height
                 }));
-                assert.ok(focus.visible && focus.offset <= 0 && focus.gap >= 2, `focus ring clipped: ${JSON.stringify(focus)}`);
+                assert.ok(focus.visible && focus.offset === 2 && Math.abs(focus.gap) < 1 && focus.height === focus.paneHeight,
+                    `text action differs from the reference pane: ${JSON.stringify(focus)}`);
+                const clipping = await action.evaluate(element => {
+                    const pane = element.closest('.admiral-group-actions-pane');
+                    const viewport = pane.closest('.admiral-table-gallery__scroll');
+                    const paneRect = pane.getBoundingClientRect();
+                    const viewportRect = viewport?.getBoundingClientRect();
+                    return {
+                        zIndex: Number(getComputedStyle(pane).zIndex),
+                        room: viewportRect && {
+                            left: paneRect.left - viewportRect.left,
+                            top: paneRect.top - viewportRect.top,
+                            right: viewportRect.right - paneRect.right
+                        }
+                    };
+                });
+                assert.ok(clipping.zIndex >= 3, `focused pane is behind the grid header: ${JSON.stringify(clipping)}`);
+                if (clipping.room) {
+                    assert.ok(Object.values(clipping.room).every(space => space >= 4),
+                        `scroll viewport clips the 4px focus ring: ${JSON.stringify(clipping)}`);
+                }
+                const tool = pane.locator('.admiral-group-actions-pane__tools > button').first();
+                if (await tool.count()) {
+                    await page.keyboard.press('Tab');
+                    await tool.focus();
+                    assert.equal(await tool.evaluate(element => element.matches(':focus-visible')), true);
+                    assert.equal(await tool.evaluate(element => parseFloat(getComputedStyle(element).outlineOffset)), focus.offset,
+                        'text and icon actions use the same focus offset');
+                }
                 const baseColor = await action.evaluate(element => getComputedStyle(element).color);
                 await action.hover();
                 assert.notEqual(await action.evaluate(element => getComputedStyle(element).color), baseColor);

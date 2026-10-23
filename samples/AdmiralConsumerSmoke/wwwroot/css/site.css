@@ -422,6 +422,14 @@ body {
     overflow-x: auto;
 }
 
+/* Give the pane's outer focus ring room inside the scrolling viewport. */
+.admiral-table-gallery__scroll:has(.admiral-group-actions-pane) {
+    box-sizing: border-box;
+    width: calc(100% + 0.5rem);
+    margin: -0.25rem;
+    padding: 0.25rem;
+}
+
 .admiral-table-gallery__frame {
     width: 100%;
     min-width: 0;
