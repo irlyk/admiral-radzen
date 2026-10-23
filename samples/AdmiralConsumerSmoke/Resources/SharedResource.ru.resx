@@ -887,4 +887,5 @@
   <data name="Decorative icons should carry aria-hidden; give an interactive parent an accessible name. The icon adapter loads SVG assets lazily." xml:space="preserve"><value>Декоративной иконке задавайте aria-hidden, а интерактивному родительскому элементу — доступное имя. Адаптер загружает SVG по мере необходимости.</value></data>
   <data name="Direct RadzenIcon with packaged Admiral icon assets" xml:space="preserve"><value>Прямой RadzenIcon с иконками пакета Admiral</value></data>
   <data name="AdmiralIcon size" xml:space="preserve"><value>Размер AdmiralIcon</value></data>
+  <data name="Border radius" xml:space="preserve"><value>Скругление</value></data>
 </root>

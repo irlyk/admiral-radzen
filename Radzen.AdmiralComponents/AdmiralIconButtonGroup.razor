@@ -1,7 +1,7 @@
 <div class="@CssClass" role="group" aria-label="@AriaLabel"
      data-dimension="@Dimension.ToString().ToLowerInvariant()"
      @attributes="AdditionalAttributes">
-    <CascadingValue Value="this" IsFixed="true">@ChildContent</CascadingValue>
+    <CascadingValue Value="this">@ChildContent</CascadingValue>
 </div>
 
 @code {

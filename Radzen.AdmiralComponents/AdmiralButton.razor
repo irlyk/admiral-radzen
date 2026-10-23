@@ -2,8 +2,8 @@
               Size="@RadzenSize"
               Variant="@RadzenVariant"
               ButtonStyle="@RadzenButtonStyle"
-              ButtonType="@RadzenButtonType"
-              Disabled="@IsInteractionBlocked"
+              ButtonType="@EffectiveButtonType"
+              Disabled="@(Disabled || Skeleton)"
               Click="@HandleClick"
               aria-label="@SquareAccessibleName"
               aria-busy="@(Loading ? "true" : null)"
@@ -111,6 +111,9 @@
         AdmiralButtonType.Reset => ButtonType.Reset,
         _ => ButtonType.Button
     };
+
+    // Keep the loading appearance while preventing native submit/reset actions.
+    private ButtonType EffectiveButtonType => Loading ? ButtonType.Button : RadzenButtonType;
 
     private AdmiralIconSize ContentIconSize => EffectiveDimension == AdmiralButtonDimension.S
         ? AdmiralIconSize.Medium

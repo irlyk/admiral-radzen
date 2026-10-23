@@ -6,8 +6,18 @@
 
 <AdmiralServices />
 <AdmiralToastHost AriaLabel="@L["Notifications"]" CloseAriaLabel="@L["Close notification"]" />
+<style>
+    :root {
+        --admiral-radius-small: @RadiusTokens.Small;
+        --admiral-radius-medium: @RadiusTokens.Medium;
+        --admiral-radius-large: @RadiusTokens.Large;
+        --rz-border-radius-1: var(--admiral-radius-small);
+        --rz-border-radius-2: var(--admiral-radius-medium);
+        --rz-border-radius-3: var(--admiral-radius-large);
+    }
+</style>
 
-<AdmiralLayout SideMenuWidth="@sideMenuWidth"
+<AdmiralLayout Class="admiral-consumer-shell" SideMenuWidth="@sideMenuWidth"
                DesktopCollapseTarget="@desktopCollapseTarget"
                SideMenuShadow="false"
                SideMenuAriaLabel="@L["Gallery sections"]"
@@ -22,6 +32,15 @@
                 </div>
             </Brand>
             <Actions>
+                <label class="admiral-consumer-radius-control">
+                    <span>@L["Border radius"]</span>
+                    <select data-testid="smoke-border-radius" @bind="radius" aria-label="@L["Border radius"]">
+                        @foreach (var value in new[] { 0, 2, 4, 6, 8, 10 })
+                        {
+                            <option value="@value">@value px</option>
+                        }
+                    </select>
+                </label>
                 <label class="admiral-consumer-menu-size">
                     <span>@L["Side menu width"]</span>
                     <select @bind="sideMenuWidth" aria-label="@L["Side menu width"]">
@@ -57,7 +76,6 @@
 
     <SideMenu>
         <AdmiralSideMenu AriaLabel="@L["Gallery sections"]" CloseAriaLabel="@L["Close navigation"]">
-            <AdmiralSideMenuItem Text="@L["Components"]" Icon="admiral:system/home-outline" Href="/" Match="NavLinkMatch.All" />
             <div class="admiral-consumer-component-search">
                 <input type="search" data-testid="component-search" value="@componentSearch" @ref="componentSearchInput"
                        @oninput="OnComponentSearch" aria-label="@L["Search components"]"
@@ -68,6 +86,7 @@
                             @onclick="ClearComponentSearch">×</button>
                 }
             </div>
+            <AdmiralSideMenuItem Text="@L["Components"]" Icon="admiral:system/home-outline" Href="/" Match="NavLinkMatch.All" />
             @if (FilteredComponents.Count > 0)
             {
                 @foreach (var category in Categories)
@@ -106,13 +125,24 @@
     private bool IsLightTheme => ThemeService.Theme != "admiral-dark";
     private void ChangeTheme(bool lightTheme) => ThemeService.SetTheme(lightTheme ? "admiral" : "admiral-dark");
     private AdmiralSideMenuWidth sideMenuWidth = AdmiralSideMenuWidth.Small;
+    private int radius = 4;
+    private (string Small, string Medium, string Large) RadiusTokens => radius switch
+    {
+        0 => ("0", "0", "0"),
+        2 => ("0.125rem", "0.125rem", "0.25rem"),
+        6 => ("0.25rem", "0.375rem", "0.75rem"),
+        8 => ("0.25rem", "0.5rem", "1rem"),
+        10 => ("0.25rem", "0.625rem", "1.25rem"),
+        _ => ("0.25rem", "0.25rem", "0.5rem")
+    };
     private AdmiralSideMenuState desktopCollapseTarget = AdmiralSideMenuState.IconsOnly;
     private string componentSearch = string.Empty;
     private ElementReference componentSearchInput;
     private static readonly (string Text, string Href)[] Components =
     [
         ("Button", "/components/button"), ("IconButton", "/components/icon-button"),
-        ("TextButton", "/components/text-button"), ("Button groups", "/components/button-groups"),
+        ("TextButton", "/components/text-button"), ("ButtonGroup", "/components/button-groups"),
+        ("IconButtonGroup", "/components/icon-button-group"),
         ("FloatingButtonMenu", "/components/floating-button-menu"), ("Typography", "/components/typography"),
         ("Divider", "/components/divider"), ("Drawer", "/components/drawer"),
         ("Link", "/components/link"), ("Badge", "/components/badge"),
@@ -140,6 +170,7 @@
     [
         ("Actions", "Действия", "admiral:system/edit-outline", [
             "/components/button", "/components/icon-button", "/components/text-button", "/components/button-groups",
+            "/components/icon-button-group",
             "/components/floating-button-menu", "/components/action-bar"]),
         ("Inputs", "Поля ввода", "admiral:system/search-outline", [
             "/components/checkbox", "/components/checkbox-group", "/components/text-input", "/components/text-area",
@@ -166,6 +197,7 @@
             ["/components/icon-button"] = "кнопка с иконкой иконка",
             ["/components/text-button"] = "текстовая кнопка",
             ["/components/button-groups"] = "группы кнопок",
+            ["/components/icon-button-group"] = "группа кнопок с иконками",
             ["/components/floating-button-menu"] = "плавающая кнопка меню",
             ["/components/typography"] = "типографика текст",
             ["/components/divider"] = "разделитель",

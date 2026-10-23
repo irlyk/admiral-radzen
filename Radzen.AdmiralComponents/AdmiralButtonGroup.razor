@@ -2,7 +2,7 @@
      data-dimension="@Dimension.ToString().ToLowerInvariant()"
      data-appearance="@Appearance.ToString().ToLowerInvariant()"
      @attributes="AdditionalAttributes">
-    <CascadingValue Value="this" IsFixed="true">@ChildContent</CascadingValue>
+    <CascadingValue Value="this">@ChildContent</CascadingValue>
 </div>
 
 @code {

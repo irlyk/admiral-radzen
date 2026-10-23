@@ -24,3 +24,4 @@ samples/AdmiralDocs/wwwroot/css/site.css
 playwright-report/
 test-results/
 coverage/
+samples/AdmiralConsumerSmoke/wwwroot/local-typography/

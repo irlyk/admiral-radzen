@@ -40,6 +40,43 @@ try {
       console.log(theme, name, results.at(-1).passed ? 'PASS' : 'FAIL');
     };
 
+    await test('Button loading keeps appearance and blocks native submit', async () => {
+      await go('/components/button');
+      const section = page.locator('#button-loading-heading').locator('xpath=..');
+      const primary = section.locator('.admiral-button--loading.admiral-button--primary').first();
+      const danger = section.locator('.admiral-button--loading.admiral-button--danger').first();
+      const state = async button => button.evaluate(element => ({
+        background: getComputedStyle(element).backgroundColor,
+        disabled: element.disabled,
+        ariaDisabled: element.getAttribute('aria-disabled'),
+        busy: element.getAttribute('aria-busy')
+      }));
+      const primaryState = await state(primary);
+      const dangerState = await state(danger);
+      assert.notEqual(primaryState.background, dangerState.background);
+      for (const value of [primaryState, dangerState]) {
+        assert.equal(value.disabled, false);
+        assert.equal(value.ariaDisabled, 'true');
+        assert.equal(value.busy, 'true');
+      }
+    });
+
+    await test('TextInput status borders use Admiral error and success shades', async () => {
+      await go('/components/text-input');
+      const expected = theme === 'admiral-dark'
+        ? { error: ['rgb(234, 60, 60)', 'rgb(245, 95, 95)'], success: ['rgb(22, 145, 63)', 'rgb(31, 169, 81)'] }
+        : { error: ['rgb(217, 32, 32)', 'rgb(186, 23, 23)'], success: ['rgb(27, 160, 73)', 'rgb(18, 130, 56)'] };
+      for (const [status, [normal, hover]] of Object.entries(expected)) {
+        const input = page.locator(`.admiral-text-input--${status} .admiral-text-input__control`).first();
+        const border = () => input.evaluate(element => getComputedStyle(element).borderTopColor);
+        assert.equal(await border(), normal);
+        await input.hover();
+        assert.equal(await border(), hover);
+        await input.focus();
+        assert.equal(await border(), normal);
+      }
+    });
+
     await test('GroupActions text action focus and alignment across sizes', async () => {
       await go('/components/action-bar');
       const preview = page.locator('.action-bar-demo-preview');

@@ -28,6 +28,17 @@ try {
           assert.equal(await select.count(), 1);
           const input = phone.locator('input[inputmode="tel"]');
           assert.equal(await input.count(), 1);
+          const leadingGeometry = await page.locator('.admiral-phone-input').evaluateAll(elements => elements.map(element => {
+            const country = element.querySelector('.admiral-select')?.getBoundingClientRect();
+            const field = element.querySelector('input[inputmode="tel"]');
+            const box = field?.getBoundingClientRect();
+            return { size: element.className, countryRight: country?.right,
+              textStart: box ? box.left + parseFloat(getComputedStyle(field).paddingInlineStart) : 0 };
+          }));
+          for (const geometry of leadingGeometry) {
+            assert.ok(geometry.textStart >= geometry.countryRight + 2,
+              `${theme}/${culture}/${viewport.width}: phone text must clear flag and chevron: ${JSON.stringify(geometry)}`);
+          }
           assert.ok(await input.evaluate(element => element.labels?.length > 0), 'Phone input has a programmatically associated label');
           await select.focus();
           await page.keyboard.press('Enter');

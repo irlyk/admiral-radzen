@@ -2,7 +2,10 @@
      role="@(State == AdmiralUploadState.Error ? "alert" : "status")"
      aria-live="polite"
      @attributes="AdditionalAttributes">
-    <RadzenIcon Icon="@Icon" class="admiral-upload-file__type" />
+    @if (Dimension == AdmiralFileInputDimension.Xl)
+    {
+        <RadzenIcon Icon="@EffectiveIcon" class="admiral-upload-file__type" />
+    }
     <div class="admiral-upload-file__content">
         <div class="admiral-upload-file__name">@FileName</div>
         @if (!string.IsNullOrEmpty(Meta))
@@ -31,7 +34,8 @@
     [Parameter, EditorRequired] public string FileName { get; set; } = string.Empty;
     [Parameter] public string? Meta { get; set; }
     [Parameter] public string? ErrorText { get; set; }
-    [Parameter] public string Icon { get; set; } = "admiral:documents/description-outline";
+    [Parameter] public string? Icon { get; set; }
+    [Parameter] public AdmiralFileInputDimension Dimension { get; set; } = AdmiralFileInputDimension.Xl;
     [Parameter] public AdmiralUploadState State { get; set; }
     [Parameter] public double Progress { get; set; }
     [Parameter] public bool ShowAction { get; set; } = true;
@@ -45,9 +49,22 @@
     [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
     private double ClampedProgress => Math.Clamp(Progress, 0, 100);
+    private string EffectiveIcon => Icon ?? (System.IO.Path.GetExtension(FileName).ToLowerInvariant() switch
+    {
+        ".pdf" => "admiral:documents/pdf-solid",
+        ".ppt" or ".pptx" => "admiral:documents/ppt-solid",
+        ".xls" or ".xlsx" => "admiral:documents/xls-solid",
+        ".doc" or ".docx" => "admiral:documents/file-word-solid",
+        ".jpg" or ".jpeg" or ".png" or ".gif" or ".webp" or ".svg" => "admiral:documents/jpg-solid",
+        ".zip" => "admiral:documents/zip-solid",
+        ".csv" => "admiral:documents/file-csv-solid",
+        _ => "admiral:documents/doc-ok-solid"
+    });
     private string CssClass => string.Join(' ', new[]
     {
         "admiral-upload-file",
+        Dimension == AdmiralFileInputDimension.M ? "admiral-upload-file--m" : "admiral-upload-file--xl",
+        State == AdmiralUploadState.Idle ? "admiral-upload-file--queue" : null,
         State == AdmiralUploadState.Loading ? "admiral-upload-file--loading" : null,
         State == AdmiralUploadState.Complete ? "admiral-upload-file--complete" : null,
         State == AdmiralUploadState.Error ? "admiral-upload-file--error" : null,

@@ -1,17 +1,17 @@
 @page "/components/button-groups"
-<PageTitle>Admiral Button Groups</PageTitle>
+<PageTitle>Admiral ButtonGroup</PageTitle>
 <div class="admiral-component-page">
-    <AdmiralGalleryPageHeader Title="ButtonGroup / IconButtonGroup" Description="Joined button groups with group-level appearance and dimension settings."
+    <AdmiralGalleryPageHeader Title="ButtonGroup" Description="Joined buttons with shared appearance and dimension settings."
         SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-buttongroup--docs" />
-    <p><a href="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-iconbuttongroup--docs" target="_blank" rel="noreferrer">@T("Официальный пример IconButtonGroup", "Official IconButtonGroup story")</a></p>
+    <p><a href="/components/icon-button-group">@T("Отдельная страница IconButtonGroup", "IconButtonGroup has its own page")</a></p>
     <ComponentDocTabs @bind-Value="tab" />
     @if (tab == ComponentDocTabs.Api)
     {
         <section class="admiral-component-page__section">
             <h2>@T("Использование и ограничения", "Usage and limitations")</h2>
-            <p>@T("Группы задают общую геометрию и aria-label, а действия и события остаются у дочерних AdmiralButton или AdmiralIconButton. Указывайте отдельный AriaLabel каждой кнопке с одной иконкой. Disabled и Loading задаются дочернему действию, не группе.", "Groups set shared geometry and an aria-label; actions and events remain on child AdmiralButton or AdmiralIconButton controls. Give every icon-only child its own AriaLabel. Disabled and Loading are child states, not group states.")</p>
+            <p>@T("Группа задаёт общую геометрию и aria-label, а действия и события остаются у дочерних AdmiralButton. Disabled и Loading задаются дочерней кнопке, не группе.", "The group sets shared geometry and an aria-label; actions and events remain on child AdmiralButton controls. Disabled and Loading are child states, not group states.")</p>
             <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
-            <ApiReference Title="AdmiralButtonGroup" Rows="@GroupRows" /><ApiReference Title="AdmiralIconButtonGroup" Rows="@IconGroupRows" />
+            <ApiReference Title="AdmiralButtonGroup" Rows="@GroupRows" />
         </section>
     }
     else if (tab == ComponentDocTabs.Theme)
@@ -32,7 +32,6 @@
             <h2>@T("Интерактивный пример", "Interactive playground")</h2>
             <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
                 <AdmiralButtonGroup Appearance="@appearance" Dimension="@dimension" AriaLabel="Document actions"><AdmiralButton Text="Create" Click="@(_ => result = "Create")" /><AdmiralButton Text="Copy" Click="@(_ => result = "Copy")" /><AdmiralButton Text="Archive" Disabled="@disabled" Click="@(_ => result = "Archive")" /></AdmiralButtonGroup>
-                <AdmiralIconButtonGroup Dimension="@dimension" AriaLabel="Icon actions"><AdmiralIconButton Icon="admiral:system/print-outline" AriaLabel="Print" Click="@(_ => result = "Print")" /><AdmiralIconButton Icon="admiral:system/edit-outline" AriaLabel="Edit" Click="@(_ => result = "Edit")" /></AdmiralIconButtonGroup>
                 <output aria-live="polite">@T("Последнее действие", "Last action"): @result</output>
             </div><div class="admiral-component-controls">
                 <label><span>@SmokeL["Dimension"]</span><select @bind="dimension">@foreach (var value in Enum.GetValues<AdmiralButtonDimension>()) { <option value="@value">@value</option> }</select></label>
@@ -56,10 +55,6 @@
     private static readonly IReadOnlyList<ApiReference.Entry> GroupRows = [
         new("ChildContent", "RenderFragment? / null", "AdmiralButton children."),
         new("Appearance", "AdmiralButtonGroupAppearance / Primary", "Shared group appearance."),
-        new("Dimension", "AdmiralButtonDimension / Xl", "Shared S, M, L or Xl size."),
-        new("AriaLabel", "string? / null", "Accessible name for the group.")];
-    private static readonly IReadOnlyList<ApiReference.Entry> IconGroupRows = [
-        new("ChildContent", "RenderFragment? / null", "AdmiralIconButton children, each with AriaLabel."),
         new("Dimension", "AdmiralButtonDimension / Xl", "Shared S, M, L or Xl size."),
         new("AriaLabel", "string? / null", "Accessible name for the group.")];
     private const string AdmiralCode = """

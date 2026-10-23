@@ -34,7 +34,7 @@
         <div class="admiral-file-input-control__files">
             @foreach (var file in selectedFiles)
             {
-                <AdmiralUploadStatus @key="file" FileName="@file.Name" Meta="@FormatSize(file.Size)"
+                <AdmiralUploadStatus @key="file" FileName="@file.Name" Meta="@FormatSize(file.Size)" Dimension="@Dimension"
                                      State="AdmiralUploadState.Idle" ActionAriaLabel="@RemoveFileAriaLabel" ShowAction="@(!Disabled && !Skeleton)"
                                      ActionClicked="@(() => RemoveAsync(file))" />
             }

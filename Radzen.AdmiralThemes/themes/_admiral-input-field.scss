@@ -1,3 +1,9 @@
+$theme-dark: false !default;
+$admiral-input-error: if($theme-dark, #EA3C3C, #D92020);
+$admiral-input-error-hover: if($theme-dark, #F55F5F, #BA1717);
+$admiral-input-success: if($theme-dark, #16913F, #1BA049);
+$admiral-input-success-hover: if($theme-dark, #1FA951, #128238);
+
 .admiral-input-field {
   --admiral-input-field-height: 2.5rem;
   --rz-input-height: var(--admiral-input-field-height);
@@ -94,31 +100,31 @@
 }
 
 .admiral-input-field--error {
-  --rz-input-border: var(--rz-border-width) solid var(--rz-danger);
+  --rz-input-border: var(--rz-border-width) solid #{$admiral-input-error};
   --rz-input-border-block-end: var(--rz-input-border);
-  --rz-input-hover-border: var(--rz-border-width) solid var(--rz-danger-dark);
+  --rz-input-hover-border: var(--rz-border-width) solid #{$admiral-input-error-hover};
   --rz-input-hover-border-block-end: var(--rz-input-hover-border);
-  --rz-input-focus-border: var(--rz-border-width) solid var(--rz-danger);
+  --rz-input-focus-border: var(--rz-border-width) solid #{$admiral-input-error};
   --rz-input-focus-border-block-end: var(--rz-input-focus-border);
-  --rz-input-focus-shadow: inset 0 0 0 1px var(--rz-danger);
+  --rz-input-focus-shadow: inset 0 0 0 1px #{$admiral-input-error};
 }
 
 .admiral-input-field--success {
-  --rz-input-border: var(--rz-border-width) solid var(--rz-success);
+  --rz-input-border: var(--rz-border-width) solid #{$admiral-input-success};
   --rz-input-border-block-end: var(--rz-input-border);
-  --rz-input-hover-border: var(--rz-border-width) solid var(--rz-success-dark);
+  --rz-input-hover-border: var(--rz-border-width) solid #{$admiral-input-success-hover};
   --rz-input-hover-border-block-end: var(--rz-input-hover-border);
-  --rz-input-focus-border: var(--rz-border-width) solid var(--rz-success);
+  --rz-input-focus-border: var(--rz-border-width) solid #{$admiral-input-success};
   --rz-input-focus-border-block-end: var(--rz-input-focus-border);
-  --rz-input-focus-shadow: inset 0 0 0 1px var(--rz-success);
+  --rz-input-focus-shadow: inset 0 0 0 1px #{$admiral-input-success};
 }
 
 .admiral-input-field--error .admiral-input-field__extra-text {
-  color: var(--rz-danger);
+  color: $admiral-input-error;
 }
 
 .admiral-input-field--success .admiral-input-field__extra-text {
-  color: var(--rz-success);
+  color: $admiral-input-success;
 }
 
 .admiral-input-field:has(:is(.rz-state-disabled, :disabled))
@@ -240,17 +246,17 @@
 }
 
 .admiral-text-input--error {
-  --rz-input-border: var(--rz-border-width) solid var(--rz-danger);
-  --rz-input-hover-border: var(--rz-border-width) solid var(--rz-danger-dark);
-  --rz-input-focus-border: var(--rz-border-width) solid var(--rz-danger);
-  --rz-input-focus-shadow: inset 0 0 0 1px var(--rz-danger);
+  --rz-input-border: var(--rz-border-width) solid #{$admiral-input-error};
+  --rz-input-hover-border: var(--rz-border-width) solid #{$admiral-input-error-hover};
+  --rz-input-focus-border: var(--rz-border-width) solid #{$admiral-input-error};
+  --rz-input-focus-shadow: inset 0 0 0 1px #{$admiral-input-error};
 }
 
 .admiral-text-input--success {
-  --rz-input-border: var(--rz-border-width) solid var(--rz-success);
-  --rz-input-hover-border: var(--rz-border-width) solid var(--rz-success-dark);
-  --rz-input-focus-border: var(--rz-border-width) solid var(--rz-success);
-  --rz-input-focus-shadow: inset 0 0 0 1px var(--rz-success);
+  --rz-input-border: var(--rz-border-width) solid #{$admiral-input-success};
+  --rz-input-hover-border: var(--rz-border-width) solid #{$admiral-input-success-hover};
+  --rz-input-focus-border: var(--rz-border-width) solid #{$admiral-input-success};
+  --rz-input-focus-shadow: inset 0 0 0 1px #{$admiral-input-success};
 }
 
 .admiral-text-input:has(.rz-state-disabled) :is(.admiral-text-input__leading, .admiral-text-input__trailing) {
@@ -313,17 +319,17 @@
 .rz-textarea.admiral-text-area-control--actions-2 { padding-inline-end: 5.5rem; }
 
 .rz-textarea.admiral-text-area-control--error {
-  --rz-input-border: var(--rz-border-width) solid var(--rz-danger);
-  --rz-input-hover-border: var(--rz-border-width) solid var(--rz-danger-dark);
-  --rz-input-focus-border: var(--rz-border-width) solid var(--rz-danger);
-  --rz-input-focus-shadow: inset 0 0 0 1px var(--rz-danger);
+  --rz-input-border: var(--rz-border-width) solid #{$admiral-input-error};
+  --rz-input-hover-border: var(--rz-border-width) solid #{$admiral-input-error-hover};
+  --rz-input-focus-border: var(--rz-border-width) solid #{$admiral-input-error};
+  --rz-input-focus-shadow: inset 0 0 0 1px #{$admiral-input-error};
 }
 
 .rz-textarea.admiral-text-area-control--success {
-  --rz-input-border: var(--rz-border-width) solid var(--rz-success);
-  --rz-input-hover-border: var(--rz-border-width) solid var(--rz-success-dark);
-  --rz-input-focus-border: var(--rz-border-width) solid var(--rz-success);
-  --rz-input-focus-shadow: inset 0 0 0 1px var(--rz-success);
+  --rz-input-border: var(--rz-border-width) solid #{$admiral-input-success};
+  --rz-input-hover-border: var(--rz-border-width) solid #{$admiral-input-success-hover};
+  --rz-input-focus-border: var(--rz-border-width) solid #{$admiral-input-success};
+  --rz-input-focus-shadow: inset 0 0 0 1px #{$admiral-input-success};
 }
 
 .admiral-text-area__actions {
@@ -453,23 +459,23 @@
 }
 
 :is(.admiral-number-input--error, .admiral-select--error) {
-  --rz-input-border: var(--rz-border-width) solid var(--rz-danger);
+  --rz-input-border: var(--rz-border-width) solid #{$admiral-input-error};
   --rz-input-border-block-end: var(--rz-input-border);
-  --rz-input-hover-border: var(--rz-border-width) solid var(--rz-danger-dark);
+  --rz-input-hover-border: var(--rz-border-width) solid #{$admiral-input-error-hover};
   --rz-input-hover-border-block-end: var(--rz-input-hover-border);
-  --rz-input-focus-border: var(--rz-border-width) solid var(--rz-danger);
+  --rz-input-focus-border: var(--rz-border-width) solid #{$admiral-input-error};
   --rz-input-focus-border-block-end: var(--rz-input-focus-border);
-  --rz-input-focus-shadow: inset 0 0 0 1px var(--rz-danger);
+  --rz-input-focus-shadow: inset 0 0 0 1px #{$admiral-input-error};
 }
 
 :is(.admiral-number-input--success, .admiral-select--success) {
-  --rz-input-border: var(--rz-border-width) solid var(--rz-success);
+  --rz-input-border: var(--rz-border-width) solid #{$admiral-input-success};
   --rz-input-border-block-end: var(--rz-input-border);
-  --rz-input-hover-border: var(--rz-border-width) solid var(--rz-success-dark);
+  --rz-input-hover-border: var(--rz-border-width) solid #{$admiral-input-success-hover};
   --rz-input-hover-border-block-end: var(--rz-input-hover-border);
-  --rz-input-focus-border: var(--rz-border-width) solid var(--rz-success);
+  --rz-input-focus-border: var(--rz-border-width) solid #{$admiral-input-success};
   --rz-input-focus-border-block-end: var(--rz-input-focus-border);
-  --rz-input-focus-shadow: inset 0 0 0 1px var(--rz-success);
+  --rz-input-focus-shadow: inset 0 0 0 1px #{$admiral-input-success};
 }
 
 :is(.admiral-number-input--skeleton, .admiral-select--skeleton) {
@@ -668,6 +674,15 @@
 .admiral-text-input--s.admiral-text-input--trailing-2 > .admiral-text-input__control.rz-textbox { padding-inline-end: 4.25rem !important; }
 .admiral-text-input--s.admiral-text-input--trailing-3 > .admiral-text-input__control.rz-textbox { padding-inline-end: 6rem !important; }
 
+// The phone selector is layered over TextInput; reserve its full width inside
+// the input after the generic TextInput padding reset above.
+.admiral-phone-input > .admiral-text-input > .admiral-text-input__control.rz-textbox {
+  padding-inline-start: 4.5rem !important;
+}
+.admiral-phone-input--s > .admiral-text-input > .admiral-text-input__control.rz-textbox {
+  padding-inline-start: 4rem !important;
+}
+
 .admiral-text-input__leading,
 .admiral-text-input__trailing {
   top: 50% !important;
@@ -697,6 +712,16 @@
 
 .admiral-number-input__control .rz-numeric-button:hover {
   color: var(--rz-primary-dark) !important;
+}
+
+// Admiral places decrement before increment. Keep Radzen's native handlers and
+// spinbutton semantics; only the two non-tabbable controls change position.
+.admiral-number-input__control.rz-numeric .rz-numeric-down {
+  inset-inline-end: calc(var(--rz-numeric-button-offset) + var(--rz-numeric-button-width) + 0.25rem);
+}
+
+.admiral-number-input__control.rz-numeric .rz-numeric-up {
+  inset-inline-end: var(--rz-numeric-button-offset);
 }
 
 .admiral-select__loading {
