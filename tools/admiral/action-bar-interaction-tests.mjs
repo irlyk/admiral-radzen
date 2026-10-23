@@ -171,6 +171,25 @@ try {
             await page.getByRole('button', { name: 'Настройки', exact: true }).click();
             await page.waitForFunction(() => document.querySelector('.action-bar-demo-result').textContent.includes('Открыть настройки'));
         });
+        await test('table GroupActionsPane actions keep focus ring and hover contrast', async () => {
+            await page.goto(base + '/tables');
+            const panes = page.locator('.admiral-group-actions-pane');
+            await panes.first().waitFor();
+            for (const pane of await panes.all()) {
+                const action = pane.locator('.admiral-group-actions-pane__actions > button').first();
+                if (!await action.count()) continue;
+                await action.focus();
+                const focus = await action.evaluate(element => ({
+                    visible: element.matches(':focus-visible'),
+                    offset: parseFloat(getComputedStyle(element).outlineOffset),
+                    gap: element.getBoundingClientRect().left - element.parentElement.getBoundingClientRect().left
+                }));
+                assert.ok(focus.visible && focus.offset <= 0 && focus.gap >= 2, `focus ring clipped: ${JSON.stringify(focus)}`);
+                const baseColor = await action.evaluate(element => getComputedStyle(element).color);
+                await action.hover();
+                assert.notEqual(await action.evaluate(element => getComputedStyle(element).color), baseColor);
+            }
+        });
         await test('API and direct theme tabs are runnable independently', async () => {
             await page.locator('.component-doc-tabs [data-doc-tab="api"]').click();
             await page.getByRole('table', { name: 'AdmiralActionBar', exact: true }).waitFor();

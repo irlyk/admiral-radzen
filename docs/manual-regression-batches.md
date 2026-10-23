@@ -27,3 +27,10 @@ Work takes place on `codex/manual-regression-batch`. Merge to `main` and choose 
 - PhoneNumberInput reserves room for the flag and chevron after the shared TextInput padding reset. The former rule was overwritten by a later `!important` selector, allowing the flag to cover the number. Browser regression checks text start against the country selector for each rendered size.
 
 The batches share one final browser and local-package check. Source presence or CSS selectors alone do not establish visual parity.
+
+## Open differences
+
+| Area | Current behavior | Reason / next check |
+| --- | --- | --- |
+| NumberInput prefix and suffix | They share the value's text colour. | RadzenNumeric renders one input text node; separate colours require a markup and accessibility design. |
+| Direct RadzenUpload file icons | Generic preview rather than extension-specific icons. | The direct control has no per-file row template; the Admiral wrapper supplies file-type icons. |

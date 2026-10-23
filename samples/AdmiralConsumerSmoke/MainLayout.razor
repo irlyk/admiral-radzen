@@ -76,7 +76,6 @@
 
     <SideMenu>
         <AdmiralSideMenu AriaLabel="@L["Gallery sections"]" CloseAriaLabel="@L["Close navigation"]">
-            <AdmiralSideMenuItem Text="@L["Components"]" Icon="admiral:system/home-outline" Href="/" Match="NavLinkMatch.All" />
             <div class="admiral-consumer-component-search">
                 <input type="search" data-testid="component-search" value="@componentSearch" @ref="componentSearchInput"
                        @oninput="OnComponentSearch" aria-label="@L["Search components"]"
@@ -87,6 +86,7 @@
                             @onclick="ClearComponentSearch">×</button>
                 }
             </div>
+            <AdmiralSideMenuItem Text="@L["Components"]" Icon="admiral:system/home-outline" Href="/" Match="NavLinkMatch.All" />
             @if (FilteredComponents.Count > 0)
             {
                 @foreach (var category in Categories)

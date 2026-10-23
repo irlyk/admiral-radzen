@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Components.Web
 @using System.Globalization
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment HostEnvironment
 @namespace AdmiralConsumerSmoke.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
@@ -15,6 +16,10 @@
           type="font/woff2"
           crossorigin="anonymous" />
     <link href="css/site.css" rel="stylesheet" asp-append-version="true" />
+    @if (HostEnvironment.WebRootFileProvider.GetFileInfo("local-typography/preview.css").Exists)
+    {
+        <link href="local-typography/preview.css" rel="stylesheet" />
+    }
     <link href="AdmiralConsumerSmoke.styles.css" rel="stylesheet" asp-append-version="true" />
     <link href="_content/Radzen.Admiral.Icons/admiral-radzen-icons.css" rel="stylesheet" asp-append-version="true" />
     <script src="_content/Radzen.Admiral.Icons/admiral-radzen-icons.js" asp-append-version="true"></script>

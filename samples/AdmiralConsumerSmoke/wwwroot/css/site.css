@@ -43,7 +43,8 @@ body {
 
 .admiral-consumer-radius-control select {
     min-height: 2rem;
-    padding: 0.25rem 0.5rem;
+    min-width: 5.25rem;
+    padding: 0.25rem 1.5rem 0.25rem 0.5rem;
     border: var(--rz-border-normal);
     border-radius: var(--rz-border-radius-2);
     background: var(--rz-base-background-color);
@@ -60,11 +61,11 @@ body {
     .admiral-consumer-radius-control > span { display: none; }
 }
 
-.admiral-consumer-shell.admiral-layout--side-menu-iconsonly > .admiral-layout__side-menu:not(:hover):not(:focus-within) {
+.admiral-consumer-shell > .admiral-layout__side-menu:not(:hover):not(:focus-within) {
     scrollbar-width: none;
 }
 
-.admiral-consumer-shell.admiral-layout--side-menu-iconsonly > .admiral-layout__side-menu:not(:hover):not(:focus-within)::-webkit-scrollbar {
+.admiral-consumer-shell > .admiral-layout__side-menu:not(:hover):not(:focus-within)::-webkit-scrollbar {
     display: none;
 }
 
@@ -1054,7 +1055,7 @@ body {
     gap: 1rem;
     padding: 1.5rem;
     border-radius: var(--rz-border-radius-2);
-    background: color-mix(in srgb, var(--rz-base-background-color) 92%, var(--rz-text-color));
+    background: transparent;
 }
 
 .pagination-doc__preview {

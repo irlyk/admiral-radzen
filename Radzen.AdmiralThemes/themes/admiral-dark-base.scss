@@ -3133,6 +3133,7 @@ a.rz-button {
   gap: 1rem;
   min-width: 0;
   margin-inline-end: 1rem;
+  padding-inline: 0.25rem;
   // Keep overflowed actions clipped while leaving room for their focus outline.
   overflow: clip;
   overflow-clip-margin: 0.3125rem;
@@ -3142,7 +3143,7 @@ a.rz-button {
     width: auto;
     min-width: 0;
     min-height: var(--admiral-pane-text-action-height);
-    padding-inline: 0;
+    padding-inline: 0.375rem;
     color: var(--rz-primary);
     background: transparent;
     box-shadow: none;
@@ -3194,6 +3195,12 @@ a.rz-button {
 .admiral-group-actions-pane__actions > .rz-button.rz-variant-text:not(.rz-state-disabled):active {
   color: var(--rz-primary-darker);
   background: transparent;
+  box-shadow: none;
+}
+
+.admiral-group-actions-pane__actions > .rz-button.rz-variant-text:focus-visible {
+  outline: 0.125rem solid var(--rz-primary);
+  outline-offset: -0.125rem;
   box-shadow: none;
 }
 

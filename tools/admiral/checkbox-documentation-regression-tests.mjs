@@ -68,6 +68,8 @@ try {
         await page.waitForFunction(() => document.querySelector('[data-testid="checkbox-admiral-demo"] .admiral-checkbox-field')
           ?.classList.contains('admiral-checkbox-field--error'));
         assert.match(await field.getAttribute('class'), /admiral-checkbox-field--error/);
+        assert.notEqual(await field.locator('.rz-chkbox-box.rz-state-active').evaluate(element =>
+          getComputedStyle(element).boxShadow), 'none', 'checked + error keeps a visible error ring');
         await demo.getByRole('checkbox', { name: controls.indeterminate, exact: true }).check();
         await page.waitForFunction(() => document.querySelector('[data-testid="checkbox-admiral-demo"] .rz-chkbox')
           ?.getAttribute('aria-checked') === 'mixed');
