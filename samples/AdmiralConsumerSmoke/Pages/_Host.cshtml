@@ -16,7 +16,8 @@
           type="font/woff2"
           crossorigin="anonymous" />
     <link href="css/site.css" rel="stylesheet" asp-append-version="true" />
-    @if (HostEnvironment.WebRootFileProvider.GetFileInfo("local-typography/preview.css").Exists)
+    @if (System.Environment.GetEnvironmentVariable("ADMIRAL_LOCAL_TYPOGRAPHY") == "1" &&
+         HostEnvironment.WebRootFileProvider.GetFileInfo("local-typography/preview.css").Exists)
     {
         <link href="local-typography/preview.css" rel="stylesheet" />
     }
