@@ -674,6 +674,15 @@ $admiral-input-success-hover: if($theme-dark, #1FA951, #128238);
 .admiral-text-input--s.admiral-text-input--trailing-2 > .admiral-text-input__control.rz-textbox { padding-inline-end: 4.25rem !important; }
 .admiral-text-input--s.admiral-text-input--trailing-3 > .admiral-text-input__control.rz-textbox { padding-inline-end: 6rem !important; }
 
+// The phone selector is layered over TextInput; reserve its full width inside
+// the input after the generic TextInput padding reset above.
+.admiral-phone-input > .admiral-text-input > .admiral-text-input__control.rz-textbox {
+  padding-inline-start: 4.5rem !important;
+}
+.admiral-phone-input--s > .admiral-text-input > .admiral-text-input__control.rz-textbox {
+  padding-inline-start: 4rem !important;
+}
+
 .admiral-text-input__leading,
 .admiral-text-input__trailing {
   top: 50% !important;

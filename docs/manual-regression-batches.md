@@ -21,4 +21,9 @@ Work takes place on `codex/manual-regression-batch`. Merge to `main` and choose 
 - Match FileInput text colours in both themes and use XL/M file-card layouts with extension-based file-type icons. Preserve direct RadzenUpload as an independent themed example.
 - NumberInput prefix/suffix colours remain a separate design task. The current RadzenNumeric format puts prefix, value, and suffix into one input text node, so CSS cannot style them independently. A markup change needs a focused interaction and accessibility review.
 
+## Follow-up — direct upload and phone composition
+
+- The direct RadzenUpload example now switches between XL and M. Radzen's optional image preview occupies the same slot as the generic file icon in XL and is hidden in M. RadzenUpload has no per-file row template, so file-type SVGs remain an AdmiralUploadStatus feature; the direct Radzen tab states this limit.
+- PhoneNumberInput reserves room for the flag and chevron after the shared TextInput padding reset. The former rule was overwritten by a later `!important` selector, allowing the flag to cover the number. Browser regression checks text start against the country selector for each rendered size.
+
 The batches share one final browser and local-package check. Source presence or CSS selectors alone do not establish visual parity.

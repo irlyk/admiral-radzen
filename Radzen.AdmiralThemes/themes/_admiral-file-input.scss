@@ -63,6 +63,32 @@ $admiral-file-text-color: if($theme-dark, #E3E5E7, #252629);
   }
 }
 
+.rz-fileupload.admiral-file-input .rz-fileupload-row {
+  color: $admiral-file-text-color;
+  > div:nth-last-child(3) { color: $admiral-file-text-color; }
+
+  // Radzen inserts a separate image preview before name/size/actions.
+  // Place it in the same slot as the fallback file icon.
+  &:has(> div:first-child img) {
+    &::before { display: none; }
+    > div:first-child {
+      grid-column: 1;
+      grid-row: 1 / 3;
+      width: 40px;
+      height: 40px;
+      overflow: hidden;
+      border-radius: var(--rz-border-radius-2);
+      > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    }
+  }
+}
+
+.rz-fileupload.admiral-file-input--m .rz-fileupload-row {
+  > div:first-child:has(img) { display: none; }
+  > div:nth-last-child(3) { grid-column: 1; }
+  .rz-button { min-height: 20px; }
+}
+
 // FileItem dimensions and queue colours match the pinned AdmiralDS FileInput.
 .admiral-upload-file:not(.admiral-upload-file--queue) { color: $admiral-file-text-color; }
 .admiral-upload-file--xl { min-height: 56px; padding: 8px; }

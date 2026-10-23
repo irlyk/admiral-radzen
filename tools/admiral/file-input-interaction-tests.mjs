@@ -69,6 +69,29 @@ try {
             assert.equal(await card.locator('.admiral-upload-file__type').count(), 0);
             assert.ok(await card.evaluate(element => element.getBoundingClientRect().height <= 44));
         });
+        await test('Direct Radzen image preview fits XL and M file rows', async () => {
+            await page.locator('[data-doc-tab=theme]').click();
+            const upload = page.locator('.rz-fileupload.admiral-file-input');
+            await upload.locator('input[type=file]').setInputFiles(first);
+            const row = upload.locator('.rz-fileupload-row');
+            await row.waitFor();
+            const xl = await row.boundingBox();
+            assert.ok(xl && xl.height <= 60, `XL row height: ${xl?.height}`);
+            const preview = row.locator(':scope > div:first-child img');
+            assert.equal(await preview.isVisible(), true);
+            await page.locator('.admiral-component-controls select').first().selectOption('M');
+            await page.waitForFunction(() => document.querySelector('.rz-fileupload.admiral-file-input--m'));
+            const m = await row.boundingBox();
+            assert.ok(m && m.height <= 44, `M row height: ${m?.height}`);
+            assert.equal(await preview.isVisible(), false);
+            const columns = await row.evaluate(element => {
+                const name = element.querySelector(':scope > div:nth-last-child(3)').getBoundingClientRect();
+                const size = element.querySelector(':scope > div:nth-last-child(2)').getBoundingClientRect();
+                return { nameRight: name.right, sizeLeft: size.left };
+            });
+            assert.ok(columns.nameRight <= columns.sizeLeft + 1,
+                `M filename and size must not overlap: ${JSON.stringify(columns)}`);
+        });
         await test('Rejected selection clears stale list and reports accessible error', async () => {
             await pick([first]);
             await page.getByText('file-input-first.svg', { exact: true }).waitFor();

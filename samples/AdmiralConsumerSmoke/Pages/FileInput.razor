@@ -26,11 +26,11 @@
     {
         <section class="admiral-component-page__section">
             <h2>RadzenUpload + Admiral theme</h2>
-            <p>@SmokeL["Прямой"] <code>RadzenUpload</code> @SmokeL["использует классы"] <code>admiral-file-input admiral-file-input--xl|--m</code>@SmokeL[". В отличие от Admiral-обёртки он сам отправляет multipart на"] <code>Url</code> @SmokeL["и отдаёт Radzen-события прогресса и завершения."]</p>
+            <p>@SmokeL["Прямой"] <code>RadzenUpload</code> @SmokeL["использует классы"] <code>admiral-file-input admiral-file-input--xl|--m</code>@SmokeL[". В отличие от Admiral-обёртки он сам отправляет multipart на"] <code>Url</code> @SmokeL["и отдаёт Radzen-события прогресса и завершения. Для изображений Radzen показывает миниатюру; для остальных файлов тема использует общую иконку, потому что RadzenUpload не предоставляет шаблон отдельной строки файла."]</p>
             <div class="admiral-component-playground">
                 <div class="admiral-component-playground__preview">
                     <div class="file-input-playground__sample">
-                    <RadzenUpload @ref="radzenUpload" class="admiral-file-input admiral-file-input--xl"
+                    <RadzenUpload @ref="radzenUpload" class="@($"admiral-file-input admiral-file-input--{radzenDimension.ToString().ToLowerInvariant()}")"
                                   Url="/upload/smoke/success" Multiple="false" Auto="false" MaxFileCount="1"
                                   Accept=".pdf,.png,.jpg" Icon="admiral:system/attach-file-outline"
                                   ChooseText="Перетащите файл сюда или нажмите для выбора"
@@ -41,6 +41,7 @@
                     </div>
                     </div>
                 </div>
+                <div class="admiral-component-controls"><label><span>@SmokeL["Dimension"]</span><select @bind="radzenDimension"><option value="Xl">XL</option><option value="M">M</option></select></label></div>
             </div>
             <CopyableRazorExample Code="@ThemeCode" Title="@SmokeL["Razor · прямой Radzen API"]" />
             <ApiReference Title="@SmokeL["Параметры RadzenUpload + тема"]" Rows="@RadzenRows" />
@@ -96,6 +97,7 @@
 @code {
     private string tab = ComponentDocTabs.Admiral;
     private AdmiralFileInputDimension dimension = AdmiralFileInputDimension.Xl;
+    private AdmiralFileInputDimension radzenDimension = AdmiralFileInputDimension.Xl;
     private AdmiralUploadState state = AdmiralUploadState.Idle;
     private bool multiple = true, disabled, skeleton, radzenHasFile, customTrigger;
     private double progress = 40;
