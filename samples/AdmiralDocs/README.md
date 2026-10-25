@@ -23,7 +23,17 @@ ASPNETCORE_URLS=http://localhost:5073 dotnet run --project samples/AdmiralDocs/A
 
 Откройте `http://localhost:5073/`. Не открывайте `wwwroot/index.html` через `file://`: Blazor WebAssembly и пакетные static web assets требуют HTTP-сервера. Общий `site.css` синхронизируется из smoke при сборке, поэтому страницы используют тот же стиль без отдельной ручной копии.
 
-Публикуйте содержимое `wwwroot` **под** `/admiral-radzen/`. Host использует `<base href="/admiral-radzen/">`. В publish-каталоге находятся `.nojekyll` и копия `index.html` как `404.html` для прямого открытия вложенных маршрутов на GitHub Pages. Локальный статический сервер тоже должен возвращать этот файл при неизвестном маршруте; обычный `python -m http.server` этого не делает.
+Workflow `.github/workflows/docs-pages.yml` собирает локальные пакеты и публикует
+`wwwroot` после подходящих изменений в `main` или ручного запуска. Перед первым
+запуском в настройках репозитория выберите **Settings → Pages → Build and
+deployment → Source: GitHub Actions**. Адрес проекта после успешного развёртывания:
+`https://irlyk.github.io/admiral-radzen/`.
+
+Содержимое `wwwroot` размещается **под** `/admiral-radzen/`. Host использует
+`<base href="/admiral-radzen/">`. В publish-каталоге находятся `.nojekyll` и
+копия `index.html` как `404.html` для прямого открытия вложенных маршрутов на
+GitHub Pages. Локальный статический сервер тоже должен возвращать этот файл при
+неизвестном маршруте; обычный `python -m http.server` этого не делает.
 
 Локальный `dotnet run` запускает стандартный WASM DevServer в корне; на
 `localhost` приложение меняет base URI для этого режима. Для проверки

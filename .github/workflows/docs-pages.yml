@@ -1,0 +1,86 @@
+name: Documentation Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/docs-pages.yml
+      - samples/AdmiralDocs/**
+      - samples/AdmiralConsumerSmoke/Pages/**
+      - samples/AdmiralConsumerSmoke/Shared/**
+      - samples/AdmiralConsumerSmoke/Resources/**
+      - samples/AdmiralConsumerSmoke/SharedResource.cs
+      - samples/AdmiralConsumerSmoke/wwwroot/css/site.css
+      - Radzen.AdmiralComponents/**
+      - Radzen.AdmiralIcons/**
+      - Radzen.AdmiralThemes/**
+      - tools/admiral/build-admiral-packages.sh
+      - NuGet.config
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: documentation-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install package verification tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ripgrep unzip
+
+      - name: Build local Admiral packages
+        run: tools/admiral/build-admiral-packages.sh --configuration Release
+
+      - name: Publish static documentation
+        run: |
+          dotnet restore samples/AdmiralDocs/AdmiralDocs.csproj \
+            --configfile samples/AdmiralDocs/NuGet.config --force
+          dotnet publish samples/AdmiralDocs/AdmiralDocs.csproj \
+            --configuration Release --no-restore --output "$RUNNER_TEMP/admiral-docs"
+          test -f "$RUNNER_TEMP/admiral-docs/wwwroot/.nojekyll"
+          test -f "$RUNNER_TEMP/admiral-docs/wwwroot/404.html"
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ${{ runner.temp }}/admiral-docs/wwwroot
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy documentation
+        id: deployment
+        uses: actions/deploy-pages@v4
