@@ -19,6 +19,7 @@ try {
     page.setDefaultTimeout(7000);
     const go = async route => {
       await page.goto(baseURL + route, { waitUntil: 'domcontentloaded' });
+      await page.locator('.admiral-consumer-shell[data-interactive="true"]').waitFor();
       await page.waitForTimeout(500);
     };
     const activeText = () => page.evaluate(() => document.activeElement?.textContent.trim());
@@ -123,8 +124,9 @@ try {
     });
     await test('Grid: keyboard row focus has color, horizontal cell focus has outline', async () => {
       await go('/tables');
-      const grid = page.locator('.rz-data-grid-data[role="grid"]').first();
-      await grid.focus(); await page.keyboard.press('ArrowDown');
+      const playground = page.getByTestId('table-playground-scroll');
+      const grid = playground.getByRole('grid');
+      await grid.press('ArrowDown');
       const row = grid.locator('tr.rz-data-row.rz-state-focused').first();
       await row.waitFor();
       await page.waitForFunction(() => {
@@ -223,8 +225,15 @@ try {
     await test('Radio group: arrows and Space select an enabled option', async () => {
       await go('/regression/overview');
       const group = page.locator('.admiral-radio-list').first();
-      await group.focus(); await page.keyboard.press('ArrowDown'); await page.keyboard.press('Space');
-      await page.waitForFunction(() => document.querySelector('.admiral-radio-list [role="radio"]:nth-child(2)').getAttribute('aria-checked') === 'true');
+      const options = group.getByRole('radio');
+      await group.focus();
+      await page.waitForFunction(id => document.activeElement?.getAttribute('aria-activedescendant') === id,
+        await options.nth(0).getAttribute('id'));
+      await group.press('ArrowDown');
+      await page.waitForFunction(id => document.activeElement?.getAttribute('aria-activedescendant') === id,
+        await options.nth(1).getAttribute('id'));
+      await group.press('Space');
+      await options.nth(1).and(group.getByRole('radio', { checked: true })).waitFor();
     });
     await test('Tabs: ArrowRight and Enter change active panel', async () => {
       await go('/regression/overview');

@@ -18,6 +18,7 @@
 </style>
 
 <AdmiralLayout Class="admiral-consumer-shell" SideMenuWidth="@sideMenuWidth"
+               data-interactive="@(interactive ? "true" : null)"
                DesktopCollapseTarget="@desktopCollapseTarget"
                SideMenuShadow="false"
                SideMenuAriaLabel="@L["Gallery sections"]"
@@ -121,6 +122,18 @@
 </AdmiralLayout>
 
 @code {
+    private bool interactive;
+
+    // Browser tests use this signal to distinguish prerendered HTML from an active circuit.
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            interactive = true;
+            StateHasChanged();
+        }
+    }
+
     private string CurrentCulture => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
     private bool IsLightTheme => ThemeService.Theme != "admiral-dark";
     private void ChangeTheme(bool lightTheme) => ThemeService.SetTheme(lightTheme ? "admiral" : "admiral-dark");
