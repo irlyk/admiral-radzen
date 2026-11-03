@@ -36,6 +36,12 @@ The batches share one final browser and local-package check. Source presence or 
 - The upstream Radzen `/textarea` demo also passed multiline change, rows/columns, focus and disabled checks. The demo’s auto-resize example relies on an inline event handler blocked by the host CSP with both Admiral themes and the stock Material theme.
 - React gives the clear action priority when both clear and copy are enabled. The Blazor wrapper exposes both actions in that case. It uses CSS for auto-height, while React measures content.
 
+## Follow-up — Select and DropDown
+
+- Escape restores focus to the combobox in both Admiral selection modes. The previous focus handler only recognized the single-select panel.
+- When narrowing the window clips an open Admiral popup horizontally, Admiral closes it through Radzen so it can reopen at the new position. Direct RadzenDropDown retains its original resize and focus behavior.
+- The browser suite checks grouped single selection, adding and removing multiple values, and independent direct Radzen selection in both themes and languages at desktop and mobile widths. Grouping and async data are still limited to the single-select path.
+
 ## Open differences
 
 | Area | Current behavior | Reason / next check |

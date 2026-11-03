@@ -22,7 +22,7 @@ try {
         await page.goto(base + '/components/select');
         const playground = page.locator('.admiral-component-playground').first();
         await playground.waitFor();
-        await page.waitForTimeout(600);
+        await page.locator('.admiral-consumer-shell[data-interactive="true"]').waitFor();
         const select = playground.locator('.rz-dropdown').first();
         const visibleLabel = playground.locator('.admiral-input-field__label').first();
         const labelText = (await visibleLabel.innerText()).trim();
@@ -103,8 +103,60 @@ try {
         }).first();
         assert.equal(await errorField.locator('.rz-dropdown').getAttribute('aria-invalid'), 'true',
           'SelectField error status is exposed to assistive technology');
+        const grouped = page.locator('.admiral-input-field')
+          .filter({ has: page.locator('.admiral-input-field__label').getByText(/^(Grouped|С группировкой)$/) })
+          .getByRole('combobox');
+        await grouped.click();
+        await popup.waitFor();
+        assert.deepEqual(await popup.locator('.admiral-dropdown-group').allTextContents(),
+          ['Россия', 'Беларусь', 'Казахстан'], 'Single Select renders group headings in source order');
+        await popup.getByText('Алматы', { exact: false }).click();
+        await popup.waitFor({ state: 'hidden' });
+        assert.match(await grouped.innerText(), /ALA.*Алматы/s);
+
+        for (const multiple of [false, true]) {
+          if (multiple) {
+            await playground.getByRole('checkbox', { name: 'Multiple', exact: true }).check();
+            await select.and(page.locator('.admiral-select__control:not(.admiral-dropdown)')).waitFor();
+          }
+          const panel = page.locator(multiple ? '.rz-multiselect-panel:visible' : '.rz-dropdown-panel:visible');
+          await select.scrollIntoViewIfNeeded();
+          await select.focus();
+          await page.keyboard.press('Enter');
+          await panel.waitFor();
+          await page.keyboard.press('Escape');
+          await panel.waitFor({ state: 'hidden' });
+          await page.waitForFunction(id => document.activeElement?.id === id, await select.getAttribute('id'));
+
+          if (viewport.width === 1440) {
+            await page.keyboard.press('Enter');
+            await panel.waitFor();
+            await page.setViewportSize({ width: 390, height: viewport.height });
+            await panel.waitFor({ state: 'hidden' });
+            await page.waitForFunction(id => document.activeElement?.id === id, await select.getAttribute('id'));
+            await page.keyboard.press('Enter');
+            await panel.waitFor();
+            const reopened = await panel.boundingBox();
+            assert.ok(reopened && reopened.x >= -1 && reopened.x + reopened.width <= 391,
+              'Select reopens within the narrowed viewport');
+            await page.keyboard.press('Escape');
+            await panel.waitFor({ state: 'hidden' });
+            await page.setViewportSize(viewport);
+          }
+
+          if (multiple) {
+            await select.click();
+            await panel.waitFor();
+            const result = playground.locator('[role="status"]');
+            await result.getByText(/MOW, KZN/).waitFor();
+            await panel.getByText('Минск', { exact: true }).click();
+            await result.getByText(/MOW, KZN, MSQ/).waitFor();
+            await panel.getByText('Казань', { exact: true }).click();
+            await result.getByText(/MOW, MSQ/).waitFor();
+          }
+        }
         await page.goto(base + '/components/drop-down');
-        await page.waitForTimeout(600);
+        await page.locator('.admiral-consumer-shell[data-interactive="true"]').waitFor();
         await page.locator('.component-doc-tabs [data-doc-tab="theme"]').click();
         const direct = page.locator('[data-testid="drop-down-radzen-demo"] .rz-dropdown').first();
         await direct.waitFor();
@@ -120,6 +172,11 @@ try {
             directPanelBox.y >= directBox.y + directBox.height - 2),
         `${theme}/${culture}/${viewport.width}: direct RadzenDropDown popup must not overlap its trigger`);
         await page.keyboard.press('Escape');
+        await directPopup.waitFor({ state: 'hidden' });
+        await direct.click();
+        await directPopup.getByText('Казань', { exact: true }).click();
+        await page.locator('[data-testid="drop-down-radzen-demo"] [role="status"]')
+          .getByText(/Казань/).waitFor();
         assert.deepEqual(errors, [], 'No browser page errors');
         passed++;
         console.log(`Select/DropDown ${theme}/${culture}/${viewport.width}: PASS`);
