@@ -26,7 +26,8 @@
         </RadzenText>
         <div class="admiral-component-playground admiral-table-playground">
             <div class="admiral-component-playground__preview admiral-table-playground__preview">
-                <div class="admiral-table-gallery__scroll" data-testid="table-playground-scroll">
+                <div class="admiral-table-gallery__scroll" data-testid="table-playground-scroll"
+                     data-interactive="@(playgroundInteractive ? "true" : null)">
                     <div class="admiral-table-playground__table">
                         <AdmiralDataGrid TItem="TablePayment"
                                          Data="@(playgroundEmpty ? Array.Empty<TablePayment>() : reorderPayments)" Columns="@playgroundGridColumns"
@@ -420,6 +421,7 @@
     </div>;
     private bool playgroundSelectionEnabled;
     private bool playgroundRowReorder;
+    private bool playgroundInteractive;
     private string tableSearchValue = string.Empty;
     private bool lazyLoading;
     private int compactPage = 1;
@@ -513,6 +515,16 @@
         await Task.Delay(120);
         serverRows = payments.Skip(args.Skip ?? 0).Take(args.Top ?? 4).ToArray();
         serverLoading = false;
+    }
+
+    // The keyboard regression waits for Blazor to attach the interactive grid.
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            playgroundInteractive = true;
+            StateHasChanged();
+        }
     }
 
     protected override void OnInitialized()

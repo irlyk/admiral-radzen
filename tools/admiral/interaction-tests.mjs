@@ -122,9 +122,10 @@ try {
       await page.waitForFunction(() => document.activeElement?.textContent.includes('Large hint'));
     });
     await test('Grid: keyboard row focus has color, horizontal cell focus has outline', async () => {
-      await go('/tables');
-      const grid = page.locator('.rz-data-grid-data[role="grid"]').first();
-      await grid.focus(); await page.keyboard.press('ArrowDown');
+      await page.goto(baseURL + '/tables', { waitUntil: 'domcontentloaded' });
+      const playground = page.locator('[data-testid="table-playground-scroll"][data-interactive="true"]');
+      const grid = playground.getByRole('grid');
+      await grid.press('ArrowDown');
       const row = grid.locator('tr.rz-data-row.rz-state-focused').first();
       await row.waitFor();
       await page.waitForFunction(() => {
