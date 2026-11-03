@@ -48,8 +48,7 @@
 
 ```text
 /_content/Radzen.Admiral.Themes/css/admiral-dark-base.css
-/_content/Radzen.Admiral.Themes/fonts/SourceSans3VF-Upright.ttf.woff2
-/_content/Radzen.Admiral.Themes/fonts/MaterialSymbolsOutlined.woff2
+/_content/Radzen.Blazor/fonts/MaterialSymbolsOutlined.woff2
 /_content/Radzen.Admiral.Icons/admiral-radzen-icons.css
 /_content/Radzen.Admiral.Icons/admiral-icons/icons.txt
 /_content/Radzen.Admiral.Icons/admiral-icons/system/search-outline.svg

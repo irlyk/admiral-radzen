@@ -1,7 +1,6 @@
 # Шрифты в AdmiralRadzen
 
-Темы `admiral` и `admiral-dark` используют системный шрифт для основного текста
-и поставляемые Noto Sans SC/KR для китайских и корейских символов. Переменная
+Темы `admiral` и `admiral-dark` используют системные шрифты. Переменная
 `--admiral-font-family` задаёт семейство для компонентов `Admiral*` и прямых
 компонентов `Radzen*` с темой Admiral, включая всплывающие списки.
 
@@ -28,7 +27,7 @@
 }
 
 :root {
-  --admiral-font-family: 'MyApp Font', 'Admiral CJK', system-ui, sans-serif;
+  --admiral-font-family: 'MyApp Font', system-ui, sans-serif;
 }
 ```
 
@@ -55,12 +54,23 @@
 
 ## Настройка fallback
 
-Если собственный шрифт не нужен, менять переменную не требуется. Тема задаёт
-`--rz-text-font-family` через `--admiral-font-family`; `Admiral CJK` применяется
-только к соответствующим символам благодаря CSS `unicode-range`. Остальной
-текст использует системный шрифт. Если собственный шрифт не содержит китайских
-или корейских глифов, они также переходят к `Admiral CJK`.
+Если собственный шрифт не нужен, менять переменную не требуется. Браузер
+выбирает системное начертание для символов, которых нет в выбранном шрифте.
+Чтобы китайский и корейский текст выглядел одинаково на разных устройствах,
+подключите [Noto Sans SC](https://github.com/google/fonts/tree/main/ofl/notosanssc)
+и [Noto Sans KR](https://github.com/google/fonts/tree/main/ofl/notosanskr) в
+приложении и добавьте их в список `--admiral-font-family` перед системными
+семействами. В качестве основного семейства можно подключить
+[Source Sans 3](https://github.com/adobe-fonts/source-sans/tree/release).
 
 Не переопределяйте `--rz-text-font-family` отдельно после темы: иначе прямые
 компоненты Radzen могут получить другую типографику. Правило действует и для
 всплывающих элементов, которые Radzen размещает у `body`.
+
+## Шрифт иконок Radzen
+
+Стандартные иконки Radzen используют `MaterialSymbolsOutlined.woff2` из
+`_content/Radzen.Blazor/fonts/`. CSS темы ссылается на этот файл относительным
+путём, поэтому он работает и при размещении сайта в подпути. Radzen.Blazor
+поставляет файл вместе с [лицензией Apache 2.0](https://github.com/radzenhq/radzen-blazor/blob/v12.0.6/Radzen.Blazor/wwwroot/fonts/LICENSE-APACHE-MaterialSymbols.txt).
+Иконки Admiral SVG продолжают загружаться из отдельного пакета Icons.

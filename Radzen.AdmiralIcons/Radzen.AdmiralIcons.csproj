@@ -8,7 +8,7 @@
     <AssemblyName>Radzen.Admiral.Icons</AssemblyName>
     <RootNamespace>Radzen.Admiral.Icons</RootNamespace>
     <Title>Radzen Admiral Icons</Title>
-    <Description>Full Admiral DS SVG icon pack and lazy inline SVG adapter for Radzen Blazor components.</Description>
+    <Description>Admiral DS SVG icon pack and lazy inline SVG adapter for Radzen Blazor components.</Description>
     <IsPackable>true</IsPackable>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Version>1.0.3</Version>

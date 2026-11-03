@@ -105,7 +105,7 @@ manifest_icon_count="$(wc -l < Radzen.AdmiralIcons/wwwroot/admiral-icons/icons.t
 package_icon_count="$(unzip -l "$icons_package" | rg '\sstaticwebassets/admiral-icons/.+\.svg$' | wc -l | tr -d ' ')"
 package_theme_css_count="$(unzip -l "$themes_package" | rg '\sstaticwebassets/css/admiral.*\.css$' | wc -l | tr -d ' ')"
 package_theme_scss_count="$(unzip -l "$themes_package" | rg '\sthemes/admiral.*\.scss$' | wc -l | tr -d ' ')"
-package_theme_font_count="$(unzip -l "$themes_package" | rg '\sstaticwebassets/fonts/(MaterialSymbolsOutlined\.woff2|SourceSans3VF-(Italic|Upright)\.ttf\.woff2|cjk/NotoSans(SC|KR)-variable\.woff2)$' | wc -l | tr -d ' ')"
+package_theme_font_count="$(unzip -Z1 "$themes_package" | awk '/\.(woff2?|ttf|otf|eot|ttc)$/ { count++ } END { print count+0 }')"
 package_components_dll_count="$(unzip -l "$components_package" | rg '\slib/net10\.0/Radzen\.Admiral\.Components\.dll$' | wc -l | tr -d ' ')"
 
 if [ "$source_icon_count" != "$manifest_icon_count" ]; then
@@ -128,17 +128,12 @@ if [ "$package_theme_scss_count" != "6" ]; then
   exit 1
 fi
 
-if [ "$package_theme_font_count" != "5" ]; then
-  echo "Expected 5 font files in themes package, got $package_theme_font_count" >&2
+if [ "$package_theme_font_count" != "0" ]; then
+  echo "Expected no font files in themes package, got $package_theme_font_count" >&2
   exit 1
 fi
 if [ "$package_components_dll_count" != "1" ]; then
   echo "Expected the Admiral components assembly in the components package, got $package_components_dll_count" >&2
-  exit 1
-fi
-
-if rg -q '/_content/Radzen\.Blazor/fonts/' Radzen.AdmiralThemes/wwwroot/css/*.css; then
-  echo "Admiral CSS must not reference fonts owned by Radzen.Blazor." >&2
   exit 1
 fi
 

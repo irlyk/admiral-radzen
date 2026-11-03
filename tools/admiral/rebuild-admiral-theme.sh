@@ -22,7 +22,7 @@ cleanup() {
 trap cleanup EXIT
 
 cp "$admiral_themes"/*.scss "$stage_dir/"
-for partial in _variables.scss _mixins.scss _fonts.scss _components.scss _css-variables.scss; do
+for partial in _variables.scss _mixins.scss _components.scss _css-variables.scss; do
   ln -s "$radzen_themes/$partial" "$stage_dir/$partial"
 done
 ln -s "$radzen_themes/components" "$stage_dir/components"
@@ -36,8 +36,6 @@ for variant in admiral-base admiral-dark-base admiral admiral-dark; do
     echo "Sass did not generate $compiled_css" >&2
     exit 1
   fi
-  # Keep font URLs relative to the packaged stylesheet. This resolves within
-  # _content/Radzen.Admiral.Themes/ at both the site root and a host base path.
 done
 
 if ! rg -q --fixed-strings '.rz-grid-table tbody tr.rz-data-row.rz-state-focused' "$stage_dir/admiral-base.css" ||

@@ -37,7 +37,8 @@ for (const [id, directory] of packages) {
   assert.equal(xmlValue(project, 'PackageId'), id, `${directory}: PackageId mismatch`);
   const version = xmlValue(project, 'Version');
   const licenseExpression = xmlValue(project, 'PackageLicenseExpression');
-  assert.ok(version && licenseExpression, `${id}: version or license metadata missing`);
+  assert.ok(version, `${id}: version metadata missing`);
+  assert.equal(licenseExpression, 'MIT', `${id}: expected MIT package metadata`);
   const archive = resolve(root, 'artifacts/packages/admiral', `${id}.${version}.nupkg`);
   assert.ok(existsSync(archive), `${id}: package not built`);
   const members = run('unzip', ['-Z1', archive]).split('\n').filter(Boolean);
@@ -52,13 +53,8 @@ for (const [id, directory] of packages) {
   assert.equal(xmlValue(nuspec, 'version'), version, `${id}: packaged version mismatch`);
   assert.ok(nuspec.includes(`<license type="expression">${licenseExpression}</license>`),
     `${id}: packaged license expression mismatch`);
-  if (id === 'AdmiralRadzen.Themes') {
-    for (const name of [
-      'MaterialSymbolsOutlined.woff2', 'SourceSans3VF-Upright.ttf.woff2',
-      'SourceSans3VF-Italic.ttf.woff2', 'cjk/NotoSansSC-variable.woff2',
-      'cjk/NotoSansKR-variable.woff2', 'cjk/OFL.txt',
-    ]) assert.ok(members.includes(`staticwebassets/fonts/${name}`), `${id}: missing ${name}`);
-  }
+  assert.deepEqual(members.filter(name => /\.(woff2?|ttf|otf|eot|ttc)$/i.test(name)), [],
+    `${id}: fonts must be supplied by the application or its dependencies`);
   if (id === 'AdmiralRadzen.Icons') {
     for (const name of [
       'staticwebassets/admiral-radzen-icons.css',

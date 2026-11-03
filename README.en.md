@@ -75,7 +75,7 @@ Before validating copyable examples and running browser tests, start the smoke s
 
 ## Typography, licensing, and documentation
 
-The theme uses a system font for primary text and Noto Sans SC/KR for Chinese and Korean characters. You can add an application font through `@font-face` and `--admiral-font-family`; see the [font guide](docs/fonts.md).
+The theme uses system fonts by default. You can add an application font through `@font-face` and `--admiral-font-family`; see the [font guide](docs/fonts.md).
 
 The project's own code is covered by the root [MIT license](LICENSE). Bundled third-party materials and their notices are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Use of depicted trademarks is separate from the SVG license.
 

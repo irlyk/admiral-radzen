@@ -88,7 +88,7 @@ try {
     $packageIconCount = Get-PackageEntryCount $iconsPackage.FullName '^staticwebassets/admiral-icons/.+\.svg$'
     $packageThemeCssCount = Get-PackageEntryCount $themesPackage.FullName '^staticwebassets/css/admiral.*\.css$'
     $packageThemeScssCount = Get-PackageEntryCount $themesPackage.FullName '^themes/admiral.*\.scss$'
-    $packageThemeFontCount = Get-PackageEntryCount $themesPackage.FullName '^staticwebassets/fonts/(MaterialSymbolsOutlined\.woff2|SourceSans3VF-(Italic|Upright)\.ttf\.woff2|cjk/NotoSans(SC|KR)-variable\.woff2)$'
+    $packageThemeFontCount = Get-PackageEntryCount $themesPackage.FullName '\.(woff2?|ttf|otf|eot|ttc)$'
     $packageComponentsDllCount = Get-PackageEntryCount $componentsPackage.FullName '^lib/net10\.0/Radzen\.Admiral\.Components\.dll$'
 
     if ($sourceIconCount -ne $manifestIconCount) {
@@ -103,17 +103,11 @@ try {
     if ($packageThemeScssCount -ne 6) {
         throw "Expected 6 Admiral SCSS files in themes package, got $packageThemeScssCount"
     }
-    if ($packageThemeFontCount -ne 5) {
-        throw "Expected 5 font files in themes package, got $packageThemeFontCount"
+    if ($packageThemeFontCount -ne 0) {
+        throw "Expected no font files in themes package, got $packageThemeFontCount"
     }
     if ($packageComponentsDllCount -ne 1) {
         throw "Expected the Admiral components assembly in the components package, got $packageComponentsDllCount"
-    }
-
-    $invalidFontReferences = @(Get-ChildItem -LiteralPath "Radzen.AdmiralThemes/wwwroot/css" -Filter "*.css" -File |
-        Select-String -Pattern '/_content/Radzen\.Blazor/fonts/')
-    if ($invalidFontReferences.Count -gt 0) {
-        throw "Admiral CSS must not reference fonts owned by Radzen.Blazor."
     }
 
     Write-Host "Admiral package pipeline completed."
