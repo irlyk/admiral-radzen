@@ -8,7 +8,7 @@
 Добавьте пакет:
 
 ```xml
-<PackageReference Include="AdmiralRadzen.Themes" Version="1.1.2" />
+<PackageReference Include="AdmiralRadzen.Themes" Version="2.0.0" />
 ```
 
 Рекомендуемый вариант для Radzen Blazor 10.3.1 и новее:

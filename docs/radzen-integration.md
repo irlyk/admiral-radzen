@@ -62,7 +62,7 @@ PowerShell-скрипт не требует `ripgrep`, `unzip` или Unix-ут�
 
 ```xml
 <ItemGroup>
-  <PackageReference Include="AdmiralRadzen.Components" Version="1.2.2" />
+  <PackageReference Include="AdmiralRadzen.Components" Version="2.0.0" />
 </ItemGroup>
 ```
 
@@ -232,8 +232,8 @@ Cookie-сервис сохраняет выбор темы, но начальн�
 ## Только Radzen с темой Admiral
 
 Если обёртки не нужны, подключите `Radzen.Blazor` 12.0.6,
-`AdmiralRadzen.Themes` 1.1.2 и, при необходимости,
-`AdmiralRadzen.Icons` 1.0.3. Используйте стандартную регистрацию сервисов
+`AdmiralRadzen.Themes` 2.0.0 и, при необходимости,
+`AdmiralRadzen.Icons` 2.0.0. Используйте стандартную регистрацию сервисов
 Radzen и его сервисные хосты, а не `AddAdmiralComponents`/`AdmiralServices`.
 
 Тема подключается одним статическим `<link>` из примера выше либо через
