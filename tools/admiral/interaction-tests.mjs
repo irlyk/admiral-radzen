@@ -174,6 +174,67 @@ try {
       await square.waitFor();
       assert.equal(await square.getAttribute('aria-label'), 'Square action');
     });
+    await test('TextInput: label focus, password reset and clear', async () => {
+      await go('/components/text-input');
+      const demo = page.locator('.admiral-component-playground').first();
+      const label = demo.locator('.admiral-input-field__label');
+      const input = demo.locator('.admiral-text-input__control');
+      const named = demo.getByRole('textbox', { name: await label.innerText(), exact: true });
+      await label.click();
+      assert.ok(await named.evaluate(element => element === document.activeElement));
+
+      const password = demo.getByRole('checkbox', { name: 'Password', exact: true });
+      const show = demo.getByRole('button', { name: 'Show password', exact: true });
+      const hide = demo.getByRole('button', { name: 'Hide password', exact: true });
+      await password.check();
+      await demo.locator('input.admiral-text-input__control[type="password"]').waitFor();
+      const original = await input.inputValue();
+      const beforeReveal = await demo.getByRole('status').innerText();
+      await show.press('Enter');
+      await hide.waitFor();
+      assert.equal(await input.getAttribute('type'), 'text');
+      assert.equal(await input.inputValue(), original);
+      assert.equal(await demo.getByRole('status').innerText(), beforeReveal);
+
+      await password.uncheck();
+      await hide.waitFor({ state: 'hidden' });
+      await password.check();
+      await show.waitFor();
+      assert.equal(await input.getAttribute('type'), 'password');
+
+      const readOnly = demo.getByRole('checkbox', { name: 'Read only', exact: true });
+      await readOnly.check();
+      await demo.locator('input.admiral-text-input__control[readonly]').waitFor();
+      assert.ok(await show.isDisabled());
+      assert.equal(await demo.getByRole('button', { name: 'Clear value', exact: true }).count(), 0);
+      await readOnly.uncheck();
+      const clear = demo.getByRole('button', { name: 'Clear value', exact: true });
+      await clear.press('Enter');
+      await page.waitForFunction(() => document.querySelector('.admiral-component-playground .admiral-text-input__control')?.value === '');
+
+      const disabled = demo.getByRole('checkbox', { name: 'Disabled', exact: true });
+      await disabled.check();
+      await demo.locator('input.admiral-text-input__control[disabled]').waitFor();
+      assert.ok(await show.isDisabled());
+      await disabled.uncheck();
+
+      await demo.getByRole('checkbox', { name: 'Loading', exact: true }).check();
+      await demo.locator('.admiral-text-input[aria-busy="true"]').waitFor();
+      assert.ok(await input.isDisabled());
+      await show.waitFor({ state: 'hidden' });
+    });
+    await test('Direct RadzenTextBox: typing, blur and disabled', async () => {
+      await go('/components/text-input');
+      await page.locator('[data-doc-tab="theme"]').click();
+      const demo = page.locator('.admiral-component-playground').first();
+      const input = demo.locator('.admiral-component-playground__preview .rz-textbox');
+      await input.click();
+      await input.fill('Direct Radzen text');
+      await input.press('Tab');
+      await demo.getByRole('checkbox', { name: 'Disabled', exact: true }).check();
+      await demo.locator('.admiral-component-playground__preview .rz-textbox[disabled]').waitFor();
+      assert.equal(await input.inputValue(), 'Direct Radzen text');
+    });
     await test('TextArea: action hover is transparent, focus is square, Enter clears', async () => {
       await go('/components/text-area');
       const field = page.locator('.admiral-component-playground .admiral-input-field');

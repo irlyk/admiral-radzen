@@ -58,6 +58,12 @@ The batches share one final browser and local-package check. Source presence or 
 - Confirming the existing range with Enter leaves both callbacks quiet. A changed boundary emits only its own callback, and clearing a complete range emits one callback per boundary.
 - Both themes passed browser checks for reversed typed ranges, Escape recovery, keyboard calendar selection, interior shading and the direct Radzen range fixture.
 
+## Follow-up — TextInput and TextField
+
+- TextField supplies a stable input ID when the caller omits one, so the visible label names and focuses the input. An explicit ID still takes precedence.
+- Leaving password mode resets visibility. Re-entering password mode masks the value again, and toggling visibility does not emit a value change.
+- Chromium checks cover label focus, password visibility, clear, read-only, disabled and loading. The direct RadzenTextBox example retains typed input after blur and after switching to disabled. In read-only mode Admiral keeps the password toggle disabled, while the pinned React TextInput hides it.
+
 ## Open differences
 
 | Area | Current behavior | Reason / next check |

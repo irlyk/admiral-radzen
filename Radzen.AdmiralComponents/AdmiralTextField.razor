@@ -1,7 +1,7 @@
 <AdmiralInputField Label="@Label" AdditionalLabel="@AdditionalLabel" ExtraText="@ExtraText"
-                   For="@Id" Required="@Required" Size="@Size" Status="@Status" Class="@Class">
+                   For="@ControlId" Required="@Required" Size="@Size" Status="@Status" Class="@Class">
     <AdmiralTextInput Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"
-                      Name="@Name" Id="@Id" Placeholder="@Placeholder" Size="@Size" Status="@Status"
+                      Name="@Name" Id="@ControlId" Placeholder="@Placeholder" Size="@Size" Status="@Status"
                       IconStart="@IconStart" IconEnd="@IconEnd" DisplayClearIcon="@DisplayClearIcon"
                       Password="@Password" Disabled="@Disabled" ReadOnly="@ReadOnly" Loading="@Loading"
                       Skeleton="@Skeleton" Immediate="@Immediate" Trim="@Trim" MaxLength="@MaxLength"
@@ -10,6 +10,28 @@
 </AdmiralInputField>
 
 @code {
+    private readonly string generatedId = $"admiral-text-{Guid.NewGuid():N}";
+
+    private string ControlId
+    {
+        get
+        {
+            if (!string.IsNullOrWhiteSpace(Id))
+            {
+                return Id;
+            }
+
+            if (AdditionalAttributes?.TryGetValue("id", out var id) == true &&
+                id is string explicitId && !string.IsNullOrWhiteSpace(explicitId))
+            {
+                return explicitId;
+            }
+
+            return generatedId;
+        }
+    }
+
+
     [Parameter] public string? Value { get; set; }
     [Parameter] public EventCallback<string?> ValueChanged { get; set; }
     [Parameter] public System.Linq.Expressions.Expression<Func<string?>>? ValueExpression { get; set; }
