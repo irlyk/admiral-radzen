@@ -64,6 +64,11 @@ The batches share one final browser and local-package check. Source presence or 
 - Leaving password mode resets visibility. Re-entering password mode masks the value again, and toggling visibility does not emit a value change.
 - Chromium checks cover label focus, password visibility, clear, read-only, disabled and loading. The direct RadzenTextBox example retains typed input after blur and after switching to disabled. In read-only mode Admiral keeps the password toggle disabled, while the pinned React TextInput hides it.
 
+## Follow-up — Checkbox and CheckboxGroup
+
+- Clicking the Admiral checkbox label focuses the exposed checkbox and toggles it once. Previously the native label focused Radzen’s hidden input and the next Space emitted two changes.
+- Both themes and languages passed checks for label and keyboard activation, the mixed parent state, selecting all children, and disabled propagation. The direct Radzen example passed keyboard activation from the exposed checkbox. Its wrapping HTML label still reproduces the hidden-input focus issue.
+
 ## Open differences
 
 | Area | Current behavior | Reason / next check |
