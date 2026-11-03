@@ -31,6 +31,7 @@ try {
             const days = popup.locator('.rz-calendar-view').first().locator('td[id]');
             const start = await days.nth(4).getAttribute('id');
             const end = await days.nth(7).getAttribute('id');
+            const typedRange = await days.evaluateAll(cells => cells.slice(10, 14).map(cell => cell.id));
             const formatted = id => id.slice(-10).split('-').reverse().join('.');
             await days.nth(4).click();
             await days.nth(7).click();
@@ -38,11 +39,15 @@ try {
             assert.equal(await input.inputValue(), `${formatted(start)} - ${formatted(end)}`);
             await root.locator('.rz-dropdown-clear-icon').click();
             await page.waitForFunction(() => document.querySelector('#input-native-range input').value === '');
-            await input.fill('05.10.2026 - 08.10.2026');
+            // Keep the typed range in the displayed month, distinct from the clicked range.
+            await input.fill(`${formatted(typedRange[0])} - ${formatted(typedRange[3])}`);
             await input.press('Tab');
             await root.locator('.rz-datepicker-trigger').click();
             await popup.waitFor({ state: 'visible' });
-            assert.equal(await popup.locator('[aria-selected="true"]').count(), 4);
+            await page.waitForFunction(({ ids }) => {
+                const selected = document.querySelectorAll('#popupinput-native-range td[aria-selected="true"]');
+                return selected.length === ids.length && [...selected].every(cell => ids.includes(cell.id));
+            }, { ids: typedRange });
             await page.waitForTimeout(300);
             await popup.screenshot({ path: `${output}/${theme}.png` });
             await input.focus();

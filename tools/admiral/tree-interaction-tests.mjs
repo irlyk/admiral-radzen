@@ -38,7 +38,11 @@ try {
         await test('M/S geometry, hierarchy metadata, icons and wrapping', async () => {
             for (const [size, height, icon, indent] of [['Medium', 40, 24, 40], ['Small', 32, 20, 36]]) {
                 await page.locator('.admiral-component-controls select').selectOption(size);
-                await page.waitForTimeout(100);
+                await page.waitForFunction(({ height, size }) => {
+                    const root = document.querySelector('[aria-label="Документы компании"]');
+                    return root?.classList.contains('admiral-tree-view--s') === (size === 'Small')
+                        && root.querySelector('[data-tree-id="docs"]')?.getBoundingClientRect().height === height;
+                }, { height, size });
                 const dimensions = await row('docs').evaluate(e => ({ height: e.getBoundingClientRect().height, icon: e.querySelector('.admiral-tree-view__icon').getBoundingClientRect().width, padding: parseFloat(getComputedStyle(e).paddingInlineStart) }));
                 assert.equal(dimensions.height, height); assert.equal(dimensions.icon, icon);
                 const expectedIconColor = theme === 'admiral-dark' ? 'rgb(130, 134, 139)' : 'rgb(116, 118, 123)';

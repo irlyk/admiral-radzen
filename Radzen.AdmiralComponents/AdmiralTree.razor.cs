@@ -278,8 +278,10 @@ public partial class AdmiralTree : IAsyncDisposable
             if (disposed) return;
             module ??= await JS.InvokeAsync<IJSObjectReference>("import", "./_content/Radzen.Admiral.Components/admiral-tree.js");
             interaction ??= await module.InvokeAsync<IJSObjectReference>("connect", element);
-            await interaction.InvokeVoidAsync("update", pendingFocus);
+            // A keyboard event can queue another focus request before JS interop returns.
+            var focus = pendingFocus;
             pendingFocus = null;
+            await interaction.InvokeVoidAsync("update", focus);
         }
         finally { renderGate.Release(); }
     }
