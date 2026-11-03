@@ -214,6 +214,54 @@ try {
       await textarea.fill('Short text');
       assert.equal((await textarea.boundingBox()).height, shortHeight, 'Auto-height shrinks with content');
     });
+    await test('NumberInput: label, literal text, steppers, bounds and clear', async () => {
+      await go('/components/number-input');
+      const demo = page.locator('.admiral-component-playground').first();
+      const field = demo.getByRole('spinbutton', { name: 'Amount' });
+      await demo.locator('.admiral-input-field__label').click();
+      assert.ok(await field.evaluate(e => e === document.activeElement), 'Label focuses the spinbutton');
+
+      const prefix = demo.locator('.admiral-component-controls input[type="text"], .admiral-component-controls input:not([type])').first();
+      await prefix.fill("Owner's ");
+      await prefix.press('Tab');
+      await page.waitForFunction(() => document.querySelector('.admiral-component-playground [role="spinbutton"]')
+        ?.value.startsWith("Owner's "));
+      await field.fill("Owner's 5,050.50 ₽");
+      await field.press('Tab');
+      await demo.getByRole('status').getByText(/5050.50/).waitFor();
+      await demo.getByRole('button', { name: 'Increase value' }).click();
+      await demo.getByRole('status').getByText(/5051.50/).waitFor();
+      await demo.getByRole('button', { name: 'Clear value' }).click();
+      await page.waitForFunction(() => document.querySelector('.admiral-component-playground [role="spinbutton"]')?.value === '');
+
+      const rate = page.getByRole('spinbutton', { name: 'Rate', exact: true });
+      await rate.focus();
+      await rate.press('ArrowUp');
+      await page.waitForFunction(() => document.querySelector('input[aria-valuemax="100"]')?.value === '12.75 %');
+      await rate.fill('150 %');
+      await rate.press('Tab');
+      await page.waitForFunction(() => document.querySelector('input[aria-valuemax="100"]')?.value === '100.00 %');
+      await rate.fill('-10 %');
+      await rate.press('Tab');
+      await page.waitForFunction(() => document.querySelector('input[aria-valuemax="100"]')?.value === '0.00 %');
+    });
+    await test('Direct RadzenNumeric: binding, step and upper bound', async () => {
+      await go('/components/number-input');
+      await page.locator('[data-doc-tab="theme"]').click();
+      const demo = page.locator('.admiral-component-playground').first();
+      const field = demo.locator('.admiral-component-playground__preview').getByRole('spinbutton');
+      const bound = demo.locator('input[type="number"]');
+      await bound.waitFor();
+      await field.fill('999');
+      await field.press('Tab');
+      await page.waitForFunction(() => document.querySelector('.admiral-component-playground input[type="number"]')?.value === '999');
+      await demo.locator('.rz-numeric-up').click();
+      await page.waitForFunction(() => document.querySelector('.admiral-component-playground input[type="number"]')?.value === '1000');
+      await demo.locator('.rz-numeric-up').click();
+      assert.equal(await bound.inputValue(), '1000');
+      await demo.locator('.rz-numeric-down').click();
+      await page.waitForFunction(() => document.querySelector('.admiral-component-playground input[type="number"]')?.value === '999');
+    });
     await test('Slider: ArrowRight adjusts value and exposes live slider semantics', async () => {
       await go('/components/slider');
       const handle = page.locator('.admiral-slider [role="slider"]').first();

@@ -47,6 +47,12 @@ The batches share one final browser and local-package check. Source presence or 
 - Keyboard selection keeps the existing country combobox mounted so focus can return to it after the country list closes. The first Tab after keyboard selection can still be consumed by the dropdown; a subsequent Tab reaches the phone input.
 - The browser test covers retaining Kazakhstan when editing a shared +7 number, replacing the dial code without losing national digits, and updating the country label when a typed international prefix changes the country in Digits mode.
 
+## Follow-up — NumberInput
+
+- NumberInputField uses the native Radzen input ID for label focus and references the visible label for the accessible name. An explicit Name still supplies the native input name and ID.
+- Text decorations preserve literal apostrophes when building a numeric format. Chromium checks cover editing a decorated value, stepping, clearing a nullable value, and enforcing Min/Max. Direct RadzenNumeric keeps its own binding, stepping and bounds.
+- Both themes passed the S/M/XL height and minus/plus order checks, and the fractional keyboard step used the expected separator in RU and EN. The visual error state still lacks `aria-invalid` on the spinbutton in the current RadzenNumeric markup.
+
 ## Open differences
 
 | Area | Current behavior | Reason / next check |

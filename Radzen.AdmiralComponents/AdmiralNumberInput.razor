@@ -5,7 +5,7 @@
                    Value="@Value"
                    ValueChanged="@ValueChanged"
                    ValueExpression="@ValueExpression"
-                   Name="@Name"
+                   Name="@(string.IsNullOrWhiteSpace(Name) ? Id : Name)"
                    Placeholder="@Placeholder"
                    Disabled="@Disabled"
                    ReadOnly="@ReadOnly"
@@ -82,7 +82,10 @@
         }
     }
 
-    private static string Literal(string? value) => string.IsNullOrEmpty(value) ? string.Empty : $"'{value.Replace("'", "''")}'";
+    // Escape each character so numeric formatting and parsing both treat it as literal text.
+    private static string Literal(string? value) => string.IsNullOrEmpty(value)
+        ? string.Empty
+        : string.Concat(value.Select(character => $"\\{character}"));
     private Task ClearAsync() => ValueChanged.InvokeAsync(default);
 
     private string CssClass => string.Join(' ', new[]
