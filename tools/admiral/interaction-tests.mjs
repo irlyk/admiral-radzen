@@ -368,6 +368,44 @@ try {
         assert.ok(await disabled.count());
       }
     });
+    await test('Switch: visible labels, native activation, disabled state and theme change', async () => {
+      await go('/regression/overview');
+      const section = page.locator('section[aria-labelledby="binary-heading"]');
+      const off = section.getByRole('switch', { name: 'Switch off', exact: true });
+      const on = section.getByRole('switch', { name: 'Switch on', exact: true });
+      const disabledOff = section.getByRole('switch', { name: 'Disabled off', exact: true });
+      const disabledOn = section.getByRole('switch', { name: 'Disabled on', exact: true });
+      await off.waitFor({ state: 'attached' });
+      assert.equal(await on.getAttribute('aria-checked'), 'true');
+      assert.ok(await disabledOff.isDisabled());
+      assert.ok(await disabledOn.isDisabled());
+      assert.equal(await disabledOff.getAttribute('aria-checked'), 'false');
+      assert.equal(await disabledOn.getAttribute('aria-checked'), 'true');
+
+      await section.getByText('Switch off', { exact: true }).click();
+      await off.and(section.getByRole('switch', { checked: true })).waitFor({ state: 'attached' });
+      assert.ok(await off.evaluate(e => e === document.activeElement));
+      await off.press('Enter');
+      await off.and(section.getByRole('switch', { checked: false })).waitFor({ state: 'attached' });
+      await off.press('Space');
+      await off.and(section.getByRole('switch', { checked: true })).waitFor({ state: 'attached' });
+      const visual = off.locator('..');
+      const { width, height } = await visual.boundingBox();
+      assert.deepEqual([width, height], [36, 20]);
+
+      await section.getByText('Disabled off', { exact: true }).click({ force: true });
+      assert.equal(await disabledOff.getAttribute('aria-checked'), 'false');
+      const background = () => visual.locator('.rz-switch-circle').evaluate(e => getComputedStyle(e).backgroundColor);
+      await visual.locator('.rz-switch-circle').evaluate(e => Promise.all(e.getAnimations().map(animation => animation.finished)));
+      const before = await background();
+      await page.getByRole('button', { name: 'Switch Admiral color theme', exact: true }).click();
+      await page.waitForFunction(color => getComputedStyle(document.querySelector(
+        '#demo-switch-off + .rz-switch-circle')).backgroundColor !== color, before);
+      assert.equal(await off.getAttribute('aria-checked'), 'true');
+      await page.getByRole('button', { name: 'Switch Admiral color theme', exact: true }).click();
+      await page.waitForFunction(color => getComputedStyle(document.querySelector(
+        '#demo-switch-off + .rz-switch-circle')).backgroundColor === color, before);
+    });
     await test('Radio groups: accessible names, arrow selection, disabled skip and label click', async () => {
       await go('/regression/overview');
       const group = page.getByRole('radiogroup', { name: 'Radio button M', exact: true });

@@ -198,20 +198,20 @@
                 <RadzenLabel Text="@L["Disabled checked"]" />
             </div>
             <div class="admiral-state-grid__item">
-                <RadzenSwitch @bind-Value="switchOff" />
-                <RadzenLabel Text="@L["Switch off"]" />
+                <RadzenSwitch Name="demo-switch-off" @bind-Value="switchOff" />
+                <RadzenLabel Component="demo-switch-off" Text="@L["Switch off"]" />
             </div>
             <div class="admiral-state-grid__item">
-                <RadzenSwitch @bind-Value="switchOn" />
-                <RadzenLabel Text="@L["Switch on"]" />
+                <RadzenSwitch Name="demo-switch-on" @bind-Value="switchOn" />
+                <RadzenLabel Component="demo-switch-on" Text="@L["Switch on"]" />
             </div>
             <div class="admiral-state-grid__item">
-                <RadzenSwitch Value="false" Disabled="true" />
-                <RadzenLabel Text="@L["Disabled off"]" />
+                <RadzenSwitch Name="demo-switch-disabled-off" Value="false" Disabled="true" />
+                <RadzenLabel Component="demo-switch-disabled-off" Text="@L["Disabled off"]" />
             </div>
             <div class="admiral-state-grid__item">
-                <RadzenSwitch Value="true" Disabled="true" />
-                <RadzenLabel Text="@L["Disabled on"]" />
+                <RadzenSwitch Name="demo-switch-disabled-on" Value="true" Disabled="true" />
+                <RadzenLabel Component="demo-switch-disabled-on" Text="@L["Disabled on"]" />
             </div>
         </div>
     </section>
@@ -363,8 +363,8 @@
         <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap">
             <RadzenCheckBox @bind-Value="confirmed" TValue="bool" />
             <RadzenLabel Text="@L["Confirmed"]" />
-            <RadzenSwitch @bind-Value="notifications" />
-            <RadzenLabel Text="@L["Notifications"]" />
+            <RadzenSwitch Name="demo-switch-notifications" @bind-Value="notifications" />
+            <RadzenLabel Component="demo-switch-notifications" Text="@L["Notifications"]" />
         </RadzenStack>
     </section>
 
@@ -923,8 +923,8 @@
                                   Click="SendLiveUpload" />
                     <RadzenButton Text="@L["Reset"]" Variant="Variant.Text" ButtonStyle="ButtonStyle.Base"
                                   Size="ButtonSize.Small" Disabled="@(!liveUploadHasFile)" Click="ResetLiveUpload" />
-                    <RadzenSwitch @bind-Value="simulateUploadError" Disabled="@liveUploadHasFile" />
-                    <RadzenText TextStyle="TextStyle.Caption" class="rz-m-0">@L["Simulate server error"]</RadzenText>
+                    <RadzenSwitch Name="demo-switch-upload-error" @bind-Value="simulateUploadError" Disabled="@liveUploadHasFile" />
+                    <RadzenLabel Component="demo-switch-upload-error" class="rz-text-caption rz-m-0" Text="@L["Simulate server error"]" />
                 </RadzenStack>
                 @if (liveUploadHasFile)
                 {

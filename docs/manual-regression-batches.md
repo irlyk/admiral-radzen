@@ -74,6 +74,11 @@ The batches share one final browser and local-package check. Source presence or 
 - The two direct Radzen radio groups in the gallery now reference their visible headings for accessible names.
 - Chromium checks passed for arrow selection, wrapping past a disabled option, label clicks and a visible focus ring in both themes. At 390 px the M and S radio indicators measured 20 and 18 px.
 
+## Follow-up — Switch
+
+- The direct RadzenSwitch examples now associate the visible captions with their native inputs. Clicking an enabled label focuses and toggles its switch.
+- Chromium checks passed for Space, Enter, disabled on/off, the 36 × 20 px track, and switching the active theme while preserving the checked state.
+
 ## Open differences
 
 | Area | Current behavior | Reason / next check |
