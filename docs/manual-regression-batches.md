@@ -53,6 +53,11 @@ The batches share one final browser and local-package check. Source presence or 
 - Text decorations preserve literal apostrophes when building a numeric format. Chromium checks cover editing a decorated value, stepping, clearing a nullable value, and enforcing Min/Max. Direct RadzenNumeric keeps its own binding, stepping and bounds.
 - Both themes passed the S/M/XL height and minus/plus order checks, and the fractional keyboard step used the expected separator in RU and EN. `Status=Error` sets `aria-invalid` on the spinbutton. Leaving Error restores the native Radzen validation state.
 
+## Follow-up — DateRangePicker
+
+- Confirming the existing range with Enter leaves both callbacks quiet. A changed boundary emits only its own callback, and clearing a complete range emits one callback per boundary.
+- Both themes passed browser checks for reversed typed ranges, Escape recovery, keyboard calendar selection, interior shading and the direct Radzen range fixture.
+
 ## Open differences
 
 | Area | Current behavior | Reason / next check |
