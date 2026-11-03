@@ -69,6 +69,11 @@ The batches share one final browser and local-package check. Source presence or 
 - Clicking the Admiral checkbox label focuses the exposed checkbox and toggles it once. Previously the native label focused Radzen’s hidden input and the next Space emitted two changes.
 - Both themes and languages passed checks for label and keyboard activation, the mixed parent state, selecting all children, and disabled propagation. The direct Radzen example passed keyboard activation from the exposed checkbox. Its wrapping HTML label still reproduces the hidden-input focus issue.
 
+## Follow-up — RadioButtonList
+
+- The two direct Radzen radio groups in the gallery now reference their visible headings for accessible names.
+- Chromium checks passed for arrow selection, wrapping past a disabled option, label clicks and a visible focus ring in both themes. At 390 px the M and S radio indicators measured 20 and 18 px.
+
 ## Open differences
 
 | Area | Current behavior | Reason / next check |

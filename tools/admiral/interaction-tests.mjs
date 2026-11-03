@@ -368,9 +368,10 @@ try {
         assert.ok(await disabled.count());
       }
     });
-    await test('Radio group: arrows and Space select an enabled option', async () => {
+    await test('Radio groups: accessible names, arrow selection, disabled skip and label click', async () => {
       await go('/regression/overview');
-      const group = page.locator('.admiral-radio-list').first();
+      const group = page.getByRole('radiogroup', { name: 'Radio button M', exact: true });
+      await page.getByRole('radiogroup', { name: 'Radio button S', exact: true }).waitFor();
       const options = group.getByRole('radio');
       await group.focus();
       await page.waitForFunction(id => document.activeElement?.getAttribute('aria-activedescendant') === id,
@@ -379,7 +380,16 @@ try {
       await page.waitForFunction(id => document.activeElement?.getAttribute('aria-activedescendant') === id,
         await options.nth(1).getAttribute('id'));
       await group.press('Space');
-      await options.nth(1).and(group.getByRole('radio', { checked: true })).waitFor();
+      const selected = group.getByRole('radio', { checked: true });
+      await options.nth(1).and(selected).waitFor();
+      assert.equal(await options.nth(1).locator('.rz-radiobutton-box').evaluate(e => getComputedStyle(e).outlineStyle), 'solid');
+      await group.press('End');
+      await options.nth(2).and(selected).waitFor();
+      await group.press('ArrowDown');
+      await options.nth(0).and(selected).waitFor();
+      await options.nth(1).locator('.rz-radiobutton-label').click();
+      await options.nth(1).and(selected).waitFor();
+      assert.equal(await options.nth(3).getAttribute('aria-disabled'), 'true');
     });
     await test('Tabs: ArrowRight and Enter change active panel', async () => {
       await go('/regression/overview');

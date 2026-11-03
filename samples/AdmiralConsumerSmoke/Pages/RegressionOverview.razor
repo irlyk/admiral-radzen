@@ -223,9 +223,9 @@
         </RadzenText>
         <div class="admiral-gallery__form-grid">
             <div class="admiral-choice-demo">
-                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0">@L["Radio button M"]</RadzenText>
+                <RadzenText TextStyle="TextStyle.Subtitle2" id="radio-button-m-heading" class="rz-m-0">@L["Radio button M"]</RadzenText>
                 <RadzenRadioButtonList TValue="string" @bind-Value="paymentMethod"
-                                       class="admiral-radio-list" Gap="0.75rem">
+                                       class="admiral-radio-list" AriaLabelledBy="radio-button-m-heading" Gap="0.75rem">
                     <Items>
                         <RadzenRadioButtonListItem Text="@L["Card"]" Value="@("card")" />
                         <RadzenRadioButtonListItem Text="@L["Bank transfer"]" Value="@("bank")" />
@@ -236,9 +236,9 @@
             </div>
 
             <div class="admiral-choice-demo">
-                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0">@L["Radio button S"]</RadzenText>
+                <RadzenText TextStyle="TextStyle.Subtitle2" id="radio-button-s-heading" class="rz-m-0">@L["Radio button S"]</RadzenText>
                 <RadzenRadioButtonList TValue="string" @bind-Value="deliverySpeed"
-                                       class="admiral-radio-list admiral-radio-list--s" Gap="0.75rem">
+                                       class="admiral-radio-list admiral-radio-list--s" AriaLabelledBy="radio-button-s-heading" Gap="0.75rem">
                     <Items>
                         <RadzenRadioButtonListItem Text="@L["Standard"]" Value="@("standard")" />
                         <RadzenRadioButtonListItem Text="@L["Express"]" Value="@("express")" />
