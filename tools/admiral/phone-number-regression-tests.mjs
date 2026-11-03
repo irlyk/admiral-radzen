@@ -40,7 +40,17 @@ try {
               `${theme}/${culture}/${viewport.width}: phone text must clear flag and chevron: ${JSON.stringify(geometry)}`);
           }
           assert.ok(await input.evaluate(element => element.labels?.length > 0), 'Phone input has a programmatically associated label');
+          const selectedFlag = select.locator('.admiral-phone-input__country-value [data-admiral-icon-loaded] svg');
+          await selectedFlag.waitFor();
+          const initialFlag = await selectedFlag.evaluate(svg => svg.outerHTML);
+          await page.keyboard.press('Tab');
           await select.focus();
+          const focus = await select.evaluate(element => {
+            const style = getComputedStyle(element);
+            return { visible: element.matches(':focus-visible'), outline: style.outlineStyle, width: style.outlineWidth };
+          });
+          assert.deepEqual(focus, { visible: true, outline: 'solid', width: '2px' },
+            'Country selector exposes a visible keyboard focus outline');
           await page.keyboard.press('Enter');
           const popup = page.locator('.rz-dropdown-panel:visible:has(.admiral-phone-input__country-option)').first();
           await popup.waitFor();
@@ -74,6 +84,12 @@ try {
           await search.press('Enter');
           await popup.waitFor({ state: 'hidden' });
           await page.waitForFunction(() => /United/.test(document.querySelector('.admiral-phone-input .rz-dropdown')?.getAttribute('aria-label') ?? ''));
+          const flagName = (await select.getAttribute('aria-label')) === 'United Kingdom'
+            ? 'united-kingdom-of-great-britain-and-northern-ireland'
+            : 'united-states-of-america';
+          await select.locator(`[data-admiral-icon-loaded="flags/${flagName}"] svg`).waitFor();
+          assert.notEqual(await selectedFlag.evaluate(svg => svg.outerHTML), initialFlag,
+            'Changing the country replaces the rendered SVG flag');
           assert.equal(await select.getAttribute('id'), countryControlId,
             'Country selection preserves the combobox element');
           await page.waitForFunction(id => document.activeElement?.id === id, countryControlId);
@@ -118,6 +134,7 @@ try {
             await page.waitForTimeout(350); // Let both country and value callbacks settle before typing.
             assert.match(await playground.locator('[role=status]').innerText(), /KAZ/,
               'Country remains KAZ after country-selection callbacks settle');
+            await country.locator('[data-admiral-icon-loaded="flags/kazakhstan"] svg').waitFor();
             const number = playground.locator('input[inputmode="tel"]');
             await number.fill('+7 999 123-45-68');
             await number.press('Tab');

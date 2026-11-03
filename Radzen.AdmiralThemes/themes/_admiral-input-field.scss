@@ -530,6 +530,11 @@ $admiral-input-success-hover: if($theme-dark, #1FA951, #128238);
   padding: 0 !important;
 }
 
+.admiral-phone-input > .admiral-select .rz-dropdown:focus-visible {
+  outline: 2px solid var(--rz-primary);
+  outline-offset: -2px;
+}
+
 .admiral-phone-input > .admiral-select .rz-dropdown-label {
   display: flex;
   align-items: center;

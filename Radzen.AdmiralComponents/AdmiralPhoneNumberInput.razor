@@ -7,8 +7,9 @@
                    FilterPlaceholder="@CountrySearchPlaceholder"
                    PopupStyle="max-height: min(18rem, calc(100dvh - 4rem)); min-width: min(18rem, calc(100vw - 1rem)); background: var(--rz-panel-background-color, var(--rz-base-background-color))">
         <SelectedTemplate Context="country">
+            @{ var flagIcon = SelectedCountry?.FlagIcon ?? country.FlagIcon; }
             <span class="admiral-phone-input__country-value">
-                <AdmiralIcon Icon="@(SelectedCountry?.FlagIcon ?? country.FlagIcon)" Size="@FlagSize" />
+                <AdmiralIcon @key="flagIcon" Icon="@flagIcon" Size="@FlagSize" />
             </span>
         </SelectedTemplate>
         <ItemTemplate Context="country">

@@ -44,6 +44,7 @@ The batches share one final browser and local-package check. Source presence or 
 
 ## Follow-up — PhoneNumberInput
 
+- Changing country replaces the flag icon without remounting the combobox. Keyboard focus draws a separate outline around the country selector. Browser checks inspect the loaded SVG and the visible outline in both themes.
 - Keyboard selection keeps the existing country combobox mounted so focus can return to it after the country list closes. The first Tab after keyboard selection can still be consumed by the dropdown; a subsequent Tab reaches the phone input.
 - The browser test covers retaining Kazakhstan when editing a shared +7 number, replacing the dial code without losing national digits, and updating the country label when a typed international prefix changes the country in Digits mode.
 
