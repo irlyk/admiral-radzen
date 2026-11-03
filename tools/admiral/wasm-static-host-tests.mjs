@@ -58,7 +58,7 @@ for (const asset of ['index.html', '404.html', '.nojekyll', '_framework/blazor.w
   'css/site.css', 'css/docs.css',
   '_content/Radzen.Admiral.Themes/css/admiral-base.css',
   '_content/Radzen.Admiral.Themes/css/admiral-dark-base.css',
-  '_content/Radzen.Admiral.Themes/fonts/SourceSans3VF-Upright.ttf.woff2',
+  '_content/Radzen.Blazor/fonts/MaterialSymbolsOutlined.woff2',
   '_content/Radzen.Admiral.Icons/admiral-radzen-icons.css',
   '_content/Radzen.Admiral.Icons/admiral-icons/system/star-solid.svg']) {
   assert.ok(existsSync(resolve(web, asset)), `Missing published asset: ${asset}`);

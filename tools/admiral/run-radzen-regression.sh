@@ -56,7 +56,7 @@ cp "$package_root/Radzen.AdmiralThemes/wwwroot/css/admiral-dark-wcag.css" "$regr
 # Restore package asset URLs only in the temporary copies; the shipped CSS keeps
 # relative URLs so applications hosted below a base path resolve them correctly.
 for variant in admiral-regression-base admiral-regression-dark-base; do
-  perl -pi -e 's@\.\./fonts/@/_content/Radzen.Admiral.Themes/fonts/@g; s@\.\./\.\./Radzen\.Admiral\.Icons/admiral-icons/@/_content/Radzen.Admiral.Icons/admiral-icons/@g' "$regression_css_dir/$variant.css"
+  perl -pi -e 's@\.\./\.\./Radzen\.Blazor/fonts/@/_content/Radzen.Blazor/fonts/@g; s@\.\./\.\./Radzen\.Admiral\.Icons/admiral-icons/@/_content/Radzen.Admiral.Icons/admiral-icons/@g' "$regression_css_dir/$variant.css"
 done
 
 dotnet build "$demo_host" \

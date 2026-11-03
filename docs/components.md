@@ -7,7 +7,7 @@
 ## Подключение
 
 ```xml
-<PackageReference Include="AdmiralRadzen.Components" Version="1.2.2" />
+<PackageReference Include="AdmiralRadzen.Components" Version="2.0.0" />
 ```
 
 Пакет уже зависит от `Radzen.Blazor`, `AdmiralRadzen.Icons` и

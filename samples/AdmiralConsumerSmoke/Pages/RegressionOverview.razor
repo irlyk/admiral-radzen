@@ -1565,14 +1565,14 @@
 
     private readonly PaymentRow[] payments =
     [
-        new("ADM-1042", "Northern Star LLC", 128_400m, "RUB", "Completed", "VTB → VTB", "Elena Petrova"),
-        new("ADM-1043", "Vector Lab", 2_850m, "USD", "Pending", "VTB → Correspondent bank", "Alexey Morozov"),
-        new("ADM-1044", "Oceanic Trade", 46_100m, "EUR", "Rejected", "VTB → SEPA", "Elena Petrova"),
-        new("ADM-1045", "Aurora Systems", 780_000m, "RUB", "Completed", "VTB → Bank of Russia", "Maria Volkova"),
-        new("ADM-1046", "Atlas Retail", 93_200m, "RUB", "Pending", "VTB → VTB", "Alexey Morozov"),
-        new("ADM-1047", "Northwind GmbH", 18_750m, "EUR", "Completed", "VTB → SEPA", "Maria Volkova"),
-        new("ADM-1048", "Pacific Studio", 6_400m, "USD", "Rejected", "VTB → Correspondent bank", "Elena Petrova"),
-        new("ADM-1049", "Volga Logistics", 215_000m, "RUB", "Completed", "VTB → Bank of Russia", "Alexey Morozov")
+        new("ADM-1042", "Northern Star LLC", 128_400m, "RUB", "Completed", "Example Bank → Example Bank", "Elena Petrova"),
+        new("ADM-1043", "Vector Lab", 2_850m, "USD", "Pending", "Example Bank → Correspondent bank", "Alexey Morozov"),
+        new("ADM-1044", "Oceanic Trade", 46_100m, "EUR", "Rejected", "Example Bank → SEPA", "Elena Petrova"),
+        new("ADM-1045", "Aurora Systems", 780_000m, "RUB", "Completed", "Example Bank → Bank of Russia", "Maria Volkova"),
+        new("ADM-1046", "Atlas Retail", 93_200m, "RUB", "Pending", "Example Bank → Example Bank", "Alexey Morozov"),
+        new("ADM-1047", "Northwind GmbH", 18_750m, "EUR", "Completed", "Example Bank → SEPA", "Maria Volkova"),
+        new("ADM-1048", "Pacific Studio", 6_400m, "USD", "Rejected", "Example Bank → Correspondent bank", "Elena Petrova"),
+        new("ADM-1049", "Volga Logistics", 215_000m, "RUB", "Completed", "Example Bank → Bank of Russia", "Alexey Morozov")
     ];
 
     private IEnumerable<PaymentRow> FilteredPayments => string.IsNullOrWhiteSpace(paymentGridSearchValue)

@@ -10,11 +10,11 @@
     <Title>Radzen Admiral Themes</Title>
     <Description>Admiral Design System light and dark themes for Radzen Blazor.</Description>
     <IsPackable>true</IsPackable>
-    <Version>1.1.2</Version>
+    <Version>2.0.0</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>irlyk</Authors>
     <Copyright>Copyright (c) 2026 irlyk</Copyright>
-    <PackageLicenseExpression>MIT AND OFL-1.1 AND Apache-2.0</PackageLicenseExpression>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/irlyk/admiral-radzen</PackageProjectUrl>
     <RepositoryUrl>https://github.com/irlyk/admiral-radzen.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

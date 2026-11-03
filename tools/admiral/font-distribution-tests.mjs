@@ -9,6 +9,8 @@ const baseURL = process.env.SMOKE_URL || 'http://localhost:5072';
 const fixtureDir = process.env.ADMIRAL_FONT_FIXTURE_DIR;
 const family = 'Admiral Consumer Font Fixture';
 const fixtureFamily = process.env.ADMIRAL_FONT_FIXTURE_EXPECTED_FAMILY;
+const radzenIconFont = '/_content/Radzen.Blazor/fonts/MaterialSymbolsOutlined.woff2';
+const themeFontPath = '/_content/Radzen.Admiral.Themes/fonts/';
 const viewports = [{ width: 1280, height: 800 }, { width: 390, height: 800 }];
 const themes = ['admiral', 'admiral-dark'];
 const results = [];
@@ -32,7 +34,7 @@ if (fixtureDir) {
     'Fixture needs Regular, Medium and SemiBold fonts');
   const css = fonts.map(([weight, file]) =>
     `@font-face{font-family:"${family}";src:url("./${encodeURIComponent(file)}");font-weight:${weight};font-style:normal;font-display:swap}`)
-    .join('\n') + `\n:root{--admiral-font-family:"${family}","Admiral CJK",system-ui,sans-serif}`;
+    .join('\n') + `\n:root{--admiral-font-family:"${family}",system-ui,sans-serif}`;
   fixtureServer = createServer((request, response) => {
     const pathname = new URL(request.url, 'http://localhost').pathname;
     response.setHeader('Access-Control-Allow-Origin', '*');
@@ -62,7 +64,7 @@ const browser = await chromium.launch({ headless: true,
 // Computed font-family only reports the CSS stack. Render probes with the
 // target's computed typography and ask Chromium which face painted each glyph.
 async function renderedFonts(page, parentSelector) {
-  const samples = { latin: 'Admiral', cyrillic: 'Адмирал', chinese: '中文测试', korean: '한국어' };
+  const samples = { latin: 'Admiral', cyrillic: 'Адмирал' };
   await page.evaluate(({ selector, samples }) => {
     const parent = selector.endsWith(':visible')
       ? [...document.querySelectorAll(selector.slice(0, -8))].find(element => element.getClientRects().length)
@@ -116,8 +118,10 @@ try {
     const requests = [];
     const failed = [];
     const fixtureResponses = [];
+    const iconFontStatuses = [];
     page.on('request', request => requests.push(request.url()));
     page.on('response', response => {
+      if (new URL(response.url()).pathname.endsWith(radzenIconFont)) iconFontStatuses.push(response.status());
       if (fixtureURL && response.url().startsWith(fixtureURL))
         fixtureResponses.push({ url: response.url(), status: response.status() });
     });
@@ -150,20 +154,15 @@ try {
           if (fixtureURL) assert.ok(value.includes(family), `${route}: ${part} uses consumer font: ${value}`);
         }
         if (route === '/components/button') {
+          const iconFaces = await page.evaluate(async () =>
+            (await document.fonts.load('16px "Admiral Material Symbols"', 'search'))
+              .map(face => face.status));
+          assert.deepEqual(iconFaces, ['loaded'], 'Admiral theme must register a working Radzen icon face');
           const actual = await renderedFonts(page, 'body');
-          assert.ok(actual.chinese.some(name => /Noto Sans SC/i.test(name)),
-            `Chinese glyph uses packaged Noto Sans SC: ${JSON.stringify(actual)}`);
-          assert.ok(actual.korean.some(name => /Noto Sans KR/i.test(name)),
-            `Korean glyph uses packaged Noto Sans KR: ${JSON.stringify(actual)}`);
           if (fixtureURL) {
             for (const script of ['latin', 'cyrillic']) {
               assert.ok(actual[script].some(name => name === fixtureFamily),
                 `${script} glyph uses consumer font ${fixtureFamily}: ${JSON.stringify(actual)}`);
-            }
-          } else {
-            for (const script of ['latin', 'cyrillic']) {
-              assert.ok(actual[script].length > 0,
-                `${script} glyph uses an available font: ${JSON.stringify(actual)}`);
             }
           }
           console.log(`${label} actual glyph fonts ${JSON.stringify(actual)}`);
@@ -174,9 +173,6 @@ try {
           const directFamily = await direct.evaluate(element => getComputedStyle(element).fontFamily);
           if (fixtureURL) assert.ok(directFamily.includes(family), `Direct Radzen button uses consumer font: ${directFamily}`);
           const actual = await renderedFonts(page, '.rz-button');
-          assert.ok(actual.chinese.some(name => /Noto Sans SC/i.test(name)) &&
-            actual.korean.some(name => /Noto Sans KR/i.test(name)),
-          `Direct Radzen button CJK glyphs use packaged fonts: ${JSON.stringify(actual)}`);
           if (fixtureURL) assert.ok(actual.latin.some(name => name === fixtureFamily),
             `Direct Radzen button Latin glyphs use consumer font: ${JSON.stringify(actual)}`);
         }
@@ -189,10 +185,6 @@ try {
           const popupFamily = await popup.evaluate(element => getComputedStyle(element).fontFamily);
           if (fixtureURL) assert.ok(popupFamily.includes(family), `Popup uses consumer font: ${popupFamily}`);
           const actual = await renderedFonts(page, '.rz-dropdown-panel:visible');
-          assert.ok(actual.chinese.some(name => /Noto Sans SC/i.test(name)),
-            `Popup Chinese glyph uses packaged Noto Sans SC: ${JSON.stringify(actual)}`);
-          assert.ok(actual.korean.some(name => /Noto Sans KR/i.test(name)),
-            `Popup Korean glyph uses packaged Noto Sans KR: ${JSON.stringify(actual)}`);
           if (fixtureURL) assert.ok(actual.latin.some(name => name === fixtureFamily),
             `Popup Latin glyph uses consumer font: ${JSON.stringify(actual)}`);
           await page.keyboard.press('Escape');
@@ -216,6 +208,10 @@ try {
             `Consumer font weight ${weight} is loaded`);
         }
       }
+      assert.ok(iconFontStatuses.length && iconFontStatuses.every(status => [200, 304].includes(status)),
+        `Radzen icon font must load from Radzen.Blazor: ${iconFontStatuses}`);
+      assert.ok(!requests.some(url => new URL(url).pathname.includes(themeFontPath)),
+        'Theme must not request font assets from AdmiralRadzen.Themes');
       assert.deepEqual(failed, [], 'No failed font or application requests');
       results.push({ label, mode: fixtureURL ? 'consumer-opt-in' : 'fallback', status: 'PASS' });
     } catch (error) {

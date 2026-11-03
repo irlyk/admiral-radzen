@@ -8,7 +8,7 @@
 Добавьте пакет:
 
 ```xml
-<PackageReference Include="AdmiralRadzen.Themes" Version="1.1.2" />
+<PackageReference Include="AdmiralRadzen.Themes" Version="2.0.0" />
 ```
 
 Рекомендуемый вариант для Radzen Blazor 10.3.1 и новее:
@@ -74,19 +74,10 @@ builder.Services.AddRadzenCookieThemeService(options =>
 - `css/admiral-wcag.css`;
 - `css/admiral-dark-wcag.css`.
 
-Пакет включает шрифты иконок, Source Sans 3 и Admiral CJK через
-`_content/Radzen.Admiral.Themes/fonts/`. Основной текст использует системный
-шрифт; собственное семейство приложения подключается по
-[инструкции](../docs/fonts.md).
-
-Для китайских и корейских символов тема включает локальные Noto Sans SC/KR
-по лицензии SIL Open Font License 1.1 (`fonts/cjk/OFL.txt`). Эти WOFF2-файлы
-загружаются браузером только при наличии соответствующих символов на странице,
-поэтому отображение CJK-текста не зависит от системных шрифтов машины.
-Латиница и кириллица по умолчанию используют системный fallback.
-Исходники шрифтов — [Noto Sans SC](https://github.com/google/fonts/tree/main/ofl/notosanssc)
-и [Noto Sans KR](https://github.com/google/fonts/tree/main/ofl/notosanskr)
-из Google Fonts; упакованные файлы перекодированы в WOFF2 без удаления глифов.
+Тема использует системные шрифты. Подключение шрифтов приложения описано в
+[руководстве по типографике](../docs/fonts.md). Для стандартных иконок Radzen
+тема использует Material Symbols Outlined из статических ресурсов
+`Radzen.Blazor`.
 
 SCSS-снимки находятся в каталоге `themes/` внутри пакета и репозитория. Для
 обычного использования они не нужны: приложение подключает готовый CSS.

@@ -28,9 +28,9 @@ Radzen Blazor. Подключаются через NuGet и статически
 | --- | --- |
 | .NET SDK / целевая платформа | 10 / `net10.0` |
 | Radzen.Blazor | 12.0.6 |
-| [AdmiralRadzen.Components](https://www.nuget.org/packages/AdmiralRadzen.Components/1.2.2) | 1.2.2 |
-| [AdmiralRadzen.Themes](https://www.nuget.org/packages/AdmiralRadzen.Themes/1.1.2) | 1.1.2 |
-| [AdmiralRadzen.Icons](https://www.nuget.org/packages/AdmiralRadzen.Icons/1.0.3) | 1.0.3 |
+| [AdmiralRadzen.Components](https://www.nuget.org/packages/AdmiralRadzen.Components/2.0.0) | 2.0.0 |
+| [AdmiralRadzen.Themes](https://www.nuget.org/packages/AdmiralRadzen.Themes/2.0.0) | 2.0.0 |
+| [AdmiralRadzen.Icons](https://www.nuget.org/packages/AdmiralRadzen.Icons/2.0.0) | 2.0.0 |
 
 Версии заданы в файлах `.csproj`. API, примеры и ограничения описаны в
 [справочнике компонентов](docs/components.md).
@@ -85,7 +85,7 @@ dotnet run --project samples/AdmiralConsumerSmoke/AdmiralConsumerSmoke.csproj `
 публичного источника можно использовать локальный каталог `artifacts/packages/admiral`:
 
 ```xml
-<PackageReference Include="AdmiralRadzen.Components" Version="1.2.2" />
+<PackageReference Include="AdmiralRadzen.Components" Version="2.0.0" />
 ```
 
 Он транзитивно подключает Radzen, тему и иконки. Имена NuGet-пакетов —
@@ -141,8 +141,7 @@ npm run test:wasm
 
 ## Типографика и лицензии
 
-Тема использует системный шрифт для основного текста и Noto Sans SC/KR для
-китайских и корейских символов. Собственный шрифт приложения подключается через
+Тема использует системные шрифты. Собственный шрифт приложения подключается через
 `@font-face` и `--admiral-font-family`; пример есть в
 [руководстве по типографике](docs/fonts.md).
 

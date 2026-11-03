@@ -119,7 +119,7 @@ if (packageFolders.length !== 1 || path.resolve(packageFolders[0]) !== path.reso
   throw new Error(`Restore did not use the isolated NuGet cache: ${packageFolders.join(', ')}`);
 }
 for (const [name, version] of Object.entries({
-  'AdmiralRadzen.Components': '1.2.2', 'AdmiralRadzen.Icons': '1.0.3', 'AdmiralRadzen.Themes': '1.1.2'
+  'AdmiralRadzen.Components': '2.0.0', 'AdmiralRadzen.Icons': '2.0.0', 'AdmiralRadzen.Themes': '2.0.0'
 })) {
   const nupkg = path.join(root, 'artifacts/packages/admiral', `${name}.${version}.nupkg`);
   const cached = path.join(cache, name.toLowerCase(), version, `${name.toLowerCase()}.${version}.nupkg`);

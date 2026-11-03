@@ -8,7 +8,7 @@ assets.
 ## Packages
 
 - `Radzen.AdmiralIcons/` — SVG assets and the lazy Radzen icon adapter.
-- `Radzen.AdmiralThemes/` — packaged CSS, SCSS sources and fonts. It does not
+- `Radzen.AdmiralThemes/` — packaged CSS and SCSS sources. It does not
   depend on Radzen.Blazor.
 - `Radzen.AdmiralComponents/` — Admiral-prefixed Razor components over Radzen.
 - `samples/AdmiralConsumerSmoke/` — server-side package consumer and examples.
@@ -22,7 +22,7 @@ explicit request.
 
 Link the packaged CSS from `_content/Radzen.Admiral.Themes/css/`. For runtime
 switching use `RadzenTheme` with names `admiral` and `admiral-dark`. The theme
-uses a system text font by default and packaged Noto Sans SC/KR for CJK glyphs.
+uses system fonts by default.
 Consumers can set `--admiral-font-family` to use their own font; see
 [`docs/fonts.md`](docs/fonts.md). Keep this variable integrated with
 `--rz-text-font-family` so Admiral wrappers and direct Radzen controls share the

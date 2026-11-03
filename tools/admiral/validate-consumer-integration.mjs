@@ -31,7 +31,7 @@ const assets = JSON.parse(await readFile(path.join(projectDir, 'obj/project.asse
 assert.deepEqual(Object.keys(assets.packageFolders).map(folder => path.resolve(folder)), [path.resolve(cache)]);
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 for (const [name, version] of Object.entries({
-  'AdmiralRadzen.Components': '1.2.2', 'AdmiralRadzen.Icons': '1.0.3', 'AdmiralRadzen.Themes': '1.1.2'
+  'AdmiralRadzen.Components': '2.0.0', 'AdmiralRadzen.Icons': '2.0.0', 'AdmiralRadzen.Themes': '2.0.0'
 })) {
   const local = path.join(root, 'artifacts/packages/admiral', `${name}.${version}.nupkg`);
   const restored = path.join(cache, name.toLowerCase(), version, `${name.toLowerCase()}.${version}.nupkg`);

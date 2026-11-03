@@ -10,9 +10,9 @@ Explore the local [smoke gallery](samples/AdmiralConsumerSmoke/README.md) or the
 
 | Package | Version | Purpose |
 | --- | --- | --- |
-| [AdmiralRadzen.Components](https://www.nuget.org/packages/AdmiralRadzen.Components/1.2.2) | 1.2.2 | `Admiral*` components built on Radzen |
-| [AdmiralRadzen.Themes](https://www.nuget.org/packages/AdmiralRadzen.Themes/1.1.2) | 1.1.2 | Packaged CSS, SCSS snapshots, fonts, and styling for direct Radzen controls |
-| [AdmiralRadzen.Icons](https://www.nuget.org/packages/AdmiralRadzen.Icons/1.0.3) | 1.0.3 | Admiral SVG assets and icon adapter |
+| [AdmiralRadzen.Components](https://www.nuget.org/packages/AdmiralRadzen.Components/2.0.0) | 2.0.0 | `Admiral*` components built on Radzen |
+| [AdmiralRadzen.Themes](https://www.nuget.org/packages/AdmiralRadzen.Themes/2.0.0) | 2.0.0 | Packaged CSS, SCSS snapshots, and styling for direct Radzen controls |
+| [AdmiralRadzen.Icons](https://www.nuget.org/packages/AdmiralRadzen.Icons/2.0.0) | 2.0.0 | Admiral SVG assets and icon adapter |
 
 The projects target .NET 10 and Components currently depends on Radzen.Blazor 12.0.6. See the [component guide](docs/components.md) for examples and limitations.
 
@@ -36,7 +36,7 @@ Install the components package from NuGet.org. When working on this repository,
 you can instead use `artifacts/packages/admiral` as a local NuGet source:
 
 ```xml
-<PackageReference Include="AdmiralRadzen.Components" Version="1.2.2" />
+<PackageReference Include="AdmiralRadzen.Components" Version="2.0.0" />
 ```
 
 The NuGet IDs are `AdmiralRadzen.*`; C# namespaces and static asset URLs
@@ -75,7 +75,7 @@ Before validating copyable examples and running browser tests, start the smoke s
 
 ## Typography, licensing, and documentation
 
-The theme uses a system font for primary text and Noto Sans SC/KR for Chinese and Korean characters. You can add an application font through `@font-face` and `--admiral-font-family`; see the [font guide](docs/fonts.md).
+The theme uses system fonts by default. You can add an application font through `@font-face` and `--admiral-font-family`; see the [font guide](docs/fonts.md).
 
 The project's own code is covered by the root [MIT license](LICENSE). Bundled third-party materials and their notices are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Use of depicted trademarks is separate from the SVG license.
 
