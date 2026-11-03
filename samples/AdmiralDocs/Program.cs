@@ -10,6 +10,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddRadzenComponents();
+builder.Services.AddHttpClient();
 builder.Services.AddScoped<AdmiralToastService>();
 
 // The boot script exposes only validated preferences. Set culture before Razor

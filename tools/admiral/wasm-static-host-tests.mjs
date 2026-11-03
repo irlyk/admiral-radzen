@@ -46,7 +46,7 @@ function contrastRatio(foreground, background) {
 
 const command = ['publish', 'samples/AdmiralDocs/AdmiralDocs.csproj', '--configuration',
   'Release', '--output', output];
-// Package versions intentionally remain unchanged during the pilot. A fresh
+// Package versions are shared with the smoke project. A fresh
 // cache proves the published app uses the latest locally rebuilt .nupkg.
 rmSync(packageCache, { recursive: true, force: true });
 rmSync(output, { recursive: true, force: true });
@@ -55,7 +55,7 @@ const build = spawnSync('dotnet', command, { cwd: root, stdio: 'inherit',
   env: { ...process.env, NUGET_PACKAGES: packageCache } });
 assert.equal(build.status, 0, 'WASM publish must succeed');
 for (const asset of ['index.html', '404.html', '.nojekyll', '_framework/blazor.webassembly.js',
-  'css/site.css', 'css/docs.css',
+  'css/site.css', 'css/docs.css', 'AdmiralDocs.styles.css', 'images/image-viewer-a.svg',
   '_content/Radzen.Admiral.Themes/css/admiral-base.css',
   '_content/Radzen.Admiral.Themes/css/admiral-dark-base.css',
   '_content/Radzen.Blazor/fonts/MaterialSymbolsOutlined.woff2',
@@ -190,12 +190,21 @@ try {
       assert.match(await page.locator('.admiral-component-playground__preview').first().innerText(), /Click count:\s*1/);
       checks++;
       await page.goto(url + 'components/checkbox');
-      const relatedLink = page.getByRole('link', { name: 'Checkbox groups' });
+      const relatedLink = page.locator('#main-content').getByRole('link', { name: 'Checkbox groups' });
       await relatedLink.waitFor();
       assert.equal(new URL(await relatedLink.getAttribute('href'), url).pathname,
         '/admiral-radzen/components/checkbox-group', 'Shared page link stays in project subpath');
       await relatedLink.click();
-      await page.getByRole('heading', { name: 'Page not yet included in the pilot' }).waitFor();
+      await page.locator('#main-content').getByRole('heading', { name: 'Checkbox groups', exact: true }).waitFor();
+      const catalogToggle = page.getByRole('button', { name: 'Catalog', exact: true });
+      if (await catalogToggle.isVisible()) await catalogToggle.click();
+      await page.getByRole('searchbox', { name: 'Search components' }).fill('slider');
+      const sliderLink = page.locator('.docs-nav a[href="components/slider"]');
+      await sliderLink.click();
+      await page.locator('#main-content').getByRole('heading', { level: 1, name: 'Slider / Range' }).waitFor();
+      assert.equal(await sliderLink.getAttribute('aria-current'), 'page');
+      if (await catalogToggle.isVisible()) assert.equal(await catalogToggle.getAttribute('aria-expanded'), 'false');
+      checks++;
       await page.goto(url + 'components/checkbox');
       await page.locator('.component-doc-tabs [data-doc-tab="theme"]').click();
       const directCheckbox = page.locator('[data-testid="checkbox-radzen-demo"] .rz-chkbox').first();

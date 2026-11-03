@@ -8,19 +8,37 @@
     <header class="docs-header">
         <a href="" class="docs-brand">AdmiralRadzen</a>
         <div class="docs-preferences">
-            <button type="button" aria-pressed="@(culture == "ru")" @onclick='() => SetCulture("ru")'>RU</button>
-            <button type="button" aria-pressed="@(culture == "en")" @onclick='() => SetCulture("en")'>EN</button>
+            <button type="button" aria-pressed="@(IsRussian ? "true" : "false")" @onclick='() => SetCulture("ru")'>RU</button>
+            <button type="button" aria-pressed="@(IsRussian ? "false" : "true")" @onclick='() => SetCulture("en")'>EN</button>
             <button type="button" @onclick="ToggleTheme" aria-label="@(culture == "ru" ? "Переключить тему" : "Switch theme")">@(dark ? "☀" : "☾")</button>
         </div>
     </header>
     <div class="docs-columns">
-        <nav class="docs-nav" aria-label="@(culture == "ru" ? "Компоненты" : "Components")">
-            <a href="components/button">Button</a>
-            <a href="components/checkbox">Checkbox</a>
-            <a href="components/select">Select</a>
-            <a href="components/phone-number-input">PhoneNumberInput</a>
-            <a href="tables">Table</a>
-            <a href="components/tooltip">Tooltip</a>
+        <button type="button" class="docs-nav-toggle" aria-controls="docs-navigation"
+                aria-expanded="@(menuOpen ? "true" : "false")" @onclick="() => menuOpen = !menuOpen">
+            @(IsRussian ? "Каталог" : "Catalog")
+        </button>
+        <nav id="docs-navigation" class="docs-nav @(menuOpen ? "docs-nav--open" : null)" aria-label="@(culture == "ru" ? "Компоненты" : "Components")">
+            <input type="search" @bind="search" @bind:event="oninput"
+                   placeholder="@SearchLabel" aria-label="@SearchLabel" />
+            @foreach (var group in DocsCatalog.Groups)
+            {
+                var entries = group.Entries.Where(MatchesSearch).ToArray();
+                if (entries.Length == 0)
+                    continue;
+
+                <section>
+                    <h2>@group.Label(IsRussian)</h2>
+                    @foreach (var entry in entries)
+                    {
+                        <NavLink href="@entry.Href" Match="NavLinkMatch.All" @onclick="() => menuOpen = false">@entry.Label(IsRussian)</NavLink>
+                    }
+                </section>
+            }
+            @if (!DocsCatalog.Groups.SelectMany(group => group.Entries).Any(MatchesSearch))
+            {
+                <p role="status">@(IsRussian ? "Компоненты не найдены" : "No matching components")</p>
+            }
         </nav>
         <main id="main-content">@Body</main>
     </div>
@@ -29,6 +47,14 @@
 @code {
     private string culture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
     private bool dark;
+    private bool menuOpen;
+    private string search = string.Empty;
+    private bool IsRussian => culture == "ru";
+    private string SearchLabel => IsRussian ? "Поиск компонентов" : "Search components";
+
+    private bool MatchesSearch(DocsCatalog.Entry entry) =>
+        entry.Name.Contains(search.Trim(), StringComparison.OrdinalIgnoreCase) ||
+        entry.Label(IsRussian).Contains(search.Trim(), StringComparison.OrdinalIgnoreCase);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
