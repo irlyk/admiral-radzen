@@ -42,6 +42,11 @@ The batches share one final browser and local-package check. Source presence or 
 - When narrowing the window clips an open Admiral popup horizontally, Admiral closes it through Radzen so it can reopen at the new position. Direct RadzenDropDown retains its original resize and focus behavior.
 - The browser suite checks grouped single selection, adding and removing multiple values, and independent direct Radzen selection in both themes and languages at desktop and mobile widths. Grouping and async data are still limited to the single-select path.
 
+## Follow-up — PhoneNumberInput
+
+- Keyboard selection keeps the existing country combobox mounted so focus can return to it after the country list closes. The first Tab after keyboard selection can still be consumed by the dropdown; a subsequent Tab reaches the phone input.
+- The browser test covers retaining Kazakhstan when editing a shared +7 number, replacing the dial code without losing national digits, and updating the country label when a typed international prefix changes the country in Digits mode.
+
 ## Open differences
 
 | Area | Current behavior | Reason / next check |

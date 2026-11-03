@@ -1,6 +1,5 @@
 <div class="@CssClass" data-status="@StatusName">
     <AdmiralSelect TValue="string" TItem="AdmiralPhoneCountry"
-                   @key="SelectedIso3"
                    Value="@SelectedIso3" ValueChanged="@ChangeCountryAsync"
                    Data="@EffectiveCountries" TextSelector="@(country => country.Name)"
                    ValueSelector="@(country => country.Iso3)" Size="@Size" Status="@Status"

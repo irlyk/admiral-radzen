@@ -23,7 +23,7 @@ try {
           await page.goto(base + '/components/phone-number-input');
           const phone = page.locator('.admiral-phone-input').first();
           await phone.waitFor();
-          await page.waitForTimeout(600); // Allow interactive Blazor hydration before keyboard input.
+          await page.locator('.admiral-consumer-shell[data-interactive="true"]').waitFor();
           const select = phone.locator('.rz-dropdown');
           assert.equal(await select.count(), 1);
           const input = phone.locator('input[inputmode="tel"]');
@@ -70,9 +70,13 @@ try {
           assert.equal(await popup.locator('.rz-dropdown-item').count(), 2);
           await search.press('ArrowDown');
           await popup.locator('.rz-dropdown-item.rz-state-highlight').first().waitFor();
+          const countryControlId = await select.getAttribute('id');
           await search.press('Enter');
           await popup.waitFor({ state: 'hidden' });
           await page.waitForFunction(() => /United/.test(document.querySelector('.admiral-phone-input .rz-dropdown')?.getAttribute('aria-label') ?? ''));
+          assert.equal(await select.getAttribute('id'), countryControlId,
+            'Country selection preserves the combobox element');
+          await page.waitForFunction(id => document.activeElement?.id === id, countryControlId);
           await select.click();
           await popup.waitFor();
           await page.keyboard.press('Escape');
@@ -101,7 +105,7 @@ try {
             await popup.waitFor({ state: 'hidden' });
             // KAZ and RUS share +7. Editing a KAZ number must not silently select RUS.
             await page.goto(base + '/components/phone-number-input');
-            await page.waitForTimeout(600);
+            await page.locator('.admiral-consumer-shell[data-interactive="true"]').waitFor();
             const playground = page.locator('.admiral-component-playground').first();
             const country = playground.locator('.admiral-phone-input .rz-dropdown');
             await country.click();
@@ -121,6 +125,20 @@ try {
               ?.textContent?.includes('+7 999 123-45-68'));
             assert.match(await playground.locator('[role=status]').innerText(), /KAZ/,
               'Typing a shared +7 dial code keeps selected KAZ');
+
+            await playground.locator('.admiral-component-controls select').nth(2).selectOption('Digits');
+            await page.waitForFunction(() => document.querySelector('.admiral-component-playground input[inputmode="tel"]')
+              ?.value === '+7 999 123 45 68');
+            await country.click();
+            await countryPopup.getByText('United Kingdom', { exact: true }).click();
+            await countryPopup.waitFor({ state: 'hidden' });
+            await playground.locator('[role=status]').getByText(/449991234568.*GBR/).waitFor();
+            assert.equal(await number.inputValue(), '+44 999 123 456 8',
+              'Digits mode replaces the dial code and preserves the national number');
+            await number.fill('+375 29 123-45-67');
+            await playground.locator('[role=status]').getByText(/375291234567.*BLR/).waitFor();
+            await page.waitForFunction(() => document.querySelector('.admiral-component-playground .rz-dropdown')
+              ?.getAttribute('aria-label') === 'Беларусь');
 
             await playground.getByRole('checkbox', { name: 'Disabled' }).check();
             await page.waitForFunction(() => document.querySelector('.admiral-component-playground__preview input[inputmode="tel"]')?.disabled === true);
