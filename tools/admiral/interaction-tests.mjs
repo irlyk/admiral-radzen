@@ -221,6 +221,14 @@ try {
       await demo.locator('.admiral-input-field__label').click();
       assert.ok(await field.evaluate(e => e === document.activeElement), 'Label focuses the spinbutton');
 
+      const status = demo.getByRole('combobox', { name: 'Status', exact: true });
+      await status.selectOption('Error');
+      await page.waitForFunction(() => document.querySelector('.admiral-component-playground [role="spinbutton"]')
+        ?.getAttribute('aria-invalid') === 'true');
+      await status.selectOption('Success');
+      await page.waitForFunction(() => !document.querySelector('.admiral-component-playground [role="spinbutton"]')
+        ?.hasAttribute('aria-invalid'));
+
       const prefix = demo.locator('.admiral-component-controls input[type="text"], .admiral-component-controls input:not([type])').first();
       await prefix.fill("Owner's ");
       await prefix.press('Tab');

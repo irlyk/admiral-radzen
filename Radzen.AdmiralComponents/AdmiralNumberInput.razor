@@ -1,6 +1,9 @@
 @typeparam TValue
+@using Microsoft.JSInterop
+@implements IAsyncDisposable
+@inject IJSRuntime JS
 
-<div class="@CssClass" data-status="@StatusName">
+<div @ref="root" class="@CssClass" data-status="@StatusName">
     <RadzenNumeric TValue="TValue"
                    Value="@Value"
                    ValueChanged="@ValueChanged"
@@ -74,11 +77,40 @@
     {
         get
         {
-            if (string.IsNullOrWhiteSpace(Id) && Status != AdmiralInputStatus.Error) return InputAttributes;
+            if (string.IsNullOrWhiteSpace(Id)) return InputAttributes;
             var attributes = InputAttributes is null ? new Dictionary<string, object>() : new(InputAttributes);
             if (!string.IsNullOrWhiteSpace(Id)) attributes["id"] = Id;
-            if (Status == AdmiralInputStatus.Error && !attributes.ContainsKey("aria-invalid")) attributes["aria-invalid"] = "true";
             return attributes;
+        }
+    }
+
+    private ElementReference root;
+    private IJSObjectReference? accessibilityModule;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var invalid = InputAttributes?.TryGetValue("aria-invalid", out var configured) == true
+            ? configured?.ToString()
+            : Status == AdmiralInputStatus.Error ? "true" : null;
+        if (invalid is null && accessibilityModule is null)
+        {
+            return;
+        }
+
+        accessibilityModule ??= await JS.InvokeAsync<IJSObjectReference>(
+            "import", "./_content/Radzen.Admiral.Components/admiral-number-input.js");
+        await accessibilityModule.InvokeVoidAsync("setInvalid", root, invalid);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (accessibilityModule is not null)
+        {
+            try
+            {
+                await accessibilityModule.DisposeAsync();
+            }
+            catch (JSDisconnectedException) { }
         }
     }
 

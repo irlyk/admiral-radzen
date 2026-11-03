@@ -51,7 +51,7 @@ The batches share one final browser and local-package check. Source presence or 
 
 - NumberInputField uses the native Radzen input ID for label focus and references the visible label for the accessible name. An explicit Name still supplies the native input name and ID.
 - Text decorations preserve literal apostrophes when building a numeric format. Chromium checks cover editing a decorated value, stepping, clearing a nullable value, and enforcing Min/Max. Direct RadzenNumeric keeps its own binding, stepping and bounds.
-- Both themes passed the S/M/XL height and minus/plus order checks, and the fractional keyboard step used the expected separator in RU and EN. The visual error state still lacks `aria-invalid` on the spinbutton in the current RadzenNumeric markup.
+- Both themes passed the S/M/XL height and minus/plus order checks, and the fractional keyboard step used the expected separator in RU and EN. `Status=Error` sets `aria-invalid` on the spinbutton. Leaving Error restores the native Radzen validation state.
 
 ## Open differences
 
