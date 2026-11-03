@@ -176,7 +176,12 @@ try {
     });
     await test('TextArea: action hover is transparent, focus is square, Enter clears', async () => {
       await go('/components/text-area');
-      const action = page.locator('.admiral-text-area__action').first();
+      const field = page.locator('.admiral-component-playground .admiral-input-field');
+      const label = field.locator('label');
+      const textarea = field.getByRole('textbox', { name: await label.innerText() });
+      await label.click();
+      assert.equal(await textarea.evaluate(e => e === document.activeElement), true, 'Label focuses the textarea');
+      const action = field.getByRole('button', { name: 'Clear value' });
       await action.hover();
       assert.equal(await action.evaluate(e => getComputedStyle(e).backgroundColor), 'rgba(0, 0, 0, 0)');
       await page.keyboard.press('Tab'); await action.focus();
@@ -184,6 +189,30 @@ try {
       assert.ok(parseFloat(await action.evaluate(e => getComputedStyle(e).borderRadius)) <= 4);
       await page.keyboard.press('Enter');
       await page.waitForFunction(() => document.querySelector('textarea')?.value === '');
+    });
+    await test('TextArea: auto-height grows and shrinks after manual resize', async () => {
+      await go('/components/text-area');
+      const demo = page.locator('.admiral-component-playground');
+      const textarea = demo.locator('textarea');
+      await demo.getByRole('checkbox', { name: 'Resizable', exact: true }).check();
+      await demo.locator('.admiral-text-area-control--resizable').waitFor();
+      const bounds = await textarea.boundingBox();
+      const x = bounds.x + bounds.width - 4;
+      const y = bounds.y + bounds.height - 4;
+      await page.mouse.move(x, y);
+      await page.mouse.down();
+      await page.mouse.move(x, y + 40, { steps: 6 });
+      await page.mouse.up();
+      assert.ok((await textarea.boundingBox()).height > bounds.height, 'Native resize changed the height');
+
+      await demo.getByRole('checkbox', { name: 'AutoHeight', exact: true }).check();
+      await demo.locator('.admiral-text-area-control--auto').waitFor();
+      await textarea.fill('Short text');
+      const shortHeight = (await textarea.boundingBox()).height;
+      await textarea.fill('One\nTwo\nThree\nFour');
+      assert.ok((await textarea.boundingBox()).height > shortHeight, 'Auto-height grows with content');
+      await textarea.fill('Short text');
+      assert.equal((await textarea.boundingBox()).height, shortHeight, 'Auto-height shrinks with content');
     });
     await test('Slider: ArrowRight adjusts value and exposes live slider semantics', async () => {
       await go('/components/slider');

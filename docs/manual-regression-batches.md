@@ -28,6 +28,14 @@ Work takes place on `codex/manual-regression-batch`. Merge to `main` and choose 
 
 The batches share one final browser and local-package check. Source presence or CSS selectors alone do not establish visual parity.
 
+## Follow-up — TextArea
+
+- TextAreaField associates its label with the textarea even when the caller omits `Id`. The browser test checks the accessible name and focus on label click.
+- Native resize writes a height onto the textarea. In browsers that support `field-sizing`, AutoHeight now takes precedence over that height so the field can grow and shrink after switching modes.
+- In Chromium, the S/M/XL typography and base padding agree with the pinned React source. The light and dark checks covered error/success borders, disabled and read-only, copying, manual resize and bounded auto-height. The direct Radzen example retained multiline binding, focus, row changes and disabled behavior.
+- The upstream Radzen `/textarea` demo also passed multiline change, rows/columns, focus and disabled checks. The demo’s auto-resize example relies on an inline event handler blocked by the host CSP with both Admiral themes and the stock Material theme.
+- React gives the clear action priority when both clear and copy are enabled. The Blazor wrapper exposes both actions in that case. It uses CSS for auto-height, while React measures content.
+
 ## Open differences
 
 | Area | Current behavior | Reason / next check |

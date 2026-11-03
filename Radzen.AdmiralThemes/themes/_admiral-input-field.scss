@@ -315,6 +315,13 @@ $admiral-input-success-hover: if($theme-dark, #1FA951, #128238);
   overflow-y: auto;
 }
 
+@supports (field-sizing: content) {
+  .rz-textarea.admiral-text-area-control--auto {
+    // Native resize writes an inline height that would otherwise stop auto-height.
+    height: auto !important;
+  }
+}
+
 .rz-textarea.admiral-text-area-control--actions-1 { padding-inline-end: 3.5rem; }
 .rz-textarea.admiral-text-area-control--actions-2 { padding-inline-end: 5.5rem; }
 
