@@ -6,8 +6,8 @@
     <NotFound>
         <PageTitle>Страница не найдена</PageTitle>
         <LayoutView Layout="@typeof(MainLayout)">
-            <h1>@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "Страница пока не включена в пилот" : "Page not yet included in the pilot")</h1>
-            <p role="status">@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "Эта страница остаётся доступной в серверной документации. Выберите один из пилотных компонентов в меню." : "This page remains available in the server documentation. Choose a pilot component from the menu.")</p>
+            <h1>@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "Страница не найдена" : "Page not found")</h1>
+            <p role="status">@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "Выберите страницу в меню документации." : "Choose a page from the documentation menu.")</p>
         </LayoutView>
     </NotFound>
 </Router>

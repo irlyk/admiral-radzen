@@ -11,6 +11,7 @@ on:
       - samples/AdmiralConsumerSmoke/Resources/**
       - samples/AdmiralConsumerSmoke/SharedResource.cs
       - samples/AdmiralConsumerSmoke/wwwroot/css/site.css
+      - samples/AdmiralConsumerSmoke/wwwroot/images/**
       - Radzen.AdmiralComponents/**
       - Radzen.AdmiralIcons/**
       - Radzen.AdmiralThemes/**
@@ -59,6 +60,9 @@ jobs:
             --configuration Release --no-restore --output "$RUNNER_TEMP/admiral-docs"
           test -f "$RUNNER_TEMP/admiral-docs/wwwroot/.nojekyll"
           test -f "$RUNNER_TEMP/admiral-docs/wwwroot/404.html"
+          test -s "$RUNNER_TEMP/admiral-docs/wwwroot/AdmiralDocs.styles.css"
+          cmp samples/AdmiralConsumerSmoke/wwwroot/css/site.css \
+            "$RUNNER_TEMP/admiral-docs/wwwroot/css/site.css"
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

@@ -10,30 +10,31 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.13" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.13" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.13" />
     <PackageReference Include="Radzen.Blazor" Version="12.0.6" />
     <PackageReference Include="AdmiralRadzen.Components" Version="2.0.0" />
     <PackageReference Include="AdmiralRadzen.Icons" Version="2.0.0" />
     <PackageReference Include="AdmiralRadzen.Themes" Version="2.0.0" />
   </ItemGroup>
-  <!-- Pilot pages are compiled from the smoke sources. They are not copied or forked. -->
+  <!-- Share the browser-compatible documentation with the smoke app. -->
   <ItemGroup>
-    <RazorComponent Include="../AdmiralConsumerSmoke/Pages/Button.razor" Link="Pages/Button.razor" />
-    <RazorComponent Include="../AdmiralConsumerSmoke/Pages/Checkbox.razor" Link="Pages/Checkbox.razor" />
-    <RazorComponent Include="../AdmiralConsumerSmoke/Pages/Select.razor" Link="Pages/Select.razor" />
-    <RazorComponent Include="../AdmiralConsumerSmoke/Pages/PhoneNumberInput.razor" Link="Pages/PhoneNumberInput.razor" />
-    <RazorComponent Include="../AdmiralConsumerSmoke/Pages/Tables.razor" Link="Pages/Tables.razor" />
-    <RazorComponent Include="../AdmiralConsumerSmoke/Pages/Tooltip.razor" Link="Pages/Tooltip.razor" />
+    <RazorComponent Include="../AdmiralConsumerSmoke/Pages/*.razor"
+                    Exclude="../AdmiralConsumerSmoke/Pages/Index.razor;../AdmiralConsumerSmoke/Pages/Coverage.razor;../AdmiralConsumerSmoke/Pages/Inputs.razor;../AdmiralConsumerSmoke/Pages/RegressionOverview.razor;../AdmiralConsumerSmoke/Pages/FileInput.razor"
+                    Link="Pages/%(Filename)%(Extension)" />
+    <Compile Include="../AdmiralConsumerSmoke/Pages/*.razor.cs" Link="Pages/%(Filename)%(Extension)" />
+    <None Include="../AdmiralConsumerSmoke/Pages/*.razor.css"
+          Exclude="../AdmiralConsumerSmoke/Pages/FileInput.razor.css"
+          Link="Pages/%(Filename)%(Extension)" />
     <RazorComponent Include="../AdmiralConsumerSmoke/Shared/*.razor" Link="Shared/%(Filename)%(Extension)" />
     <Compile Include="../AdmiralConsumerSmoke/Shared/ComponentDocsCatalog.cs" Link="Shared/ComponentDocsCatalog.cs" />
     <Compile Include="../AdmiralConsumerSmoke/SharedResource.cs" Link="SharedResource.cs" />
     <EmbeddedResource Include="../AdmiralConsumerSmoke/Resources/SharedResource.ru.resx" Link="Resources/SharedResource.ru.resx" />
     <EmbeddedResource Include="../AdmiralConsumerSmoke/Resources/SharedResource.en.resx" Link="Resources/SharedResource.en.resx" />
-    <Content Include="wwwroot/css/site.css" Condition="!Exists('wwwroot/css/site.css')" CopyToOutputDirectory="PreserveNewest" />
+    <Content Remove="wwwroot/css/site.css" />
+    <Content Include="../AdmiralConsumerSmoke/wwwroot/css/site.css" Link="wwwroot/css/site.css" />
+    <Content Include="../AdmiralConsumerSmoke/wwwroot/images/*.svg" Link="wwwroot/images/%(Filename)%(Extension)" />
   </ItemGroup>
-  <Target Name="SyncSharedSiteCss" BeforeTargets="ResolveProjectStaticWebAssets">
-    <Copy SourceFiles="../AdmiralConsumerSmoke/wwwroot/css/site.css" DestinationFiles="wwwroot/css/site.css" />
-  </Target>
   <Target Name="PreparePagesFallback" AfterTargets="Publish">
     <Copy SourceFiles="$(PublishDir)wwwroot/index.html" DestinationFiles="$(PublishDir)wwwroot/404.html" Condition="Exists('$(PublishDir)wwwroot/index.html')" />
   </Target>
