@@ -11,6 +11,30 @@ const browser = await chromium.launch({ headless: true, ...(process.env.CHROME_P
 const results = [];
 const closeTo = (actual, expected, tolerance = 1) => Math.abs(actual - expected) <= tolerance;
 
+// Compare rendered pixels without adding a PNG decoder to the test dependencies.
+async function screenshotDifference(page, before, after) {
+  return page.evaluate(async images => {
+    const bitmaps = await Promise.all(images.map(image => createImageBitmap(
+      new Blob([Uint8Array.from(atob(image), character => character.charCodeAt(0))], { type: 'image/png' }))));
+    const [{ width, height }, second] = bitmaps;
+    if (second.width !== width || second.height !== height) return null;
+    const canvas = new OffscreenCanvas(width, height);
+    const context = canvas.getContext('2d', { willReadFrequently: true });
+    const [firstPixels, secondPixels] = bitmaps.map(bitmap => {
+      context.clearRect(0, 0, width, height);
+      context.drawImage(bitmap, 0, 0);
+      return context.getImageData(0, 0, width, height).data;
+    });
+    let changed = 0;
+    for (let i = 0; i < firstPixels.length; i += 4) {
+      if ([0, 1, 2].some(channel => Math.abs(firstPixels[i + channel] - secondPixels[i + channel]) > 32)) {
+        changed++;
+      }
+    }
+    return { changed, ratio: changed / (width * height) };
+  }, [before.toString('base64'), after.toString('base64')]);
+}
+
 try {
   for (const theme of ['admiral', 'admiral-dark']) {
     const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
@@ -234,6 +258,39 @@ try {
         await page.keyboard.press('Escape');
       } finally {
         await page.setViewportSize({ width: 1440, height: 900 });
+      }
+    });
+
+    await test('Phone country flag and keyboard focus change rendered pixels', async () => {
+      await go('/components/phone-number-input');
+      const phone = page.locator('.admiral-phone-input').first();
+      const select = phone.getByRole('combobox');
+      const flag = phone.locator('.admiral-phone-input__country-value svg');
+      await flag.waitFor();
+      const originalFlag = await flag.screenshot({ animations: 'disabled' });
+      const unfocused = await phone.screenshot({ animations: 'disabled' });
+      await page.keyboard.press('Tab');
+      await select.focus();
+      const focused = await phone.screenshot({ animations: 'disabled' });
+      const focusDifference = await screenshotDifference(page, unfocused, focused);
+      assert.ok(focusDifference?.changed > 100, 'Keyboard focus changes visible pixels in the phone field');
+
+      await select.press('Enter');
+      const popup = page.locator('.rz-dropdown-panel:visible:has(.admiral-phone-input__country-option)');
+      await popup.getByText('Казахстан', { exact: true }).click();
+      await popup.waitFor({ state: 'hidden' });
+      const kazakhstan = phone.locator('.admiral-phone-input__country-value [data-admiral-icon-loaded="flags/kazakhstan"] svg');
+      const updatedFlag = await kazakhstan.screenshot({ animations: 'disabled' });
+      const flagDifference = await screenshotDifference(page, originalFlag, updatedFlag);
+      assert.ok(flagDifference?.ratio > 0.35, 'Choosing Kazakhstan replaces the rendered Russian flag pixels');
+      assert.ok((await phone.locator('input[inputmode="tel"]').inputValue()).startsWith('+7'),
+        'Countries with the same dial code still produce a different flag');
+
+      if (output) {
+        await mkdir(output, { recursive: true });
+        for (const [name, image] of [['flag-ru', originalFlag], ['flag-kz', updatedFlag], ['focus', focused]]) {
+          await writeFile(path.join(output, `phone-${theme}-${name}.png`), image);
+        }
       }
     });
 

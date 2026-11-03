@@ -531,8 +531,18 @@ $admiral-input-success-hover: if($theme-dark, #1FA951, #128238);
 }
 
 .admiral-phone-input > .admiral-select .rz-dropdown:focus-visible {
-  outline: 2px solid var(--rz-primary);
-  outline-offset: -2px;
+  isolation: isolate;
+}
+
+.admiral-phone-input > .admiral-select .rz-dropdown:focus-visible::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0.25rem 0;
+  border: 2px solid var(--rz-primary);
+  border-radius: var(--admiral-radius-small, 4px);
+  background: color-mix(in srgb, var(--rz-primary) 10%, transparent);
+  pointer-events: none;
 }
 
 .admiral-phone-input > .admiral-select .rz-dropdown-label {

@@ -46,10 +46,10 @@ try {
           await page.keyboard.press('Tab');
           await select.focus();
           const focus = await select.evaluate(element => {
-            const style = getComputedStyle(element);
-            return { visible: element.matches(':focus-visible'), outline: style.outlineStyle, width: style.outlineWidth };
+            const style = getComputedStyle(element, '::before');
+            return { visible: element.matches(':focus-visible'), border: style.borderTopStyle, width: style.borderTopWidth };
           });
-          assert.deepEqual(focus, { visible: true, outline: 'solid', width: '2px' },
+          assert.deepEqual(focus, { visible: true, border: 'solid', width: '2px' },
             'Country selector exposes a visible keyboard focus outline');
           await page.keyboard.press('Enter');
           const popup = page.locator('.rz-dropdown-panel:visible:has(.admiral-phone-input__country-option)').first();
