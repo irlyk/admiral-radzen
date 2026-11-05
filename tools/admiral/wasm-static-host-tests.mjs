@@ -22,7 +22,8 @@ if (fontFixtureDir) {
     assert.ok(fontFixtureFiles.some(file => file.includes(name)), `Missing ${name} fixture`);
 }
 const routes = ['/', '/components/button', '/components/checkbox', '/components/select',
-  '/components/phone-number-input', '/tables', '/components/tooltip'];
+  '/components/phone-number-input', '/tables', '/components/tooltip',
+  '/basics/colors', '/guide/getting-started', '/guide/integration', '/components/typography'];
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.wasm': 'application/wasm',
   '.json': 'application/json', '.css': 'text/css', '.svg': 'image/svg+xml',
   '.woff': 'font/woff', '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.otf': 'font/otf',
@@ -178,8 +179,10 @@ try {
         await page.locator('h1').first().waitFor();
         await page.reload();
         await page.locator('h1').first().waitFor();
-        assert.ok(await page.locator('.admiral-component-playground').count() > 0,
-          `${route}: real shared documentation playground renders`);
+        const content = route === '/basics/colors' ? '[data-color-token="--rz-primary"]' :
+          route === '/guide/integration' ? '.docs-code-example' : '.admiral-component-playground';
+        assert.ok(await page.locator(content).count() > 0,
+          `${route}: shared documentation content renders`);
         assert.equal(await page.evaluate(() => localStorage.getItem('admiral-docs-culture')), 'en');
         assert.match(await page.locator('#admiral-theme').getAttribute('href'), /admiral-dark-base\.css/);
         checks++;

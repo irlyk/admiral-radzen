@@ -95,7 +95,7 @@
                     var components = FilteredComponents.Where(item => category.Hrefs.Contains(item.Href)).ToArray();
                     if (components.Length == 0) continue;
                     <AdmiralSideMenuItem @key="(category.Name, !string.IsNullOrWhiteSpace(componentSearch))" Text="@CategoryName(category)" Icon="@category.Icon"
-                                         Expanded="@(category.Name == "Actions" || !string.IsNullOrWhiteSpace(componentSearch))">
+                                         Expanded="@((category.Name == "Basics" || category.Name == "Actions") || !string.IsNullOrWhiteSpace(componentSearch))">
                     @foreach (var component in components)
                     {
                         <AdmiralSideMenuItem @key="component.Href" Text="@component.Text" Href="@component.Href" />
@@ -114,7 +114,6 @@
             </AdmiralSideMenuItem>
             <AdmiralSideMenuItem Text="@L["Icons"]" Icon="admiral:system/star-outline" Href="/icons" />
             <AdmiralSideMenuItem Text="@L["Coverage"]" Icon="admiral:service/info-outline" Href="/coverage" />
-            <AdmiralSideMenuItem Text="@IntegrationLabel" Icon="admiral:system/settings-outline" Href="/guide/integration" />
         </AdmiralSideMenu>
     </SideMenu>
 
@@ -157,6 +156,7 @@
         ("TextButton", "/components/text-button"), ("ButtonGroup", "/components/button-groups"),
         ("IconButtonGroup", "/components/icon-button-group"),
         ("FloatingButtonMenu", "/components/floating-button-menu"), ("Typography", "/components/typography"),
+        ("Colors", "/basics/colors"), ("Getting started", "/guide/getting-started"), ("Integration", "/guide/integration"),
         ("Divider", "/components/divider"), ("Drawer", "/components/drawer"),
         ("Link", "/components/link"), ("Badge", "/components/badge"),
         ("Chips", "/components/chips"), ("Pills", "/components/pills"),
@@ -181,6 +181,8 @@
     ];
     private static readonly (string Name, string Russian, string Icon, string[] Hrefs)[] Categories =
     [
+        ("Basics", "Основы", "admiral:service/info-outline", [
+            "/guide/getting-started", "/guide/integration", "/basics/colors", "/components/typography"]),
         ("Actions", "Действия", "admiral:system/edit-outline", [
             "/components/button", "/components/icon-button", "/components/text-button", "/components/button-groups",
             "/components/icon-button-group",
@@ -193,7 +195,7 @@
         ("Navigation", "Навигация", "admiral:system/arrow-right-outline", [
             "/components/link", "/components/menu", "/components/drawer", "/components/stepper", "/components/tree", "/components/pagination"]),
         ("Data Display", "Отображение данных", "admiral:category/grid-outline", [
-            "/components/typography", "/components/divider", "/components/badge", "/components/chips",
+            "/components/divider", "/components/badge", "/components/chips",
             "/components/pills", "/components/tag", "/components/lists", "/components/scroll-container",
             "/components/carousel", "/components/image-viewer", "/tables", "/components/avatar", "/components/status-indicator", "/components/grid"]),
         ("Feedback", "Обратная связь", "admiral:service/info-outline", [
@@ -202,10 +204,12 @@
     private string CategoryName((string Name, string Russian, string Icon, string[] Hrefs) category) =>
         CurrentCulture == "ru" ? category.Russian : category.Name;
     private string RegressionOverviewLabel => CurrentCulture == "ru" ? "Регрессионная галерея" : "Regression gallery";
-    private string IntegrationLabel => CurrentCulture == "ru" ? "Подключение" : "Integration";
     private static readonly IReadOnlyDictionary<string, string> ComponentSearchAliases =
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
+            ["/basics/colors"] = "цвета палитра colors palette",
+            ["/guide/getting-started"] = "начало работы getting started",
+            ["/guide/integration"] = "подключение integration установка",
             ["/components/button"] = "кнопка",
             ["/components/icon-button"] = "кнопка с иконкой иконка",
             ["/components/text-button"] = "текстовая кнопка",
