@@ -23,7 +23,7 @@ if (fontFixtureDir) {
 }
 const routes = ['/', '/components/button', '/components/checkbox', '/components/select',
   '/components/phone-number-input', '/tables', '/components/tooltip',
-  '/basics/colors', '/guide/getting-started', '/guide/integration', '/components/typography'];
+  '/basics/colors', '/guide/getting-started', '/guide/integration', '/components/typography', '/components/switch'];
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.wasm': 'application/wasm',
   '.json': 'application/json', '.css': 'text/css', '.svg': 'image/svg+xml',
   '.woff': 'font/woff', '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.otf': 'font/otf',
@@ -187,6 +187,14 @@ try {
         assert.match(await page.locator('#admiral-theme').getAttribute('href'), /admiral-dark-base\.css/);
         checks++;
       }
+      await page.goto(url + 'components/switch');
+      const switchDemo = page.getByTestId('switch-playground');
+      await switchDemo.locator('label.rz-label').click();
+      await page.waitForFunction(() => document.getElementById('switch-playground')?.checked === true);
+      await switchDemo.getByRole('checkbox', { name: 'ReadOnly', exact: true }).check();
+      await page.waitForFunction(() => document.getElementById('switch-playground')?.disabled === true);
+      assert.match(await switchDemo.getByRole('status').innerText(), /true.*1/);
+      checks++;
       await page.goto(url + 'components/button');
       const button = page.locator('.admiral-component-playground__preview button').first();
       await button.click();

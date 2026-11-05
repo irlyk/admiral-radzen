@@ -35,6 +35,7 @@ internal static class DocsCatalog
         ]),
         new("Inputs", "Поля ввода",
         [
+            new("Switch", "components/switch"),
             new("Checkbox", "components/checkbox"),
             new("Checkbox groups", "components/checkbox-group", "Группы Checkbox"),
             new("TextInput", "components/text-input"),
