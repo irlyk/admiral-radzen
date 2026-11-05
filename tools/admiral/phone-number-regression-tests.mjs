@@ -157,6 +157,32 @@ try {
             await page.waitForFunction(() => document.querySelector('.admiral-component-playground .rz-dropdown')
               ?.getAttribute('aria-label') === 'Беларусь');
 
+            for (const size of ['Small', 'Medium', 'ExtraLarge']) {
+              await playground.locator('.admiral-component-controls select').first().selectOption(size);
+              const sizeName = { Small: 's', Medium: 'm', ExtraLarge: 'xl' }[size];
+              await playground.locator(`.admiral-phone-input--${sizeName}`).waitFor();
+              await page.keyboard.press('Tab');
+              await country.focus();
+              // Wait for Radzen's size transition before checking the focus decoration.
+              await country.evaluate(element => Promise.all(element.getAnimations({ subtree: true }).map(animation => animation.finished)));
+              const bounds = await country.evaluate(element => {
+                const ring = getComputedStyle(element, '::before');
+                const box = element.getBoundingClientRect();
+                const input = element.closest('.admiral-phone-input').querySelector('input[inputmode="tel"]');
+                const field = input.getBoundingClientRect();
+                const height = parseFloat(ring.height);
+                return {
+                  top: box.top + parseFloat(ring.top) - height / 2,
+                  bottom: box.top + parseFloat(ring.top) + height / 2,
+                  right: box.left + parseFloat(ring.left) + parseFloat(ring.width),
+                  fieldTop: field.top, fieldBottom: field.bottom,
+                  textStart: field.left + parseFloat(getComputedStyle(input).paddingInlineStart)
+                };
+              });
+              assert.ok(bounds.top > bounds.fieldTop && bounds.bottom < bounds.fieldBottom && bounds.right < bounds.textStart,
+                `Country focus stays inside the field and clear of the number in ${size}: ${JSON.stringify(bounds)}`);
+            }
+
             await playground.getByRole('checkbox', { name: 'Disabled' }).check();
             await page.waitForFunction(() => document.querySelector('.admiral-component-playground__preview input[inputmode="tel"]')?.disabled === true);
             assert.equal(await number.isDisabled(), true, 'Disabled phone cannot be edited');

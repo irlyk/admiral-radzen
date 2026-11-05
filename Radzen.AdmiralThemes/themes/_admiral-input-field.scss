@@ -521,6 +521,7 @@ $admiral-input-success-hover: if($theme-dark, #1FA951, #128238);
 }
 
 .admiral-phone-input > .admiral-select .rz-dropdown {
+  display: block;
   min-height: 100%;
   height: 100%;
   border: 0 !important;
@@ -532,17 +533,26 @@ $admiral-input-success-hover: if($theme-dark, #1FA951, #128238);
 
 .admiral-phone-input > .admiral-select .rz-dropdown:focus-visible {
   isolation: isolate;
+  overflow: visible;
 }
 
 .admiral-phone-input > .admiral-select .rz-dropdown:focus-visible::before {
   content: '';
   position: absolute;
   z-index: -1;
-  inset: 0.25rem 0;
+  inset-block-start: 50%;
+  inset-inline: -0.25rem;
+  height: 2rem;
+  box-sizing: border-box;
+  transform: translateY(-50%);
   border: 2px solid var(--rz-primary);
   border-radius: var(--admiral-radius-small, 4px);
   background: color-mix(in srgb, var(--rz-primary) 10%, transparent);
   pointer-events: none;
+}
+
+.admiral-phone-input--s > .admiral-select .rz-dropdown:focus-visible::before {
+  height: 1.75rem;
 }
 
 .admiral-phone-input > .admiral-select .rz-dropdown-label {
