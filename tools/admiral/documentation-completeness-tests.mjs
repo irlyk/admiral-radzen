@@ -7,7 +7,7 @@ const base = process.env.SMOKE_URL || 'http://localhost:5072';
 const routes = [
   '/components/button', '/components/icon-button', '/components/text-button', '/components/button-groups',
   '/components/icon-button-group',
-  '/components/floating-button-menu', '/components/action-bar', '/components/checkbox', '/components/checkbox-group',
+  '/components/floating-button-menu', '/components/action-bar', '/components/switch', '/components/checkbox', '/components/checkbox-group',
   '/components/text-input', '/components/text-area', '/components/number-input', '/components/select',
   '/components/input-field', '/components/drop-down', '/components/date-range-picker', '/components/tree-select',
   '/components/slider', '/components/phone-number-input', '/components/file-input', '/components/global-search',

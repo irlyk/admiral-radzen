@@ -23,7 +23,7 @@ try {
           await page.goto(base + '/components/phone-number-input');
           const phone = page.locator('.admiral-phone-input').first();
           await phone.waitFor();
-          await page.waitForTimeout(600); // Allow interactive Blazor hydration before keyboard input.
+          await page.locator('.admiral-consumer-shell[data-interactive="true"]').waitFor();
           const select = phone.locator('.rz-dropdown');
           assert.equal(await select.count(), 1);
           const input = phone.locator('input[inputmode="tel"]');
@@ -40,7 +40,17 @@ try {
               `${theme}/${culture}/${viewport.width}: phone text must clear flag and chevron: ${JSON.stringify(geometry)}`);
           }
           assert.ok(await input.evaluate(element => element.labels?.length > 0), 'Phone input has a programmatically associated label');
+          const selectedFlag = select.locator('.admiral-phone-input__country-value [data-admiral-icon-loaded] svg');
+          await selectedFlag.waitFor();
+          const initialFlag = await selectedFlag.evaluate(svg => svg.outerHTML);
+          await page.keyboard.press('Tab');
           await select.focus();
+          const focus = await select.evaluate(element => {
+            const style = getComputedStyle(element, '::before');
+            return { visible: element.matches(':focus-visible'), border: style.borderTopStyle, width: style.borderTopWidth };
+          });
+          assert.deepEqual(focus, { visible: true, border: 'solid', width: '2px' },
+            'Country selector exposes a visible keyboard focus outline');
           await page.keyboard.press('Enter');
           const popup = page.locator('.rz-dropdown-panel:visible:has(.admiral-phone-input__country-option)').first();
           await popup.waitFor();
@@ -70,9 +80,19 @@ try {
           assert.equal(await popup.locator('.rz-dropdown-item').count(), 2);
           await search.press('ArrowDown');
           await popup.locator('.rz-dropdown-item.rz-state-highlight').first().waitFor();
+          const countryControlId = await select.getAttribute('id');
           await search.press('Enter');
           await popup.waitFor({ state: 'hidden' });
           await page.waitForFunction(() => /United/.test(document.querySelector('.admiral-phone-input .rz-dropdown')?.getAttribute('aria-label') ?? ''));
+          const flagName = (await select.getAttribute('aria-label')) === 'United Kingdom'
+            ? 'united-kingdom-of-great-britain-and-northern-ireland'
+            : 'united-states-of-america';
+          await select.locator(`[data-admiral-icon-loaded="flags/${flagName}"] svg`).waitFor();
+          assert.notEqual(await selectedFlag.evaluate(svg => svg.outerHTML), initialFlag,
+            'Changing the country replaces the rendered SVG flag');
+          assert.equal(await select.getAttribute('id'), countryControlId,
+            'Country selection preserves the combobox element');
+          await page.waitForFunction(id => document.activeElement?.id === id, countryControlId);
           await select.click();
           await popup.waitFor();
           await page.keyboard.press('Escape');
@@ -101,7 +121,7 @@ try {
             await popup.waitFor({ state: 'hidden' });
             // KAZ and RUS share +7. Editing a KAZ number must not silently select RUS.
             await page.goto(base + '/components/phone-number-input');
-            await page.waitForTimeout(600);
+            await page.locator('.admiral-consumer-shell[data-interactive="true"]').waitFor();
             const playground = page.locator('.admiral-component-playground').first();
             const country = playground.locator('.admiral-phone-input .rz-dropdown');
             await country.click();
@@ -114,6 +134,7 @@ try {
             await page.waitForTimeout(350); // Let both country and value callbacks settle before typing.
             assert.match(await playground.locator('[role=status]').innerText(), /KAZ/,
               'Country remains KAZ after country-selection callbacks settle');
+            await country.locator('[data-admiral-icon-loaded="flags/kazakhstan"] svg').waitFor();
             const number = playground.locator('input[inputmode="tel"]');
             await number.fill('+7 999 123-45-68');
             await number.press('Tab');
@@ -121,6 +142,46 @@ try {
               ?.textContent?.includes('+7 999 123-45-68'));
             assert.match(await playground.locator('[role=status]').innerText(), /KAZ/,
               'Typing a shared +7 dial code keeps selected KAZ');
+
+            await playground.locator('.admiral-component-controls select').nth(2).selectOption('Digits');
+            await page.waitForFunction(() => document.querySelector('.admiral-component-playground input[inputmode="tel"]')
+              ?.value === '+7 999 123 45 68');
+            await country.click();
+            await countryPopup.getByText('United Kingdom', { exact: true }).click();
+            await countryPopup.waitFor({ state: 'hidden' });
+            await playground.locator('[role=status]').getByText(/449991234568.*GBR/).waitFor();
+            assert.equal(await number.inputValue(), '+44 999 123 456 8',
+              'Digits mode replaces the dial code and preserves the national number');
+            await number.fill('+375 29 123-45-67');
+            await playground.locator('[role=status]').getByText(/375291234567.*BLR/).waitFor();
+            await page.waitForFunction(() => document.querySelector('.admiral-component-playground .rz-dropdown')
+              ?.getAttribute('aria-label') === 'Беларусь');
+
+            for (const size of ['Small', 'Medium', 'ExtraLarge']) {
+              await playground.locator('.admiral-component-controls select').first().selectOption(size);
+              const sizeName = { Small: 's', Medium: 'm', ExtraLarge: 'xl' }[size];
+              await playground.locator(`.admiral-phone-input--${sizeName}`).waitFor();
+              await page.keyboard.press('Tab');
+              await country.focus();
+              // Wait for Radzen's size transition before checking the focus decoration.
+              await country.evaluate(element => Promise.all(element.getAnimations({ subtree: true }).map(animation => animation.finished)));
+              const bounds = await country.evaluate(element => {
+                const ring = getComputedStyle(element, '::before');
+                const box = element.getBoundingClientRect();
+                const input = element.closest('.admiral-phone-input').querySelector('input[inputmode="tel"]');
+                const field = input.getBoundingClientRect();
+                const height = parseFloat(ring.height);
+                return {
+                  top: box.top + parseFloat(ring.top) - height / 2,
+                  bottom: box.top + parseFloat(ring.top) + height / 2,
+                  right: box.left + parseFloat(ring.left) + parseFloat(ring.width),
+                  fieldTop: field.top, fieldBottom: field.bottom,
+                  textStart: field.left + parseFloat(getComputedStyle(input).paddingInlineStart)
+                };
+              });
+              assert.ok(bounds.top > bounds.fieldTop && bounds.bottom < bounds.fieldBottom && bounds.right < bounds.textStart,
+                `Country focus stays inside the field and clear of the number in ${size}: ${JSON.stringify(bounds)}`);
+            }
 
             await playground.getByRole('checkbox', { name: 'Disabled' }).check();
             await page.waitForFunction(() => document.querySelector('.admiral-component-playground__preview input[inputmode="tel"]')?.disabled === true);

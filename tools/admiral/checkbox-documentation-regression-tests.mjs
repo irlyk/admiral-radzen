@@ -22,7 +22,7 @@ try {
         : { disabled: 'Disabled', readOnly: 'Read-only', error: 'Error', indeterminate: 'Indeterminate' };
       try {
         await page.goto(base + '/components/checkbox', { waitUntil: 'domcontentloaded' });
-        await page.waitForTimeout(600);
+        await page.locator('.admiral-consumer-shell[data-interactive="true"]').waitFor();
         const demo = page.getByTestId('checkbox-admiral-demo');
         const field = demo.locator('.admiral-checkbox-field');
         const checkbox = demo.getByRole('checkbox', { name: label, exact: true });
@@ -74,6 +74,17 @@ try {
         await page.waitForFunction(() => document.querySelector('[data-testid="checkbox-admiral-demo"] .rz-chkbox')
           ?.getAttribute('aria-checked') === 'mixed');
 
+        await demo.getByRole('checkbox', { name: controls.indeterminate, exact: true }).uncheck();
+        await demo.locator('.rz-chkbox[aria-checked="true"]').waitFor();
+        await field.locator('.admiral-checkbox-field__text').click();
+        await demo.locator('.rz-chkbox[aria-checked="false"]').waitFor();
+        assert.ok(await checkbox.evaluate(element => element === document.activeElement),
+          'Label activation focuses the exposed checkbox');
+        await page.keyboard.press('Space');
+        await demo.locator('.rz-chkbox[aria-checked="true"]').waitFor();
+        assert.match(await demo.getByTestId('checkbox-admiral-result').innerText(), /(?:Changes|Изменений):\s*3/,
+          'Label click and subsequent Space each emit exactly one change');
+
         await page.locator('.component-doc-tabs [data-doc-tab="theme"]').click();
         await page.waitForFunction(() => document.querySelector('.component-doc-tabs [data-doc-tab="theme"]')
           ?.getAttribute('aria-pressed') === 'true');
@@ -93,6 +104,19 @@ try {
           ?.getAttribute('aria-disabled') === 'true');
         assert.equal(await directCheckbox.getAttribute('aria-disabled'), 'true');
         assert.match(await direct.getByTestId('checkbox-radzen-result').innerText(), /(?:Changes|Изменений):\s*1/);
+        await page.goto(base + '/components/checkbox-group');
+        await page.locator('.admiral-consumer-shell[data-interactive="true"]').waitFor();
+        const group = page.locator('.admiral-checkbox-composite-group');
+        const boxes = group.getByRole('checkbox');
+        const parent = boxes.first();
+        await boxes.nth(1).press('Space');
+        await group.locator('.rz-chkbox[aria-checked="mixed"]').waitFor();
+        await parent.press('Space');
+        await page.waitForFunction(() => document.querySelectorAll(
+          '.admiral-checkbox-composite-group .rz-chkbox[aria-checked="true"]').length === 5);
+        await page.getByRole('checkbox', { name: 'Disabled', exact: true }).check();
+        await page.waitForFunction(() => document.querySelectorAll(
+          '.admiral-checkbox-composite-group .rz-chkbox[aria-disabled="true"][tabindex="-1"]').length === 5);
         assert.deepEqual(errors, []);
         results.push({ theme, language, passed: true });
       } catch (error) {

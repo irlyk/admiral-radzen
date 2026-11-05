@@ -12,7 +12,10 @@ const results = [];
 try {
     for (const theme of ['admiral', 'admiral-dark']) {
         const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
-        await context.addCookies([{ name: 'RadzenAdmiralTheme', value: theme, url: base }]);
+        await context.addCookies([
+            { name: 'RadzenAdmiralTheme', value: theme, url: base },
+            { name: '.AspNetCore.Culture', value: 'c=en|uic=en', url: base }
+        ]);
         const page = await context.newPage();
         page.setDefaultTimeout(6000);
         const errors = [];
@@ -53,6 +56,45 @@ try {
             await input.focus();
             await input.press('Escape');
             await popup.waitFor({ state: 'hidden' });
+            await page.goto(base + '/components/date-range-picker');
+            await page.locator('.admiral-consumer-shell[data-interactive="true"]').waitFor();
+            const demo = page.getByTestId('date-range-admiral-demo');
+            const range = demo.getByRole('textbox', { name: 'Date range', exact: true });
+            const status = demo.getByRole('status');
+            const initial = await range.inputValue();
+            await range.press('Enter');
+            await range.fill('07.10.2026 — 01.10.2026');
+            await range.press('Enter');
+            await demo.locator('.admiral-date-range-picker__input[aria-invalid="true"]').waitFor();
+            assert.match(await status.innerText(), /01.10.2026.*07.10.2026.*Changes: 0/);
+            await range.press('Escape');
+            await demo.locator('.admiral-date-range-picker__input[aria-invalid="false"]').waitFor();
+            assert.equal(await range.inputValue(), initial);
+
+            await range.fill('01.10.2026 — 08.10.2026');
+            await range.press('Enter');
+            await status.getByText(/08.10.2026.*Changes: 1/).waitFor();
+            await range.fill('');
+            await range.press('Tab');
+            await status.getByText(/Start: —.*End: —.*Changes: 3/).waitFor();
+
+            await demo.locator('.rz-datepicker-trigger').click();
+            const calendar = page.locator('.rz-datepicker-popup-container:visible');
+            const cells = calendar.locator('td[id]:not([aria-disabled="true"])');
+            await cells.nth(4).press('Enter');
+            await status.getByText(/Changes: 4/).waitFor();
+            await cells.nth(7).press('Enter');
+            await status.getByText(/Changes: 5/).waitFor();
+            const firstBoundary = calendar.locator('td.admiral-date-range-picker__day--start');
+            const lastBoundary = calendar.locator('td.admiral-date-range-picker__day--end');
+            const firstDate = (await firstBoundary.getAttribute('id')).slice(-10);
+            const lastDate = (await lastBoundary.getAttribute('id')).slice(-10);
+            assert.ok(firstDate < lastDate);
+            const inside = await calendar.locator('td.admiral-date-range-picker__day--inside')
+                .evaluateAll(days => days.map(day => day.id.slice(-10)));
+            const dayCount = (Date.parse(lastDate) - Date.parse(firstDate)) / 86400000;
+            assert.equal(inside.length, dayCount - 1);
+            assert.ok(inside.every(date => date > firstDate && date < lastDate));
             assert.deepEqual(errors, []);
             results.push({ theme, passed: true });
         } catch (error) {

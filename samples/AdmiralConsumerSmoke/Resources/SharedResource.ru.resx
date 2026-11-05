@@ -888,4 +888,8 @@
   <data name="Direct RadzenIcon with packaged Admiral icon assets" xml:space="preserve"><value>Прямой RadzenIcon с иконками пакета Admiral</value></data>
   <data name="AdmiralIcon size" xml:space="preserve"><value>Размер AdmiralIcon</value></data>
   <data name="Border radius" xml:space="preserve"><value>Скругление</value></data>
+  <data name="Colors" xml:space="preserve"><value>Цвета</value></data>
+  <data name="Getting started" xml:space="preserve"><value>Начало работы</value></data>
+  <data name="Integration" xml:space="preserve"><value>Подключение</value></data>
+  <data name="Typography" xml:space="preserve"><value>Типографика</value></data>
 </root>

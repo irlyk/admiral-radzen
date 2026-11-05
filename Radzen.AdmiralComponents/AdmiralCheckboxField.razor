@@ -1,6 +1,8 @@
 @using Radzen.Admiral.Components.Internal
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
 
-<label class="@CssClass" style="@Style" @attributes="AdditionalAttributes">
+<label @ref="label" class="@CssClass" style="@Style" @attributes="AdditionalAttributes">
     <RadzenCheckBox TValue="bool?" Value="@DisplayValue" Change="@OnChange" TriState="@Indeterminate"
                     Disabled="@EffectiveDisabled" ReadOnly="@ReadOnly"
                     aria-labelledby="@(HasLabel ? labelId : null)"
@@ -16,6 +18,7 @@
 </label>
 
 @code {
+    private ElementReference label;
     private readonly string labelId = $"admiral-checkbox-label-{Guid.NewGuid():N}";
     private readonly string hintId = $"admiral-checkbox-hint-{Guid.NewGuid():N}";
     private bool HasLabel => ChildContent is not null || !string.IsNullOrWhiteSpace(Text);
@@ -39,6 +42,18 @@
     private bool? DisplayValue => Indeterminate ? null : Value;
     private AdmiralCheckboxDimension EffectiveDimension => Dimension ?? GroupContext?.Dimension ?? AdmiralCheckboxDimension.M;
     private bool EffectiveDisabled => Disabled || GroupContext?.Disabled == true;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        await using var module = await JS.InvokeAsync<IJSObjectReference>(
+            "import", "./_content/Radzen.Admiral.Components/admiral-checkbox-field.js");
+        await module.InvokeVoidAsync("connectLabel", label);
+    }
+
     private async Task OnChange(bool? value)
     {
         await ValueChanged.InvokeAsync(value);

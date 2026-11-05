@@ -174,9 +174,75 @@ try {
       await square.waitFor();
       assert.equal(await square.getAttribute('aria-label'), 'Square action');
     });
+    await test('TextInput: label focus, password reset and clear', async () => {
+      await go('/components/text-input');
+      const demo = page.locator('.admiral-component-playground').first();
+      const label = demo.locator('.admiral-input-field__label');
+      const input = demo.locator('.admiral-text-input__control');
+      const named = demo.getByRole('textbox', { name: await label.innerText(), exact: true });
+      await label.click();
+      assert.ok(await named.evaluate(element => element === document.activeElement));
+
+      const password = demo.getByRole('checkbox', { name: 'Password', exact: true });
+      const show = demo.getByRole('button', { name: 'Show password', exact: true });
+      const hide = demo.getByRole('button', { name: 'Hide password', exact: true });
+      await password.check();
+      await demo.locator('input.admiral-text-input__control[type="password"]').waitFor();
+      const original = await input.inputValue();
+      const beforeReveal = await demo.getByRole('status').innerText();
+      await show.press('Enter');
+      await hide.waitFor();
+      assert.equal(await input.getAttribute('type'), 'text');
+      assert.equal(await input.inputValue(), original);
+      assert.equal(await demo.getByRole('status').innerText(), beforeReveal);
+
+      await password.uncheck();
+      await hide.waitFor({ state: 'hidden' });
+      await password.check();
+      await show.waitFor();
+      assert.equal(await input.getAttribute('type'), 'password');
+
+      const readOnly = demo.getByRole('checkbox', { name: 'Read only', exact: true });
+      await readOnly.check();
+      await demo.locator('input.admiral-text-input__control[readonly]').waitFor();
+      assert.ok(await show.isDisabled());
+      assert.equal(await demo.getByRole('button', { name: 'Clear value', exact: true }).count(), 0);
+      await readOnly.uncheck();
+      const clear = demo.getByRole('button', { name: 'Clear value', exact: true });
+      await clear.press('Enter');
+      await page.waitForFunction(() => document.querySelector('.admiral-component-playground .admiral-text-input__control')?.value === '');
+
+      const disabled = demo.getByRole('checkbox', { name: 'Disabled', exact: true });
+      await disabled.check();
+      await demo.locator('input.admiral-text-input__control[disabled]').waitFor();
+      assert.ok(await show.isDisabled());
+      await disabled.uncheck();
+
+      await demo.getByRole('checkbox', { name: 'Loading', exact: true }).check();
+      await demo.locator('.admiral-text-input[aria-busy="true"]').waitFor();
+      assert.ok(await input.isDisabled());
+      await show.waitFor({ state: 'hidden' });
+    });
+    await test('Direct RadzenTextBox: typing, blur and disabled', async () => {
+      await go('/components/text-input');
+      await page.locator('[data-doc-tab="theme"]').click();
+      const demo = page.locator('.admiral-component-playground').first();
+      const input = demo.locator('.admiral-component-playground__preview .rz-textbox');
+      await input.click();
+      await input.fill('Direct Radzen text');
+      await input.press('Tab');
+      await demo.getByRole('checkbox', { name: 'Disabled', exact: true }).check();
+      await demo.locator('.admiral-component-playground__preview .rz-textbox[disabled]').waitFor();
+      assert.equal(await input.inputValue(), 'Direct Radzen text');
+    });
     await test('TextArea: action hover is transparent, focus is square, Enter clears', async () => {
       await go('/components/text-area');
-      const action = page.locator('.admiral-text-area__action').first();
+      const field = page.locator('.admiral-component-playground .admiral-input-field');
+      const label = field.locator('label');
+      const textarea = field.getByRole('textbox', { name: await label.innerText() });
+      await label.click();
+      assert.equal(await textarea.evaluate(e => e === document.activeElement), true, 'Label focuses the textarea');
+      const action = field.getByRole('button', { name: 'Clear value' });
       await action.hover();
       assert.equal(await action.evaluate(e => getComputedStyle(e).backgroundColor), 'rgba(0, 0, 0, 0)');
       await page.keyboard.press('Tab'); await action.focus();
@@ -184,6 +250,86 @@ try {
       assert.ok(parseFloat(await action.evaluate(e => getComputedStyle(e).borderRadius)) <= 4);
       await page.keyboard.press('Enter');
       await page.waitForFunction(() => document.querySelector('textarea')?.value === '');
+    });
+    await test('TextArea: auto-height grows and shrinks after manual resize', async () => {
+      await go('/components/text-area');
+      const demo = page.locator('.admiral-component-playground');
+      const textarea = demo.locator('textarea');
+      await demo.getByRole('checkbox', { name: 'Resizable', exact: true }).check();
+      await demo.locator('.admiral-text-area-control--resizable').waitFor();
+      const bounds = await textarea.boundingBox();
+      const x = bounds.x + bounds.width - 4;
+      const y = bounds.y + bounds.height - 4;
+      await page.mouse.move(x, y);
+      await page.mouse.down();
+      await page.mouse.move(x, y + 40, { steps: 6 });
+      await page.mouse.up();
+      assert.ok((await textarea.boundingBox()).height > bounds.height, 'Native resize changed the height');
+
+      await demo.getByRole('checkbox', { name: 'AutoHeight', exact: true }).check();
+      await demo.locator('.admiral-text-area-control--auto').waitFor();
+      await textarea.fill('Short text');
+      const shortHeight = (await textarea.boundingBox()).height;
+      await textarea.fill('One\nTwo\nThree\nFour');
+      assert.ok((await textarea.boundingBox()).height > shortHeight, 'Auto-height grows with content');
+      await textarea.fill('Short text');
+      assert.equal((await textarea.boundingBox()).height, shortHeight, 'Auto-height shrinks with content');
+    });
+    await test('NumberInput: label, literal text, steppers, bounds and clear', async () => {
+      await go('/components/number-input');
+      const demo = page.locator('.admiral-component-playground').first();
+      const field = demo.getByRole('spinbutton', { name: 'Amount' });
+      await demo.locator('.admiral-input-field__label').click();
+      assert.ok(await field.evaluate(e => e === document.activeElement), 'Label focuses the spinbutton');
+
+      const status = demo.getByRole('combobox', { name: 'Status', exact: true });
+      await status.selectOption('Error');
+      await page.waitForFunction(() => document.querySelector('.admiral-component-playground [role="spinbutton"]')
+        ?.getAttribute('aria-invalid') === 'true');
+      await status.selectOption('Success');
+      await page.waitForFunction(() => !document.querySelector('.admiral-component-playground [role="spinbutton"]')
+        ?.hasAttribute('aria-invalid'));
+
+      const prefix = demo.locator('.admiral-component-controls input[type="text"], .admiral-component-controls input:not([type])').first();
+      await prefix.fill("Owner's ");
+      await prefix.press('Tab');
+      await page.waitForFunction(() => document.querySelector('.admiral-component-playground [role="spinbutton"]')
+        ?.value.startsWith("Owner's "));
+      await field.fill("Owner's 5,050.50 ₽");
+      await field.press('Tab');
+      await demo.getByRole('status').getByText(/5050.50/).waitFor();
+      await demo.getByRole('button', { name: 'Increase value' }).click();
+      await demo.getByRole('status').getByText(/5051.50/).waitFor();
+      await demo.getByRole('button', { name: 'Clear value' }).click();
+      await page.waitForFunction(() => document.querySelector('.admiral-component-playground [role="spinbutton"]')?.value === '');
+
+      const rate = page.getByRole('spinbutton', { name: 'Rate', exact: true });
+      await rate.focus();
+      await rate.press('ArrowUp');
+      await page.waitForFunction(() => document.querySelector('input[aria-valuemax="100"]')?.value === '12.75 %');
+      await rate.fill('150 %');
+      await rate.press('Tab');
+      await page.waitForFunction(() => document.querySelector('input[aria-valuemax="100"]')?.value === '100.00 %');
+      await rate.fill('-10 %');
+      await rate.press('Tab');
+      await page.waitForFunction(() => document.querySelector('input[aria-valuemax="100"]')?.value === '0.00 %');
+    });
+    await test('Direct RadzenNumeric: binding, step and upper bound', async () => {
+      await go('/components/number-input');
+      await page.locator('[data-doc-tab="theme"]').click();
+      const demo = page.locator('.admiral-component-playground').first();
+      const field = demo.locator('.admiral-component-playground__preview').getByRole('spinbutton');
+      const bound = demo.locator('input[type="number"]');
+      await bound.waitFor();
+      await field.fill('999');
+      await field.press('Tab');
+      await page.waitForFunction(() => document.querySelector('.admiral-component-playground input[type="number"]')?.value === '999');
+      await demo.locator('.rz-numeric-up').click();
+      await page.waitForFunction(() => document.querySelector('.admiral-component-playground input[type="number"]')?.value === '1000');
+      await demo.locator('.rz-numeric-up').click();
+      assert.equal(await bound.inputValue(), '1000');
+      await demo.locator('.rz-numeric-down').click();
+      await page.waitForFunction(() => document.querySelector('.admiral-component-playground input[type="number"]')?.value === '999');
     });
     await test('Slider: ArrowRight adjusts value and exposes live slider semantics', async () => {
       await go('/components/slider');
@@ -222,9 +368,48 @@ try {
         assert.ok(await disabled.count());
       }
     });
-    await test('Radio group: arrows and Space select an enabled option', async () => {
+    await test('Switch: visible labels, native activation, disabled state and theme change', async () => {
       await go('/regression/overview');
-      const group = page.locator('.admiral-radio-list').first();
+      const section = page.locator('section[aria-labelledby="binary-heading"]');
+      const off = section.getByRole('switch', { name: 'Switch off', exact: true });
+      const on = section.getByRole('switch', { name: 'Switch on', exact: true });
+      const disabledOff = section.getByRole('switch', { name: 'Disabled off', exact: true });
+      const disabledOn = section.getByRole('switch', { name: 'Disabled on', exact: true });
+      await off.waitFor({ state: 'attached' });
+      assert.equal(await on.getAttribute('aria-checked'), 'true');
+      assert.ok(await disabledOff.isDisabled());
+      assert.ok(await disabledOn.isDisabled());
+      assert.equal(await disabledOff.getAttribute('aria-checked'), 'false');
+      assert.equal(await disabledOn.getAttribute('aria-checked'), 'true');
+
+      await section.getByText('Switch off', { exact: true }).click();
+      await off.and(section.getByRole('switch', { checked: true })).waitFor({ state: 'attached' });
+      assert.ok(await off.evaluate(e => e === document.activeElement));
+      await off.press('Enter');
+      await off.and(section.getByRole('switch', { checked: false })).waitFor({ state: 'attached' });
+      await off.press('Space');
+      await off.and(section.getByRole('switch', { checked: true })).waitFor({ state: 'attached' });
+      const visual = off.locator('..');
+      const { width, height } = await visual.boundingBox();
+      assert.deepEqual([width, height], [36, 20]);
+
+      await section.getByText('Disabled off', { exact: true }).click({ force: true });
+      assert.equal(await disabledOff.getAttribute('aria-checked'), 'false');
+      const background = () => visual.locator('.rz-switch-circle').evaluate(e => getComputedStyle(e).backgroundColor);
+      await visual.locator('.rz-switch-circle').evaluate(e => Promise.all(e.getAnimations().map(animation => animation.finished)));
+      const before = await background();
+      await page.getByRole('button', { name: 'Switch Admiral color theme', exact: true }).click();
+      await page.waitForFunction(color => getComputedStyle(document.querySelector(
+        '#demo-switch-off + .rz-switch-circle')).backgroundColor !== color, before);
+      assert.equal(await off.getAttribute('aria-checked'), 'true');
+      await page.getByRole('button', { name: 'Switch Admiral color theme', exact: true }).click();
+      await page.waitForFunction(color => getComputedStyle(document.querySelector(
+        '#demo-switch-off + .rz-switch-circle')).backgroundColor === color, before);
+    });
+    await test('Radio groups: accessible names, arrow selection, disabled skip and label click', async () => {
+      await go('/regression/overview');
+      const group = page.getByRole('radiogroup', { name: 'Radio button M', exact: true });
+      await page.getByRole('radiogroup', { name: 'Radio button S', exact: true }).waitFor();
       const options = group.getByRole('radio');
       await group.focus();
       await page.waitForFunction(id => document.activeElement?.getAttribute('aria-activedescendant') === id,
@@ -233,7 +418,16 @@ try {
       await page.waitForFunction(id => document.activeElement?.getAttribute('aria-activedescendant') === id,
         await options.nth(1).getAttribute('id'));
       await group.press('Space');
-      await options.nth(1).and(group.getByRole('radio', { checked: true })).waitFor();
+      const selected = group.getByRole('radio', { checked: true });
+      await options.nth(1).and(selected).waitFor();
+      assert.equal(await options.nth(1).locator('.rz-radiobutton-box').evaluate(e => getComputedStyle(e).outlineStyle), 'solid');
+      await group.press('End');
+      await options.nth(2).and(selected).waitFor();
+      await group.press('ArrowDown');
+      await options.nth(0).and(selected).waitFor();
+      await options.nth(1).locator('.rz-radiobutton-label').click();
+      await options.nth(1).and(selected).waitFor();
+      assert.equal(await options.nth(3).getAttribute('aria-disabled'), 'true');
     });
     await test('Tabs: ArrowRight and Enter change active panel', async () => {
       await go('/regression/overview');
