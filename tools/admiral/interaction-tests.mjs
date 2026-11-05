@@ -122,6 +122,33 @@ try {
       await page.locator('.admiral-hint__dialog').waitFor({ state: 'detached' });
       await page.waitForFunction(() => document.activeElement?.textContent.includes('Large hint'));
     });
+    await test('Tooltip: focused child is described and existing description survives Escape', async () => {
+      await go('/components/tooltip');
+      const trigger = page.locator('.admiral-component-playground__preview button').first();
+      await trigger.evaluate(element => {
+        const description = document.createElement('span');
+        description.id = 'existing-tooltip-help';
+        description.textContent = 'Existing description';
+        element.after(description);
+        element.setAttribute('aria-describedby', description.id);
+      });
+      await trigger.focus();
+      const tooltip = page.getByRole('tooltip');
+      await tooltip.waitFor();
+      const id = await tooltip.getAttribute('id');
+      await page.waitForFunction(id => document.querySelector('.admiral-component-playground__preview button')
+        ?.getAttribute('aria-describedby')?.split(/\s+/).includes(id), id);
+      const session = await context.newCDPSession(page);
+      const { nodes } = await session.send('Accessibility.getFullAXTree');
+      const button = nodes.find(node => node.role?.value === 'button' && node.name?.value === 'Hover or focus');
+      assert.match(button?.description?.value ?? '', /Existing description/);
+      assert.match(button?.description?.value ?? '', /Helpful details/);
+      await session.detach();
+      await trigger.press('Escape');
+      await tooltip.waitFor({ state: 'detached' });
+      await page.waitForFunction(() => document.querySelector('.admiral-component-playground__preview button')
+        ?.getAttribute('aria-describedby') === 'existing-tooltip-help');
+    });
     await test('Grid: keyboard row focus has color, horizontal cell focus has outline', async () => {
       await go('/tables');
       const playground = page.getByTestId('table-playground-scroll');
