@@ -35,7 +35,8 @@ try {
                 await page.setViewportSize({ width: 1440, height: 1000 });
                 await page.goto(baseURL + '/components/hint', { waitUntil: 'domcontentloaded' });
                 await opener.waitFor();
-                await page.waitForTimeout(300);
+                await page.locator('.admiral-consumer-shell[data-interactive="true"]').waitFor();
+                await page.waitForFunction(() => document.querySelector('.admiral-hint-anchor button')?.getAttribute('aria-expanded') === 'false');
                 await run();
                 assert.deepEqual(errors, []);
                 assert.equal(await page.locator('#blazor-error-ui').isVisible(), false);
@@ -158,6 +159,16 @@ try {
             assert.equal(await opener.evaluate(e => e === document.activeElement), true);
             await page.keyboard.press('Escape');
             await popup.waitFor({ state: 'detached' });
+        });
+        await test('Hover closes when keyboard focus leaves for a blank page area', async () => {
+            await page.getByLabel('Триггер', { exact: true }).selectOption('Hover');
+            await page.mouse.move(1400, 990);
+            await opener.focus();
+            await popup.waitFor();
+            await page.mouse.click(1400, 950);
+            await page.waitForFunction(() => document.activeElement === document.body);
+            await popup.waitFor({ state: 'detached' });
+            await page.getByText('Открыто: False · Изменений: 2 · Действий: 0', { exact: true }).waitFor();
         });
         await test('Hover closes on resize; click repositions on scroll', async () => {
             await page.getByLabel('Триггер', { exact: true }).selectOption('Hover');

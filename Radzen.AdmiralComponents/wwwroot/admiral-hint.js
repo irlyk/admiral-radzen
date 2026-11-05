@@ -82,6 +82,10 @@ export function connect(id, anchor, dotnet) {
         if (inside(event.target)) { state.suppressed = false; request(true); }
         else if (!anchor.matches(':hover') && !popup()?.matches(':hover')) request(false);
     };
+    const blur = event => {
+        if (state.options.hover && inside(event.target) && !inside(event.relatedTarget) &&
+            !anchor.matches(':hover') && !popup()?.matches(':hover')) request(false);
+    };
     const outside = event => {
         if (!state.options.hover && state.options.closeOnDocumentClick && !inside(event.target)) request(false);
     };
@@ -96,6 +100,7 @@ export function connect(id, anchor, dotnet) {
     document.addEventListener('pointerover', over);
     document.addEventListener('pointerout', out);
     document.addEventListener('focusin', focus);
+    document.addEventListener('focusout', blur);
     document.addEventListener('pointerdown', outside, true);
     document.addEventListener('keydown', key);
     document.addEventListener('scroll', schedule, true);
@@ -106,6 +111,7 @@ export function connect(id, anchor, dotnet) {
         document.removeEventListener('pointerover', over);
         document.removeEventListener('pointerout', out);
         document.removeEventListener('focusin', focus);
+        document.removeEventListener('focusout', blur);
         document.removeEventListener('pointerdown', outside, true);
         document.removeEventListener('keydown', key);
         document.removeEventListener('scroll', schedule, true);
