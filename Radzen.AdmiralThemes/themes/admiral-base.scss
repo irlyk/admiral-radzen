@@ -4431,6 +4431,7 @@ body:has(.admiral-drawer-backdrop--modal) .rz-body {
 // Admiral Tree M/S geometry and interaction layers.
 
 .rz-tree.admiral-tree {
+  --admiral-tree-toggle-space: 2.5rem;
   width: min(100%, 48rem);
   overflow: hidden;
   color: var(--rz-base-900);
@@ -4448,6 +4449,12 @@ body:has(.admiral-drawer-backdrop--modal) .rz-body {
   padding-inline-start: 1rem;
   background-color: transparent;
   transition: var(--rz-transition-all);
+}
+
+// Radzen omits the toggle element on leaves; reserve its column at every depth.
+.rz-tree.admiral-tree .rz-treenode-content:not([aria-expanded])::before {
+  content: '';
+  flex: 0 0 var(--admiral-tree-toggle-space);
 }
 
 .rz-tree.admiral-tree .rz-treenode-children > .rz-treenode > .rz-treenode-content {
@@ -4540,6 +4547,7 @@ body:has(.admiral-drawer-backdrop--modal) .rz-body {
 }
 
 .rz-tree.admiral-tree--small {
+  --admiral-tree-toggle-space: 2.25rem;
   font-size: 0.875rem;
   line-height: 1rem;
 }
