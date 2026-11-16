@@ -1,4 +1,7 @@
 @inject TooltipService TooltipService
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
+@implements IAsyncDisposable
 
 <span @ref="target" class="@CssClass" tabindex="@TabIndex"
       @onmouseenter="MouseEnter" @onmouseleave="MouseLeave"
@@ -7,6 +10,8 @@
 
 @code {
     private ElementReference target;
+    private IJSObjectReference? descriptionModule;
+    private IJSObjectReference? descriptionConnection;
     private bool hovered;
     private bool focused;
 
@@ -29,6 +34,33 @@
         AdmiralTooltipPosition.Left => TooltipPosition.Left,
         _ => TooltipPosition.Bottom
     };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            descriptionModule = await JS.InvokeAsync<IJSObjectReference>(
+                "import", "./_content/Radzen.Admiral.Components/admiral-tooltip.js");
+            descriptionConnection = await descriptionModule.InvokeAsync<IJSObjectReference>("connect", target);
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            if (descriptionConnection is not null)
+            {
+                await descriptionConnection.InvokeVoidAsync("disconnect");
+                await descriptionConnection.DisposeAsync();
+            }
+            if (descriptionModule is not null)
+            {
+                await descriptionModule.DisposeAsync();
+            }
+        }
+        catch (JSDisconnectedException) { }
+    }
 
     private void MouseEnter() { hovered = true; Open(); }
     private void MouseLeave() { hovered = false; CloseIfInactive(); }

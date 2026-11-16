@@ -28,6 +28,59 @@ Work takes place on `codex/manual-regression-batch`. Merge to `main` and choose 
 
 The batches share one final browser and local-package check. Source presence or CSS selectors alone do not establish visual parity.
 
+## Follow-up — TextArea
+
+- TextAreaField associates its label with the textarea even when the caller omits `Id`. The browser test checks the accessible name and focus on label click.
+- Native resize writes a height onto the textarea. In browsers that support `field-sizing`, AutoHeight now takes precedence over that height so the field can grow and shrink after switching modes.
+- In Chromium, the S/M/XL typography and base padding agree with the pinned React source. The light and dark checks covered error/success borders, disabled and read-only, copying, manual resize and bounded auto-height. The direct Radzen example retained multiline binding, focus, row changes and disabled behavior.
+- The upstream Radzen `/textarea` demo also passed multiline change, rows/columns, focus and disabled checks. The demo’s auto-resize example relies on an inline event handler blocked by the host CSP with both Admiral themes and the stock Material theme.
+- React gives the clear action priority when both clear and copy are enabled. The Blazor wrapper exposes both actions in that case. It uses CSS for auto-height, while React measures content.
+
+## Follow-up — Select and DropDown
+
+- Escape restores focus to the combobox in both Admiral selection modes. The previous focus handler only recognized the single-select panel.
+- When narrowing the window clips an open Admiral popup horizontally, Admiral closes it through Radzen so it can reopen at the new position. Direct RadzenDropDown retains its original resize and focus behavior.
+- The browser suite checks grouped single selection, adding and removing multiple values, and independent direct Radzen selection in both themes and languages at desktop and mobile widths. Grouping and async data are still limited to the single-select path.
+
+## Follow-up — PhoneNumberInput
+
+- Changing country replaces the flag icon without remounting the combobox. Keyboard focus draws an inset decoration around the country selector, separated from the field border and the number. S/M/XL checks cover its bounds; the country control uses block layout to avoid a baseline offset. The visual suite compares rendered screenshot pixels for the Russia-to-Kazakhstan flag change and for keyboard focus in both themes. It saves the flag crops and the focused field when AUDIT_OUTPUT is set.
+- The pinned React control opens the country menu with arrow keys from the phone input. The Blazor selector is a separate tab stop with a searchable popup.
+- Keyboard selection keeps the existing country combobox mounted so focus can return to it after the country list closes. The first Tab after keyboard selection can still be consumed by the dropdown; a subsequent Tab reaches the phone input.
+- The browser test covers retaining Kazakhstan when editing a shared +7 number, replacing the dial code without losing national digits, and updating the country label when a typed international prefix changes the country in Digits mode.
+
+## Follow-up — NumberInput
+
+- NumberInputField uses the native Radzen input ID for label focus and references the visible label for the accessible name. An explicit Name still supplies the native input name and ID.
+- Text decorations preserve literal apostrophes when building a numeric format. Chromium checks cover editing a decorated value, stepping, clearing a nullable value, and enforcing Min/Max. Direct RadzenNumeric keeps its own binding, stepping and bounds.
+- Both themes passed the S/M/XL height and minus/plus order checks, and the fractional keyboard step used the expected separator in RU and EN. `Status=Error` sets `aria-invalid` on the spinbutton. Leaving Error restores the native Radzen validation state.
+
+## Follow-up — DateRangePicker
+
+- Confirming the existing range with Enter leaves both callbacks quiet. A changed boundary emits only its own callback, and clearing a complete range emits one callback per boundary.
+- Both themes passed browser checks for reversed typed ranges, Escape recovery, keyboard calendar selection, interior shading and the direct Radzen range fixture.
+
+## Follow-up — TextInput and TextField
+
+- TextField supplies a stable input ID when the caller omits one, so the visible label names and focuses the input. An explicit ID still takes precedence.
+- Leaving password mode resets visibility. Re-entering password mode masks the value again, and toggling visibility does not emit a value change.
+- Chromium checks cover label focus, password visibility, clear, read-only, disabled and loading. The direct RadzenTextBox example retains typed input after blur and after switching to disabled. In read-only mode Admiral keeps the password toggle disabled, while the pinned React TextInput hides it.
+
+## Follow-up — Checkbox and CheckboxGroup
+
+- Clicking the Admiral checkbox label focuses the exposed checkbox and toggles it once. Previously the native label focused Radzen’s hidden input and the next Space emitted two changes.
+- Both themes and languages passed checks for label and keyboard activation, the mixed parent state, selecting all children, and disabled propagation. The direct Radzen example passed keyboard activation from the exposed checkbox. Its wrapping HTML label still reproduces the hidden-input focus issue.
+
+## Follow-up — RadioButtonList
+
+- The two direct Radzen radio groups in the gallery now reference their visible headings for accessible names.
+- Chromium checks passed for arrow selection, wrapping past a disabled option, label clicks and a visible focus ring in both themes. At 390 px the M and S radio indicators measured 20 and 18 px.
+
+## Follow-up — Switch
+
+- The direct RadzenSwitch examples now associate the visible captions with their native inputs. Clicking an enabled label focuses and toggles its switch.
+- Chromium checks passed for Space, Enter, disabled on/off, the 36 × 20 px track, and switching the active theme while preserving the checked state.
+
 ## Open differences
 
 | Area | Current behavior | Reason / next check |

@@ -48,12 +48,16 @@ Choose checks according to the changed files:
 - Components: run the affected component's regression tests and build its
   package or consumer as needed.
 - Shared infrastructure: expand checks according to the actual dependencies.
+  For runner selection or CLI changes, run `dotnet test tests/Admiral.TestRunner.Tests`.
 
-The complete browser suite is available through `npm run test:browser`; the
-normal affected runner is `npm test`. Build all packages with
+The complete C# browser suite is available through
+`dotnet run --project tools/Admiral.TestRunner -- browser`; the normal affected
+runner is `dotnet run --project tools/Admiral.TestRunner -- affected`.
+`dotnet test tests/Admiral.Playwright` also includes consumer, WASM, snippet,
+and package checks. npm commands remain compatibility aliases. Build all packages with
 `tools/admiral/build-admiral-packages.sh --configuration Release` when a full
-package check is warranted. `tools/admiral/verify-public-release.mjs` checks a
-clean release checkout and assembled package contents.
+package check is warranted. `REQUIRE_CLEAN_RELEASE=1 dotnet run --project tools/Admiral.TestRunner -- release`
+checks a clean release checkout and assembled package contents.
 
 A successful build or HTTP 200 is not proof of visual behavior. Use a rendered
 browser for visual claims and state any scenarios that were not checked.

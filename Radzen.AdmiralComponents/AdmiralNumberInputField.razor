@@ -1,17 +1,26 @@
 @typeparam TValue
 
 <AdmiralInputField Label="@Label" AdditionalLabel="@AdditionalLabel" ExtraText="@ExtraText"
-                   For="@Id" Required="@Required" Size="@Size" Status="@Status" Class="@Class">
+                   For="@ControlId" Required="@Required" Size="@Size" Status="@Status" Class="@Class">
     <AdmiralNumberInput TValue="TValue" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"
-                        Name="@Name" Id="@Id" Placeholder="@Placeholder" Size="@Size" Status="@Status"
+                        Name="@ControlId" Id="@Id" Placeholder="@Placeholder" Size="@Size" Status="@Status"
                         Alignment="@Alignment" Min="@Min" Max="@Max" Step="@Step" Precision="@Precision"
                         Prefix="@Prefix" Suffix="@Suffix" TextBefore="@TextBefore" TextAfter="@TextAfter" Format="@Format"
                         DisplayPlusMinusIcons="@DisplayPlusMinusIcons" DisplayClearIcon="@DisplayClearIcon"
                         Disabled="@Disabled" ReadOnly="@ReadOnly" Skeleton="@Skeleton" Immediate="@Immediate"
-                        MaxLength="@MaxLength" />
+                        MaxLength="@MaxLength" InputAttributes="@LabelAttributes" />
 </AdmiralInputField>
 
 @code {
+    private readonly string generatedId = $"admiral-number-{Guid.NewGuid():N}";
+    // RadzenNumeric uses Name as the id of the inner spinbutton.
+    private string ControlId => !string.IsNullOrWhiteSpace(Name) ? Name :
+        !string.IsNullOrWhiteSpace(Id) ? Id : generatedId;
+
+    private IReadOnlyDictionary<string, object>? LabelAttributes => string.IsNullOrWhiteSpace(Label)
+        ? null
+        : new Dictionary<string, object> { ["aria-labelledby"] = $"{ControlId}-label" };
+
     [Parameter] public TValue? Value { get; set; }
     [Parameter] public EventCallback<TValue?> ValueChanged { get; set; }
     [Parameter] public System.Linq.Expressions.Expression<Func<TValue?>>? ValueExpression { get; set; }

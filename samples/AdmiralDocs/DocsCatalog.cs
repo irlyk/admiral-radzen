@@ -14,8 +14,11 @@ internal static class DocsCatalog
 
     internal static readonly Group[] Groups =
     [
-        new("Getting started", "Начало работы",
+        new("Basics", "Основы",
         [
+            new("Getting started", "guide/getting-started", "Начало работы"),
+            new("Colors", "basics/colors", "Цвета"),
+            new("Typography", "components/typography", "Типографика"),
             new("Integration", "guide/integration", "Подключение"),
             new("Icons", "icons", "Иконки"),
             new("Layout", "layout", "Макет"),
@@ -32,6 +35,7 @@ internal static class DocsCatalog
         ]),
         new("Inputs", "Поля ввода",
         [
+            new("Switch", "components/switch"),
             new("Checkbox", "components/checkbox"),
             new("Checkbox groups", "components/checkbox-group", "Группы Checkbox"),
             new("TextInput", "components/text-input"),
@@ -57,7 +61,6 @@ internal static class DocsCatalog
         ]),
         new("Data Display", "Отображение данных",
         [
-            new("Typography", "components/typography"),
             new("Divider", "components/divider"),
             new("Badge", "components/badge"),
             new("Chips", "components/chips"),

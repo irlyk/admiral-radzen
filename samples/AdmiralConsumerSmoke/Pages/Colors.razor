@@ -1,0 +1,92 @@
+@page "/basics/colors"
+@page "/colors"
+
+<PageTitle>@T("Цвета Admiral", "Admiral colors")</PageTitle>
+
+<div class="admiral-component-page">
+    <header>
+        <h1>@T("Цвета", "Colors")</h1>
+        <p>@T("Палитра темы, цвета диаграмм и служебные CSS-классы. Переключите светлую и тёмную тему, чтобы увидеть текущие значения.", "Theme palette, chart colors and utility CSS classes. Switch between light and dark themes to preview the current values.")</p>
+    </header>
+    <section class="admiral-component-page__section">
+        <h2>@T("Цвета темы", "Theme colors")</h2>
+        <p>@T("Переменные Radzen получают значения из темы Admiral. Используйте семантические цвета для действий и статусов, а базовую шкалу для нейтральных элементов.", "Radzen variables receive their values from the Admiral theme. Use semantic colors for actions and status, and the base scale for neutral elements.")</p>
+        <h3>@T("Нейтральная шкала", "Neutral scale")</h3>
+        <div class="admiral-color-grid">
+            @foreach (var shade in NeutralShades)
+            {
+                @Swatch($"--rz-{shade}")
+            }
+        </div>
+        @foreach (var color in ThemeColors)
+        {
+            <h3>@T(color.Russian, color.English)</h3>
+            <div class="admiral-color-grid">
+                @foreach (var shade in SemanticShades)
+                {
+                    @Swatch($"--rz-{color.Name}{shade}")
+                }
+            </div>
+        }
+    </section>
+    <section class="admiral-component-page__section">
+        <h2>@T("Поверхности и текст", "Surfaces and text")</h2>
+        <p>@T("Для фона и текста выбирайте переменные по назначению. Их значения учитывают активную тему.", "Choose background and text variables by their purpose. Their values follow the active theme.")</p>
+        <div class="admiral-color-grid">
+            @foreach (var token in SurfaceColors)
+            {
+                @Swatch(token)
+            }
+        </div>
+        <div class="admiral-color-text-examples">
+            @foreach (var token in TextColors)
+            {
+                <div><span style="color:var(@token)">@T("Пример текста", "Sample text")</span><code>@token</code></div>
+            }
+        </div>
+    </section>
+    <section class="admiral-component-page__section">
+        <h2>@T("Цвета диаграмм", "Series colors")</h2>
+        <div class="admiral-color-grid">
+            @foreach (var index in Enumerable.Range(1, 8))
+            {
+                @Swatch($"--rz-series-{index}")
+            }
+        </div>
+    </section>
+    <section class="admiral-component-page__section">
+        <h2>@T("Служебные CSS-классы", "Utility CSS classes")</h2>
+        <p>@T("Для фона, текста и границ доступны классы Radzen. Суффикс соответствует имени цвета в палитре выше.", "Radzen classes are available for backgrounds, text and borders. The suffix matches a color name in the palette above.")</p>
+        <div class="admiral-color-utilities">
+            <div class="rz-background-color-primary-lighter"><code>.rz-background-color-primary-lighter</code></div>
+            <div class="rz-color-primary"><code>.rz-color-primary</code></div>
+            <div class="rz-border-color-primary"><code>.rz-border-color-primary</code></div>
+        </div>
+        <CopyableRazorExample Code="@ColorCode" Title="CSS · Razor" />
+    </section>
+</div>
+
+@code {
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private static readonly string[] NeutralShades = ["white", "base-50", "base-100", "base-200", "base-300", "base-400", "base-500", "base-600", "base-700", "base-800", "base-900", "black"];
+    private static readonly string[] SemanticShades = ["-lighter", "-light", "", "-dark", "-darker"];
+    private static readonly (string Name, string Russian, string English)[] ThemeColors =
+    [
+        ("base", "Базовый", "Base"), ("primary", "Основной", "Primary"), ("secondary", "Дополнительный", "Secondary"),
+        ("info", "Информация", "Info"), ("success", "Успех", "Success"), ("warning", "Предупреждение", "Warning"), ("danger", "Ошибка", "Danger")
+    ];
+    private static readonly string[] SurfaceColors = ["--rz-body-background-color", "--rz-base-background-color", "--rz-panel-background-color"];
+    private static readonly string[] TextColors = ["--rz-text-title-color", "--rz-text-color", "--rz-text-secondary-color", "--rz-text-tertiary-color", "--rz-text-disabled-color"];
+    private RenderFragment Swatch(string token) => @<div class="admiral-color-swatch">
+        <div class="admiral-color-swatch__paint" data-color-token="@token" style="background-color:var(@token)" aria-hidden="true"></div>
+        <code>@token</code>
+    </div>;
+    private const string ColorCode = """
+        <div class="rz-background-color-primary-lighter rz-color-primary-dark">
+            Content
+        </div>
+        <div style="background:var(--rz-panel-background-color);color:var(--rz-text-color)">
+            Content
+        </div>
+        """;
+}

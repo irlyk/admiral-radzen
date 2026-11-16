@@ -1,0 +1,92 @@
+@page "/components/switch"
+
+<PageTitle>Admiral Switch</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Switch / Toggle"
+        Description="@T("Переключатель RadzenSwitch с темой Admiral, подписью и состояниями.", "RadzenSwitch with the Admiral theme, a label and interaction states.")"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-toggle--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <CopyableRazorExample Code="@ExampleCode" Title="Razor · Switch" />
+        <ApiReference Title="RadzenSwitch" Rows="@ApiRows" />
+        <ComponentDocNotes Title="@T("Поведение", "Behavior")">
+            <p>@T("Space, Enter и клик по подписи переключают значение. Disabled и ReadOnly блокируют изменение и убирают переключатель из порядка Tab. Для доступной подписи задайте Name и тот же Component у RadzenLabel. События ValueChanged и Change получают bool.", "Space, Enter and a label click toggle the value. Disabled and ReadOnly prevent changes and remove the switch from the Tab order. For an accessible label, set Name and the same Component on RadzenLabel. ValueChanged and Change receive bool.")</p>
+        </ComponentDocNotes>
+    }
+    else if (tab == ComponentDocTabs.Theme)
+    {
+        <section class="admiral-component-page__section">
+            <h2>RadzenSwitch + Admiral theme</h2>
+            <p>@T("Switch использует RadzenSwitch напрямую. CSS пакета задаёт цвета, размеры и состояния. Значение этого примера независимо от Playground.", "Switch uses RadzenSwitch directly. The packaged CSS provides colors, geometry and states. This example has its own value, independent of the playground.")</p>
+            <div class="admiral-component-playground" data-testid="switch-radzen-demo">
+                <div class="admiral-component-playground__preview">
+                    <RadzenSwitch Name="switch-direct" @bind-Value="directValue" Change="_ => directChanges++" />
+                    <RadzenLabel Component="switch-direct" Text="@T("Уведомления", "Notifications")" />
+                    <span role="status">Value @directValue.ToString().ToLowerInvariant() · @T("Изменений", "Changes") @directChanges</span>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@ExampleCode" Title="Razor · Radzen API" />
+        </section>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>Playground</h2>
+            <div class="admiral-component-playground" data-testid="switch-playground">
+                <div class="admiral-component-playground__preview">
+                    <RadzenSwitch Name="switch-playground" Value="@value" ValueChanged="OnChanged" Disabled="@disabled" ReadOnly="@readOnly" />
+                    <RadzenLabel Component="switch-playground" Text="@label" />
+                    <span role="status">Value @value.ToString().ToLowerInvariant() · @T("Изменений", "Changes") @changes</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>@T("Подпись", "Label")</span><input @bind="label" /></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="value" /> @T("Включён", "Checked")</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="readOnly" /> ReadOnly</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@ExampleCode" Title="Razor · Switch" />
+        </section>
+        <section class="admiral-component-page__section">
+            <h2>@T("Состояния", "States")</h2>
+            <div class="admiral-state-grid">
+                @foreach (var state in States)
+                {
+                    <div class="admiral-state-grid__item">
+                        <RadzenSwitch Name="@state.Id" Value="@state.Value" Disabled="@state.Disabled" ReadOnly="@state.ReadOnly" />
+                        <RadzenLabel Component="@state.Id" Text="@T(state.Russian, state.English)" />
+                    </div>
+                }
+            </div>
+        </section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private bool value, disabled, readOnly, directValue;
+    private int changes, directChanges;
+    private string label = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "Уведомления" : "Notifications";
+    private void OnChanged(bool next) { value = next; changes++; }
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private static readonly (string Id, bool Value, bool Disabled, bool ReadOnly, string Russian, string English)[] States =
+    [
+        ("switch-off", false, false, false, "Выключен", "Off"), ("switch-on", true, false, false, "Включён", "On"),
+        ("switch-disabled-off", false, true, false, "Недоступен и выключен", "Disabled off"),
+        ("switch-disabled-on", true, true, false, "Недоступен и включён", "Disabled on"),
+        ("switch-readonly-off", false, false, true, "Только чтение, выключен", "Read-only off"),
+        ("switch-readonly-on", true, false, true, "Только чтение, включён", "Read-only on")
+    ];
+    private IReadOnlyList<ApiReference.Entry> ApiRows =>
+    [
+        new("Value / ValueChanged / Change", "bool / EventCallback<bool> / EventCallback<bool>", T("Значение и события переключения.", "Value and toggle callbacks.")),
+        new("Disabled / ReadOnly", "bool; false", T("Блокируют изменение значения.", "Prevent value changes.")),
+        new("Name / InputAttributes", "string / IReadOnlyDictionary<string, object>", T("Идентификатор внутреннего input и его HTML-атрибуты.", "The inner input name/ID and its HTML attributes.")),
+        new("TabIndex", "int; 0", T("Позиция в порядке клавиатурного фокуса.", "Position in the keyboard focus order."))
+    ];
+    private const string ExampleCode = """
+        <RadzenSwitch Name="notifications" @bind-Value="enabled" />
+        <RadzenLabel Component="notifications" Text="Notifications" />
+        @code { private bool enabled; }
+        """;
+}

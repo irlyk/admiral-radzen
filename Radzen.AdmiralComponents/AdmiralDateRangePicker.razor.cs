@@ -229,14 +229,23 @@ public partial class AdmiralDateRangePicker
 
     private async Task SetRangeAsync(DateTime? start, DateTime? end)
     {
+        var startChanged = Start != start;
+        var endChanged = End != end;
         Start = start;
         End = end;
         isEditing = false;
         inputInvalid = false;
         inputValue = FormatRange(start, end);
         selectedDates = GetBoundaryDates(start, end);
-        await StartChanged.InvokeAsync(start);
-        await EndChanged.InvokeAsync(end);
+        if (startChanged)
+        {
+            await StartChanged.InvokeAsync(start);
+        }
+
+        if (endChanged)
+        {
+            await EndChanged.InvokeAsync(end);
+        }
     }
 
     private void RenderDate(DateRenderEventArgs args)

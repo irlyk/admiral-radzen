@@ -62,16 +62,18 @@ Add `@using Radzen.Admiral.Components` and `@using Radzen.Admiral.Components.Mod
 tools/admiral/build-admiral-packages.sh --configuration Release
 dotnet restore Radzen.Admiral.slnx
 dotnet build Radzen.Admiral.slnx --configuration Release
-npm ci
-npx playwright install chromium
-node tools/admiral/validate-consumer-integration.mjs
-node tools/admiral/validate-copyable-razor.mjs
-npm test
-npm run test:browser
-npm run test:wasm
+dotnet run --project tests/Admiral.Playwright -- install chromium
+dotnet run --project tools/Admiral.TestRunner -- affected
+dotnet test tests/Admiral.Playwright
 ```
 
-Before validating copyable examples and running browser tests, start the smoke server at `http://localhost:5072` in a separate terminal as shown above.
+Tests use C#, NUnit, and Microsoft.Playwright. The full `dotnet test` run includes
+browser regressions, WASM, an isolated NuGet consumer, rendered Razor compilation,
+and package checks. The smoke server starts automatically; set `SMOKE_URL` to use
+an existing server. Node.js is not required. npm test commands remain compatibility
+aliases for the C# runner. See the [test guide](tests/Admiral.Playwright/README.md).
+Scenarios are grouped by component and check type. Page objects contain shared
+interactions; infrastructure owns hosts, browser sessions and diagnostics.
 
 ## Typography, licensing, and documentation
 

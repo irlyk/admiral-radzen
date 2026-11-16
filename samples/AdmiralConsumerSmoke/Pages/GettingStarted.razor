@@ -1,0 +1,50 @@
+@page "/guide/getting-started"
+
+<PageTitle>@T("Начало работы · AdmiralRadzen", "Getting started · AdmiralRadzen")</PageTitle>
+<div class="admiral-component-page">
+    <header>
+        <h1>@T("Начало работы", "Getting started")</h1>
+        <p>@T("Добавьте Admiral Design System в приложение Blazor через NuGet и подключите тему, иконки и сервисы.", "Add Admiral Design System to a Blazor app through NuGet, then connect the theme, icons and services.")</p>
+    </header>
+    <section class="admiral-component-page__section">
+        <h2>@T("1. Установите пакеты", "1. Install the packages")</h2>
+        <p>@T("AdmiralRadzen.Components включает зависимости от Radzen.Blazor, AdmiralRadzen.Themes и AdmiralRadzen.Icons. Для использования только CSS или иконок доступны отдельные пакеты.", "AdmiralRadzen.Components includes dependencies on Radzen.Blazor, AdmiralRadzen.Themes and AdmiralRadzen.Icons. Separate packages are available for CSS or icons alone.")</p>
+        <CopyableRazorExample Code="dotnet add package AdmiralRadzen.Components --version 2.0.0" Title=".NET CLI" />
+    </section>
+    <section class="admiral-component-page__section">
+        <h2>@T("2. Подключите ресурсы и сервисы", "2. Connect assets and services")</h2>
+        <p>@T("Зарегистрируйте AddAdmiralComponents, добавьте пространства имён и разместите AdmiralServices в layout. В host-странице подключите CSS темы, адаптер иконок, Radzen JS и стили изолированных компонентов.", "Register AddAdmiralComponents, add the namespaces, and place AdmiralServices in the layout. In the host page, load the theme CSS, icon adapter, Radzen JS and isolated component styles.")</p>
+        <CopyableRazorExample Code="@ImportsCode" Title="_Imports.razor" />
+        <p><a href="guide/integration">@T("Открыть инструкцию подключения с полным кодом", "Open the integration guide with complete code")</a></p>
+    </section>
+    <section class="admiral-component-page__section">
+        <h2>@T("3. Добавьте первый компонент", "3. Add your first component")</h2>
+        <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
+            <AdmiralButton Text="@T("Проверить подключение", "Check integration")" Click="() => clicks++" />
+            <span role="status">@T("Нажатий", "Clicks") @clicks</span>
+        </div></div>
+        <CopyableRazorExample Code="@ExampleCode" Title="Razor" />
+    </section>
+    <section class="admiral-component-page__section">
+        <h2>@T("4. Настройте оформление", "4. Choose the appearance")</h2>
+        <p>@T("Для смены темы используйте AdmiralTheme или RadzenTheme с именами admiral и admiral-dark. Переменная --admiral-font-family задаёт шрифт для обёрток Admiral и прямых контролов Radzen.", "Use AdmiralTheme or RadzenTheme with admiral and admiral-dark for theme switching. The --admiral-font-family variable sets the font for Admiral wrappers and direct Radzen controls.")</p>
+        <ul>
+            <li><a href="basics/colors">@T("Цвета и CSS-переменные", "Colors and CSS variables")</a></li>
+            <li><a href="components/typography">@T("Типографика", "Typography")</a></li>
+            <li><a href="guide/integration">@T("Темы, шрифты и подключение", "Themes, fonts and integration")</a></li>
+        </ul>
+    </section>
+</div>
+@code {
+    private int clicks;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private const string ImportsCode = """
+        @using Radzen.Admiral.Components
+        @using Radzen.Admiral.Components.Models
+        """;
+    private const string ExampleCode = """
+        <AdmiralButton Text="Check integration" Click="() => clicks++" />
+        <span role="status">Clicks @clicks</span>
+        @code { private int clicks; }
+        """;
+}

@@ -1292,3 +1292,24 @@ h1[tabindex="-1"]:focus { outline: none; }
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.admiral-color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+    gap: 1rem;
+    margin-block-end: 1.5rem;
+}
+.admiral-color-swatch {
+    overflow: hidden;
+    border: 1px solid var(--rz-base-300);
+    border-radius: var(--rz-border-radius);
+    background: var(--rz-panel-background-color);
+}
+.admiral-color-swatch__paint { height: 4.5rem; border-block-end: 1px solid var(--rz-base-300); }
+.admiral-color-swatch > code { display: block; padding: .75rem; font-size: .75rem; overflow-wrap: anywhere; }
+.admiral-color-text-examples { display: grid; gap: 1rem; margin-block-start: 1rem; }
+.admiral-color-text-examples > div { display: flex; flex-wrap: wrap; gap: 1rem; align-items: baseline; }
+.admiral-color-text-examples code { font-size: .75rem; }
+.admiral-color-utilities { display: grid; gap: 1rem; margin-block-end: 1rem; }
+.admiral-color-utilities > div { padding: 1rem; border: 1px solid var(--rz-base-300); border-radius: var(--rz-border-radius); overflow-wrap: anywhere; }
+.admiral-color-utilities > .rz-background-color-primary-lighter { color: var(--rz-on-primary-lighter); }

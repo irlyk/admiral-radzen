@@ -2,6 +2,10 @@
   <Import Project="$(AdmiralUpstreamTargets)" Condition="'$(AdmiralUpstreamTargets)' != '' and Exists('$(AdmiralUpstreamTargets)')" />
   <!-- Inject test-only static web assets without modifying the Radzen checkout. -->
   <ItemGroup Condition="'$(MSBuildProjectName)' == 'RadzenBlazorDemos'">
+    <!-- The upstream wildcard now selects 0.0.2, which requires Roslyn 5.9
+         while this source snapshot targets Roslyn 4.x. Pin the compatible
+         test-host dependency without modifying the source checkout. -->
+    <PackageReference Update="MetadataReferenceService.BlazorWasm" Version="0.0.1" />
     <ProjectReference Include="$(AdmiralPackageRoot)/Radzen.AdmiralThemes/Radzen.AdmiralThemes.csproj" />
     <ProjectReference Include="$(AdmiralPackageRoot)/Radzen.AdmiralIcons/Radzen.AdmiralIcons.csproj" />
   </ItemGroup>

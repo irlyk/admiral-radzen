@@ -104,6 +104,14 @@
         }
     }
 
+    protected override void OnParametersSet()
+    {
+        if (!Password)
+        {
+            passwordVisible = false;
+        }
+    }
+
     private Task HandleValueChanged(string value) => ValueChanged.InvokeAsync(value);
     private Task ClearAsync() => ValueChanged.InvokeAsync(string.Empty);
     private void TogglePassword() => passwordVisible = !passwordVisible;
