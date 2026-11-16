@@ -34,7 +34,9 @@ HTTPS исправляет это без ослабления CSP и без па
 под именами `admiral-regression-*.css`. Внешний MSBuild targets-файл подключает
 проекты со шрифтами и SVG из `_content/`. Рабочее дерево Radzen не меняется,
 не сбрасывается, не переключается и не коммитится. Локальные изменения не включаются.
-После остановки временная копия удаляется.
+После остановки временная копия удаляется. Тестовый targets-файл фиксирует
+`MetadataReferenceService.BlazorWasm` на совместимой версии `0.0.1`, чтобы
+upstream wildcard не подтягивал зависимость Roslyn 5.9 в снимок с Roslyn 4.x.
 
 Можно явно выбрать checkout и уже имеющийся в нём commit/tag:
 
@@ -73,100 +75,60 @@ tools/admiral/rebuild-admiral-theme.sh
 
 ### Локальные проверки smoke-приложения
 
-Нужны Node.js 20 или новее и Chromium. В `.nvmrc` закреплён Node.js
-24.21.0 LTS. Из корня репозитория один раз
-установите зависимости и браузер:
+Нужны .NET SDK 10 и Chromium Playwright. Тесты находятся в
+[`tests/Admiral.Playwright`](../tests/Admiral.Playwright/README.md) и используют C# и NUnit.
+Установка браузера не требует Node.js или PowerShell:
 
 ```bash
-npm install
-npx playwright install chromium
+dotnet run --project tests/Admiral.Playwright -- install chromium
+dotnet run --project tools/Admiral.TestRunner -- browser
 ```
 
-`package-lock.json` фиксирует версии. На чистом checkout для воспроизводимой
-установки используйте `npm ci`, затем `npx playwright install chromium`.
-`node_modules/` не хранится в Git.
-
-Сначала соберите пакеты и решение, затем запустите smoke-приложение в отдельном
-терминале:
+Без `SMOKE_URL` тесты пересобирают пакеты и автоматически запускают изолированный
+smoke-сервер. Для уже запущенного приложения:
 
 ```bash
-tools/admiral/build-admiral-packages.sh --configuration Release
-dotnet build Radzen.Admiral.slnx
-ASPNETCORE_ENVIRONMENT=Development ASPNETCORE_URLS=http://localhost:5072 \
-  dotnet run --project samples/AdmiralConsumerSmoke/AdmiralConsumerSmoke.csproj \
-  --no-build --no-launch-profile
+SMOKE_URL=http://localhost:5072 dotnet test tests/Admiral.Playwright --filter TestCategory=Tree
 ```
 
-Когда приложение доступно по `http://localhost:5072`, из второго терминала
-запустите все локальные браузерные проверки:
+C#-раннер поддерживает отдельные наборы `audit`, `checkbox`, `interactions`, `combo`,
+`drawer`, `hint`, `slider`, `phone-number`, `select`, `visual`, `file-input`,
+`image-viewer`, `action-bar`, `tree`, `native-date-range`, `layout`, `fonts`,
+`docs`, `consumer`, `snippets`, `wasm` и `release`.
+Например, `dotnet run --project tools/Admiral.TestRunner -- slider`.
+`dotnet test tests/Admiral.Playwright` запускает весь набор, включая инфраструктуру.
+Старые npm-команды сохранены как алиасы этого раннера; JS-реализаций тестов нет.
+
+Для внешнего Radzen demos сервера, запущенного описанным выше скриптом:
 
 ```bash
-npm run test:browser
+RADZEN_URL=https://localhost:5084 dotnet run --project tools/Admiral.TestRunner -- radzen-demos
 ```
 
-Можно запускать отдельные наборы: `test:browser:audit`,
-`test:browser:interactions`, `test:browser:combo`, `test:browser:drawer`,
-`test:browser:hint`, `test:browser:slider`, `test:browser:file-input`,
-`test:browser:image-viewer`, `test:browser:action-bar`, `test:browser:tree`,
-`test:browser:native-date-range` и `test:browser:layout`.
-Сценарий `test:radzen-demos` проверяет отдельный Radzen demos сервер и в общий
-`test:browser` не включён. По умолчанию он обращается к
-`https://localhost:5084`; внешний `RADZEN_URL` используйте только после отдельного
-согласования.
+Без `RADZEN_URL` внешние demos-тесты пропускаются. Они используют изолированный
+снимок исходников Radzen; пакеты и обычные тесты не зависят от этого checkout.
 
 Переменные окружения:
 
-- `SMOKE_URL` — адрес локального smoke-приложения; по умолчанию
-  `http://localhost:5072`.
-- `PLAYWRIGHT_MODULE` — путь к существующему модулю `playwright` или
-  `playwright-core`; если не задан, используется установленный npm-пакет
-  `playwright`.
-- `CHROME_PATH` — путь к системному Chromium/Chrome, если нужно использовать его
-  вместо браузера, установленного Playwright.
-- `ADMIRAL_FONT_FIXTURE_DIR` — внешний каталог с файлами Regular, Medium и
-  SemiBold для необязательной проверки собственного шрифта. Для
-  `font-distribution-tests.mjs` вместе с ним укажите
-  `ADMIRAL_FONT_FIXTURE_EXPECTED_FAMILY` — внутреннее имя семейства этих файлов;
-  тест сравнит его с фактически использованным браузером шрифтом.
-- `AUDIT_OUTPUT` — каталог для JSON и скриншотов; значение по умолчанию зависит
-  от сценария. Для layout-аудита это `artifacts/smoke-layout-audit`.
-- `AUDIT_WIDTHS` и `AUDIT_ROUTES` — ширины и маршруты для `test:browser:layout`.
-- `RADZEN_URL` — адрес Radzen demos для отдельного сценария
-  `npm run test:radzen-demos`; не задавайте внешний URL без согласования.
+- `SMOKE_URL` — адрес существующего smoke-сервера; без него сервер запускается автоматически.
+- `CHROME_PATH` — путь к Chromium/Chrome вместо установленного браузера Playwright.
+- `HEADED=1` — видимый браузер.
+- `ADMIRAL_FONT_FIXTURE_DIR` — внешний каталог с Regular, Medium и SemiBold для
+  необязательной проверки собственного шрифта. Вместе с ним задайте
+  `ADMIRAL_FONT_FIXTURE_EXPECTED_FAMILY` — внутреннее имя семейства, которое
+  проверяется по реально отрисованным глифам через CDP. Файлы не копируются в репозиторий.
+- `AUDIT_OUTPUT` — каталог JSON, скриншотов и traces; по умолчанию `artifacts/playwright`.
+- `AUDIT_WIDTHS` и `AUDIT_ROUTES` — ширины и маршруты layout-аудита.
+- `RADZEN_URL` — адрес отдельного Radzen demos сервера.
+- `REQUIRE_CLEAN_RELEASE=1` — дополнительно проверяет чистоту release-checkout.
 
-### Аудит состояний и отдельные команды
+NUnit/TRX показывает каждый поведенческий сценарий и комбинацию темы, языка
+и размера окна. При ошибке сохраняются скриншот и Playwright trace. Аудит
+состояний пишет отдельные `states-*.json`; это инвентаризация computed styles,
+а не автоматическое утверждение визуального паритета. Layout-аудит проверяет
+вкладки, переполнение документа и контейнеров в RU/EN и светлой/тёмной темах.
+Проверяйте итоговый результат и код завершения процесса.
 
-Браузерный инвентаризационный проход smoke:
-
-```bash
-npm run test:browser:audit
-```
-
-Отчёт — `artifacts/browser-audit/gallery-states.json`: computed styles default,
-hover, focus, hover+focus для разных классов контролов в обеих темах.
-Это **не** автоматическое утверждение визуального паритета или проверки всех
-клавиш. Поведенческие проверки и оставшиеся ограничения ведутся отдельно.
-
-Проверки клавиатуры в smoke:
-
-```bash
-npm run test:browser:interactions
-npm run test:browser:combo
-npm run test:browser:drawer
-npm run test:browser:hint
-npm run test:browser:slider
-npm run test:browser:file-input
-npm run test:browser:image-viewer
-npm run test:browser:action-bar
-npm run test:browser:tree
-npm run test:browser:native-date-range
-```
-
-Для локальных smoke-сценариев по умолчанию используется
-`SMOKE_URL=http://localhost:5072`. JSON и скриншоты записываются в каталоги
-`artifacts/`; точное имя каталога задаёт каждый сценарий либо `AUDIT_OUTPUT`.
-Проверяйте итоговый JSON и код завершения процесса: отсутствие исключений
-в консоли само по себе не подтверждает прохождение сценариев. Текущий объём проверки
-и непокрытые сценарии фиксируйте в отчёте о конкретном изменении.
-
-Это регрессионный просмотр **прямых Radzen-компонентов с Admiral-темой**, а не проверка Admiral-обёрток. Если сломался компонент Radzen, отметьте страницу, тему, размер окна и состояние (обычное, hover, focus, active, disabled), затем сравните с smoke-галереей и официальным Admiral.
+Нативный drag-and-drop из ОС и работа на физических touch-устройствах остаются
+ручными сценариями: программная передача FileList и эмуляция touch не доказывают
+их поведение.

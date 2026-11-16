@@ -8,7 +8,7 @@
 
 - [ ] Сборка Release и пакеты
 - [ ] Изолированный NuGet consumer и Razor-примеры
-- [ ] `npm test` и полный браузерный набор, если применимо
+- [ ] `dotnet run --project tools/Admiral.TestRunner -- affected` и полный браузерный набор, если применимо
 - [ ] Light/dark и RU/EN, если применимо
 
 ## Ограничения и риски

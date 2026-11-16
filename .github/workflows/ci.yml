@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, 'codex/**']
   workflow_dispatch:
 
 permissions:
@@ -60,6 +60,15 @@ jobs:
 
       - name: Restore solution
         run: dotnet restore Radzen.Admiral.slnx
+
+      - name: Check C# test and runner code style
+        run: |
+          dotnet format tests/Admiral.Playwright --verify-no-changes --no-restore
+          dotnet format tests/Admiral.TestRunner.Tests --verify-no-changes --no-restore
+          dotnet format tools/Admiral.TestRunner --verify-no-changes --no-restore
+
+      - name: Test regression suite selection
+        run: dotnet test tests/Admiral.TestRunner.Tests --configuration Release
 
       - name: Verify package dependency graph
         run: |
@@ -160,16 +169,10 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
       - name: Install browser
         run: |
-          npm ci
-          npx playwright install --with-deps chromium
+          dotnet build tests/Admiral.Playwright -c Release
+          dotnet run --project tests/Admiral.Playwright -c Release --no-build -- install --with-deps chromium
 
       - name: Download local NuGet packages
         uses: actions/download-artifact@v4
@@ -184,7 +187,7 @@ jobs:
           path: ${{ runner.temp }}/smoke-publish
 
       - name: Validate isolated NuGet consumer
-        run: node tools/admiral/validate-consumer-integration.mjs
+        run: dotnet test tests/Admiral.Playwright -c Release --no-build --filter TestCategory=Consumer --logger trx --results-directory artifacts/test-results
 
       - name: Start smoke app and wait for readiness
         run: |
@@ -207,13 +210,15 @@ jobs:
           fi
 
       - name: Compile rendered copyable Razor examples
-        run: node tools/admiral/validate-copyable-razor.mjs --output "$RUNNER_TEMP/copyable-razor"
+        run: dotnet test tests/Admiral.Playwright -c Release --no-build --filter TestCategory=Snippets --logger trx --results-directory artifacts/test-results
 
       - name: Validate published WASM documentation under project subpath
-        run: npm run test:wasm
+        run: dotnet test tests/Admiral.Playwright -c Release --no-build --filter TestCategory=Wasm --logger trx --results-directory artifacts/test-results
 
       - name: Verify public licensing and package assets
-        run: node tools/admiral/verify-public-release.mjs
+        env:
+          REQUIRE_CLEAN_RELEASE: '1'
+        run: dotnet test tests/Admiral.Playwright -c Release --no-build --filter TestCategory=Release --logger trx --results-directory artifacts/test-results
 
       - name: Check generated files and whitespace
         run: |
@@ -240,8 +245,8 @@ jobs:
           retention-days: 7
           path: |
             ${{ runner.temp }}/smoke.log
-            ${{ runner.temp }}/copyable-razor/inventory.json
-            ${{ runner.temp }}/copyable-razor/results.json
+            artifacts/playwright/
+            artifacts/test-results/
 
   browser:
     needs: prepare
@@ -252,13 +257,15 @@ jobs:
       matrix:
         include:
           - group: audit
-            scripts: 'test:browser:audit'
+            filter: 'TestCategory=Audit'
           - group: interactions
-            scripts: 'test:browser:checkbox test:browser:interactions test:browser:combo test:browser:drawer test:browser:hint test:browser:slider'
+            filter: 'TestCategory=Checkbox|TestCategory=Interactions|TestCategory=Combo|TestCategory=Drawer|TestCategory=Hint|TestCategory=Slider'
           - group: components
-            scripts: 'test:browser:phone-number test:browser:select test:browser:visual test:browser:file-input test:browser:image-viewer'
+            filter: 'TestCategory=PhoneNumber|TestCategory=Select|TestCategory=Visual|TestCategory=FileInput|TestCategory=ImageViewer'
           - group: layout
-            scripts: 'test:browser:action-bar test:browser:tree test:browser:native-date-range test:browser:layout test:browser:fonts'
+            filter: 'TestCategory=ActionBar|TestCategory=Tree|TestCategory=NativeDateRange|TestCategory=Layout|TestCategory=Fonts'
+          - group: documentation
+            filter: 'TestCategory=Documentation|TestCategory=DocsUx|TestCategory=DocsIteration'
     env:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://127.0.0.1:5072
@@ -274,16 +281,10 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
       - name: Install browser
         run: |
-          npm ci
-          npx playwright install --with-deps chromium
+          dotnet build tests/Admiral.Playwright -c Release
+          dotnet run --project tests/Admiral.Playwright -c Release --no-build -- install --with-deps chromium
 
       - name: Download published smoke app
         uses: actions/download-artifact@v4
@@ -312,15 +313,7 @@ jobs:
           fi
 
       - name: Run ${{ matrix.group }} browser regressions
-        run: |
-          failed=0
-          for suite in ${{ matrix.scripts }}; do
-            if ! npm run "$suite"; then
-              echo "::error title=Browser regression failed::$suite (${{ matrix.group }})"
-              failed=1
-            fi
-          done
-          exit "$failed"
+        run: dotnet test tests/Admiral.Playwright -c Release --no-build --filter '${{ matrix.filter }}' --logger trx --results-directory artifacts/test-results
 
       - name: Stop smoke app
         if: always()

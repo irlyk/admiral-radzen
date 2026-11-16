@@ -1,0 +1,16 @@
+global using System.Text.Json;
+global using System.Text.Json.Serialization;
+global using System.Text.RegularExpressions;
+global using Admiral.Playwright.Infrastructure.Assertions;
+global using Admiral.Playwright.Infrastructure.Browser;
+global using Admiral.Playwright.Infrastructure.Browser.DevTools;
+global using Admiral.Playwright.Infrastructure.Configuration;
+global using Admiral.Playwright.Infrastructure.Execution;
+global using Admiral.Playwright.Infrastructure.Fixtures;
+global using Admiral.Playwright.Infrastructure.Hosting;
+global using Admiral.Playwright.Infrastructure.Packages;
+global using Admiral.Playwright.Models.Geometry;
+global using Admiral.Playwright.Models.Rendering;
+global using Admiral.Playwright.Models.Styles;
+global using Microsoft.Playwright;
+global using NUnit.Framework;

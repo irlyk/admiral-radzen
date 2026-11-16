@@ -125,19 +125,20 @@ builder.Services.AddAdmiralComponents();
 tools/admiral/build-admiral-packages.sh --configuration Release
 dotnet restore Radzen.Admiral.slnx
 dotnet build Radzen.Admiral.slnx --configuration Release
-npm ci
-npx playwright install chromium
-node tools/admiral/validate-consumer-integration.mjs
-node tools/admiral/validate-copyable-razor.mjs
-npm test
-npm run test:browser
-npm run test:wasm
+dotnet run --project tests/Admiral.Playwright -- install chromium
+dotnet run --project tools/Admiral.TestRunner -- affected
+dotnet test tests/Admiral.Playwright
 ```
 
-Перед проверкой копируемых примеров и браузерными тестами запустите smoke
-в отдельном терминале на `http://localhost:5072` по инструкции выше.
-Для этих проверок нужен Chromium Playwright; подробности в
-[инструкции smoke](samples/AdmiralConsumerSmoke/README.md).
+Тесты написаны на C# с NUnit и Microsoft.Playwright. Полный `dotnet test`
+включает браузерные сценарии, WASM, изолированный NuGet-потребитель,
+компиляцию копируемых Razor-примеров и проверку пакетов. Smoke-приложение
+запускается автоматически; `SMOKE_URL` позволяет использовать уже запущенный
+сервер. Node.js для тестов не требуется. Команды `npm test` и `npm run test:browser`
+сохранены как совместимые алиасы C#-раннера.
+Подробности и выбор наборов — в [руководстве по тестам](tests/Admiral.Playwright/README.md).
+Сценарии распределены по компонентам и типам проверок; общие действия находятся
+в page objects, а хосты, браузерные сессии и диагностика — в инфраструктуре тестов.
 
 ## Типографика и лицензии
 
