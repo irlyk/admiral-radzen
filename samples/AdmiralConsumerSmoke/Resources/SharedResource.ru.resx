@@ -893,4 +893,5 @@
   <data name="Integration" xml:space="preserve"><value>Подключение</value></data>
   <data name="Typography" xml:space="preserve"><value>Типографика</value></data>
   <data name="Select current month" xml:space="preserve"><value>Выбрать текущий месяц</value></data>
+  <data name="Lighter, Light, Default, Dark, Darker. Disabled keeps a neutral palette for every shade." xml:space="preserve"><value>Lighter, Light, Default, Dark, Darker. Disabled сохраняет нейтральную палитру при любом оттенке.</value></data>
 </root>

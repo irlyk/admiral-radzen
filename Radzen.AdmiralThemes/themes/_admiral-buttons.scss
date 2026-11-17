@@ -277,7 +277,8 @@ $admiral-button-warning: if($theme-dark, #EF5018, #FF5C22);
 .rz-button.admiral-button--loading {
   pointer-events: none;
 
-  .admiral-button__content { visibility: hidden; }
+  // Keep the action name in the accessibility tree while the spinner is visible.
+  .admiral-button__content { opacity: 0; }
 }
 
 .admiral-button__spinner {

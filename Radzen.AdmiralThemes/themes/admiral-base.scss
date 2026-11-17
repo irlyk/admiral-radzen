@@ -5862,7 +5862,9 @@ ul.rz-profile-menu {
 
 // Admiral button disabled states use neutral tokens instead of opacity.
 
-.rz-button.rz-state-disabled {
+// Keep class-based Radzen actions; native state also beats variant + shade rules.
+.rz-button.rz-state-disabled,
+.rz-button.rz-state-disabled:disabled {
   &.rz-variant-filled {
     background-color: var(--rz-base-200);
     border-color: var(--rz-base-200);

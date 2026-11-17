@@ -96,7 +96,7 @@ dotnet run --project tools/Admiral.TestRunner -- snippets
 dotnet run --project tools/Admiral.TestRunner -- wasm
 ```
 
-Categories: `Audit`, `Layout`, `Checkbox`, `Interactions`, `Combo`, `TreeSelect`, `GlobalSearch`, `Drawer`,
+Categories: `Audit`, `Layout`, `Button`, `Checkbox`, `Interactions`, `Combo`, `TreeSelect`, `GlobalSearch`, `Drawer`,
 `Hint`, `Slider`, `PhoneNumber`, `Select`, `Visual`, `FileInput`, `ImageViewer`,
 `ActionBar`, `Tree`, `NativeDateRange`, `Fonts`, `DocsUx`, `DocsIteration`,
 `Documentation`, `Consumer`, `Snippets`, `Wasm`, `Release`, `CleanRelease`, `Radzen`.
