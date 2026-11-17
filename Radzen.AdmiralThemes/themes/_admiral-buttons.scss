@@ -281,6 +281,11 @@ $admiral-button-warning: if($theme-dark, #EF5018, #FF5C22);
   .admiral-button__content { opacity: 0; }
 }
 
+.rz-button.admiral-text-button--loading {
+  position: relative;
+  .admiral-text-button__content { opacity: 0; }
+}
+
 .admiral-button__spinner {
   position: absolute;
   z-index: 1;

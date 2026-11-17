@@ -8,10 +8,10 @@
               @attributes="AdditionalAttributes">
     @if (Loading)
     {
-        <AdmiralSpinner Size="@SpinnerSize" AriaLabel="Loading" />
+        <span class="admiral-button__spinner" aria-hidden="true">
+            <AdmiralSpinner Size="@SpinnerSize" AriaLabel="Loading" />
+        </span>
     }
-    else
-    {
     <span class="admiral-text-button__content">
         @if (!string.IsNullOrWhiteSpace(IconStart))
         {
@@ -32,7 +32,6 @@
             <AdmiralIcon Icon="@IconEnd" Size="@ContentIconSize" aria-hidden="true" />
         }
     </span>
-    }
 </RadzenButton>
 
 @code {
@@ -73,6 +72,7 @@
     {
         "admiral-text-button",
         Appearance == AdmiralTextButtonAppearance.Secondary ? "admiral-text-button--secondary" : null,
+        Loading ? "admiral-text-button--loading" : null,
         Skeleton ? "rz-skeleton admiral-text-button--skeleton" : null,
         Class
     }.Where(value => !string.IsNullOrWhiteSpace(value)));
