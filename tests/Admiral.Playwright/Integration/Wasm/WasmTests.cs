@@ -14,6 +14,8 @@ public sealed class WasmTests : BrowserTest
         {
             "/",
             "/components/button",
+            "/components/button-groups",
+            "/components/icon-button-group",
             "/components/checkbox",
             "/components/select",
             "/components/phone-number-input",
@@ -221,6 +223,32 @@ public sealed class WasmTests : BrowserTest
         await page.Locator("#main-content").GetByRole(
             AriaRole.Heading,
             new LocatorGetByRoleOptions { Name = "Checkbox groups", Exact = true }).WaitForAsync();
+
+        // Shared group links must resolve under the static site's project prefix.
+        await page.GotoAsync(url + "components/button-groups");
+        var iconGroups = page.Locator("#main-content").GetByRole(AriaRole.Link,
+            new() { Name = "IconButtonGroup has its own page", Exact = true });
+        Assert.That(new Uri(new Uri(url), await iconGroups.GetAttributeAsync("href")).AbsolutePath,
+            Is.EqualTo("/admiral-radzen/components/icon-button-group"));
+        await iconGroups.ClickAsync();
+        await page.Locator("#main-content").GetByRole(AriaRole.Heading,
+            new() { Name = "IconButtonGroup", Exact = true }).WaitForAsync();
+        var textGroups = page.Locator("#main-content").GetByRole(AriaRole.Link,
+            new() { Name = "ButtonGroup page", Exact = true });
+        Assert.That(new Uri(new Uri(url), await textGroups.GetAttributeAsync("href")).AbsolutePath,
+            Is.EqualTo("/admiral-radzen/components/button-groups"));
+        await textGroups.ClickAsync();
+        await page.Locator("[data-doc-tab=theme]").ClickAsync();
+        var groupPreview = page.Locator(".admiral-component-playground__preview").First;
+        var directGroup = groupPreview.GetByRole(AriaRole.Group, new() { Name = "Document actions", Exact = true });
+        await directGroup.GetByRole(AriaRole.Button).First.ClickAsync();
+        await Assertions.Expect(groupPreview.Locator("output")).ToHaveTextAsync(new Regex(@"Clicks:\s*1$"));
+        var disableLast = page.GetByLabel("Disabled · last", new() { Exact = true });
+        await disableLast.UncheckAsync();
+        await Assertions.Expect(directGroup.GetByRole(AriaRole.Button).Last).ToBeEnabledAsync();
+        await disableLast.CheckAsync();
+        await Assertions.Expect(directGroup.GetByRole(AriaRole.Button).Last).ToBeDisabledAsync();
+        await Assertions.Expect(directGroup.GetByRole(AriaRole.Button).Last).ToHaveCSSAsync("color", "rgb(81, 83, 87)");
 
         // Act: navigate through the searchable component catalog.
         var catalogToggle = page.GetByRole(
