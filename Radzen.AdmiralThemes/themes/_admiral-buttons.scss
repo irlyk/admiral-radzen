@@ -28,6 +28,10 @@ $admiral-button-warning: if($theme-dark, #EF5018, #FF5C22);
   position: relative;
   border: var(--rz-border-width) solid transparent;
   background-image: none;
+  // Admiral appearances already define their hover/press color; do not layer
+  // Radzen's gradient over it (its state selector is more specific than the base).
+  &:not(.rz-state-disabled):is(:hover, :active) { background-image: none; }
+
   // Radzen's outlined-variant selector is more specific and otherwise adds an
   // inset ring on top of the real border, making Admiral buttons look 2px wide.
   box-shadow: none !important;
@@ -300,6 +304,9 @@ $admiral-button-warning: if($theme-dark, #EF5018, #FF5C22);
   display: inline-flex;
   max-width: 100%;
   white-space: nowrap;
+
+  // A joined group must not squeeze a label underneath its neighbouring action.
+  > .rz-button { flex-shrink: 0; }
 
   > .rz-button:first-child {
     border-start-end-radius: 0;

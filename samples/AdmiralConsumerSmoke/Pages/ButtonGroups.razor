@@ -3,45 +3,39 @@
 <div class="admiral-component-page">
     <AdmiralGalleryPageHeader Title="ButtonGroup" Description="Joined buttons with shared appearance and dimension settings."
         SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-buttongroup--docs" />
-    <p><a href="/components/icon-button-group">@T("Отдельная страница IconButtonGroup", "IconButtonGroup has its own page")</a></p>
+    <p><a href="components/icon-button-group">@T("Отдельная страница IconButtonGroup", "IconButtonGroup has its own page")</a></p>
     <ComponentDocTabs @bind-Value="tab" />
     @if (tab == ComponentDocTabs.Api)
     {
         <section class="admiral-component-page__section">
             <h2>@T("Использование и ограничения", "Usage and limitations")</h2>
-            <p>@T("Группа задаёт общую геометрию и aria-label, а действия и события остаются у дочерних AdmiralButton. Disabled и Loading задаются дочерней кнопке, не группе.", "The group sets shared geometry and an aria-label; actions and events remain on child AdmiralButton controls. Disabled and Loading are child states, not group states.")</p>
+            <p>@T("Группа задаёт общую геометрию и aria-label, а действия и события остаются у дочерних AdmiralButton. Disabled и Loading задаются дочерней кнопке, не группе. Для узкой области поместите группу в контейнер с горизонтальной прокруткой: кнопки сохраняют свою ширину.", "The group sets shared geometry and an aria-label; actions and events remain on child AdmiralButton controls. Disabled and Loading are child states, not group states. In narrow areas, put the group in a horizontal scroll container so buttons retain their widths.")</p>
             <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
             <ApiReference Title="AdmiralButtonGroup" Rows="@GroupRows" />
         </section>
     }
     else if (tab == ComponentDocTabs.Theme)
     {
-        <section class="admiral-component-page__section">
-            <h2>RadzenStack + RadzenButton</h2>
-            <p>@T("Прямой RadzenStack с Gap=0 ставит кнопки рядом и получает стили темы, но не реализует автоматически единый контур, общую размерность и семантику AdmiralButtonGroup. Если они необходимы, добавьте соответствующую разметку и CSS приложения.", "A direct RadzenStack with Gap=0 places themed buttons together, but it does not automatically provide the joined border, shared dimensions or AdmiralButtonGroup semantics. Add application markup and CSS if those are required.")</p>
-            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
-                <RadzenStack Orientation="Orientation.Horizontal" Gap="0" role="group" aria-label="Document actions"><RadzenButton Text="Create" Size="ButtonSize.Small" Click="@(_ => directResult = "Create")" /><RadzenButton Text="Copy" Size="ButtonSize.Small" Click="@(_ => directResult = "Copy")" /></RadzenStack>
-                <output aria-live="polite">@T("Последнее действие Radzen", "Last Radzen action"): @directResult</output>
-            </div></div>
-            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
-        </section>
+        <ButtonGroupThemePlayground IconOnly="false" />
     }
     else
     {
         <section class="admiral-component-page__section">
             <h2>@T("Интерактивный пример", "Interactive playground")</h2>
             <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
-                <AdmiralButtonGroup Appearance="@appearance" Dimension="@dimension" AriaLabel="Document actions"><AdmiralButton Text="Create" Click="@(_ => result = "Create")" /><AdmiralButton Text="Copy" Click="@(_ => result = "Copy")" /><AdmiralButton Text="Archive" Disabled="@disabled" Click="@(_ => result = "Archive")" /></AdmiralButtonGroup>
-                <output aria-live="polite">@T("Последнее действие", "Last action"): @result</output>
+                <div class="admiral-button-group-viewport"><AdmiralButtonGroup Appearance="@appearance" Dimension="@dimension" AriaLabel="Document actions"><AdmiralButton Text="Create" Click="@(_ => InvokeAction("Create"))" /><AdmiralButton Text="Copy" Loading="@loading" Skeleton="@skeleton" Click="@(_ => InvokeAction("Copy"))" /><AdmiralButton Text="Archive" Disabled="@disabled" Click="@(_ => InvokeAction("Archive"))" /></AdmiralButtonGroup></div>
+                <output aria-live="polite">@T("Последнее действие", "Last action"): @result · @T("Нажатия", "Clicks"): @clicks</output>
             </div><div class="admiral-component-controls">
                 <label><span>@SmokeL["Dimension"]</span><select @bind="dimension">@foreach (var value in Enum.GetValues<AdmiralButtonDimension>()) { <option value="@value">@value</option> }</select></label>
                 <label><span>@SmokeL["Appearance"]</span><select @bind="appearance">@foreach (var value in Enum.GetValues<AdmiralButtonGroupAppearance>()) { <option value="@value">@value</option> }</select></label>
-                <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> @T("Архив недоступен", "Disable Archive")</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> @T("Disabled · последняя", "Disabled · last")</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="loading" /> Loading</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="skeleton" /> Skeleton</label>
             </div></div>
             <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
         </section>
         <section class="admiral-component-page__section"><h2>@T("Размеры и состояния", "Dimensions and states")</h2><div class="admiral-button-group-gallery">
-            @foreach (var value in Enum.GetValues<AdmiralButtonDimension>()) { <AdmiralButtonGroup Dimension="@value" AriaLabel="Example actions"><AdmiralButton Text="Create" Click="@(_ => result = "Create")" /><AdmiralButton Text="Loading" Loading="true" /><AdmiralButton Text="Disabled" Disabled="true" /></AdmiralButtonGroup> }
+            @foreach (var value in Enum.GetValues<AdmiralButtonDimension>()) { <div class="admiral-button-group-viewport"><AdmiralButtonGroup Dimension="@value" AriaLabel="Example actions"><AdmiralButton Text="Create" Click="@(_ => InvokeAction("Create"))" /><AdmiralButton Text="Loading" Loading="true" /><AdmiralButton Text="Disabled" Disabled="true" /></AdmiralButtonGroup></div> }
         </div></section>
     }
 </div>
@@ -50,8 +44,10 @@
     private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
     private AdmiralButtonDimension dimension = AdmiralButtonDimension.M;
     private AdmiralButtonGroupAppearance appearance;
-    private bool disabled = true;
-    private string result = "—", directResult = "—";
+    private bool disabled = true, loading, skeleton;
+    private string result = "—";
+    private int clicks;
+    private void InvokeAction(string action) { result = action; clicks++; }
     private static readonly IReadOnlyList<ApiReference.Entry> GroupRows = [
         new("ChildContent", "RenderFragment? / null", "AdmiralButton children."),
         new("Appearance", "AdmiralButtonGroupAppearance / Primary", "Shared group appearance."),
@@ -62,14 +58,6 @@
             <AdmiralButton Text="Create" Click="@(_ => result = "Create")" />
             <AdmiralButton Text="Copy" Click="@(_ => result = "Copy")" />
         </AdmiralButtonGroup>
-        <output aria-live="polite">Last action: @result</output>
-        @code { private string result = "—"; }
-        """;
-    private const string DirectCode = """
-        <RadzenStack Orientation="Orientation.Horizontal" Gap="0" role="group" aria-label="Document actions">
-            <RadzenButton Text="Create" Size="ButtonSize.Small" Click="@(_ => result = "Create")" />
-            <RadzenButton Text="Copy" Size="ButtonSize.Small" Click="@(_ => result = "Copy")" />
-        </RadzenStack>
         <output aria-live="polite">Last action: @result</output>
         @code { private string result = "—"; }
         """;

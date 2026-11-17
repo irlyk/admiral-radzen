@@ -1,0 +1,62 @@
+<section class="admiral-component-page__section">
+    <h2>RadzenStack + RadzenButton</h2>
+    <p>@T("Классы группы и кнопок из пакета темы создают общий контур. Приложение задаёт Size каждой кнопке и Gap контейнеру; Disabled и IsBusy принадлежат отдельным действиям. В узкой области пример прокручивается горизонтально, сохраняя ширину кнопок. Admiral-обёртки в этом примере не используются.",
+        "Packaged group and button classes create the joined border. The application sets each button's Size and the container's Gap; Disabled and IsBusy belong to individual actions. In a narrow area the example scrolls horizontally while preserving button widths. This example uses direct Radzen controls.")</p>
+    <div class="admiral-component-playground">
+        <div class="admiral-component-playground__preview">
+            <div class="admiral-button-group-viewport">
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="@Gap" class="@GroupClass" role="group" aria-label="Document actions">
+                @for (var index = 0; index < Actions.Length; index++)
+                {
+                    var action = Actions[index];
+                    <RadzenButton Text="@(IconOnly ? null : action.Text)" Icon="@action.Icon" aria-label="@action.Text"
+                        Size="@size" Variant="@ButtonVariant" ButtonStyle="@Style" class="@ButtonClass"
+                        Disabled="@(disableLast && index == 2)" IsBusy="@(busy && index == 1)"
+                        BusyText="@(IconOnly ? null : action.Text)" Click="@(_ => InvokeAction(action.Text))" />
+                }
+            </RadzenStack>
+            </div>
+            <output aria-live="polite">@T("Последнее действие Radzen", "Last Radzen action"): @result · @T("Нажатия", "Clicks"): @clicks</output>
+        </div>
+        <div class="admiral-component-controls">
+            <label><span>Size</span><select aria-label="Size" @bind="size">@foreach (var value in Enum.GetValues<ButtonSize>()) { <option value="@value">@value</option> }</select></label>
+            <label><span>Appearance</span><select aria-label="Appearance" @bind="appearance">@foreach (var value in Appearances) { <option value="@value">@value</option> }</select></label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="busy" /> IsBusy</label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="disableLast" /> @T("Disabled · последняя", "Disabled · last")</label>
+        </div>
+    </div>
+    <CopyableRazorExample Code="@Code" Title="Razor · direct Radzen" />
+</section>
+
+@code {
+    [Parameter] public bool IconOnly { get; set; }
+    private ButtonSize size = ButtonSize.Small;
+    private string appearance = "Primary", result = "—";
+    private bool busy, disableLast;
+    private int clicks;
+    private static readonly (string Text, string? Icon)[] TextActions = [("Create", null), ("Copy", null), ("Archive", null)];
+    private static readonly (string Text, string? Icon)[] IconActions = [("Print", "admiral:system/print-outline"), ("Edit", "admiral:system/edit-outline"), ("Close", "admiral:service/close-outline")];
+    private (string Text, string? Icon)[] Actions => IconOnly ? IconActions : TextActions;
+    private string[] Appearances => IconOnly ? ["Primary", "Secondary", "Danger"] : ["Primary", "Secondary", "Tertiary"];
+    private string GroupClass => IconOnly ? "admiral-icon-button-group" : $"admiral-button-group admiral-button-group--{appearance.ToLowerInvariant()}";
+    private string ButtonClass => IconOnly ? $"admiral-icon-button admiral-icon-button--{appearance.ToLowerInvariant()}" : $"admiral-button admiral-button--{appearance.ToLowerInvariant()}";
+    private string Gap => IconOnly || appearance == "Secondary" ? "0" : "1px";
+    private Variant ButtonVariant => IconOnly ? Variant.Text : appearance switch { "Secondary" => Variant.Outlined, "Tertiary" => Variant.Flat, _ => Variant.Filled };
+    private ButtonStyle Style => IconOnly ? appearance switch { "Secondary" => ButtonStyle.Secondary, "Danger" => ButtonStyle.Danger, _ => ButtonStyle.Primary } : ButtonStyle.Primary;
+    protected override void OnInitialized() { appearance = IconOnly ? "Secondary" : "Primary"; disableLast = !IconOnly; }
+    private void InvokeAction(string action) { result = action; clicks++; }
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private string Code => $"""
+        <RadzenStack Orientation="Orientation.Horizontal" Gap="{Gap}" class="{GroupClass}"
+                     role="group" aria-label="Document actions">
+        {string.Join("\n", Actions.Select((action, index) => $"""
+            <RadzenButton Text="{(IconOnly ? "" : action.Text)}" Icon="{action.Icon}" aria-label="{action.Text}"
+                          Size="ButtonSize.{size}" Variant="Variant.{ButtonVariant}" ButtonStyle="ButtonStyle.{Style}"
+                          class="{ButtonClass}" Disabled="{(disableLast && index == 2).ToString().ToLowerInvariant()}"
+                          IsBusy="{(busy && index == 1).ToString().ToLowerInvariant()}" BusyText="{(IconOnly ? "" : action.Text)}"
+                          Click="@(_ => result = "{action.Text}")" />
+        """))}
+        </RadzenStack>
+        <output aria-live="polite">Last action: @result</output>
+        """ + "\n@code { private string result = \"—\"; }";
+}

@@ -929,7 +929,9 @@ body {
 
 .admiral-button-group-gallery {
     display: grid;
-    justify-items: start;
+    grid-template-columns: minmax(0, 1fr);
+    min-width: 0;
+    width: 100%;
     gap: 1rem;
 }
 
@@ -1313,3 +1315,19 @@ h1[tabindex="-1"]:focus { outline: none; }
 .admiral-color-utilities { display: grid; gap: 1rem; margin-block-end: 1rem; }
 .admiral-color-utilities > div { padding: 1rem; border: 1px solid var(--rz-base-300); border-radius: var(--rz-border-radius); overflow-wrap: anywhere; }
 .admiral-color-utilities > .rz-background-color-primary-lighter { color: var(--rz-on-primary-lighter); }
+
+/* Preserve joined action widths and leave room for their 2px focus outline + offset. */
+.admiral-button-group-viewport {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 4px;
+    overflow-x: auto;
+}
+
+.admiral-button-group-viewport > :is(.admiral-button-group, .admiral-icon-button-group) {
+    flex: none;
+    max-width: none;
+    margin-inline: auto;
+}
