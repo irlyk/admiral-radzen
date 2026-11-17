@@ -44,6 +44,9 @@
 
 .admiral-layout > .admiral-layout__body.rz-body {
   position: static;
+  // Radzen promotes its body with translateZ(0). Admiral uses a grid instead;
+  // keep viewport-fixed descendants (floating actions and overlays) untrapped.
+  transform: none;
   grid-area: body;
   width: auto;
   min-width: 0;

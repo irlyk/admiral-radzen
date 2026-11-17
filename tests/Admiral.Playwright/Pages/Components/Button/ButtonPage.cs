@@ -22,6 +22,10 @@ internal sealed class ButtonPage(IPage page) : GalleryPage(page)
         }
     }
 
+    public static async Task<string> ReadActionNameAsync(ILocator button) =>
+        await button.GetAttributeAsync("aria-label")
+        ?? (await button.Locator(".admiral-button__text, .admiral-text-button__text, .rz-button-text").InnerTextAsync()).Trim();
+
     public Task SetStateAsync(string name, bool value) => Controls.GetByLabel(name, new() { Exact = true }).SetCheckedAsync(value);
     public Task SetOptionAsync(string name, string value) => Controls.GetByLabel(new Regex("^" + Regex.Escape(name))).SelectOptionAsync(value);
 

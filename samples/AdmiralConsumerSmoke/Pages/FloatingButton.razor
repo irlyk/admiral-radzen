@@ -1,0 +1,91 @@
+@page "/components/floating-button"
+<PageTitle>Admiral FloatingButton</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="FloatingButton" Description="@T("Круглое действие с бейджем, размерами M/XL и фиксацией у края экрана.", "Circular action with a badge, M/XL sizes and optional viewport positioning.")"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-floatingbutton--docs" />
+    <a href="components/floating-button-menu">FloatingButtonMenu</a>
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
+        <ApiReference Title="AdmiralFloatingButton" Rows="@ApiRows" />
+        <p>@T("Fixed=false оставляет кнопку в потоке. Mobile меняет отступ только при Fixed=true: 28 px на обычном экране и 16 px в мобильном режиме. Disabled блокирует действие и скрывает бейдж. Loading и Skeleton в API FloatingButton отсутствуют.", "Fixed=false keeps the button in the layout. Mobile only affects Fixed=true: the viewport offset is 28 px or 16 px in mobile mode. Disabled blocks activation and hides the badge. FloatingButton has no Loading or Skeleton parameters.")</p>
+    }
+    else
+    {
+        <section class="admiral-component-page__section">
+            <h2>@(tab == ComponentDocTabs.Theme ? "RadzenButton + Admiral theme" : "AdmiralFloatingButton")</h2>
+            @if (tab == ComponentDocTabs.Theme)
+            {
+                <p>@T("Прямой RadzenButton использует классы темы и шаблон содержимого. Размер кнопки и бейдж задаёт приложение; обёртка Admiral здесь не используется.", "Direct RadzenButton uses packaged classes and a content template. The application sets its size and badge; this example uses no Admiral wrapper.")</p>
+            }
+            <div class="admiral-component-playground">
+                <div class="admiral-component-playground__preview">
+                    @if (tab == ComponentDocTabs.Theme)
+                    {
+                        <RadzenButton class="@ButtonClass" Size="@(size == AdmiralFloatingButtonSize.Xl ? ButtonSize.Large : ButtonSize.Small)"
+                            Variant="Variant.Text" Icon="@icon" aria-label="Compose" Disabled="@disabled" Click="@(_ => clicks++)">
+                            <span class="admiral-floating-button__content"><RadzenIcon Icon="@icon" aria-hidden="true" /></span>
+                            @if (!disabled && (dot || count)) { <span class="@(dot ? "admiral-floating-button__badge admiral-floating-button__badge--dot" : "admiral-floating-button__badge")" aria-hidden="true">@(dot ? null : "7")</span> }
+                        </RadzenButton>
+                    }
+                    else
+                    {
+                        <AdmiralFloatingButton Icon="@icon" AriaLabel="Compose" Size="@size" Appearance="@appearance"
+                            Fixed="@fixedPosition" Mobile="@mobile" Disabled="@disabled" BadgeDot="@dot" BadgeCount="@(count ? 7 : null)" Click="@(_ => clicks++)" />
+                    }
+                    <output aria-live="polite">@T("Нажатия", "Clicks"): @clicks</output>
+                </div>
+                <div class="admiral-component-controls">
+                    <label><span>Size</span><select @bind="size"><option value="Medium">M</option><option value="Xl">XL</option></select></label>
+                    <label><span>Appearance</span><select @bind="appearance"><option value="Primary">Primary</option><option value="Secondary">Secondary</option></select></label>
+                    <label><span>Icon</span><select @bind="icon"><option value="admiral:system/email-outline">Email</option><option value="admiral:system/print-outline">Print</option><option value="refresh">Radzen: refresh</option></select></label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="fixedPosition" /> Fixed</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="mobile" /> Mobile</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="count" /> BadgeCount</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="dot" /> BadgeDot</label>
+                </div>
+            </div>
+            <CopyableRazorExample Code="@(tab == ComponentDocTabs.Theme ? ThemeCode : AdmiralCode)" Title="Razor" />
+        </section>
+    }
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral, icon = "admiral:system/email-outline";
+    private AdmiralFloatingButtonSize size;
+    private AdmiralFloatingButtonAppearance appearance;
+    private bool fixedPosition, mobile, disabled, dot, count = true;
+    private int clicks;
+    private string ButtonClass => $"admiral-floating-button admiral-floating-button--{(size == AdmiralFloatingButtonSize.Xl ? "xl" : "m")} admiral-floating-button--{appearance.ToString().ToLowerInvariant()} admiral-floating-button--{(fixedPosition ? "fixed" : "inline")}{(mobile ? " admiral-floating-button--mobile" : "")}";
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private static IReadOnlyList<ApiReference.Entry> ApiRows =>
+    [
+        new("Icon / AriaLabel", "string; required", T("Имя иконки и доступное название действия.", "Icon name and accessible action name.")),
+        new("Size", "AdmiralFloatingButtonSize; Medium", "M: 40 px · XL: 56 px"),
+        new("Appearance", "AdmiralFloatingButtonAppearance; Primary", "Primary / Secondary"),
+        new("Fixed", "bool; true", T("Фиксация относительно окна; false оставляет кнопку в потоке.", "Viewport positioning; false keeps the button in the layout.")),
+        new("Mobile", "bool; false", T("Отступ 16 px вместо 28 px при Fixed=true.", "16 px instead of 28 px when Fixed=true.")),
+        new("Disabled", "bool; false", T("Блокирует нажатие и скрывает бейдж.", "Blocks activation and hides the badge.")),
+        new("BadgeCount", "int?; null", T("Числовой бейдж.", "Numeric badge.")),
+        new("BadgeDot", "bool; false", T("Точка вместо числового бейджа.", "A dot takes priority over the numeric badge.")),
+        new("BadgeAppearance", "AdmiralFloatingButtonBadgeAppearance; Info", "Info / Error / Success / Warning"),
+        new("Click", "EventCallback<MouseEventArgs>", T("Нажатие активной кнопки.", "Enabled button activation.")),
+        new("Class / Style / AdditionalAttributes", "string? / attributes", T("Классы, стиль и атрибуты корневой кнопки.", "Root button classes, style and attributes."))
+    ];
+    private const string AdmiralCode = """
+        <AdmiralFloatingButton Icon="admiral:system/email-outline" AriaLabel="Compose"
+            Fixed="false" BadgeCount="7" Click="@(_ => clicks++)" />
+        <output aria-live="polite">Clicks: @clicks</output>
+        @code { private int clicks; }
+        """;
+    private const string ThemeCode = """
+        <RadzenButton Icon="admiral:system/email-outline" aria-label="Compose" Size="ButtonSize.Small"
+            Variant="Variant.Text" class="admiral-floating-button admiral-floating-button--m admiral-floating-button--primary admiral-floating-button--inline"
+            Click="@(_ => clicks++)">
+            <span class="admiral-floating-button__content"><RadzenIcon Icon="admiral:system/email-outline" aria-hidden="true" /></span>
+        </RadzenButton>
+        <output aria-live="polite">Clicks: @clicks</output>
+        @code { private int clicks; }
+        """;
+}

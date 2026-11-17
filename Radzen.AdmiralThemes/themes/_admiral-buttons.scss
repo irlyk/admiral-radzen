@@ -369,7 +369,7 @@ $admiral-button-warning: if($theme-dark, #EF5018, #FF5C22);
     inset-block-end: 1.75rem;
   }
 
-  &.admiral-floating-button--mobile {
+  &.admiral-floating-button--mobile.admiral-floating-button--fixed {
     inset-inline-end: 1rem;
     inset-block-end: 1rem;
   }
@@ -381,6 +381,23 @@ $admiral-button-warning: if($theme-dark, #EF5018, #FF5C22);
 
   &:disabled {
     cursor: not-allowed;
+  }
+}
+
+// Radzen's content box and variant states must not shrink or recolor the
+// packaged floating skin. The child content owns the circular surface.
+.rz-button.admiral-floating-button.rz-variant-text {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: var(--rz-shadow-8);
+
+  > .rz-button-box { width: 100%; height: 100%; }
+
+  &:not(.rz-state-disabled):is(:hover, :active),
+  &:disabled {
+    background: transparent;
+    box-shadow: var(--rz-shadow-8);
   }
 }
 

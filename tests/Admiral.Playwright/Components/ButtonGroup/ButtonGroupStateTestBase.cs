@@ -1,3 +1,4 @@
+using Admiral.Playwright.Pages.Components.Button;
 using Admiral.Playwright.Pages.Components.ButtonGroup;
 
 namespace Admiral.Playwright.Components.ButtonGroup;
@@ -38,7 +39,7 @@ public abstract class ButtonGroupStateTestBase : GalleryTest
         // Logical edges and the shared border also work when direction changes at runtime.
         await gallery.Group.EvaluateAsync("e => e.dir = 'rtl'");
         var rtl = await gallery.MeasureAsync();
-        var rtlGap = iconOnly || (await gallery.Controls.GetByLabel(new Regex("^Appearance")).InputValueAsync()) == "Secondary" ? -1 : 1;
+        var rtlGap = iconOnly || await gallery.Controls.GetByLabel(new Regex("^Appearance")).InputValueAsync() == "Secondary" ? -1 : 1;
         Assert.That(rtl.Buttons[0].Bounds.Left - rtl.Buttons[1].Bounds.Right, Is.EqualTo(rtlGap).Within(1));
         Assert.That(rtl.Buttons[0].StartStart, Is.GreaterThan(0));
         Assert.That(rtl.Buttons[2].StartEnd, Is.GreaterThan(0));
@@ -78,7 +79,7 @@ public abstract class ButtonGroupStateTestBase : GalleryTest
         await Page.Keyboard.PressAsync("Enter");
         await Page.Keyboard.PressAsync("Space");
         await Assertions.Expect(gallery.Result).ToHaveTextAsync(new Regex(@"Clicks:\s*3$"));
-        var middleName = await middle.GetAttributeAsync("aria-label") ?? (await middle.InnerTextAsync()).Trim();
+        var middleName = await ButtonPage.ReadActionNameAsync(middle);
         await middle.ClickAsync();
         await Assertions.Expect(gallery.Result).ToHaveTextAsync(new Regex(@"Clicks:\s*4$"));
         await Assertions.Expect(gallery.Result).ToContainTextAsync(middleName);
@@ -99,7 +100,7 @@ public abstract class ButtonGroupStateTestBase : GalleryTest
         Assert.That(await gallery.Group.EvaluateAsync<bool>("e => e.contains(document.activeElement)"), Is.False, "Disabled last action is skipped");
 
         var geometry = await gallery.MeasureAsync();
-        var loadingName = await middle.GetAttributeAsync("aria-label") ?? (await middle.InnerTextAsync()).Trim();
+        var loadingName = await ButtonPage.ReadActionNameAsync(middle);
         await gallery.SetStateAsync(themeOnly ? "IsBusy" : "Loading", true);
         await Assertions.Expect(middle).ToBeDisabledAsync();
         await Assertions.Expect(middle).ToHaveAccessibleNameAsync(loadingName);

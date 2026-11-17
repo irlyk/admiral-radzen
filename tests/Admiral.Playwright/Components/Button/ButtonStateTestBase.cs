@@ -13,7 +13,7 @@ public abstract class ButtonStateTestBase : GalleryTest
         var button = gallery.Button;
         await Page.Mouse.MoveAsync(0, 0);
         var normal = await gallery.ReadStateAsync();
-        var name = await button.GetAttributeAsync("aria-label") ?? (await button.InnerTextAsync()).Trim();
+        var name = await ButtonPage.ReadActionNameAsync(button);
         var file = $"{Output}/{theme}-{route.Split('/').Last()}-{themeOnly}";
         var normalPixels = await button.ScreenshotAsync(new() { Animations = ScreenshotAnimations.Disabled, Path = file + "-normal.png" });
         await button.HoverAsync();
@@ -72,7 +72,7 @@ public abstract class ButtonStateTestBase : GalleryTest
         await StartPageAsync(theme, "en");
         var gallery = new ButtonPage(Page);
         await gallery.InitializeAsync(route, false);
-        var name = await gallery.Button.GetAttributeAsync("aria-label") ?? (await gallery.Button.InnerTextAsync()).Trim();
+        var name = await ButtonPage.ReadActionNameAsync(gallery.Button);
         var initial = await gallery.Button.GetBoundsAsync();
         await gallery.SetStateAsync("Loading", true);
         await Assertions.Expect(gallery.Button).ToHaveAttributeAsync("aria-busy", "true");
