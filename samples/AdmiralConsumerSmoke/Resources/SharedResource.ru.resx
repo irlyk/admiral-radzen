@@ -533,7 +533,7 @@
   <data name="Move row" xml:space="preserve"><value>Переместить строку</value></data>
   <data name="Row {0} moved from position {1} to {2}." xml:space="preserve"><value>Строка «{0}» перемещена с позиции {1} на позицию {2}.</value></data>
   <data name="Buttons with seven appearances, four dimensions, icons and service states." xml:space="preserve"><value>Кнопки с семью вариантами оформления, четырьмя размерами, иконками и служебными состояниями.</value></data>
-  <data name="Compact icon actions in four dimensions and two appearances." xml:space="preserve"><value>Компактные действия с иконками в четырёх размерах и двух вариантах оформления.</value></data>
+  <data name="Compact icon actions in four dimensions and three appearances." xml:space="preserve"><value>Компактные действия с иконками в четырёх размерах и трёх вариантах оформления.</value></data>
   <data name="Text actions in M and S dimensions with optional icons." xml:space="preserve"><value>Текстовые действия размеров M и S с необязательными иконками.</value></data>
   <data name="Open the official Admiral story" xml:space="preserve"><value>Открыть официальный пример Admiral</value></data>
   <data name="Click count" xml:space="preserve"><value>Количество нажатий</value></data>
