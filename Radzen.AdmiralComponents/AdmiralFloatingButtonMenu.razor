@@ -39,6 +39,20 @@
 
     private readonly string menuId = $"admiral-floating-button-menu-{Guid.NewGuid():N}";
     private bool internalOpen;
+    private bool parametersInitialized;
+    private bool observedIsOpen;
+
+    protected override void OnParametersSet()
+    {
+        // Unbound parameters provide initial/external state; unrelated parent
+        // renders must not reset an opening/closing performed by the component.
+        if (!parametersInitialized || observedIsOpen != IsOpen)
+        {
+            internalOpen = IsOpen;
+            observedIsOpen = IsOpen;
+            parametersInitialized = true;
+        }
+    }
     private AdmiralFloatingButton? trigger;
     private bool EffectiveOpen => !Disabled && (IsOpenChanged.HasDelegate ? IsOpen : internalOpen);
     private AdmiralFloatingButtonMenuContext Context => new(Size);

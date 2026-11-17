@@ -16,6 +16,8 @@ public sealed class WasmTests : BrowserTest
             "/components/button",
             "/components/button-groups",
             "/components/icon-button-group",
+            "/components/floating-button",
+            "/components/floating-button-menu",
             "/components/checkbox",
             "/components/select",
             "/components/phone-number-input",
@@ -249,6 +251,26 @@ public sealed class WasmTests : BrowserTest
         await disableLast.CheckAsync();
         await Assertions.Expect(directGroup.GetByRole(AriaRole.Button).Last).ToBeDisabledAsync();
         await Assertions.Expect(directGroup.GetByRole(AriaRole.Button).Last).ToHaveCSSAsync("color", "rgb(81, 83, 87)");
+
+        // Floating action links and both implementations work under the project prefix.
+        await page.GotoAsync(url + "components/floating-button");
+        var floatingMenuLink = page.Locator("#main-content a[href='components/floating-button-menu']");
+        Assert.That(new Uri(new Uri(url), await floatingMenuLink.GetAttributeAsync("href")).AbsolutePath,
+            Is.EqualTo("/admiral-radzen/components/floating-button-menu"));
+        await floatingMenuLink.ClickAsync();
+        var floatingTrigger = page.Locator(".admiral-floating-button-menu").First.Locator(":scope > button");
+        await floatingTrigger.ClickAsync();
+        await Assertions.Expect(floatingTrigger.Locator("[data-admiral-icon-loaded='service/close-outline'] svg")).ToBeVisibleAsync();
+        await floatingTrigger.ClickAsync();
+        await Assertions.Expect(floatingTrigger).ToHaveAttributeAsync("aria-expanded", "false");
+        await page.Locator("#main-content a[href='components/floating-button']").ClickAsync();
+        await page.Locator("[data-doc-tab=theme]").ClickAsync();
+        var floatingDirect = page.Locator(".admiral-component-playground__preview .rz-button.admiral-floating-button");
+        await floatingDirect.ClickAsync();
+        await Assertions.Expect(page.Locator(".admiral-component-playground__preview output")).ToHaveTextAsync(new Regex(@"Clicks:\s*1$"));
+        await page.GetByLabel("Disabled", new() { Exact = true }).CheckAsync();
+        await Assertions.Expect(floatingDirect).ToBeDisabledAsync();
+        await Assertions.Expect(floatingDirect.Locator(".admiral-floating-button__content")).ToHaveCSSAsync("color", "rgb(81, 83, 87)");
 
         // Act: navigate through the searchable component catalog.
         var catalogToggle = page.GetByRole(
