@@ -8,7 +8,11 @@ internal sealed class GridPage(IPage page, bool native = false) : GalleryPage(pa
     public async Task InitializeAsync()
     {
         await NavigateAsync("/components/grid");
-        if (native) await Page.Locator("[data-doc-tab=theme]").ClickAsync();
+        if (native)
+        {
+            await Page.Locator("[data-doc-tab=theme]").ClickAsync();
+        }
+
         await Assertions.Expect(Items).ToHaveCountAsync(6);
     }
     public async Task SetAsync(string label, string value)

@@ -18,7 +18,10 @@ internal sealed class MenuActionPage(IPage page, string route, bool themeOnly = 
             await Widget.WaitForAsync();
         }
         await Toggle.WaitForAsync();
-        if (!route.EndsWith("/tag-menu")) await Main.Locator("svg").First.WaitForAsync();
+        if (!route.EndsWith("/tag-menu"))
+        {
+            await Main.Locator("svg").First.WaitForAsync();
+        }
     }
     public Task SetAsync(string label, bool value) => Controls.GetByLabel(label, new() { Exact = true }).SetCheckedAsync(value);
     public Task SelectAsync(string label, string value) => Controls.GetByLabel(new Regex("^" + Regex.Escape(label))).SelectOptionAsync(value);

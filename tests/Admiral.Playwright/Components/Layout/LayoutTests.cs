@@ -8,10 +8,18 @@ public sealed class LayoutTests : GalleryTest
     public static IEnumerable<TestCaseData> Compositions()
     {
         foreach (var theme in new[] { "admiral", "admiral-dark" })
-        foreach (var native in new[] { false, true })
-        foreach (var width in new[] { 390, 900, 1100, 1440 })
-        foreach (var composition in new[] { "body", "header-body", "header-sidebar-body", "sidebar-body", "header-sidebar-body-footer", "sidebar-body-footer", "body-footer" })
-            yield return new TestCaseData(theme, native, width, composition);
+        {
+            foreach (var native in new[] { false, true })
+            {
+                foreach (var width in new[] { 390, 900, 1100, 1440 })
+                {
+                    foreach (var composition in new[] { "body", "header-body", "header-sidebar-body", "sidebar-body", "header-sidebar-body-footer", "sidebar-body-footer", "body-footer" })
+                    {
+                        yield return new TestCaseData(theme, native, width, composition);
+                    }
+                }
+            }
+        }
     }
 
     [TestCaseSource(nameof(Compositions))]
@@ -28,7 +36,11 @@ public sealed class LayoutTests : GalleryTest
             // The width/transform transition must settle before measuring its visible bounds.
             await sample.Sidebar.EvaluateAsync("async e => { await Promise.all(e.getAnimations().map(a => a.finished.catch(() => {}))); }");
         }
-        if (native && hasSidebar) await Assertions.Expect(sample.Sidebar).ToHaveCSSAsync("opacity", "1");
+        if (native && hasSidebar)
+        {
+            await Assertions.Expect(sample.Sidebar).ToHaveCSSAsync("opacity", "1");
+        }
+
         var geometry = await sample.MeasureAsync();
         Assert.That(geometry.Root.Height, Is.EqualTo(480).Within(1));
         Assert.That(geometry.Header is not null, Is.EqualTo(composition.Contains("header")));
@@ -38,7 +50,7 @@ public sealed class LayoutTests : GalleryTest
         var bodyBottom = geometry.Footer?.Top ?? geometry.Root.Bottom;
         Assert.That(geometry.Body.Top, Is.EqualTo(bodyTop).Within(1));
         Assert.That(geometry.Body.Bottom, Is.EqualTo(bodyBottom).Within(1));
-        var reservedSidebar = !hasSidebar || (!native && width < 1024) ? 0 : !native && width < 1280 ? 56 : 288;
+        var reservedSidebar = !hasSidebar || !native && width < 1024 ? 0 : !native && width < 1280 ? 56 : 288;
         Assert.That(geometry.Body.Left, Is.EqualTo(geometry.Root.Left + reservedSidebar).Within(1));
         Assert.That(geometry.Body.Right, Is.EqualTo(geometry.Root.Right).Within(1));
         foreach (var section in new[] { geometry.Header, geometry.Footer }.Where(x => x is not null))
@@ -46,8 +58,16 @@ public sealed class LayoutTests : GalleryTest
             Assert.That(section!.Left, Is.EqualTo(geometry.Root.Left).Within(1));
             Assert.That(section.Right, Is.EqualTo(geometry.Root.Right).Within(1));
         }
-        if (geometry.Header is not null) Assert.That(geometry.Header.Height, Is.EqualTo(64).Within(1));
-        if (geometry.Footer is not null) Assert.That(geometry.Footer.Height, Is.EqualTo(56).Within(1));
+        if (geometry.Header is not null)
+        {
+            Assert.That(geometry.Header.Height, Is.EqualTo(64).Within(1));
+        }
+
+        if (geometry.Footer is not null)
+        {
+            Assert.That(geometry.Footer.Height, Is.EqualTo(56).Within(1));
+        }
+
         if (geometry.Sidebar is not null)
         {
             Assert.That(geometry.Sidebar.Top, Is.EqualTo(bodyTop).Within(1));
@@ -56,7 +76,9 @@ public sealed class LayoutTests : GalleryTest
             Assert.That(geometry.Sidebar.Width, Is.EqualTo(!native && width < 1024 ? Math.Min(288, geometry.Root.Width - 56) : 288).Within(1));
         }
         if (composition == "header-sidebar-body-footer")
+        {
             await sample.Layout.ScreenshotAsync(new() { Path = $"{Output}/{theme}-{native}-{width}-all-sections.png" });
+        }
     }
 
     [TestCase("admiral", false)]
@@ -141,7 +163,11 @@ public sealed class LayoutTests : GalleryTest
         await StartPageAsync(theme, "en", width, 1000);
         var sample = new LayoutPage(Page);
         await sample.InitializeAsync("header-sidebar-body-footer");
-        if (width < 1024) await Assertions.Expect(sample.Sidebar).ToHaveCSSAsync("visibility", "hidden");
+        if (width < 1024)
+        {
+            await Assertions.Expect(sample.Sidebar).ToHaveCSSAsync("visibility", "hidden");
+        }
+
         Assert.That(await sample.Layout.Locator(":scope > .admiral-layout__overlay").EvaluateAsync<int>("e => e.tabIndex"), Is.EqualTo(-1));
         var trigger = sample.Header.GetByRole(AriaRole.Button, new() { Name = "Open navigation", Exact = true });
         await trigger.FocusAsync();
@@ -154,7 +180,10 @@ public sealed class LayoutTests : GalleryTest
         await Page.Keyboard.PressAsync("Escape");
         await Assertions.Expect(trigger).ToHaveAttributeAsync("aria-expanded", "false");
         await Assertions.Expect(trigger).ToBeFocusedAsync();
-        if (width < 1024) await Assertions.Expect(sample.Sidebar).ToHaveCSSAsync("visibility", "hidden");
+        if (width < 1024)
+        {
+            await Assertions.Expect(sample.Sidebar).ToHaveCSSAsync("visibility", "hidden");
+        }
     }
 
     [TestCase("admiral", false)]
@@ -194,7 +223,10 @@ public sealed class LayoutTests : GalleryTest
             await sample.Sidebar.EvaluateAsync("async e => { await Promise.all(e.getAnimations().map(a => a.finished.catch(() => {}))); }");
             var geometry = await sample.MeasureAsync();
             Assert.That(geometry.Body.Left - geometry.Root.Left, Is.EqualTo(expected).Within(1));
-            if (state == "Hidden") await Assertions.Expect(sample.Sidebar).ToHaveCSSAsync("visibility", "hidden");
+            if (state == "Hidden")
+            {
+                await Assertions.Expect(sample.Sidebar).ToHaveCSSAsync("visibility", "hidden");
+            }
         }
     }
     [TestCase("admiral")]

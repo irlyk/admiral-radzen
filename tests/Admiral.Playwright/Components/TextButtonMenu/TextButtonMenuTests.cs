@@ -81,7 +81,11 @@ public sealed class TextButtonMenuTests : MenuActionTestBase
         await Assertions.Expect(gallery.Main).ToHaveAccessibleNameAsync("Actions");
         await gallery.Toggle.EvaluateAsync("e => e.click()");
         await Assertions.Expect(gallery.Popup).ToHaveCountAsync(0);
-        if (!themeOnly) Assert.That((await gallery.Widget.GetBoundsAsync()).Width, Is.EqualTo(before.Width).Within(1));
+        if (!themeOnly)
+        {
+            Assert.That((await gallery.Widget.GetBoundsAsync()).Width, Is.EqualTo(before.Width).Within(1));
+        }
+
         await gallery.SetAsync(themeOnly ? "IsBusy" : "Loading", false);
         await gallery.Toggle.ClickAsync();
         await Assertions.Expect(gallery.Popup).ToBeVisibleAsync();

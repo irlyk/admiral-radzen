@@ -335,7 +335,9 @@ public sealed class WasmTests : BrowserTest
             var tiles = page.Locator(".grid-playground__tile");
             await Assertions.Expect(tiles).ToHaveCountAsync(6);
             for (var i = 0; i < 6; i++)
+            {
                 await Assertions.Expect(tiles.Nth(i)).ToHaveTextAsync((i + 1).ToString());
+            }
         }
         await page.Locator("[data-doc-tab=admiral]").ClickAsync();
         var integration = page.Locator("#main-content a[href=layout]");

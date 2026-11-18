@@ -22,8 +22,15 @@ public abstract class MenuActionTestBase : GalleryTest
         var blocked = gallery.Popup.GetByRole(AriaRole.Menuitem, new() { Name = "Unavailable", Exact = true });
         await blocked.EvaluateAsync("e => e.click()");
         await Assertions.Expect(gallery.Result).ToContainTextAsync("Actions: 0");
-        if (themeOnly) await Page.Keyboard.PressAsync("ArrowDown");
-        else await Assertions.Expect(gallery.Popup.GetByRole(AriaRole.Menuitem, new() { Name = "Print", Exact = true })).ToBeFocusedAsync();
+        if (themeOnly)
+        {
+            await Page.Keyboard.PressAsync("ArrowDown");
+        }
+        else
+        {
+            await Assertions.Expect(gallery.Popup.GetByRole(AriaRole.Menuitem, new() { Name = "Print", Exact = true })).ToBeFocusedAsync();
+        }
+
         await Page.Keyboard.PressAsync("Enter");
         await Assertions.Expect(gallery.Popup).ToHaveCountAsync(0);
         await Assertions.Expect(gallery.Result).ToContainTextAsync("Actions: 1 · Last: print");

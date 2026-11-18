@@ -41,8 +41,15 @@ public sealed class TagMenuTests : MenuActionTestBase
             await gallery.SelectAsync("Kind", kind);
             await gallery.SetAsync("StatusViaBackground", true);
             var normal = await gallery.ReadStyleAsync(gallery.Main);
-            if (kind == "Neutral") Assert.That(normal.Color, Is.EqualTo(theme == "admiral" ? "rgb(37, 38, 41)" : "rgb(227, 229, 231)"));
-            else Assert.That(ColorContrast.Ratio(normal.Color, normal.Background), Is.GreaterThan(4.5), kind);
+            if (kind == "Neutral")
+            {
+                Assert.That(normal.Color, Is.EqualTo(theme == "admiral" ? "rgb(37, 38, 41)" : "rgb(227, 229, 231)"));
+            }
+            else
+            {
+                Assert.That(ColorContrast.Ratio(normal.Color, normal.Background), Is.GreaterThan(4.5), kind);
+            }
+
             await gallery.Main.HoverAsync();
             Assert.That((await gallery.ReadStyleAsync(gallery.Main)).Background, Is.Not.EqualTo(normal.Background));
             await Page.Mouse.MoveAsync(0, 0);

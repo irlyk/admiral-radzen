@@ -9,9 +9,15 @@ public sealed class GridTests : GalleryTest
     public static IEnumerable<TestCaseData> Breakpoints()
     {
         foreach (var theme in new[] { "admiral", "admiral-dark" })
-        foreach (var native in new[] { false, true })
-        foreach (var width in new[] { 320, 767, 768, 1023, 1024, 1279, 1280, 1600 })
-            yield return new TestCaseData(theme, native, width);
+        {
+            foreach (var native in new[] { false, true })
+            {
+                foreach (var width in new[] { 320, 767, 768, 1023, 1024, 1279, 1280, 1600 })
+                {
+                    yield return new TestCaseData(theme, native, width);
+                }
+            }
+        }
     }
 
     [TestCaseSource(nameof(Breakpoints))]

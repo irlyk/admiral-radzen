@@ -62,7 +62,11 @@ public sealed class MultiButtonTests : MenuActionTestBase
         await Assertions.Expect(gallery.Main).ToHaveAccessibleNameAsync("Actions");
         await gallery.Toggle.EvaluateAsync("e => e.click()");
         await Assertions.Expect(gallery.Popup).ToHaveCountAsync(0);
-        if (!themeOnly) Assert.That((await gallery.Widget.GetBoundsAsync()).Width, Is.EqualTo(before.Width).Within(1));
+        if (!themeOnly)
+        {
+            Assert.That((await gallery.Widget.GetBoundsAsync()).Width, Is.EqualTo(before.Width).Within(1));
+        }
+
         Assert.That((await gallery.Widget.GetBoundsAsync()).Height, Is.EqualTo(before.Height).Within(1));
     }
     [TestCase("admiral")]
