@@ -17,6 +17,7 @@ public sealed class WasmTests : BrowserTest
             "/components/button-groups",
             "/components/icon-button-group",
             "/components/multi-button",
+            "/components/text-button-menu",
             "/components/floating-button",
             "/components/floating-button-menu",
             "/components/checkbox",
@@ -274,7 +275,7 @@ public sealed class WasmTests : BrowserTest
         await Assertions.Expect(floatingDirect.Locator(".admiral-floating-button__content")).ToHaveCSSAsync("color", "rgb(81, 83, 87)");
 
         // The three menu-action pages share working examples with the package consumer.
-        foreach (var route in new[] { "multi-button" })
+        foreach (var route in new[] { "multi-button", "text-button-menu" })
         {
             await page.GotoAsync(url + "components/" + route);
             var demo = page.GetByTestId("menu-action-playground");

@@ -1,0 +1,31 @@
+@page "/components/text-button-menu"
+<PageTitle>Admiral TextButtonMenu</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="TextButtonMenu" Description="@T("Текстовое действие с выпадающим меню.", "Text action with a dropdown menu.")"
+        SourceUrl="https://github.com/AdmiralDS/react-ui/blob/4721c1b326ac17fb7b08e915adfce5b8dced0664/src/components/TextButtonMenu/index.tsx" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <p>@T("Loading и Skeleton сохраняют размер и название действия. Disabled, Loading и Skeleton закрывают открытое меню.", "Loading and Skeleton preserve the size and action name. Disabled, Loading and Skeleton close an open menu.")</p>
+        <ApiReference Title="AdmiralTextButtonMenu" Rows="@Rows" />
+    }
+    else
+    {
+        <MenuActionPlayground Kind="Text" ThemeOnly="@(tab == ComponentDocTabs.Theme)" @key="tab" />
+    }
+    <a href="components/menu">Menu / MenuButton / OverflowMenu</a>
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private static readonly IReadOnlyList<ApiReference.Entry> Rows = [
+        new("Text / ChildContent", "string / RenderFragment?", "Trigger label and AdmiralMenuItem children."),
+        new("Disabled", "bool; false", "Blocks opening the menu."),
+        new("Appearance / Dimension", "AdmiralTextButtonAppearance / AdmiralTextButtonDimension; Primary / M", "Primary or Secondary; S is 20px, M is 24px."),
+        new("IconStart", "string?; null", "Optional leading icon."),
+        new("Loading / Skeleton", "bool; false", "Keeps geometry and accessible action name; blocks opening."),
+        new("AriaLabel", "string; Menu", "Accessible menu name."),
+        new("MenuClass", "string?; null", "Additional menu class."),
+        new("AdmiralMenuItem", "Click / Disabled / Checkable / CheckedChanged / KeepOpen", "Items own their actions and selection state.")
+    ];
+}

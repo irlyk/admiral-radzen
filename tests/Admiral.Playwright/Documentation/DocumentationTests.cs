@@ -19,6 +19,7 @@ public sealed class DocumentationTests : BrowserTest
             "/components/button-groups",
             "/components/icon-button-group",
             "/components/multi-button",
+            "/components/text-button-menu",
             "/components/floating-button-menu",
             "/components/action-bar",
             "/components/switch",

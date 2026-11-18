@@ -88,6 +88,7 @@
   }
   &.admiral-multi-button--disabled > .admiral-menu-root::before { background: $admiral-button-neutral-30; }
 }
-.admiral-multi-button__toggle[aria-expanded='true'] .admiral-icon {
+.admiral-multi-button__toggle[aria-expanded='true'] .admiral-icon,
+.admiral-text-button-menu__trigger [aria-expanded='true'] .admiral-text-button__content > .admiral-icon:last-child {
   transform: rotate(180deg);
 }
