@@ -13,7 +13,7 @@
 Добавьте пакет:
 
 ```xml
-<PackageReference Include="AdmiralRadzen.Icons" Version="2.0.0" />
+<PackageReference Include="AdmiralRadzen.Icons" Version="2.0.1" />
 ```
 
 В `<head>` host-страницы подключите стили и сразу после них адаптер:

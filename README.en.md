@@ -10,9 +10,11 @@ Explore the local [smoke gallery](samples/AdmiralConsumerSmoke/README.md) or the
 
 | Package | Version | Purpose |
 | --- | --- | --- |
-| [AdmiralRadzen.Components](https://www.nuget.org/packages/AdmiralRadzen.Components/2.0.0) | 2.0.0 | `Admiral*` components built on Radzen |
-| [AdmiralRadzen.Themes](https://www.nuget.org/packages/AdmiralRadzen.Themes/2.0.0) | 2.0.0 | Packaged CSS, SCSS snapshots, and styling for direct Radzen controls |
-| [AdmiralRadzen.Icons](https://www.nuget.org/packages/AdmiralRadzen.Icons/2.0.0) | 2.0.0 | Admiral SVG assets and icon adapter |
+| [AdmiralRadzen.Components](https://www.nuget.org/packages/AdmiralRadzen.Components) | 2.1.0 | `Admiral*` components built on Radzen |
+| [AdmiralRadzen.Themes](https://www.nuget.org/packages/AdmiralRadzen.Themes) | 2.0.1 | Packaged CSS, SCSS snapshots, and styling for direct Radzen controls |
+| [AdmiralRadzen.Icons](https://www.nuget.org/packages/AdmiralRadzen.Icons) | 2.0.1 | Admiral SVG assets and icon adapter |
+
+Versions match the current source. See the [regression part 1 release notes](docs/releases/2.1.0-part-1.md) for scope and compatibility.
 
 The projects target .NET 10 and Components currently depends on Radzen.Blazor 12.0.6. See the [component guide](docs/components.md) for examples and limitations.
 
@@ -36,7 +38,7 @@ Install the components package from NuGet.org. When working on this repository,
 you can instead use `artifacts/packages/admiral` as a local NuGet source:
 
 ```xml
-<PackageReference Include="AdmiralRadzen.Components" Version="2.0.0" />
+<PackageReference Include="AdmiralRadzen.Components" Version="2.1.0" />
 ```
 
 The NuGet IDs are `AdmiralRadzen.*`; C# namespaces and static asset URLs

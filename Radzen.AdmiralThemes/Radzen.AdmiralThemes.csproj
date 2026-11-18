@@ -10,7 +10,8 @@
     <Title>Radzen Admiral Themes</Title>
     <Description>Admiral Design System light and dark themes for Radzen Blazor.</Description>
     <IsPackable>true</IsPackable>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
+    <PackageReleaseNotes>Fix disabled states, layout and grid geometry, dark footer and menu colors, and direct Radzen tree alignment.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>irlyk</Authors>
     <Copyright>Copyright (c) 2026 irlyk</Copyright>
