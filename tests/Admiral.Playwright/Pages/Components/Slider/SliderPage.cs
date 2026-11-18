@@ -17,5 +17,8 @@ internal sealed class SliderPage(IPage page) : GalleryPage(page)
         await Page.SetViewportSizeAsync(1440, 1000);
         await NavigateAsync("/components/slider");
         await Handles.First.WaitForAsync();
+
+        // The layout becomes interactive before every slider has connected its JS handlers.
+        await Assertions.Expect(Page.Locator(".admiral-slider:not([data-slider-step])")).ToHaveCountAsync(0);
     }
 }

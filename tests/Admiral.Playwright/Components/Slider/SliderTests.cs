@@ -335,6 +335,29 @@ public sealed class SliderTests : GalleryTest
         await slider.ExpectValueAsync(legacy, 55);
     }
 
+    [TestCase("admiral", TestName = "Slider: Slow module download preserves the first keyboard action / admiral")]
+    [TestCase("admiral-dark", TestName = "Slider: Slow module download preserves the first keyboard action / admiral-dark")]
+    public async Task SlowModuleDownloadPreservesTheFirstKeyboardActionAsync(string theme)
+    {
+        // Arrange: keep the page interactive while its slider module is still downloading.
+        await StartPageAsync(theme, "ru");
+        await Page.RouteAsync("**/admiral-slider.js", async route =>
+        {
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+            await route.ContinueAsync();
+        });
+        var slider = new SliderPage(Page);
+        var legacy = Page.GetByRole(AriaRole.Slider, new PageGetByRoleOptions { Name = "Целочисленный ползунок" });
+
+        // Act: interact immediately after the page object reports readiness.
+        await slider.InitializeAsync();
+        await legacy.FocusAsync();
+        await Page.Keyboard.PressAsync("ArrowRight");
+
+        // Assert: the first keyboard action reaches the integer wrapper exactly once.
+        await slider.ExpectValueAsync(legacy, 55);
+    }
+
     [TestCase("admiral", TestName = "Slider: Narrow viewport, direct Radzen example and API documentation / admiral")]
     [TestCase("admiral-dark", TestName = "Slider: Narrow viewport, direct Radzen example and API documentation / admiral-dark")]
     public async Task NarrowViewportDirectRadzenExampleAndAPIDocumentationAsync(string theme)
