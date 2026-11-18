@@ -106,7 +106,7 @@ builder.Services.AddAdmiralComponents();
 | `AdmiralNumericSlider` / `AdmiralSlider` | Ползунок XL/M: decimal, дробный/свободный шаг, пересечение и совпадение маркеров, DragEnded, локализованные отметки и шаблон. `AdmiralSlider` сохраняет совместимый int API |
 | `AdmiralPhoneNumberInput` / `AdmiralPhoneNumberInputField` | Телефонное поле с флагом, поиском страны и заменой телефонного кода |
 | `AdmiralGrid` / `AdmiralGridItem` | Адаптивная модульная сетка Admiral на 4, 8 и 12 колонок |
-| `AdmiralLayout` | Основа страницы с декларативными слотами header/menu/content и адаптивным боковым меню 240/288/336 px |
+| `AdmiralLayout` | Основа страницы с необязательными слотами Header/SideMenu/Content/Footer, настраиваемыми размерами и адаптивной навигацией |
 | `AdmiralLayoutHeader` | Шапка layout со встроенным управлением мобильным и desktop-меню |
 | `AdmiralSideMenu` / `AdmiralSideMenuItem` | Рекурсивное меню с вложенностью, активной веткой и icons-only режимом |
 | `AdmiralMenu` / `AdmiralMenuItem` | Декларативное popup-меню с иконками, описанием, checkbox, shortcut и состояниями |
@@ -328,18 +328,58 @@ Layout не требует `@ref`, ручного переноса событи�
 фокуса внутрь меню. `DesktopCollapseMode.Button` оставляет полноразмерное меню и
 полностью скрывает его при `SideMenuCollapsed="true"`; старое имя `Hidden`
 сохранено как совместимый алиас `Button`. Пункт меню получает класс
-`admiral-layout__side-menu-item`, а его подпись —
-`admiral-layout__side-menu-label`: в rail это даёт иконку 24 px с отступами 8 px
-внутри области 40 px. Внешние кнопки открытия и сворачивания можно привести к
-той же геометрии классом `admiral-layout__menu-control`. Для независимой сетки
-без shell используйте
+`admiral-side-menu-item`, а его подпись —
+`admiral-side-menu-item__label`: в rail это даёт иконку 24 px с отступами 8 px
+внутри области 40 px. Для независимой сетки без shell используйте
 `AdmiralGrid`, а для компактных внешних отступов —
 `Variant="AdmiralGridVariant.Alternative"`.
 
-Header занимает всю ширину shell, а sidebar и body располагаются следующей
-строкой под ним. Стандартная высота header — `4rem`; если у приложения другая
-геометрия, передайте её через `HeaderHeight` — это значение также задаёт верхнюю
-границу мобильного меню и затемнения.
+Header и footer занимают всю ширину shell. Sidebar и body располагаются между
+ними; отсутствующие header/footer не резервируют строку, а пустой SideMenu не
+резервирует колонку. `HasSideMenu="false"` скрывает переданный sidebar.
+
+```razor
+<AdmiralLayout HeaderHeight="56px" FooterHeight="48px" CustomSideMenuWidth="20rem">
+    <Header><AdmiralLayoutHeader><Brand>Приложение</Brand></AdmiralLayoutHeader></Header>
+    <SideMenu><AdmiralSideMenu><AdmiralSideMenuItem Text="Обзор" Href="/" /></AdmiralSideMenu></SideMenu>
+    <Content>
+        <AdmiralGridItem MobileSpan="4" TabletSpan="4" DesktopSpan="6">Область A</AdmiralGridItem>
+        <AdmiralGridItem MobileSpan="4" TabletSpan="4" DesktopSpan="6">Область B</AdmiralGridItem>
+    </Content>
+    <Footer>Нижняя панель</Footer>
+</AdmiralLayout>
+```
+
+`HeaderHeight` по умолчанию `4rem`, `FooterHeight` — `3.5rem`; размеры включают
+рамку. Допустимы CSS-длины в px/rem и `calc(...)`. `CustomSideMenuWidth` имеет
+приоритет над пресетом `SideMenuWidth`; на узком экране ширина ограничена областью
+layout. Sidebar и затемнение ограничиваются строкой body, поэтому корректно
+работают внутри вложенного layout и не закрывают header/footer.
+
+Body уже содержит адаптивную сетку: прямые `AdmiralGridItem` сохраняют свои span.
+Для обычного потока блоков задайте `UseBodyGrid="false"`. Для вложенного макета
+можно передать `Style="height:30rem"`. `FooterClass`/`FooterStyle`, как и параметры
+стилей остальных секций, применяются к корневому элементу соответствующей секции.
+
+Для theme-only используйте собственный API Radzen:
+
+```razor
+<RadzenLayout Style="--rz-header-min-height:56px;--rz-sidebar-width:320px">
+    <RadzenHeader>Шапка</RadzenHeader>
+    <RadzenSidebar Responsive="false">Навигация</RadzenSidebar>
+    <RadzenBody>Содержимое</RadzenBody>
+    <RadzenFooter Style="height:48px;padding:0">Нижняя панель</RadzenFooter>
+</RadzenLayout>
+```
+
+`--rz-header-min-height` задаёт минимальную высоту прямого RadzenHeader, а
+`--rz-sidebar-width` — ширину RadzenSidebar. Responsive/Expanded остаются
+параметрами Radzen; тема не добавляет в них режим IconsOnly.
+
+Правила колонок, gap и padding AdmiralGrid находятся в одном SCSS partial
+`_admiral-grid.scss`. Standard/Alternative сохраняют breakpoints 4/8/12;
+локальные `--admiral-grid-gap` и `--admiral-grid-padding` позволяют задать свои
+отступы. Прямые RadzenRow/RadzenColumn используют собственную 12-колоночную сетку.
 
 `AdmiralDataGrid` автоматически выбирает русские или английские подписи фильтров,
 пейджера, поиска и настройки столбцов по `CurrentUICulture`. Тексты можно полностью

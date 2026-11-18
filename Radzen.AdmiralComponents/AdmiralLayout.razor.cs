@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Radzen.Admiral.Components.Internal;
 using Radzen.Admiral.Components.Models;
 
@@ -17,16 +18,28 @@ public partial class AdmiralLayout
     public RenderFragment? Content { get; set; }
 
     [Parameter]
+    public RenderFragment? Footer { get; set; }
+
+    [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
     public bool HasSideMenu { get; set; } = true;
 
     [Parameter]
+    public bool UseBodyGrid { get; set; } = true;
+
+    [Parameter]
     public string HeaderHeight { get; set; } = "4rem";
 
     [Parameter]
+    public string FooterHeight { get; set; } = "3.5rem";
+
+    [Parameter]
     public AdmiralSideMenuWidth SideMenuWidth { get; set; } = AdmiralSideMenuWidth.Small;
+
+    [Parameter]
+    public string? CustomSideMenuWidth { get; set; }
 
     [Parameter]
     public AdmiralSideMenuState SideMenuState { get; set; } = AdmiralSideMenuState.Expanded;
@@ -44,7 +57,7 @@ public partial class AdmiralLayout
     public EventCallback<bool> MenuOpenChanged { get; set; }
 
     [Parameter]
-    public string SideMenuId { get; set; } = "admiral-side-menu";
+    public string SideMenuId { get; set; } = $"admiral-side-menu-{Guid.NewGuid():N}";
 
     [Parameter]
     public string SideMenuAriaLabel { get; set; } = "Main navigation";
@@ -72,6 +85,12 @@ public partial class AdmiralLayout
 
     [Parameter]
     public string? BodyStyle { get; set; }
+
+    [Parameter]
+    public string? FooterClass { get; set; }
+
+    [Parameter]
+    public string? FooterStyle { get; set; }
 
     [Parameter]
     public string? Class { get; set; }
@@ -104,13 +123,26 @@ public partial class AdmiralLayout
             ToggleDesktopAsync = ToggleDesktopNavigation,
             IsOverlayOpen = () => MenuOpen,
             GetSideMenuState = () => EffectiveSideMenuState,
-            SideMenuId = SideMenuId
+            GetSideMenuId = () => SideMenuId,
+            HasSideMenu = () => HasSideMenuContent
         };
     }
 
     public Task ToggleMenu() => SetMenuOpen(!MenuOpen);
     public Task CloseMenu() => SetMenuOpen(false);
     public Task ToggleSideMenuCollapsed() => ToggleDesktopNavigation();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!HasSideMenuContent && MenuOpen)
+        {
+            MenuOpen = false;
+            await MenuOpenChanged.InvokeAsync(false);
+        }
+    }
+
+    private Task OnKeyDownAsync(KeyboardEventArgs args) => args.Key == "Escape" && MenuOpen
+        ? CloseMenu() : Task.CompletedTask;
 
     private AdmiralSideMenuState EffectiveSideMenuState => SideMenuState != AdmiralSideMenuState.Expanded
         ? SideMenuState
@@ -120,6 +152,7 @@ public partial class AdmiralLayout
 
     private async Task ToggleDesktopNavigation()
     {
+        if (!HasSideMenuContent) return;
         var next = EffectiveSideMenuState == AdmiralSideMenuState.Expanded
             ? (DesktopCollapseTarget == AdmiralSideMenuState.Expanded ? AdmiralSideMenuState.IconsOnly : DesktopCollapseTarget)
             : AdmiralSideMenuState.Expanded;
@@ -131,27 +164,32 @@ public partial class AdmiralLayout
 
     private async Task SetMenuOpen(bool value)
     {
+        value = value && HasSideMenuContent;
         if (MenuOpen == value)
         {
             return;
         }
         MenuOpen = value;
         await MenuOpenChanged.InvokeAsync(value);
+        if (!value && layoutContext.FocusNavigationAsync is { } focus) await focus();
     }
 
     private string CssClass => string.Join(' ', new[]
     {
         "admiral-layout",
-        HasSideMenu ? "admiral-layout--with-side-menu" : "admiral-layout--without-side-menu",
-        MenuOpen ? "admiral-layout--menu-open" : null,
+        HasSideMenuContent ? "admiral-layout--with-side-menu" : "admiral-layout--without-side-menu",
+        HasSideMenuContent && MenuOpen ? "admiral-layout--menu-open" : null,
         SideMenuShadow ? "admiral-layout--side-menu-shadow" : null,
-        $"admiral-layout--side-menu-{EffectiveSideMenuState.ToString().ToLowerInvariant()}",
+        HasSideMenuContent ? $"admiral-layout--side-menu-{EffectiveSideMenuState.ToString().ToLowerInvariant()}" : null,
         Class
     }.Where(value => !string.IsNullOrWhiteSpace(value)));
 
     private string CssVariables =>
-        $"--admiral-layout-side-menu-width:{(int)SideMenuWidth}px;" +
-        $"--admiral-layout-header-height:{(Header is null ? "0px" : HeaderHeight)}";
+        $"--admiral-layout-side-menu-width:{(string.IsNullOrWhiteSpace(CustomSideMenuWidth) ? $"{(int)SideMenuWidth}px" : CustomSideMenuWidth)};" +
+        $"--admiral-layout-header-height:{(Header is null ? "0px" : HeaderHeight)};" +
+        $"--admiral-layout-footer-height:{(Footer is null ? "0px" : FooterHeight)}";
+
+    private bool HasSideMenuContent => HasSideMenu && SideMenu is not null;
 
     private string CombinedStyle => $"{CssVariables};{Style}";
     private string SideMenuCssClass => string.Join(' ', new[] { "admiral-layout__side-menu", SideMenuClass }
@@ -159,5 +197,7 @@ public partial class AdmiralLayout
     private string HeaderCssClass => string.Join(' ', new[] { "admiral-layout__header", HeaderClass }
         .Where(value => !string.IsNullOrWhiteSpace(value)));
     private string BodyCssClass => string.Join(' ', new[] { "admiral-layout__body", BodyClass }
+        .Where(value => !string.IsNullOrWhiteSpace(value)));
+    private string FooterCssClass => string.Join(' ', new[] { "admiral-layout__footer", FooterClass }
         .Where(value => !string.IsNullOrWhiteSpace(value)));
 }

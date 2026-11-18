@@ -1,0 +1,52 @@
+@page "/components/layout"
+<PageTitle>Admiral Layout</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="Layout" Description="@T("Семь композиций header, sidebar, body и footer с настраиваемыми размерами.", "Seven header, sidebar, body and footer compositions with configurable dimensions.")"
+        SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-flex-container--docs" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <p>@T("Header, SideMenu и Footer необязательны. Content имеет приоритет над ChildContent. HasSideMenu=false скрывает переданный sidebar; без SideMenu место под него не резервируется. CustomSideMenuWidth принимает CSS-длину и имеет приоритет над пресетом SideMenuWidth.", "Header, SideMenu and Footer are optional. Content takes priority over ChildContent. HasSideMenu=false hides the supplied sidebar; an absent SideMenu reserves no space. CustomSideMenuWidth accepts a CSS length and takes priority over the SideMenuWidth preset.")</p>
+        <p>@T("Ниже 1024 px sidebar открывается поверх body; на 1024–1279 px остаётся rail 56 px; с 1280 px действуют Expanded, IconsOnly и Hidden. Header и footer остаются видимыми при прокрутке body. Layout уже содержит сетку: передавайте GridItem напрямую, чтобы не добавлять второй слой отступов. Для обычного потока блоков задайте UseBodyGrid=false.", "Below 1024 px the sidebar opens over the body; at 1024–1279 px a 56 px rail remains; from 1280 px Expanded, IconsOnly and Hidden apply. Header and footer stay visible while the body scrolls. Layout already supplies a grid: pass GridItem directly to avoid a second layer of padding. Use UseBodyGrid=false for normal block flow.")</p>
+        <CopyableRazorExample Code="@Example" Title="Razor · Admiral API" />
+        <ApiReference Title="AdmiralLayout" Rows="@Rows" />
+    }
+    else
+    {
+        @if (tab == ComponentDocTabs.Theme)
+        {
+            <p>@T("Прямой RadzenLayout использует свои компоненты и шаблон сетки. Высота header задаётся --rz-header-min-height, ширина sidebar — --rz-sidebar-width, высота footer — его Style. Здесь Responsive=false оставляет sidebar видимым на любом экране; Toggle sidebar меняет Expanded. Admiral-параметры и режим IconsOnly не добавляются теме.", "Direct RadzenLayout uses its own components and grid template. Set header height with --rz-header-min-height, sidebar width with --rz-sidebar-width and footer height through its Style. Here Responsive=false keeps the sidebar visible at every width; Toggle sidebar changes Expanded. The theme does not add Admiral parameters or IconsOnly mode.")</p>
+        }
+        <LayoutPlayground ThemeOnly="@(tab == ComponentDocTabs.Theme)" @key="tab" />
+    }
+    <a href="components/grid">Grid / GridItem</a>
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private const string Example = """
+        <AdmiralLayout HeaderHeight="56px" CustomSideMenuWidth="20rem" FooterHeight="48px">
+            <Header><AdmiralLayoutHeader><Brand>Application</Brand></AdmiralLayoutHeader></Header>
+            <SideMenu><AdmiralSideMenu><AdmiralSideMenuItem Text="Overview" Href="/" /></AdmiralSideMenu></SideMenu>
+            <Content>
+                <AdmiralGridItem MobileSpan="4" TabletSpan="4" DesktopSpan="6">Panel A</AdmiralGridItem>
+                <AdmiralGridItem MobileSpan="4" TabletSpan="4" DesktopSpan="6">Panel B</AdmiralGridItem>
+            </Content>
+            <Footer>Footer</Footer>
+        </AdmiralLayout>
+        """;
+    private static readonly IReadOnlyList<ApiReference.Entry> Rows = [
+        new("Header / SideMenu / Content / Footer", "RenderFragment?; null", "Optional layout sections; absent header/footer rows have zero height."),
+        new("ChildContent", "RenderFragment?; null", "Body content when Content is not supplied."),
+        new("HasSideMenu", "bool; true", "Controls whether supplied sidebar content is shown; no sidebar is rendered for an empty slot."),
+        new("HeaderHeight / FooterHeight", "string; 4rem / 3.5rem", "CSS lengths for the header/footer tracks, including borders."),
+        new("UseBodyGrid", "bool; true", "Automatic responsive body grid for direct GridItem children; false uses normal block flow."),
+        new("SideMenuWidth", "AdmiralSideMenuWidth; Small", "Small 240px / Medium 288px / Large 336px."),
+        new("CustomSideMenuWidth", "string?; null", "CSS length overriding the preset and reserved body width; mobile width is capped to the layout."),
+        new("SideMenuState / SideMenuStateChanged", "AdmiralSideMenuState / callback", "Desktop Expanded, IconsOnly or Hidden; use @bind-SideMenuState."),
+        new("MenuOpen / MenuOpenChanged", "bool / callback", "Overlay state; use @bind-MenuOpen."),
+        new("SideMenuId", "string; generated", "Unique sidebar id; header controls follow an explicitly supplied id."),
+        new("HeaderClass / SideMenuClass / BodyClass / FooterClass", "string?; null", "Optional section classes."),
+        new("HeaderStyle / SideMenuStyle / BodyStyle / FooterStyle / Style", "string?; null", "Section/root CSS; prefer the dimension parameters for coordinated sizing.")
+    ];
+}

@@ -57,6 +57,7 @@ public sealed class DocumentationTests : BrowserTest
             "/tables",
             "/components/avatar",
             "/components/status-indicator",
+            "/components/layout",
             "/components/grid",
             "/components/skeleton",
             "/components/tooltip",

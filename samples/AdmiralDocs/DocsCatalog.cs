@@ -21,7 +21,8 @@ internal static class DocsCatalog
             new("Typography", "components/typography", "Типографика"),
             new("Integration", "guide/integration", "Подключение"),
             new("Icons", "icons", "Иконки"),
-            new("Layout", "layout", "Макет"),
+            new("Layout", "components/layout", "Макет"),
+            new("Grid integration", "layout", "Сетка в приложении"),
         ]),
         new("Actions", "Действия",
         [

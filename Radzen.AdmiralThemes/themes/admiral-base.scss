@@ -644,7 +644,7 @@ $header-shadow: none !default;
 $footer-padding: 1rem !default;
 $footer-background-color: var(--rz-base-background-color) !default;
 $footer-border: var(--rz-border-width) solid var(--rz-base-200) !default;
-$footer-color: var(--rz-base-700) !default;
+$footer-color: var(--rz-text-secondary-color) !default;
 
 $card-padding: 1rem !default;
 $card-background-color: var(--rz-base-background-color) !default;
@@ -5892,6 +5892,7 @@ ul.rz-profile-menu {
 @import 'admiral-navigation';
 @import 'admiral-pagination';
 @import 'admiral-input-field';
+@import 'admiral-grid';
 @import 'admiral-layout';
 @import 'admiral-menu';
 @import 'admiral-tree-select';

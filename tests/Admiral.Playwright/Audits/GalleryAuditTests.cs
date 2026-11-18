@@ -50,7 +50,7 @@ public sealed class GalleryAuditTests : BrowserTest
         // Arrange: open the requested gallery route and prepare the state inventory.
         var (_, page) = await NewPageAsync(theme, "en");
         await page.GotoAsync(BaseUrl + route, new() { WaitUntil = WaitUntilState.DOMContentLoaded });
-        await page.Locator(".admiral-layout").WaitForAsync();
+        await page.Locator(".admiral-consumer-shell").WaitForAsync();
         await page.WaitForTimeoutAsync(350);
         var probes = new List<object>();
 
@@ -141,7 +141,7 @@ public sealed class GalleryAuditTests : BrowserTest
         // Arrange: open the route with the requested theme, culture and viewport.
         var (_, page) = await NewPageAsync(theme, culture, width);
         await page.GotoAsync(BaseUrl + route);
-        await page.Locator(".admiral-layout").WaitForAsync();
+        await page.Locator(".admiral-consumer-shell").WaitForAsync();
         await page.WaitForTimeoutAsync(100);
         var tabs = page.Locator(".component-doc-tabs button");
         var count = await tabs.CountAsync();

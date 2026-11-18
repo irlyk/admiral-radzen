@@ -1,0 +1,43 @@
+// One responsive grid definition shared by standalone grids and layout slots.
+.admiral-grid {
+  --admiral-grid-columns: 4;
+  --admiral-grid-standard-gap: 1rem;
+  --admiral-grid-alternative-gap: 1rem;
+  --admiral-grid-standard-padding: 1rem;
+  --admiral-grid-alternative-padding: 1rem;
+  --admiral-grid-gap: var(--admiral-grid-standard-gap);
+  --admiral-grid-padding: var(--admiral-grid-standard-padding);
+  display: grid;
+  box-sizing: border-box;
+  grid-template-columns: repeat(var(--admiral-grid-columns), minmax(0, 1fr));
+  column-gap: var(--admiral-grid-gap);
+  padding-inline: var(--admiral-grid-padding);
+  width: 100%;
+  min-width: 0;
+}
+.admiral-grid--alternative {
+  --admiral-grid-gap: var(--admiral-grid-alternative-gap);
+  --admiral-grid-padding: var(--admiral-grid-alternative-padding);
+}
+.admiral-grid__item { min-width: 0; grid-column: span var(--admiral-grid-mobile-span, 4); }
+
+@media (min-width: 48rem) {
+  .admiral-grid {
+    --admiral-grid-columns: 8;
+    --admiral-grid-standard-gap: 1.5rem;
+    --admiral-grid-alternative-gap: 1.5rem;
+    --admiral-grid-standard-padding: 4rem;
+    --admiral-grid-alternative-padding: 1.5rem;
+  }
+  .admiral-grid__item { grid-column: span var(--admiral-grid-tablet-span, 8); }
+}
+@media (min-width: 64rem) {
+  .admiral-grid { --admiral-grid-columns: 12; --admiral-grid-alternative-gap: 2rem; --admiral-grid-alternative-padding: 2rem; }
+  .admiral-grid__item { grid-column: span var(--admiral-grid-desktop-span, 12); }
+}
+@media (min-width: 80rem) {
+  .admiral-grid { --admiral-grid-standard-gap: 2rem; --admiral-grid-standard-padding: 8rem; }
+}
+@media (min-width: 100rem) {
+  .admiral-grid { --admiral-grid-standard-padding: 9rem; }
+}

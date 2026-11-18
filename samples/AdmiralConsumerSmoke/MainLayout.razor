@@ -179,11 +179,12 @@
         ("Pagination", "/components/pagination"), ("Avatar", "/components/avatar"),
         ("GlobalSearch", "/components/global-search"), ("Progress", "/components/progress"),
         ("Spinner", "/components/spinner"), ("StatusIndicator", "/components/status-indicator"),
-        ("Grid", "/components/grid")
+        ("Layout", "/components/layout"), ("Grid", "/components/grid")
     ];
     private static readonly (string Name, string Russian, string Icon, string[] Hrefs)[] Categories =
     [
         ("Basics", "Основы", "admiral:service/info-outline", [
+            "/components/layout",
             "/guide/getting-started", "/guide/integration", "/basics/colors", "/components/typography"]),
         ("Actions", "Действия", "admiral:system/edit-outline", [
             "/components/button", "/components/icon-button", "/components/text-button", "/components/button-groups",
@@ -264,6 +265,7 @@
             ["/components/progress"] = "прогресс загрузка прогрессбар",
             ["/components/spinner"] = "спиннер индикатор загрузки",
             ["/components/status-indicator"] = "индикатор статуса состояние",
+            ["/components/layout"] = "макет header footer sidebar layout",
             ["/components/grid"] = "сетка колонки адаптивный layout"
         };
     private IReadOnlyList<(string Text, string Href)> FilteredComponents =>

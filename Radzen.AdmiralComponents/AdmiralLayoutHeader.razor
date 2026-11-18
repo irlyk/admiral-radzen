@@ -1,15 +1,16 @@
 @using Radzen.Admiral.Components.Internal
+@implements IDisposable
 
-<div class="@CssClass" @attributes="AdditionalAttributes">
-    @if (ShowNavigationControl && Layout is not null)
+<div class="@CssClass" @attributes="AdditionalAttributes" @onkeydown="OnKeyDownAsync" @onkeydown:stopPropagation="@(Layout?.IsOverlayOpen() == true)">
+    @if (ShowNavigationControl && Layout is not null && Layout.HasSideMenu())
     {
-        <button type="button" class="admiral-layout-header__navigation-control admiral-layout-header__navigation-control--overlay"
-                aria-label="@OpenNavigationAriaLabel" aria-controls="@Layout.SideMenuId"
+        <button @ref="overlayControl" type="button" class="admiral-layout-header__navigation-control admiral-layout-header__navigation-control--overlay"
+                aria-label="@OpenNavigationAriaLabel" aria-controls="@Layout.GetSideMenuId()"
                 aria-expanded="@(Layout.IsOverlayOpen() ? "true" : "false")" @onclick="Layout.ToggleOverlayAsync">
             <AdmiralIcon Icon="@NavigationIcon" />
         </button>
-        <button type="button" class="admiral-layout-header__navigation-control admiral-layout-header__navigation-control--desktop"
-                aria-label="@ToggleNavigationAriaLabel" aria-controls="@Layout.SideMenuId"
+        <button @ref="desktopControl" type="button" class="admiral-layout-header__navigation-control admiral-layout-header__navigation-control--desktop"
+                aria-label="@ToggleNavigationAriaLabel" aria-controls="@Layout.GetSideMenuId()"
                 aria-expanded="@(Layout.GetSideMenuState() == AdmiralSideMenuState.Expanded ? "true" : "false")" @onclick="Layout.ToggleDesktopAsync">
             <AdmiralIcon Icon="@NavigationIcon" />
         </button>
@@ -42,6 +43,26 @@
     [Parameter] public string ToggleNavigationAriaLabel { get; set; } = "Toggle navigation";
     [Parameter] public string? Class { get; set; }
     [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private ElementReference overlayControl, desktopControl;
+    private Task OnKeyDownAsync(KeyboardEventArgs args) => args.Key == "Escape" && Layout?.IsOverlayOpen() == true
+        ? Layout.CloseOverlayAsync() : Task.CompletedTask;
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (Layout is not null) Layout.FocusNavigationAsync = FocusNavigationAsync;
+    }
+    private async ValueTask FocusNavigationAsync()
+    {
+        if (!ShowNavigationControl || Layout?.HasSideMenu() != true) return;
+        // The browser ignores focus on display:none. Exactly one control is
+        // visible at a breakpoint, so no viewport listener or JS module is needed.
+        await overlayControl.FocusAsync(preventScroll: true);
+        await desktopControl.FocusAsync(preventScroll: true);
+    }
+    public void Dispose()
+    {
+        if (Layout?.FocusNavigationAsync?.Target == this) Layout.FocusNavigationAsync = null;
+    }
 
     private string CssClass => string.Join(' ', new[] { "admiral-layout-header", Class }
         .Where(value => !string.IsNullOrWhiteSpace(value)));

@@ -668,7 +668,7 @@ $header-shadow: none !default;
 $footer-padding: 1rem !default;
 $footer-background-color: var(--rz-base-background-color) !default;
 $footer-border: var(--rz-border-width) solid var(--rz-base-200) !default;
-$footer-color: var(--rz-base-700) !default;
+$footer-color: var(--rz-text-secondary-color) !default;
 
 $card-padding: 1rem !default;
 $card-background-color: var(--rz-base-background-color) !default;
@@ -1029,7 +1029,7 @@ $panel-menu-item-3rd-level-hover-color: var(--rz-text-title-color) !default;
 $panel-menu-item-3rd-level-hover-background-color: #1F2024 !default;
 $panel-menu-item-3rd-level-active-color: var(--rz-primary) !default;
 $panel-menu-item-3rd-level-active-background-color: rgba($rz-white, 0.08) !default;
-$panel-menu-icon-color: var(--rz-base-600) !default;
+$panel-menu-icon-color: var(--rz-text-secondary-color) !default;
 $panel-menu-icon-margin-inline: 0 1rem !default;
 $panel-menu-icon-2nd-level-margin-inline: 0 0.625rem !default;
 
@@ -5948,6 +5948,7 @@ ul.rz-profile-menu {
 @import 'admiral-navigation';
 @import 'admiral-pagination';
 @import 'admiral-input-field';
+@import 'admiral-grid';
 @import 'admiral-layout';
 @import 'admiral-menu';
 @import 'admiral-tree-select';
