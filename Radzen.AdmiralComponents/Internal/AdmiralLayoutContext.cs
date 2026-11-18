@@ -9,5 +9,7 @@ internal sealed class AdmiralLayoutContext
     public required Func<Task> ToggleDesktopAsync { get; init; }
     public required Func<bool> IsOverlayOpen { get; init; }
     public required Func<AdmiralSideMenuState> GetSideMenuState { get; init; }
-    public required string SideMenuId { get; init; }
+    public required Func<string> GetSideMenuId { get; init; }
+    public required Func<bool> HasSideMenu { get; init; }
+    public Func<ValueTask>? FocusNavigationAsync { get; set; }
 }

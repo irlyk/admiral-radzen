@@ -1,0 +1,79 @@
+<div class="admiral-component-playground admiral-component-playground--full-width" data-testid="layout-playground">
+    <div class="admiral-component-controls">
+        <label><span>Composition</span><select aria-label="Composition" @bind="composition">
+            <option value="body">body</option><option value="header-body">header + body</option>
+            <option value="header-sidebar-body">header + sidebar + body</option><option value="sidebar-body">sidebar + body</option>
+            <option value="header-sidebar-body-footer">header + sidebar + body + footer</option>
+            <option value="sidebar-body-footer">sidebar + body + footer</option><option value="body-footer">body + footer</option>
+        </select></label>
+        <label><span>HeaderHeight</span><input aria-label="HeaderHeight" @bind="headerHeight" /></label>
+        <label><span>SidebarWidth</span><input aria-label="SidebarWidth" @bind="sidebarWidth" /></label>
+        <label><span>FooterHeight</span><input aria-label="FooterHeight" @bind="footerHeight" /></label>
+        @if (!ThemeOnly) { <label><span>Sidebar state</span><select aria-label="Sidebar state" @bind="sideState"><option>Expanded</option><option>IconsOnly</option><option>Hidden</option></select></label> }
+        <label class="admiral-component-controls__check"><input type="checkbox" @bind="hasSideMenu" /> HasSideMenu</label>
+        @if (!ThemeOnly) { <label class="admiral-component-controls__check"><input type="checkbox" @bind="useBodyGrid" /> UseBodyGrid</label> }
+        <label class="admiral-component-controls__check"><input type="checkbox" @bind="rtl" /> RTL</label>
+        <label class="admiral-component-controls__check"><input type="checkbox" @bind="tallContent" /> Tall content</label>
+        <button type="button" disabled="@(!HasSidebar)" @onclick="ToggleSidebar">Toggle sidebar</button>
+    </div>
+    <div class="layout-playground__frame">
+        @if (ThemeOnly)
+        {
+            <RadzenLayout data-testid="layout-sample" dir="@(rtl ? "rtl" : "ltr")" Style="@NativeStyle">
+                @if (HasHeader) { <RadzenHeader><span>Header</span></RadzenHeader> }
+                @if (HasSidebar) { <RadzenSidebar Responsive="false" @bind-Expanded="nativeOpen">@NativeNavigation</RadzenSidebar> }
+                <RadzenBody>@NativeBody</RadzenBody>
+                @if (HasFooter) { <RadzenFooter Style="@($"height:{footerHeight};padding:0")"><span>Footer</span></RadzenFooter> }
+            </RadzenLayout>
+        }
+        else
+        {
+            <AdmiralLayout @ref="layout" data-testid="layout-sample" dir="@(rtl ? "rtl" : "ltr")" HasSideMenu="@hasSideMenu" UseBodyGrid="@useBodyGrid" Header="@(HasHeader ? HeaderContent : null)"
+                SideMenu="@(HasSidebar ? NavigationContent : null)" SideMenuWidth="AdmiralSideMenuWidth.Medium"
+                HeaderHeight="@headerHeight" FooterHeight="@footerHeight" Footer="@(HasFooter ? FooterContent : null)"
+                CustomSideMenuWidth="@sidebarWidth" @bind-SideMenuState="sideState" @bind-MenuOpen="menuOpen" Style="height:30rem">
+                <Content>@if (useBodyGrid) { @BodyContent } else { @NativeBody }</Content>
+            </AdmiralLayout>
+        }
+    </div>
+    <output aria-live="polite">@composition · MenuOpen: @menuOpen</output>
+</div>
+<CopyableRazorExample Code="@(ThemeOnly ? NativeCode : AdmiralCode)" Title="Razor" />
+@code {
+    [Parameter] public bool ThemeOnly { get; set; }
+    private string composition = "header-sidebar-body-footer", headerHeight = "64px", sidebarWidth = "288px", footerHeight = "56px";
+    private bool tallContent, nativeOpen = true, menuOpen, rtl, hasSideMenu = true, useBodyGrid = true;
+    private AdmiralSideMenuState sideState;
+    private AdmiralLayout? layout;
+    private bool HasHeader => composition.Contains("header");
+    private bool HasSidebar => hasSideMenu && composition.Contains("sidebar");
+    private bool HasFooter => composition.Contains("footer");
+    private string NativeStyle => $"height:30rem;min-width:0;--rz-header-min-height:{headerHeight};--rz-sidebar-width:{sidebarWidth}";
+    private async Task ToggleSidebar() { if (ThemeOnly) nativeOpen = !nativeOpen; else if (layout is not null) await layout.ToggleMenu(); }
+    private RenderFragment HeaderContent => @<AdmiralLayoutHeader><Brand><strong>Header</strong></Brand><Actions><AdmiralButton Text="Action" Dimension="AdmiralButtonDimension.S" /></Actions></AdmiralLayoutHeader>;
+    private RenderFragment NavigationContent => @<AdmiralSideMenu><AdmiralSideMenuItem Text="Overview" Icon="admiral:system/home-outline" /><AdmiralSideMenuItem Text="Documents" Icon="admiral:documents/copy-outline" /></AdmiralSideMenu>;
+    private RenderFragment FooterContent => @<span>Footer</span>;
+    private RenderFragment NativeNavigation => @<RadzenPanelMenu><RadzenPanelMenuItem Text="Overview" Icon="admiral:system/home-outline" /><RadzenPanelMenuItem Text="Documents" Icon="admiral:documents/copy-outline" /></RadzenPanelMenu>;
+    private RenderFragment BodyContent => @<text>
+        <AdmiralGridItem MobileSpan="4" TabletSpan="4" DesktopSpan="6" Class="layout-playground__panel" data-testid="layout-panel-a">Body A</AdmiralGridItem>
+        <AdmiralGridItem MobileSpan="4" TabletSpan="4" DesktopSpan="6" Class="layout-playground__panel" data-testid="layout-panel-b">Body B</AdmiralGridItem>
+        @if (tallContent) { <div class="layout-playground__long-content">@for (var i = 0; i < 35; i++) { <p>Scrollable content @i</p> }</div> }
+    </text>;
+    private RenderFragment NativeBody => @<div><p>Body</p>@if (tallContent) { @for (var i = 0; i < 35; i++) { <p>Scrollable content @i</p> } }</div>;
+    private const string AdmiralCode = """
+        <AdmiralLayout HeaderHeight="64px" FooterHeight="48px" CustomSideMenuWidth="20rem" UseBodyGrid="false">
+            <Header><AdmiralLayoutHeader><Brand>Header</Brand></AdmiralLayoutHeader></Header>
+            <SideMenu><AdmiralSideMenu><AdmiralSideMenuItem Text="Overview" Href="/" /></AdmiralSideMenu></SideMenu>
+            <Content>Body</Content>
+            <Footer>Footer</Footer>
+        </AdmiralLayout>
+        """;
+    private const string NativeCode = """
+        <RadzenLayout Style="height:30rem;--rz-header-min-height:64px;--rz-sidebar-width:288px">
+            <RadzenHeader>Header</RadzenHeader>
+            <RadzenSidebar Responsive="false">Navigation</RadzenSidebar>
+            <RadzenBody>Body</RadzenBody>
+            <RadzenFooter Style="height:56px;padding:0">Footer</RadzenFooter>
+        </RadzenLayout>
+        """;
+}

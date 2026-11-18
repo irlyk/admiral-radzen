@@ -1,0 +1,32 @@
+@page "/components/multi-button"
+<PageTitle>Admiral MultiButton</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="MultiButton" Description="@T("Основное действие и отдельная кнопка меню.", "Main action and a separate menu trigger.")"
+        SourceUrl="https://github.com/AdmiralDS/react-ui/blob/4721c1b326ac17fb7b08e915adfce5b8dced0664/src/components/MultiButton/index.tsx" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <p>@T("Loading и Skeleton блокируют обе половины. DisabledMainButton отключает только основное действие. Размеры S/M/L/XL — 32/40/48/56 px. В Blazor по умолчанию XL, в закреплённом React — L. White используется на тёмной подложке.", "Loading and Skeleton block both halves. DisabledMainButton only disables the main action. S/M/L/XL heights are 32/40/48/56 px. Blazor defaults to XL; the pinned React component defaults to L. White requires a dark surface.")</p>
+        <ApiReference Title="AdmiralMultiButton" Rows="@Rows" />
+    }
+    else
+    {
+        <MenuActionPlayground Kind="Multi" ThemeOnly="@(tab == ComponentDocTabs.Theme)" @key="tab" />
+    }
+    <a href="components/menu">Menu / MenuButton / OverflowMenu</a>
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private static readonly IReadOnlyList<ApiReference.Entry> Rows = [
+        new("Text / ChildContent", "string / RenderFragment?", "Trigger label and AdmiralMenuItem children."),
+        new("Disabled", "bool; false", "Blocks opening the menu."),
+        new("Appearance / Dimension", "AdmiralButtonAppearance / AdmiralButtonDimension; Primary / Xl", "Both halves share appearance and height."),
+        new("DisabledMainButton", "bool; false", "Disables the main action while the menu stays available."),
+        new("Loading / Skeleton", "bool; false", "Blocks both halves; loading preserves the main action name and size."),
+        new("Click", "EventCallback<MouseEventArgs>", "Main action only; menu items own their callbacks."),
+        new("MenuAriaLabel", "string; More actions", "Accessible name of the menu trigger."),
+        new("MenuClass", "string?; null", "Additional menu class."),
+        new("AdmiralMenuItem", "Click / Disabled / Checkable / CheckedChanged / KeepOpen", "Items own their actions and selection state.")
+    ];
+}

@@ -1,7 +1,10 @@
-<AdmiralMenu AriaLabel="@AriaLabel" Class="@MenuClass">
+<AdmiralMenu AriaLabel="@AriaLabel" Class="@MenuClass" Disabled="@Disabled">
     <Trigger>
         <AdmiralTag Text="@Text" Kind="@Kind" Size="@Size" StatusViaBackground="@StatusViaBackground"
-                    Disabled="@Disabled" Click="HandleTriggerClick" />
+                    Disabled="@Disabled" Click="HandleTriggerClick" Class="admiral-tag-menu">
+            <span class="admiral-tag-menu__label">@Text</span>
+            <AdmiralIcon Icon="admiral:system/chevron-down-outline" Size="AdmiralIconSize.Small" Class="admiral-tag-menu__chevron" aria-hidden="true" />
+        </AdmiralTag>
     </Trigger>
     <ChildContent>@ChildContent</ChildContent>
 </AdmiralMenu>

@@ -29,16 +29,19 @@
                         AllowCheckChildren="true" AllowCheckParents="true" class="@(themeSmall ? "admiral-tree admiral-tree--small" : "admiral-tree")">
                         <RadzenTreeItem Text="@SmokeL["Документы"]" Value="@("docs")" Expanded="true">
                             <RadzenTreeItem Text="@SmokeL["Отчёты"]" Value="@("reports")" Expanded="true">
-                                <RadzenTreeItem Text="@SmokeL["Текущий месяц"]" Value="@("month")" />
+                                <RadzenTreeItem Text="@SmokeL["Текущий месяц"]" Value="@("month")" Selected="@(Equals(radzenValue, "month"))" />
                             </RadzenTreeItem>
                             <RadzenTreeItem Text="@SmokeL["Архив · Checkable=false"]" Value="@("archive")" Checkable="false" />
                         </RadzenTreeItem>
+                        <RadzenTreeItem Text="@SmokeL["Settings"]" Value="@("settings")" />
                     </RadzenTree>
                     <output aria-live="polite">Value: @radzenValue · Checked: @string.Join(", ", radzenChecked)</output>
                 </div>
                 <div class="admiral-component-controls">
                     <label class="admiral-component-controls__check"><input type="checkbox" @bind="themeSmall" /> @SmokeL["Small"]</label>
                     <label class="admiral-component-controls__check"><input type="checkbox" @bind="themeChecks" /> AllowCheckBoxes</label>
+                    <AdmiralButton Text="@SmokeL["Select current month"]" Appearance="AdmiralButtonAppearance.Secondary"
+                        Click="@(() => radzenValue = "month")" />
                 </div>
             </div>
             <CopyableRazorExample Code="@ThemeCode" Title="@SmokeL["Razor · прямой Radzen"]" />

@@ -69,17 +69,7 @@ public partial class AdmiralPhoneNumberInput
     [Parameter]
     public string? Class { get; set; }
 
-    public static IReadOnlyList<AdmiralPhoneCountry> DefaultCountries { get; } =
-    [
-        new("RUS", "Россия", "+7", "admiral:flags/russian-federation"),
-        new("BLR", "Беларусь", "+375", "admiral:flags/belarus"),
-        new("KAZ", "Казахстан", "+7", "admiral:flags/kazakhstan"),
-        new("UZB", "Узбекистан", "+998", "admiral:flags/uzbekistan"),
-        new("TJK", "Таджикистан", "+992", "admiral:flags/tajikistan"),
-        new("ARM", "Армения", "+374", "admiral:flags/armenia"),
-        new("GBR", "United Kingdom", "+44", "admiral:flags/united-kingdom-of-great-britain-and-northern-ireland"),
-        new("USA", "United States", "+1", "admiral:flags/united-states-of-america")
-    ];
+    public static IReadOnlyList<AdmiralPhoneCountry> DefaultCountries { get; } = Internal.AdmiralPhoneCountries.All;
 
     private IReadOnlyList<AdmiralPhoneCountry> EffectiveCountries => Countries?.ToArray() ?? DefaultCountries;
     private string? currentCountry;

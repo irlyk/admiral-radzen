@@ -1,3 +1,5 @@
+using Admiral.Playwright.Pages.Components.Layout;
+
 namespace Admiral.Playwright.Integration.Wasm;
 
 [Category("Wasm")]
@@ -13,7 +15,18 @@ public sealed class WasmTests : BrowserTest
         var routes = new[]
         {
             "/",
+            "/components/layout",
+            "/components/grid",
+            "/layout",
+            "/regression/layout",
             "/components/button",
+            "/components/button-groups",
+            "/components/icon-button-group",
+            "/components/multi-button",
+            "/components/text-button-menu",
+            "/components/tag-menu",
+            "/components/floating-button",
+            "/components/floating-button-menu",
             "/components/checkbox",
             "/components/select",
             "/components/phone-number-input",
@@ -150,7 +163,7 @@ public sealed class WasmTests : BrowserTest
 
             // Assert
             await page.Locator("h1").First.WaitForAsync();
-            var content = (route == "/basics/colors") ? "[data-color-token=\"--rz-primary\"]" : ((route == "/guide/integration") ? ".docs-code-example" : ".admiral-component-playground");
+            var content = route is "/layout" or "/regression/layout" ? ".admiral-grid-guide" : (route == "/basics/colors") ? "[data-color-token=\"--rz-primary\"]" : ((route == "/guide/integration") ? ".docs-code-example" : ".admiral-component-playground");
 
             Assert.That(
                 await page.Locator(content).CountAsync() > 0,
@@ -221,6 +234,130 @@ public sealed class WasmTests : BrowserTest
         await page.Locator("#main-content").GetByRole(
             AriaRole.Heading,
             new LocatorGetByRoleOptions { Name = "Checkbox groups", Exact = true }).WaitForAsync();
+
+        // Shared group links must resolve under the static site's project prefix.
+        await page.GotoAsync(url + "components/button-groups");
+        var iconGroups = page.Locator("#main-content").GetByRole(AriaRole.Link,
+            new() { Name = "IconButtonGroup has its own page", Exact = true });
+        Assert.That(new Uri(new Uri(url), await iconGroups.GetAttributeAsync("href")).AbsolutePath,
+            Is.EqualTo("/admiral-radzen/components/icon-button-group"));
+        await iconGroups.ClickAsync();
+        await page.Locator("#main-content").GetByRole(AriaRole.Heading,
+            new() { Name = "IconButtonGroup", Exact = true }).WaitForAsync();
+        var textGroups = page.Locator("#main-content").GetByRole(AriaRole.Link,
+            new() { Name = "ButtonGroup page", Exact = true });
+        Assert.That(new Uri(new Uri(url), await textGroups.GetAttributeAsync("href")).AbsolutePath,
+            Is.EqualTo("/admiral-radzen/components/button-groups"));
+        await textGroups.ClickAsync();
+        await page.Locator("[data-doc-tab=theme]").ClickAsync();
+        var groupPreview = page.Locator(".admiral-component-playground__preview").First;
+        var directGroup = groupPreview.GetByRole(AriaRole.Group, new() { Name = "Document actions", Exact = true });
+        await directGroup.GetByRole(AriaRole.Button).First.ClickAsync();
+        await Assertions.Expect(groupPreview.Locator("output")).ToHaveTextAsync(new Regex(@"Clicks:\s*1$"));
+        var disableLast = page.GetByLabel("Disabled · last", new() { Exact = true });
+        await disableLast.UncheckAsync();
+        await Assertions.Expect(directGroup.GetByRole(AriaRole.Button).Last).ToBeEnabledAsync();
+        await disableLast.CheckAsync();
+        await Assertions.Expect(directGroup.GetByRole(AriaRole.Button).Last).ToBeDisabledAsync();
+        await Assertions.Expect(directGroup.GetByRole(AriaRole.Button).Last).ToHaveCSSAsync("color", "rgb(81, 83, 87)");
+
+        // Floating action links and both implementations work under the project prefix.
+        await page.GotoAsync(url + "components/floating-button");
+        var floatingMenuLink = page.Locator("#main-content a[href='components/floating-button-menu']");
+        Assert.That(new Uri(new Uri(url), await floatingMenuLink.GetAttributeAsync("href")).AbsolutePath,
+            Is.EqualTo("/admiral-radzen/components/floating-button-menu"));
+        await floatingMenuLink.ClickAsync();
+        var floatingTrigger = page.Locator(".admiral-floating-button-menu").First.Locator(":scope > button");
+        await floatingTrigger.ClickAsync();
+        await Assertions.Expect(floatingTrigger.Locator("[data-admiral-icon-loaded='service/close-outline'] svg")).ToBeVisibleAsync();
+        await floatingTrigger.ClickAsync();
+        await Assertions.Expect(floatingTrigger).ToHaveAttributeAsync("aria-expanded", "false");
+        await page.Locator("#main-content a[href='components/floating-button']").ClickAsync();
+        await page.Locator("[data-doc-tab=theme]").ClickAsync();
+        var floatingDirect = page.Locator(".admiral-component-playground__preview .rz-button.admiral-floating-button");
+        await floatingDirect.ClickAsync();
+        await Assertions.Expect(page.Locator(".admiral-component-playground__preview output")).ToHaveTextAsync(new Regex(@"Clicks:\s*1$"));
+        await page.GetByLabel("Disabled", new() { Exact = true }).CheckAsync();
+        await Assertions.Expect(floatingDirect).ToBeDisabledAsync();
+        await Assertions.Expect(floatingDirect.Locator(".admiral-floating-button__content")).ToHaveCSSAsync("color", "rgb(81, 83, 87)");
+
+        // The three menu-action pages share working examples with the package consumer.
+        foreach (var route in new[] { "multi-button", "text-button-menu", "tag-menu" })
+        {
+            await page.GotoAsync(url + "components/" + route);
+            var demo = page.GetByTestId("menu-action-playground");
+            var trigger = demo.Locator(".admiral-menu__trigger button");
+            await trigger.ClickAsync();
+            var menu = page.Locator(".admiral-menu__popup");
+            await menu.GetByRole(AriaRole.Menuitem, new() { Name = "Print", Exact = true }).ClickAsync();
+            await Assertions.Expect(menu).ToHaveCountAsync(0);
+            await Assertions.Expect(demo.Locator("output")).ToContainTextAsync("Actions: 1 · Last: print");
+            await page.Locator("[data-doc-tab=theme]").ClickAsync();
+            await demo.Locator(".rz-splitbutton-menubutton").ClickAsync();
+            var native = page.Locator(".rz-splitbutton-menu:visible");
+            await native.GetByRole(AriaRole.Menuitem, new() { Name = "Print", Exact = true }).ClickAsync();
+            await Assertions.Expect(demo.Locator("output")).ToContainTextAsync("Actions: 1 · Last: print");
+            await page.GetByLabel("Disabled", new() { Exact = true }).CheckAsync();
+            await Assertions.Expect(demo.Locator(".rz-splitbutton-menubutton")).ToBeDisabledAsync();
+            var related = page.Locator("#main-content a[href='components/menu']");
+            Assert.That(new Uri(new Uri(url), await related.GetAttributeAsync("href")).AbsolutePath,
+                Is.EqualTo("/admiral-radzen/components/menu"));
+        }
+
+        // Optional layout sections must also compose without the smoke host's shell.
+        await page.GotoAsync(url + "components/layout");
+        foreach (var nativeLayout in new[] { false, true })
+        {
+            await page.Locator(nativeLayout ? "[data-doc-tab=theme]" : "[data-doc-tab=admiral]").ClickAsync();
+            var layoutSample = new LayoutPage(page, nativeLayout);
+            foreach (var composition in new[] { "body", "header-body", "header-sidebar-body", "sidebar-body", "header-sidebar-body-footer", "sidebar-body-footer", "body-footer" })
+            {
+                await layoutSample.Controls.GetByLabel("Composition", new() { Exact = true }).SelectOptionAsync(composition);
+                await Assertions.Expect(layoutSample.Demo.Locator("output")).ToContainTextAsync(composition);
+                await Assertions.Expect(layoutSample.Footer).ToHaveCountAsync(composition.Contains("footer") ? 1 : 0);
+                await Assertions.Expect(layoutSample.Header).ToHaveCountAsync(composition.Contains("header") ? 1 : 0);
+                await Assertions.Expect(layoutSample.Sidebar).ToHaveCountAsync(composition.Contains("sidebar") ? 1 : 0);
+                var bounds = await layoutSample.MeasureAsync();
+                Assert.That(bounds.Root.Height, Is.EqualTo(480).Within(1));
+                Assert.That(bounds.Body.Bottom, Is.EqualTo(bounds.Footer?.Top ?? bounds.Root.Bottom).Within(1));
+                Assert.That(bounds.Body.Top, Is.EqualTo(bounds.Header?.Bottom ?? bounds.Root.Top).Within(1));
+            }
+            await layoutSample.Controls.GetByLabel("Composition", new() { Exact = true }).SelectOptionAsync("header-sidebar-body-footer");
+            await layoutSample.SetLengthAsync("HeaderHeight", "80px");
+            await layoutSample.SetLengthAsync("FooterHeight", "48px");
+            await Assertions.Expect(layoutSample.Header).ToHaveCSSAsync("height", "80px");
+            await Assertions.Expect(layoutSample.Footer).ToHaveCSSAsync("height", "48px");
+        }
+        await page.GotoAsync(url + "components/grid");
+        foreach (var gridTab in new[] { "admiral", "theme" })
+        {
+            await page.Locator($"[data-doc-tab={gridTab}]").ClickAsync();
+            var tiles = page.Locator(".grid-playground__tile");
+            await Assertions.Expect(tiles).ToHaveCountAsync(6);
+            for (var i = 0; i < 6; i++)
+            {
+                await Assertions.Expect(tiles.Nth(i)).ToHaveTextAsync((i + 1).ToString());
+            }
+        }
+        await page.Locator("[data-doc-tab=admiral]").ClickAsync();
+        var integration = page.Locator("#main-content a[href=layout]");
+        Assert.That(new Uri(new Uri(url), await integration.GetAttributeAsync("href")).AbsolutePath,
+            Is.EqualTo("/admiral-radzen/layout"));
+        await integration.ClickAsync();
+        var rulers = page.Locator(".admiral-grid-guide");
+        await Assertions.Expect(rulers).ToHaveCountAsync(2);
+        for (var i = 0; i < 2; i++)
+        {
+            await Assertions.Expect(rulers.Nth(i)).ToHaveCSSAsync("display", "grid");
+            await Assertions.Expect(rulers.Nth(i).Locator(".admiral-grid-guide__column:visible")).ToHaveCountAsync(width >= 1024 ? 12 : width >= 768 ? 8 : 4);
+            var ruler = await rulers.Nth(i).GetBoundsAsync();
+            Assert.That(ruler.X + ruler.Width, Is.LessThanOrEqualTo(width));
+            var columns = rulers.Nth(i).Locator(".admiral-grid-guide__column:visible");
+            Assert.That((await columns.First.GetBoundsAsync()).Width, Is.GreaterThan(0));
+            var last = await columns.Last.GetBoundsAsync();
+            Assert.That(last.X + last.Width, Is.LessThanOrEqualTo(ruler.X + ruler.Width + 1));
+        }
+        await page.ScreenshotAsync(new() { Path = $"{Output}/{width}-static-grid.png", FullPage = true });
 
         // Act: navigate through the searchable component catalog.
         var catalogToggle = page.GetByRole(

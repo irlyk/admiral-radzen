@@ -5,6 +5,15 @@
   font-family: inherit;
   justify-content: center;
   align-items: center;
+  position: relative;
+  width: 1em;
+  min-width: 1em;
+  height: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+  /* Keep Blazor's source text in the DOM without painting its ligature. */
+  text-indent: -9999px;
   mask: none !important;
   -webkit-mask: none !important;
 }
@@ -19,7 +28,10 @@
 
 .rzi-admiral-svg {
   display: block;
-  width: 1em;
-  height: 1em;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  text-indent: 0;
   flex: 0 0 auto;
 }

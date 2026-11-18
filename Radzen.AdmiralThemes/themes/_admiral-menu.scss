@@ -67,6 +67,49 @@
 .admiral-menu-item__shortcut { flex: 0 0 auto; margin-inline-start: 0.75rem; }
 .admiral-menu-item__divider { height: 1px; margin: 0.375rem 0; background: var(--rz-base-300); }
 
-.admiral-multi-button { display: inline-flex; }
+.admiral-multi-button { display: inline-flex; gap: 1px; }
 .admiral-multi-button > .admiral-button:first-child { border-start-end-radius: 0; border-end-end-radius: 0; }
-.admiral-multi-button .admiral-menu__trigger > .admiral-icon-button { border-start-start-radius: 0; border-end-start-radius: 0; }
+.admiral-multi-button .admiral-menu__trigger > .admiral-button { border-start-start-radius: 0; border-end-start-radius: 0; }
+.admiral-multi-button > .admiral-button:focus-visible,
+.admiral-multi-button__toggle:focus-visible {
+  outline-offset: -4px;
+  &.admiral-button--primary { outline-color: $admiral-button-neutral-00; }
+}
+.admiral-multi-button--secondary {
+  > .admiral-button { border-inline-end: 0; }
+  .admiral-multi-button__toggle { border-inline-start: 0; }
+  > .admiral-menu-root::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: -1px;
+    width: 1px;
+    background: $admiral-button-primary-60;
+  }
+  &.admiral-multi-button--disabled > .admiral-menu-root::before { background: $admiral-button-neutral-30; }
+}
+.admiral-multi-button__toggle[aria-expanded='true'] .admiral-icon,
+.admiral-text-button-menu__trigger [aria-expanded='true'] .admiral-text-button__content > .admiral-icon:last-child {
+  transform: rotate(180deg);
+}
+
+.admiral-tag-menu > .admiral-tag__text {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.admiral-tag-menu__label { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.admiral-tag-menu__chevron { flex: 0 0 auto; color: $admiral-button-neutral-50; }
+.admiral-tag-menu:disabled .admiral-tag-menu__chevron { color: $admiral-button-neutral-30; }
+.admiral-tag-menu[aria-expanded='true'] .admiral-tag-menu__chevron { transform: rotate(180deg); }
+// Preserve the status hue instead of replacing every background with neutral hover.
+.admiral-tag-menu { --admiral-tag-hover-background: #{$admiral-button-neutral-12}; }
+button.admiral-tag-menu:hover:not(:disabled) {
+  background: var(--admiral-tag-hover-background);
+}
+.admiral-tag-menu.admiral-tag--background {
+  &.admiral-tag--primary { --admiral-tag-hover-background: #{if($theme-dark, #162B67, #DDE9FF)}; }
+  &.admiral-tag--success { --admiral-tag-hover-background: #{if($theme-dark, #0E3B1E, #C3F4D3)}; }
+  &.admiral-tag--danger { --admiral-tag-hover-background: #{if($theme-dark, #571B1B, #FFDDDD)}; }
+  &.admiral-tag--warning { --admiral-tag-hover-background: #{if($theme-dark, #591C04, #FFDECE)}; }
+}

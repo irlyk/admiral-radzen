@@ -28,9 +28,12 @@ Radzen Blazor. Подключаются через NuGet и статически
 | --- | --- |
 | .NET SDK / целевая платформа | 10 / `net10.0` |
 | Radzen.Blazor | 12.0.6 |
-| [AdmiralRadzen.Components](https://www.nuget.org/packages/AdmiralRadzen.Components/2.0.0) | 2.0.0 |
-| [AdmiralRadzen.Themes](https://www.nuget.org/packages/AdmiralRadzen.Themes/2.0.0) | 2.0.0 |
-| [AdmiralRadzen.Icons](https://www.nuget.org/packages/AdmiralRadzen.Icons/2.0.0) | 2.0.0 |
+| [AdmiralRadzen.Components](https://www.nuget.org/packages/AdmiralRadzen.Components) | 2.1.0 |
+| [AdmiralRadzen.Themes](https://www.nuget.org/packages/AdmiralRadzen.Themes) | 2.0.1 |
+| [AdmiralRadzen.Icons](https://www.nuget.org/packages/AdmiralRadzen.Icons) | 2.0.1 |
+
+Версии соответствуют текущим исходникам. Состав и совместимость выпуска:
+[регресс, часть 1](docs/releases/2.1.0-part-1.md).
 
 Версии заданы в файлах `.csproj`. API, примеры и ограничения описаны в
 [справочнике компонентов](docs/components.md).
@@ -85,7 +88,7 @@ dotnet run --project samples/AdmiralConsumerSmoke/AdmiralConsumerSmoke.csproj `
 публичного источника можно использовать локальный каталог `artifacts/packages/admiral`:
 
 ```xml
-<PackageReference Include="AdmiralRadzen.Components" Version="2.0.0" />
+<PackageReference Include="AdmiralRadzen.Components" Version="2.1.0" />
 ```
 
 Он транзитивно подключает Radzen, тему и иконки. Имена NuGet-пакетов —

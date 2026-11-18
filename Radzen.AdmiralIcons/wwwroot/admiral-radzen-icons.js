@@ -90,7 +90,7 @@
   }
 
   function setInlineSvg(icon, name) {
-    if (icon.dataset.admiralIconLoaded === name) {
+    if (icon.dataset.admiralIconLoaded === name || icon.dataset.admiralIconLoading === name) {
       return;
     }
 
@@ -102,11 +102,18 @@
           return;
         }
 
-        icon.replaceChildren(svg);
+        // Preserve Blazor's text node: future parameter updates target that
+        // same node. Only the adapter-owned SVG may be replaced.
+        icon.querySelector(':scope > .rzi-admiral-svg')?.remove();
+        icon.appendChild(svg);
         icon.dataset.admiralIconLoaded = name;
         delete icon.dataset.admiralIconLoading;
       })
       .catch(function (error) {
+        if (icon.dataset.admiralIcon !== name) {
+          return;
+        }
+
         icon.dataset.admiralIconError = name;
         delete icon.dataset.admiralIconLoading;
         console.warn(error);
@@ -114,9 +121,20 @@
   }
 
   function normalizeIcon(icon) {
-    const value = (icon.textContent || '').trim();
+    const value = Array.from(icon.childNodes)
+      .filter(function (node) { return node.nodeType === 3; })
+      .map(function (node) { return node.textContent; })
+      .join('').trim();
 
     if (!value.startsWith(prefix)) {
+      if (icon.classList.contains('rzi-admiral')) {
+        icon.querySelector(':scope > .rzi-admiral-svg')?.remove();
+        icon.classList.remove('rzi-admiral');
+        delete icon.dataset.admiralIcon;
+        delete icon.dataset.admiralIconLoaded;
+        delete icon.dataset.admiralIconLoading;
+        delete icon.dataset.admiralIconError;
+      }
       return;
     }
 
@@ -127,8 +145,11 @@
     }
 
     icon.classList.add('rzi-admiral');
+    if (icon.dataset.admiralIcon !== name) {
+      delete icon.dataset.admiralIconLoading;
+      delete icon.dataset.admiralIconError;
+    }
     icon.dataset.admiralIcon = name;
-    icon.textContent = '';
     setInlineSvg(icon, name);
   }
 

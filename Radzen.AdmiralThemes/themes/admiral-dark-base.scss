@@ -668,7 +668,7 @@ $header-shadow: none !default;
 $footer-padding: 1rem !default;
 $footer-background-color: var(--rz-base-background-color) !default;
 $footer-border: var(--rz-border-width) solid var(--rz-base-200) !default;
-$footer-color: var(--rz-base-700) !default;
+$footer-color: var(--rz-text-secondary-color) !default;
 
 $card-padding: 1rem !default;
 $card-background-color: var(--rz-base-background-color) !default;
@@ -1029,7 +1029,7 @@ $panel-menu-item-3rd-level-hover-color: var(--rz-text-title-color) !default;
 $panel-menu-item-3rd-level-hover-background-color: #1F2024 !default;
 $panel-menu-item-3rd-level-active-color: var(--rz-primary) !default;
 $panel-menu-item-3rd-level-active-background-color: rgba($rz-white, 0.08) !default;
-$panel-menu-icon-color: var(--rz-base-600) !default;
+$panel-menu-icon-color: var(--rz-text-secondary-color) !default;
 $panel-menu-icon-margin-inline: 0 1rem !default;
 $panel-menu-icon-2nd-level-margin-inline: 0 0.625rem !default;
 
@@ -4423,6 +4423,7 @@ body:has(.admiral-drawer-backdrop--modal) .rz-body {
 // Admiral Tree M/S geometry and interaction layers.
 
 .rz-tree.admiral-tree {
+  --admiral-tree-toggle-space: 2.5rem;
   width: min(100%, 48rem);
   overflow: hidden;
   color: var(--rz-text-title-color);
@@ -4440,6 +4441,12 @@ body:has(.admiral-drawer-backdrop--modal) .rz-body {
   padding-inline-start: 1rem;
   background-color: transparent;
   transition: var(--rz-transition-all);
+}
+
+// Radzen omits the toggle element on leaves; reserve its column at every depth.
+.rz-tree.admiral-tree .rz-treenode-content:not([aria-expanded])::before {
+  content: '';
+  flex: 0 0 var(--admiral-tree-toggle-space);
 }
 
 .rz-tree.admiral-tree .rz-treenode-children > .rz-treenode > .rz-treenode-content {
@@ -4532,6 +4539,7 @@ body:has(.admiral-drawer-backdrop--modal) .rz-body {
 }
 
 .rz-tree.admiral-tree--small {
+  --admiral-tree-toggle-space: 2.25rem;
   font-size: 0.875rem;
   line-height: 1rem;
 }
@@ -5910,7 +5918,9 @@ ul.rz-profile-menu {
 
 // Admiral button disabled states use dark neutral tokens instead of opacity.
 
-.rz-button.rz-state-disabled {
+// Keep class-based Radzen actions; native state also beats variant + shade rules.
+.rz-button.rz-state-disabled,
+.rz-button.rz-state-disabled:disabled {
   &.rz-variant-filled {
     background-color: var(--rz-base-800);
     border-color: var(--rz-base-800);
@@ -5938,6 +5948,7 @@ ul.rz-profile-menu {
 @import 'admiral-navigation';
 @import 'admiral-pagination';
 @import 'admiral-input-field';
+@import 'admiral-grid';
 @import 'admiral-layout';
 @import 'admiral-menu';
 @import 'admiral-tree-select';

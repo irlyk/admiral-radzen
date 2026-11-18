@@ -370,6 +370,8 @@ public sealed class ConsumerTests : BrowserTest
                 await page.GetByTestId("select-callback-log").InnerTextAsync(),
                 Is.EqualTo("single:Kazan"),
                 $"{theme}: controlled single selection emits one callback after updating the value");
+            // The model callback can finish before Radzen closes the portalled popup.
+            await Assertions.Expect(popup).ToBeHiddenAsync();
 
             // Act
             await select.ClickAsync();

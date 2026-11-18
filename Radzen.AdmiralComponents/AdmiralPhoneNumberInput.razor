@@ -1,11 +1,12 @@
 <div class="@CssClass" data-status="@StatusName">
+    @* Radzen puts PopupStyle on the persistent list wrapper, including when filtering returns no options. *@
     <AdmiralSelect TValue="string" TItem="AdmiralPhoneCountry"
                    Value="@SelectedIso3" ValueChanged="@ChangeCountryAsync"
                    Data="@EffectiveCountries" TextSelector="@(country => country.Name)"
                    ValueSelector="@(country => country.Iso3)" Size="@Size" Status="@Status"
                    AllowFiltering="@AllowCountrySearch" Disabled="@(Disabled || Loading)" ReadOnly="@ReadOnly"
                    FilterPlaceholder="@CountrySearchPlaceholder"
-                   PopupStyle="max-height: min(18rem, calc(100dvh - 4rem)); min-width: min(18rem, calc(100vw - 1rem)); background: var(--rz-panel-background-color, var(--rz-base-background-color))">
+                   PopupStyle="--admiral-phone-country-popup: 1; max-height: min(18rem, calc(100dvh - 4rem)); min-width: min(18rem, calc(100vw - 1rem)); background: var(--rz-panel-background-color, var(--rz-base-background-color))">
         <SelectedTemplate Context="country">
             @{ var flagIcon = SelectedCountry?.FlagIcon ?? country.FlagIcon; }
             <span class="admiral-phone-input__country-value">

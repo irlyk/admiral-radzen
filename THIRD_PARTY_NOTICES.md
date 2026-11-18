@@ -7,6 +7,7 @@
 | Материал | Использование | Источник | Лицензия |
 | --- | --- | --- | --- |
 | Radzen.Blazor | Зависимость `AdmiralRadzen.Components` | [Radzen Blazor](https://github.com/radzenhq/radzen-blazor) | MIT; Radzen Ltd |
+| AdmiralDS React UI / Flags | Названия стран и телефонные коды в `AdmiralRadzen.Components` | [React UI](https://github.com/AdmiralDS/react-ui/blob/4721c1b326ac17fb7b08e915adfce5b8dced0664/src/components/input/PhoneNumberInput/constants.ts), [Flags 3.1.3](https://www.npmjs.com/package/@admiral-ds/flags/v/3.1.3) | MIT; AdmiralDS team |
 | AdmiralDS Icons | SVG в `AdmiralRadzen.Icons` | [AdmiralDS/icons](https://github.com/AdmiralDS/icons) | MIT; AdmiralDS team |
 
 Стандартные иконки Radzen используют шрифт Material Symbols Outlined из
@@ -50,7 +51,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-#### AdmiralDS Icons — MIT
+#### AdmiralDS Icons / React UI / Flags — MIT
 
 Источник: https://github.com/AdmiralDS/icons/blob/bbe1c1409f24de8b3ffe6e56e6168b0fea75ebac/LICENSE
 

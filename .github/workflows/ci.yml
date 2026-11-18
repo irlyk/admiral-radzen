@@ -258,6 +258,8 @@ jobs:
         include:
           - group: audit
             filter: 'TestCategory=Audit'
+          - group: buttons
+            filter: 'TestCategory=Button'
           - group: interactions
             filter: 'TestCategory=Checkbox|TestCategory=Interactions|TestCategory=Combo|TestCategory=Drawer|TestCategory=Hint|TestCategory=Slider'
           - group: components

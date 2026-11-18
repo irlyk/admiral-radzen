@@ -1,10 +1,47 @@
 using Admiral.Playwright.Pages;
+using Admiral.Playwright.Pages.Components.PhoneNumber;
 
 namespace Admiral.Playwright.Visual;
 
 [Category("Visual")]
 public sealed class PhonePopupTests : GalleryTest
 {
+    [TestCase("admiral", "ru", 1440)]
+    [TestCase("admiral-dark", "en", 1440)]
+    [TestCase("admiral", "en", 240)]
+    [TestCase("admiral-dark", "ru", 320)]
+    public async Task EmptyCountrySearchKeepsPopupWidthAndCanRecoverAsync(string theme, string culture, int width)
+    {
+        await StartPageAsync(theme, culture, width, 800);
+        var phone = new PhoneNumberPage(Page);
+        await phone.InitializeAsync();
+        var select = phone.Country;
+        await select.ClickAsync();
+        // Keep the locator independent of option content: empty search removes all options.
+        var popup = phone.Popup;
+        var search = phone.Search;
+        var initial = await popup.GetBoundsAsync();
+        Assert.That(initial.Width, Is.EqualTo(width <= 320 ? width - 16 : 288).Within(1));
+
+        await search.FillAsync("zzzz-no-country");
+        await Assertions.Expect(popup.Locator(".rz-dropdown-item")).ToHaveCountAsync(0);
+        var empty = await popup.GetBoundsAsync();
+        Assert.That(empty.Width, Is.EqualTo(initial.Width).Within(1), "Empty search keeps the country popup width");
+        Assert.That(empty.X, Is.GreaterThanOrEqualTo(0));
+        Assert.That(empty.X + empty.Width, Is.LessThanOrEqualTo(width + 1));
+        await Assertions.Expect(search).ToBeFocusedAsync();
+        await popup.ScreenshotAsync(new() { Path = $"{Output}/empty-{theme}-{culture}-{width}.png" });
+
+        await search.FillAsync("United Kingdom");
+        await Assertions.Expect(popup.Locator(".rz-dropdown-item")).ToHaveCountAsync(1);
+        Assert.That((await popup.GetBoundsAsync()).Width, Is.EqualTo(initial.Width).Within(1));
+        await search.FillAsync("");
+        await Assertions.Expect(popup.Locator(".rz-dropdown-item")).ToHaveCountAsync(249);
+        await popup.GetByText("United Kingdom", new() { Exact = true }).ClickAsync();
+        await Assertions.Expect(popup).ToBeHiddenAsync();
+        await Assertions.Expect(select).ToHaveAttributeAsync("aria-label", "United Kingdom");
+    }
+
     [TestCase("admiral", TestName = "Visual: Phone country popup stays within viewport and responds to keyboard / admiral")]
     [TestCase("admiral-dark", TestName = "Visual: Phone country popup stays within viewport and responds to keyboard / admiral-dark")]
     public async Task PhoneCountryPopupStaysWithinViewportAndRespondsToKeyboardAsync(string theme)

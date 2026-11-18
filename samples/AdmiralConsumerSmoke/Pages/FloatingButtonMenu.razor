@@ -7,6 +7,7 @@
         Description="Основная плавающая кнопка раскрывает вертикальный стек вторичных действий."
         SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-floatingbutton-floatingbuttonmenu--docs" />
 
+    <a href="components/floating-button">FloatingButton</a>
     <ComponentDocTabs @bind-Value="tab" />
     @if (tab == ComponentDocTabs.Api)
     {
@@ -14,6 +15,7 @@
         <ApiReference Title="AdmiralFloatingButtonMenu" Rows="@AdmiralRows" />
         <section class="admiral-component-page__section">
             <h2>@SmokeL["Behavior"]</h2>
+            <p>@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "Без привязки IsOpen задаёт начальное состояние и принимает внешние изменения. Перерисовка родителя с прежним значением не сбрасывает локальное переключение." : "Without binding, IsOpen supplies the initial state and accepts external changes. Parent renders with the same value preserve local toggles.")</p>
             <p><code>@("@bind-IsOpen")</code> @SmokeL["управляет меню извне; без привязки оно управляет открытием самостоятельно. Открытое меню закрывается основной кнопкой или кликом вне группы. Дочерние действия всегда вторичные и по умолчанию сохраняют меню открытым, как в исходном Admiral."]</p>
             <p>@SmokeL["Размер M — 40 px, XL — 56 px. Для фиксированного меню используются отступы 28 px от края, в мобильном режиме — 16 px. Рекомендуется не более пяти действий."]</p>
         </section>
@@ -26,12 +28,16 @@
             <div class="admiral-component-playground">
                 <div class="admiral-component-playground__preview">
                     <RadzenFabMenu Icon="admiral:system/email-outline" ToggleIcon="admiral:service/close-outline"
-                                   AriaLabel="@SmokeL["Действия"]" @bind-IsOpen="radzenOpen" Size="ButtonSize.Large"
+                                   AriaLabel="@SmokeL["Действия"]" @bind-IsOpen="radzenOpen" Size="ButtonSize.Large" Disabled="@disabled"
                                    ButtonStyle="ButtonStyle.Primary" Gap="0.75rem">
-                        <RadzenFabMenuItem Icon="admiral:system/delete-outline" Text="@SmokeL["Удалить"]" Click="OnDelete" />
+                        <RadzenFabMenuItem Icon="admiral:system/delete-outline" Text="@SmokeL["Удалить"]" Disabled="@itemDisabled" Click="OnDelete" />
                         <RadzenFabMenuItem Icon="admiral:system/print-outline" Text="@SmokeL["Печать"]" Click="OnPrint" />
                     </RadzenFabMenu>
                     <span class="admiral-component-page__result" aria-live="polite">@SmokeL["Открыто:"] @radzenOpen · @SmokeL["Последнее действие:"] @lastAction</span>
+                </div>
+                <div class="admiral-component-controls">
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="itemDisabled" /> Item Disabled</label>
                 </div>
             </div>
             <CopyableRazorExample Code="@ThemeCode" Title="@SmokeL["Razor · прямой Radzen API"]" />
@@ -48,7 +54,7 @@
                                                Size="@size" Appearance="@appearance" Fixed="@fixedPosition"
                                                Mobile="@mobile" Disabled="@disabled"
                                                @bind-IsOpen="open" OpenChanged="OnOpenChanged">
-                        <AdmiralFloatingButtonMenuItem Icon="admiral:system/delete-outline" AriaLabel="@SmokeL["Удалить"]" Click="OnDelete" />
+                        <AdmiralFloatingButtonMenuItem Icon="admiral:system/delete-outline" AriaLabel="@SmokeL["Удалить"]" Disabled="@itemDisabled" Click="OnDelete" />
                         <AdmiralFloatingButtonMenuItem Icon="admiral:system/print-outline" AriaLabel="@SmokeL["Печать"]" Click="OnPrint" />
                     </AdmiralFloatingButtonMenu>
                     <span class="admiral-component-page__result" aria-live="polite">@SmokeL["Открыто:"] @open · @SmokeL["Изменений:"] @openChanges · @SmokeL["Последнее действие:"] @lastAction</span>
@@ -60,6 +66,7 @@
                     <label class="admiral-component-controls__check"><input type="checkbox" @bind="mobile" /> @SmokeL["Mobile offset"]</label>
                     <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
                     <label class="admiral-component-controls__check"><input type="checkbox" @bind="open" /> IsOpen</label>
+                    <label class="admiral-component-controls__check"><input type="checkbox" @bind="itemDisabled" /> Item Disabled</label>
                 </div>
             </div>
             <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
@@ -68,11 +75,12 @@
             <h2>@SmokeL["Unbound state"]</h2>
             <p>@SmokeL["Второй экземпляр управляет открытием самостоятельно; здесь можно проверить закрытие при клике снаружи."]</p>
             <div style="min-height: 11rem; display: flex; align-items: end">
-                <AdmiralFloatingButtonMenu Icon="admiral:system/email-outline" AriaLabel="@SmokeL["Быстрые действия"]" Fixed="false">
+                <AdmiralFloatingButtonMenu Icon="admiral:system/email-outline" AriaLabel="@SmokeL["Быстрые действия"]" Fixed="false" IsOpen="@unboundOpen">
                     <AdmiralFloatingButtonMenuItem Icon="admiral:system/delete-outline" AriaLabel="@SmokeL["Удалить"]" Click="OnDelete" />
                     <AdmiralFloatingButtonMenuItem Icon="admiral:system/print-outline" AriaLabel="@SmokeL["Печать"]" Click="OnPrint" />
                 </AdmiralFloatingButtonMenu>
             </div>
+            <label><input type="checkbox" @bind="unboundOpen" /> IsOpen · unbound</label>
         </section>
     }
 </div>
@@ -81,7 +89,7 @@
     private string tab = ComponentDocTabs.Admiral;
     private AdmiralFloatingButtonSize size = AdmiralFloatingButtonSize.Medium;
     private AdmiralFloatingButtonAppearance appearance = AdmiralFloatingButtonAppearance.Primary;
-    private bool open, fixedPosition, mobile, disabled, radzenOpen;
+    private bool open, fixedPosition, mobile, disabled, radzenOpen, itemDisabled, unboundOpen;
     private int openChanges;
     private string lastAction = "—";
     private void OnOpenChanged(bool _) => openChanges++;

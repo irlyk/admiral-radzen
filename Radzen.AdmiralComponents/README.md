@@ -1,13 +1,13 @@
 # AdmiralRadzen.Components
 
 Компоненты Admiral Design System для Blazor на .NET 10. Обёртки используют
-Radzen.Blazor 12.0.6, тему Admiral 2.0.0 и иконки 2.0.0.
+Radzen.Blazor 12.0.6, тему Admiral 2.0.1 и иконки 2.0.1.
 Изменений исходников Radzen не требуется.
 
 ## Подключение
 
 ```xml
-<PackageReference Include="AdmiralRadzen.Components" Version="2.0.0" />
+<PackageReference Include="AdmiralRadzen.Components" Version="2.1.0" />
 ```
 
 Зависимости подключаются транзитивно. Для разработки пакеты также можно собрать

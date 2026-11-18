@@ -665,14 +665,15 @@ $admiral-input-success-hover: if($theme-dark, #1FA951, #128238);
   visibility: hidden;
 }
 
-.rz-dropdown-panel:has(.admiral-phone-input__country-option) {
+// Identify the country popup by its persistent wrapper, including an empty search result.
+.rz-dropdown-panel:has(> .rz-dropdown-items-wrapper[style*="--admiral-phone-country-popup"]) {
   width: 18rem !important;
   min-width: 18rem !important;
   background: var(--rz-panel-background-color, var(--rz-base-background-color));
 }
 
 @media (max-width: 20rem) {
-  .rz-dropdown-panel:has(.admiral-phone-input__country-option) {
+  .rz-dropdown-panel:has(> .rz-dropdown-items-wrapper[style*="--admiral-phone-country-popup"]) {
     left: 0.5rem !important;
     width: calc(100vw - 1rem) !important;
     min-width: 0 !important;

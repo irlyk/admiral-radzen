@@ -1,0 +1,116 @@
+<div class="admiral-component-playground" data-testid="menu-action-playground">
+    <div class="admiral-component-playground__preview @(appearance == "White" ? "admiral-menu-action-preview--white" : null)">
+        @if (ThemeOnly)
+        {
+            <RadzenSplitButton Text="@Label" ButtonAriaLabel="@Label" OpenAriaLabel="More actions"
+                Icon="@(Kind == "Tag" ? null : "admiral:documents/copy-outline")" DropDownIcon="admiral:system/chevron-down-outline"
+                AlwaysOpenPopup="@(Kind != "Multi")" Size="@NativeSize" Variant="@NativeVariant" ButtonStyle="@NativeStyle"
+                Disabled="@disabled" IsBusy="@loading" Click="DirectAction" ButtonContent="@(Kind == "Tag" ? BadgeContent : null)">
+                <ChildContent>
+                    <RadzenSplitButtonItem Text="Unavailable" Value="blocked" Disabled="@itemDisabled" />
+                    <RadzenSplitButtonItem Text="Print" Value="print" />
+                </ChildContent>
+            </RadzenSplitButton>
+        }
+        else if (Kind == "Multi")
+        {
+            <AdmiralMultiButton Text="@Label" IconStart="admiral:documents/copy-outline" Dimension="@ButtonDimension" Appearance="@ButtonAppearance"
+                Disabled="@disabled" DisabledMainButton="@disabledMain" Loading="@loading" Skeleton="@skeleton" Click="MainAction">@Items</AdmiralMultiButton>
+        }
+        else if (Kind == "Text")
+        {
+            <AdmiralTextButtonMenu Text="@Label" IconStart="admiral:documents/copy-outline" Dimension="@TextDimension"
+                Appearance="@TextAppearance" Disabled="@disabled" Loading="@loading" Skeleton="@skeleton">@Items</AdmiralTextButtonMenu>
+        }
+        else
+        {
+            <AdmiralTagMenu Text="@Label" Kind="@tagKind" Size="@TagSize" StatusViaBackground="@statusBackground" Disabled="@disabled">@Items</AdmiralTagMenu>
+        }
+        <output aria-live="polite">Main: @mainCount · Actions: @actions · Last: @lastAction · Checked: @pinned</output>
+    </div>
+    <div class="admiral-component-controls">
+        <label><span>Dimension</span><select @bind="dimension"><option>S</option><option>M</option>@if (Kind == "Multi" || ThemeOnly) { <option>L</option><option>Xl</option> }</select></label>
+        @if (Kind != "Tag")
+        {
+            <label><span>Appearance</span><select @bind="appearance"><option>Primary</option><option>Secondary</option>@if (Kind == "Multi") { @foreach (var value in Enum.GetValues<AdmiralButtonAppearance>().Where(x => x is not (AdmiralButtonAppearance.Primary or AdmiralButtonAppearance.Secondary))) { <option>@value</option> } }</select></label>
+        }
+        else
+        {
+            <label><span>Kind</span><select @bind="tagKind">@foreach (var value in Enum.GetValues<AdmiralTagKind>()) { <option>@value</option> }</select></label>
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="statusBackground" /> StatusViaBackground</label>
+        }
+        <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+        @if (!ThemeOnly && Kind != "Tag")
+        {
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="skeleton" /> Skeleton</label>
+            @if (Kind == "Multi") { <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabledMain" /> DisabledMainButton</label> }
+        }
+        <label class="admiral-component-controls__check"><input type="checkbox" @bind="itemDisabled" /> Item Disabled</label>
+        @if (Kind != "Tag")
+        {
+            <label class="admiral-component-controls__check"><input type="checkbox" @bind="loading" /> @(ThemeOnly ? "IsBusy" : "Loading")</label>
+        }
+    </div>
+</div>
+@if (ThemeOnly)
+{
+    <p>@T("Это прямой RadzenSplitButton. AlwaysOpenPopup открывает меню основной кнопкой; две кнопки и размеры принадлежат Radzen API. IsBusy блокирует обе половины; стандартный шаблон может менять ширину. Пункты Radzen не поддерживают KeepOpen и CheckedChanged.", "This is a direct RadzenSplitButton. AlwaysOpenPopup opens the menu from its main button; its two buttons and dimensions follow Radzen API. IsBusy blocks both halves; its default template may change the width. Radzen items do not support KeepOpen or CheckedChanged.")</p>
+}
+<CopyableRazorExample Code="@(ThemeOnly ? DirectCode : AdmiralCode)" Title="Razor" />
+@code {
+    [Parameter] public string Kind { get; set; } = "Multi";
+    [Parameter] public bool ThemeOnly { get; set; }
+    private string dimension = "M", appearance = "Primary", lastAction = "—";
+    private bool disabled, disabledMain, skeleton, loading, itemDisabled = true, statusBackground, pinned;
+    private int mainCount, actions;
+    private AdmiralTagKind tagKind = AdmiralTagKind.Primary;
+    private string Label => Kind == "Tag" ? "Status" : "Actions";
+    private AdmiralButtonDimension ButtonDimension => Enum.Parse<AdmiralButtonDimension>(dimension);
+    private AdmiralTextButtonDimension TextDimension => dimension == "S" ? AdmiralTextButtonDimension.S : AdmiralTextButtonDimension.M;
+    private AdmiralTagSize TagSize => dimension == "S" ? AdmiralTagSize.Small : AdmiralTagSize.Medium;
+    private AdmiralButtonAppearance ButtonAppearance => Enum.Parse<AdmiralButtonAppearance>(appearance);
+    private AdmiralTextButtonAppearance TextAppearance => appearance == "Secondary" ? AdmiralTextButtonAppearance.Secondary : AdmiralTextButtonAppearance.Primary;
+    private ButtonSize NativeSize => dimension switch { "S" => ButtonSize.ExtraSmall, "L" => ButtonSize.Medium, "Xl" => ButtonSize.Large, _ => ButtonSize.Small };
+    private Variant NativeVariant => Kind != "Multi" || appearance == "Ghost" ? Variant.Text : appearance is "Secondary" or "White" ? Variant.Outlined : Variant.Filled;
+    private ButtonStyle NativeStyle => appearance switch { "Danger" => ButtonStyle.Danger, "Success" => ButtonStyle.Success, "Tertiary" => ButtonStyle.Base, "White" => ButtonStyle.Light, _ => ButtonStyle.Primary };
+    private BadgeStyle NativeBadge => tagKind switch { AdmiralTagKind.Success => BadgeStyle.Success, AdmiralTagKind.Danger => BadgeStyle.Danger, AdmiralTagKind.Warning => BadgeStyle.Warning, AdmiralTagKind.Neutral => BadgeStyle.Secondary, _ => BadgeStyle.Primary };
+    private void MainAction(MouseEventArgs _) => mainCount++;
+    private void DirectAction(RadzenSplitButtonItem? item) { if (item is null) mainCount++; else { actions++; lastAction = item.Value?.ToString() ?? "—"; } }
+    private void SelectAction(string action) { actions++; lastAction = action; }
+    private RenderFragment BadgeContent => @<RadzenBadge Text="Status" BadgeStyle="@NativeBadge" />;
+    private RenderFragment Items => @<text>
+        <AdmiralMenuItem Text="Unavailable" Disabled="@itemDisabled" Click="@(() => SelectAction("blocked"))" />
+        <AdmiralMenuItem Text="Print" Click="@(() => SelectAction("print"))" />
+        <AdmiralMenuItem Text="Pin" Checkable="true" @bind-Checked="pinned" KeepOpen="true" />
+        <AdmiralMenuItem Text="Disable trigger" KeepOpen="true" Click="@(() => disabled = true)" />
+    </text>;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private string AdmiralCode => $$"""
+        <Admiral{{(Kind == "Multi" ? "MultiButton" : Kind == "Text" ? "TextButtonMenu" : "TagMenu")}} Text="{{Label}}" Disabled="@disabled"{{(Kind == "Multi" ? " Click=\"MainAction\"" : "")}}>
+            <AdmiralMenuItem Text="Print" Click="@(() => result = "print")" />
+            <AdmiralMenuItem Text="Unavailable" Disabled="true" />
+        </Admiral{{(Kind == "Multi" ? "MultiButton" : Kind == "Text" ? "TextButtonMenu" : "TagMenu")}}>
+        <output aria-live="polite">@result</output>
+        @code {
+            private bool disabled;
+            private string result = "—";
+            {{(Kind == "Multi" ? "private void MainAction(MouseEventArgs _) => result = \"main\";" : "")}}
+        }
+        """;
+    private string DirectCode => $$"""
+        <RadzenSplitButton Text="{{Label}}" OpenAriaLabel="More actions" AlwaysOpenPopup="{{(Kind != "Multi").ToString().ToLowerInvariant()}}"
+            Variant="Variant.{{(Kind == "Multi" ? "Filled" : "Text")}}" Size="ButtonSize.Small" Click="OnAction" Disabled="@disabled">
+            {{(Kind == "Tag" ? "<ButtonContent><RadzenBadge Text=\"Status\" BadgeStyle=\"BadgeStyle.Primary\" /></ButtonContent>" : "")}}
+            <ChildContent>
+                <RadzenSplitButtonItem Text="Print" Value="print" />
+                <RadzenSplitButtonItem Text="Unavailable" Disabled="true" />
+            </ChildContent>
+        </RadzenSplitButton>
+        <output aria-live="polite">@result</output>
+        @code {
+            private bool disabled;
+            private string result = "—";
+            private void OnAction(RadzenSplitButtonItem? item) => result = item?.Value?.ToString() ?? "main";
+        }
+        """;
+}

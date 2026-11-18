@@ -4,7 +4,7 @@
     <AdmiralGalleryPageHeader Title="IconButtonGroup"
         Description="Joined icon actions with one shared size and an accessible group name."
         SourceUrl="https://admiralds.github.io/react-ui/?path=/docs/admiral-2-1-iconbuttongroup--docs" />
-    <p><a href="/components/button-groups">@T("Страница ButtonGroup", "ButtonGroup page")</a></p>
+    <p><a href="components/button-groups">@T("Страница ButtonGroup", "ButtonGroup page")</a></p>
     <ComponentDocTabs @bind-Value="tab" />
     @if (tab == ComponentDocTabs.Api)
     {
@@ -18,36 +18,25 @@
     }
     else if (tab == ComponentDocTabs.Theme)
     {
-        <section class="admiral-component-page__section">
-            <h2>RadzenStack + RadzenButton</h2>
-            <p>@T("Прямые RadzenButton получают оформление темы, но RadzenStack не создаёт общий контур и размер AdmiralIconButtonGroup автоматически.",
-                "Direct RadzenButton controls receive theme styling, but RadzenStack does not create the joined border or shared AdmiralIconButtonGroup size automatically.")</p>
-            <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
-                <RadzenStack Orientation="Orientation.Horizontal" Gap="0" role="group" aria-label="Document actions">
-                    <RadzenButton Icon="admiral:system/print-outline" aria-label="Print" Variant="Variant.Text" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" class="admiral-icon-button admiral-icon-button--secondary" Click="@(_ => directResult = "Print")" />
-                    <RadzenButton Icon="admiral:system/edit-outline" aria-label="Edit" Variant="Variant.Text" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" class="admiral-icon-button admiral-icon-button--secondary" Click="@(_ => directResult = "Edit")" />
-                </RadzenStack>
-                <output aria-live="polite">@T("Последнее действие Radzen", "Last Radzen action"): @directResult</output>
-            </div></div>
-            <CopyableRazorExample Code="@DirectCode" Title="Razor · direct Radzen" />
-        </section>
+        <ButtonGroupThemePlayground IconOnly="true" />
     }
     else
     {
         <section class="admiral-component-page__section">
             <h2>@T("Интерактивный пример", "Interactive playground")</h2>
             <div class="admiral-component-playground"><div class="admiral-component-playground__preview">
-                <AdmiralIconButtonGroup Dimension="@dimension" AriaLabel="Document actions">
-                    <AdmiralIconButton Icon="admiral:system/print-outline" AriaLabel="Print" Appearance="@appearance" Click="@(_ => result = "Print")" />
-                    <AdmiralIconButton Icon="admiral:system/edit-outline" AriaLabel="Edit" Appearance="@appearance" Loading="@loading" Click="@(_ => result = "Edit")" />
-                    <AdmiralIconButton Icon="admiral:service/close-outline" AriaLabel="Close" Appearance="@appearance" Disabled="@disabled" Click="@(_ => result = "Close")" />
-                </AdmiralIconButtonGroup>
-                <output aria-live="polite">@T("Последнее действие", "Last action"): @result</output>
+                <div class="admiral-button-group-viewport"><AdmiralIconButtonGroup Dimension="@dimension" AriaLabel="Document actions">
+                    <AdmiralIconButton Icon="admiral:system/print-outline" AriaLabel="Print" Appearance="@appearance" Click="@(_ => InvokeAction("Print"))" />
+                    <AdmiralIconButton Icon="admiral:system/edit-outline" AriaLabel="Edit" Appearance="@appearance" Loading="@loading" Skeleton="@skeleton" Click="@(_ => InvokeAction("Edit"))" />
+                    <AdmiralIconButton Icon="admiral:service/close-outline" AriaLabel="Close" Appearance="@appearance" Disabled="@disabled" Click="@(_ => InvokeAction("Close"))" />
+                </AdmiralIconButtonGroup></div>
+                <output aria-live="polite">@T("Последнее действие", "Last action"): @result · @T("Нажатия", "Clicks"): @clicks</output>
             </div><div class="admiral-component-controls">
                 <label><span>@SmokeL["Dimension"]</span><select @bind="dimension">@foreach (var value in Enum.GetValues<AdmiralButtonDimension>()) { <option value="@value">@value</option> }</select></label>
                 <label><span>@SmokeL["Appearance"]</span><select @bind="appearance">@foreach (var value in Enum.GetValues<AdmiralIconButtonAppearance>()) { <option value="@value">@value</option> }</select></label>
                 <label class="admiral-component-controls__check"><input type="checkbox" @bind="loading" /> Loading</label>
-                <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> Disabled</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="disabled" /> @T("Disabled · последняя", "Disabled · last")</label>
+                <label class="admiral-component-controls__check"><input type="checkbox" @bind="skeleton" /> Skeleton</label>
             </div></div>
             <CopyableRazorExample Code="@AdmiralCode" Title="Razor · Admiral API" />
         </section>
@@ -56,11 +45,11 @@
             <div class="admiral-button-group-gallery">
                 @foreach (var size in Enum.GetValues<AdmiralButtonDimension>())
                 {
-                    <AdmiralIconButtonGroup Dimension="@size" AriaLabel="Example actions">
+                    <div class="admiral-button-group-viewport"><AdmiralIconButtonGroup Dimension="@size" AriaLabel="Example actions">
                         <AdmiralIconButton Icon="admiral:system/print-outline" AriaLabel="Print" />
                         <AdmiralIconButton Icon="admiral:system/edit-outline" AriaLabel="Loading" Loading="true" />
                         <AdmiralIconButton Icon="admiral:service/close-outline" AriaLabel="Disabled" Disabled="true" />
-                    </AdmiralIconButtonGroup>
+                    </AdmiralIconButtonGroup></div>
                 }
             </div>
         </section>
@@ -71,8 +60,10 @@
     private string tab = ComponentDocTabs.Admiral;
     private AdmiralButtonDimension dimension = AdmiralButtonDimension.M;
     private AdmiralIconButtonAppearance appearance = AdmiralIconButtonAppearance.Secondary;
-    private bool loading, disabled;
-    private string result = "—", directResult = "—";
+    private bool loading, disabled, skeleton;
+    private string result = "—";
+    private int clicks;
+    private void InvokeAction(string action) { result = action; clicks++; }
     private static readonly IReadOnlyList<ApiReference.Entry> ApiRows = [
         new("ChildContent", "RenderFragment? / null", "AdmiralIconButton children; each requires AriaLabel."),
         new("Dimension", "AdmiralButtonDimension / Xl", "Shared S, M, L or Xl size."),
@@ -83,18 +74,6 @@
             <AdmiralIconButton Icon="admiral:system/print-outline" AriaLabel="Print" Click="@(_ => result = "Print")" />
             <AdmiralIconButton Icon="admiral:system/edit-outline" AriaLabel="Edit" Click="@(_ => result = "Edit")" />
         </AdmiralIconButtonGroup>
-        <output aria-live="polite">Last action: @result</output>
-        @code { private string result = "—"; }
-        """;
-    private const string DirectCode = """
-        <RadzenStack Orientation="Orientation.Horizontal" Gap="0" role="group" aria-label="Document actions">
-            <RadzenButton Icon="admiral:system/print-outline" aria-label="Print" Variant="Variant.Text"
-                          ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small"
-                          class="admiral-icon-button admiral-icon-button--secondary" Click="@(_ => result = "Print")" />
-            <RadzenButton Icon="admiral:system/edit-outline" aria-label="Edit" Variant="Variant.Text"
-                          ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small"
-                          class="admiral-icon-button admiral-icon-button--secondary" Click="@(_ => result = "Edit")" />
-        </RadzenStack>
         <output aria-live="polite">Last action: @result</output>
         @code { private string result = "—"; }
         """;

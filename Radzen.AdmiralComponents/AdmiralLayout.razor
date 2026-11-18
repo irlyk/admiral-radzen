@@ -3,21 +3,27 @@
         @if (Header is not null)
         {
             <RadzenHeader class="@HeaderCssClass" Style="@HeaderStyle">
-                <AdmiralGrid Class="admiral-layout__header-grid">@Header</AdmiralGrid>
+                <AdmiralGrid Class="admiral-layout__header-grid"><div class="admiral-layout__header-content">@Header</div></AdmiralGrid>
             </RadzenHeader>
         }
 
-        @if (HasSideMenu)
+        @if (HasSideMenuContent)
         {
             <RadzenSidebar id="@SideMenuId" class="@SideMenuCssClass" Style="@SideMenuStyle" Responsive="false" Expanded="true"
                            aria-label="@SideMenuAriaLabel">
-                <div class="admiral-layout__side-menu-inner">@SideMenu</div>
+                <div class="admiral-layout__side-menu-inner" @onkeydown="OnKeyDownAsync" @onkeydown:stopPropagation="MenuOpen">@SideMenu</div>
             </RadzenSidebar>
-            <button type="button" class="admiral-layout__overlay" aria-label="@CloseMenuAriaLabel" @onclick="CloseMenu"></button>
+            <button type="button" class="admiral-layout__overlay" tabindex="-1" aria-label="@CloseMenuAriaLabel" @onclick="CloseMenu"></button>
         }
 
         <RadzenBody class="@BodyCssClass" Style="@BodyStyle">
-            <AdmiralGrid Class="admiral-layout__body-grid">@(Content ?? ChildContent)</AdmiralGrid>
+            <AdmiralGrid Class="@(UseBodyGrid ? "admiral-layout__body-grid" : "admiral-layout__body-grid admiral-layout__body-grid--plain")">@(Content ?? ChildContent)</AdmiralGrid>
         </RadzenBody>
+        @if (Footer is not null)
+        {
+            <RadzenFooter class="@FooterCssClass" Style="@FooterStyle">
+                <AdmiralGrid Class="admiral-layout__footer-grid"><div class="admiral-layout__footer-content">@Footer</div></AdmiralGrid>
+            </RadzenFooter>
+        }
     </CascadingValue>
 </RadzenLayout>

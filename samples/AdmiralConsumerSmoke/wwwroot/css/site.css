@@ -239,11 +239,8 @@ body {
     margin: 0;
 }
 
-.admiral-grid-guide {
-    display: contents;
-}
-
-.admiral-grid-guide__column {
+.admiral-grid-guide__column,
+.grid-playground__tile {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -254,7 +251,7 @@ body {
     font-weight: 550;
 }
 
-.admiral-grid-guide__column:nth-child(n + 5) {
+.admiral-grid-guide > .admiral-grid-guide__column:nth-child(n + 5) {
     display: none;
 }
 
@@ -275,9 +272,8 @@ body {
     color: var(--rz-text-secondary-color);
 }
 
-.admiral-grid-page__alternative {
-    margin-inline: -1.5rem;
-}
+.grid-playground__tile { min-height: 3rem; }
+.admiral-grid-page__alternative { margin: 0; }
 
 @media (max-width: 29.999rem) {
     .admiral-consumer-toolbar {
@@ -313,17 +309,17 @@ body {
 }
 
 @media (min-width: 48rem) {
-    .admiral-grid-guide__column:nth-child(n + 5) {
+    .admiral-grid-guide > .admiral-grid-guide__column:nth-child(n + 5) {
         display: flex;
     }
 
-    .admiral-grid-guide__column:nth-child(n + 9) {
+    .admiral-grid-guide > .admiral-grid-guide__column:nth-child(n + 9) {
         display: none;
     }
 }
 
 @media (min-width: 64rem) {
-    .admiral-grid-guide__column:nth-child(n + 9) {
+    .admiral-grid-guide > .admiral-grid-guide__column:nth-child(n + 9) {
         display: flex;
     }
 }
@@ -929,7 +925,9 @@ body {
 
 .admiral-button-group-gallery {
     display: grid;
-    justify-items: start;
+    grid-template-columns: minmax(0, 1fr);
+    min-width: 0;
+    width: 100%;
     gap: 1rem;
 }
 
@@ -1313,3 +1311,46 @@ h1[tabindex="-1"]:focus { outline: none; }
 .admiral-color-utilities { display: grid; gap: 1rem; margin-block-end: 1rem; }
 .admiral-color-utilities > div { padding: 1rem; border: 1px solid var(--rz-base-300); border-radius: var(--rz-border-radius); overflow-wrap: anywhere; }
 .admiral-color-utilities > .rz-background-color-primary-lighter { color: var(--rz-on-primary-lighter); }
+
+/* Preserve joined action widths and leave room for their 2px focus outline + offset. */
+.admiral-button-group-viewport {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 4px;
+    overflow-x: auto;
+}
+
+.admiral-button-group-viewport > :is(.admiral-button-group, .admiral-icon-button-group) {
+    flex: none;
+    max-width: none;
+    margin-inline: auto;
+}
+
+/* Static white actions need a dark sample canvas without changing popup tokens. */
+.admiral-component-playground__preview.admiral-menu-action-preview--white {
+    color: #E3E5E7;
+    background: #1B1C1D;
+}
+
+.layout-playground__frame {
+    min-width: 0;
+    width: 100%;
+    border: 1px solid var(--rz-base-200);
+    border-radius: var(--rz-border-radius-2);
+    overflow: hidden;
+}
+.layout-playground__panel {
+    min-height: 3rem;
+    padding: .5rem;
+    background: var(--rz-primary-lighter);
+    color: var(--rz-text-color);
+}
+.layout-playground__long-content { min-width: 0; }
+
+.admiral-component-playground.admiral-component-playground--full-width {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}

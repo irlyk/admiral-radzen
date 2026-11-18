@@ -1,0 +1,30 @@
+@page "/components/tag-menu"
+<PageTitle>Admiral TagMenu</PageTitle>
+<div class="admiral-component-page">
+    <AdmiralGalleryPageHeader Title="TagMenu" Description="@T("Статусный тег с выпадающим меню.", "Status tag with a dropdown menu.")"
+        SourceUrl="https://github.com/AdmiralDS/react-ui/blob/4721c1b326ac17fb7b08e915adfce5b8dced0664/src/components/TagMenu/index.tsx" />
+    <ComponentDocTabs @bind-Value="tab" />
+    @if (tab == ComponentDocTabs.Api)
+    {
+        <p>@T("Индикатор справа показывает раскрытие; статус остаётся слева или задаётся фоном. Loading и Skeleton в API TagMenu отсутствуют.", "The right indicator shows expansion; status stays on the left or uses background color. TagMenu has no Loading or Skeleton parameters.")</p>
+        <ApiReference Title="AdmiralTagMenu" Rows="@Rows" />
+    }
+    else
+    {
+        <MenuActionPlayground Kind="Tag" ThemeOnly="@(tab == ComponentDocTabs.Theme)" @key="tab" />
+    }
+    <a href="components/menu">Menu / MenuButton / OverflowMenu</a>
+</div>
+@code {
+    private string tab = ComponentDocTabs.Admiral;
+    private static string T(string ru, string en) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? ru : en;
+    private static readonly IReadOnlyList<ApiReference.Entry> Rows = [
+        new("Text / ChildContent", "string / RenderFragment?", "Trigger label and AdmiralMenuItem children."),
+        new("Disabled", "bool; false", "Blocks opening the menu."),
+        new("Kind / Size", "AdmiralTagKind / AdmiralTagSize; Neutral / Medium", "Five status kinds; Small is 20px, Medium is 24px."),
+        new("StatusViaBackground", "bool; false", "Status dot or colored background and border."),
+        new("AriaLabel", "string; Tag menu", "Accessible menu name."),
+        new("MenuClass", "string?; null", "Additional menu class."),
+        new("AdmiralMenuItem", "Click / Disabled / Checkable / CheckedChanged / KeepOpen", "Items own their actions and selection state.")
+    ];
+}

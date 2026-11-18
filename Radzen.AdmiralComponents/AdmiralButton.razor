@@ -11,7 +11,7 @@
               @attributes="AdditionalAttributes">
     @if (Loading)
     {
-        <span class="admiral-button__spinner">
+        <span class="admiral-button__spinner" aria-hidden="true">
             <AdmiralSpinner Size="@SpinnerSize" Inverse="@SpinnerInverse" AriaLabel="Loading" />
         </span>
     }
