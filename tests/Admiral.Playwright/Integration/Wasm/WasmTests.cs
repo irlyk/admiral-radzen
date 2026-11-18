@@ -1,3 +1,5 @@
+using Admiral.Playwright.Pages.Components.Layout;
+
 namespace Admiral.Playwright.Integration.Wasm;
 
 [Category("Wasm")]
@@ -13,6 +15,10 @@ public sealed class WasmTests : BrowserTest
         var routes = new[]
         {
             "/",
+            "/components/layout",
+            "/components/grid",
+            "/layout",
+            "/regression/layout",
             "/components/button",
             "/components/button-groups",
             "/components/icon-button-group",
@@ -157,7 +163,7 @@ public sealed class WasmTests : BrowserTest
 
             // Assert
             await page.Locator("h1").First.WaitForAsync();
-            var content = (route == "/basics/colors") ? "[data-color-token=\"--rz-primary\"]" : ((route == "/guide/integration") ? ".docs-code-example" : ".admiral-component-playground");
+            var content = route is "/layout" or "/regression/layout" ? ".admiral-grid-guide" : (route == "/basics/colors") ? "[data-color-token=\"--rz-primary\"]" : ((route == "/guide/integration") ? ".docs-code-example" : ".admiral-component-playground");
 
             Assert.That(
                 await page.Locator(content).CountAsync() > 0,
@@ -297,6 +303,59 @@ public sealed class WasmTests : BrowserTest
             Assert.That(new Uri(new Uri(url), await related.GetAttributeAsync("href")).AbsolutePath,
                 Is.EqualTo("/admiral-radzen/components/menu"));
         }
+
+        // Optional layout sections must also compose without the smoke host's shell.
+        await page.GotoAsync(url + "components/layout");
+        foreach (var nativeLayout in new[] { false, true })
+        {
+            await page.Locator(nativeLayout ? "[data-doc-tab=theme]" : "[data-doc-tab=admiral]").ClickAsync();
+            var layoutSample = new LayoutPage(page, nativeLayout);
+            foreach (var composition in new[] { "body", "header-body", "header-sidebar-body", "sidebar-body", "header-sidebar-body-footer", "sidebar-body-footer", "body-footer" })
+            {
+                await layoutSample.Controls.GetByLabel("Composition", new() { Exact = true }).SelectOptionAsync(composition);
+                await Assertions.Expect(layoutSample.Demo.Locator("output")).ToContainTextAsync(composition);
+                await Assertions.Expect(layoutSample.Footer).ToHaveCountAsync(composition.Contains("footer") ? 1 : 0);
+                await Assertions.Expect(layoutSample.Header).ToHaveCountAsync(composition.Contains("header") ? 1 : 0);
+                await Assertions.Expect(layoutSample.Sidebar).ToHaveCountAsync(composition.Contains("sidebar") ? 1 : 0);
+                var bounds = await layoutSample.MeasureAsync();
+                Assert.That(bounds.Root.Height, Is.EqualTo(480).Within(1));
+                Assert.That(bounds.Body.Bottom, Is.EqualTo(bounds.Footer?.Top ?? bounds.Root.Bottom).Within(1));
+                Assert.That(bounds.Body.Top, Is.EqualTo(bounds.Header?.Bottom ?? bounds.Root.Top).Within(1));
+            }
+            await layoutSample.Controls.GetByLabel("Composition", new() { Exact = true }).SelectOptionAsync("header-sidebar-body-footer");
+            await layoutSample.SetLengthAsync("HeaderHeight", "80px");
+            await layoutSample.SetLengthAsync("FooterHeight", "48px");
+            await Assertions.Expect(layoutSample.Header).ToHaveCSSAsync("height", "80px");
+            await Assertions.Expect(layoutSample.Footer).ToHaveCSSAsync("height", "48px");
+        }
+        await page.GotoAsync(url + "components/grid");
+        foreach (var gridTab in new[] { "admiral", "theme" })
+        {
+            await page.Locator($"[data-doc-tab={gridTab}]").ClickAsync();
+            var tiles = page.Locator(".grid-playground__tile");
+            await Assertions.Expect(tiles).ToHaveCountAsync(6);
+            for (var i = 0; i < 6; i++)
+                await Assertions.Expect(tiles.Nth(i)).ToHaveTextAsync((i + 1).ToString());
+        }
+        await page.Locator("[data-doc-tab=admiral]").ClickAsync();
+        var integration = page.Locator("#main-content a[href=layout]");
+        Assert.That(new Uri(new Uri(url), await integration.GetAttributeAsync("href")).AbsolutePath,
+            Is.EqualTo("/admiral-radzen/layout"));
+        await integration.ClickAsync();
+        var rulers = page.Locator(".admiral-grid-guide");
+        await Assertions.Expect(rulers).ToHaveCountAsync(2);
+        for (var i = 0; i < 2; i++)
+        {
+            await Assertions.Expect(rulers.Nth(i)).ToHaveCSSAsync("display", "grid");
+            await Assertions.Expect(rulers.Nth(i).Locator(".admiral-grid-guide__column:visible")).ToHaveCountAsync(width >= 1024 ? 12 : width >= 768 ? 8 : 4);
+            var ruler = await rulers.Nth(i).GetBoundsAsync();
+            Assert.That(ruler.X + ruler.Width, Is.LessThanOrEqualTo(width));
+            var columns = rulers.Nth(i).Locator(".admiral-grid-guide__column:visible");
+            Assert.That((await columns.First.GetBoundsAsync()).Width, Is.GreaterThan(0));
+            var last = await columns.Last.GetBoundsAsync();
+            Assert.That(last.X + last.Width, Is.LessThanOrEqualTo(ruler.X + ruler.Width + 1));
+        }
+        await page.ScreenshotAsync(new() { Path = $"{Output}/{width}-static-grid.png", FullPage = true });
 
         // Act: navigate through the searchable component catalog.
         var catalogToggle = page.GetByRole(
