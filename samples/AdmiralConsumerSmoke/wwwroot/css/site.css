@@ -1331,3 +1331,9 @@ h1[tabindex="-1"]:focus { outline: none; }
     max-width: none;
     margin-inline: auto;
 }
+
+/* Static white actions need a dark sample canvas without changing popup tokens. */
+.admiral-component-playground__preview.admiral-menu-action-preview--white {
+    color: #E3E5E7;
+    background: #1B1C1D;
+}

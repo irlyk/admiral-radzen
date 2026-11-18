@@ -1,10 +1,10 @@
-<span class="admiral-multi-button">
+<span class="@CssClass">
     <AdmiralButton Text="@Text" IconStart="@IconStart" Appearance="@Appearance"
-                   Dimension="@Dimension" Disabled="@Disabled" Loading="@Loading" Click="Click" />
-    <AdmiralMenu AriaLabel="@MenuAriaLabel" Class="@MenuClass">
+                   Dimension="@Dimension" Disabled="@(Disabled || DisabledMainButton)" Loading="@Loading" Skeleton="@Skeleton" Click="Click" />
+    <AdmiralMenu AriaLabel="@MenuAriaLabel" Class="@MenuClass" Disabled="@MenuDisabled">
         <Trigger>
-            <AdmiralIconButton Icon="admiral:system/chevron-down-outline" AriaLabel="@MenuAriaLabel"
-                               Appearance="@IconAppearance" Dimension="@Dimension" Disabled="@Disabled" />
+            <AdmiralButton IconStart="admiral:system/chevron-down-outline" Text="@MenuAriaLabel" DisplayAsSquare="true"
+                           Appearance="@Appearance" Dimension="@Dimension" Disabled="@MenuDisabled" Skeleton="@Skeleton" Class="admiral-multi-button__toggle" />
         </Trigger>
         <ChildContent>@ChildContent</ChildContent>
     </AdmiralMenu>
@@ -16,11 +16,13 @@
     [Parameter] public AdmiralButtonAppearance Appearance { get; set; }
     [Parameter] public AdmiralButtonDimension Dimension { get; set; } = AdmiralButtonDimension.Xl;
     [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool DisabledMainButton { get; set; }
     [Parameter] public bool Loading { get; set; }
+    [Parameter] public bool Skeleton { get; set; }
     [Parameter] public EventCallback<MouseEventArgs> Click { get; set; }
     [Parameter] public string MenuAriaLabel { get; set; } = "More actions";
     [Parameter] public string? MenuClass { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
-    private AdmiralIconButtonAppearance IconAppearance => Appearance == AdmiralButtonAppearance.Secondary
-        ? AdmiralIconButtonAppearance.Secondary : AdmiralIconButtonAppearance.Primary;
+    private bool MenuDisabled => Disabled || Loading || Skeleton;
+    private string CssClass => $"admiral-multi-button admiral-multi-button--{Appearance.ToString().ToLowerInvariant()}{(MenuDisabled ? " admiral-multi-button--disabled" : "")}";
 }

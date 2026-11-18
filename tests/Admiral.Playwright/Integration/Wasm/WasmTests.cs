@@ -16,6 +16,7 @@ public sealed class WasmTests : BrowserTest
             "/components/button",
             "/components/button-groups",
             "/components/icon-button-group",
+            "/components/multi-button",
             "/components/floating-button",
             "/components/floating-button-menu",
             "/components/checkbox",
@@ -271,6 +272,29 @@ public sealed class WasmTests : BrowserTest
         await page.GetByLabel("Disabled", new() { Exact = true }).CheckAsync();
         await Assertions.Expect(floatingDirect).ToBeDisabledAsync();
         await Assertions.Expect(floatingDirect.Locator(".admiral-floating-button__content")).ToHaveCSSAsync("color", "rgb(81, 83, 87)");
+
+        // The three menu-action pages share working examples with the package consumer.
+        foreach (var route in new[] { "multi-button" })
+        {
+            await page.GotoAsync(url + "components/" + route);
+            var demo = page.GetByTestId("menu-action-playground");
+            var trigger = demo.Locator(".admiral-menu__trigger button");
+            await trigger.ClickAsync();
+            var menu = page.Locator(".admiral-menu__popup");
+            await menu.GetByRole(AriaRole.Menuitem, new() { Name = "Print", Exact = true }).ClickAsync();
+            await Assertions.Expect(menu).ToHaveCountAsync(0);
+            await Assertions.Expect(demo.Locator("output")).ToContainTextAsync("Actions: 1 · Last: print");
+            await page.Locator("[data-doc-tab=theme]").ClickAsync();
+            await demo.Locator(".rz-splitbutton-menubutton").ClickAsync();
+            var native = page.Locator(".rz-splitbutton-menu:visible");
+            await native.GetByRole(AriaRole.Menuitem, new() { Name = "Print", Exact = true }).ClickAsync();
+            await Assertions.Expect(demo.Locator("output")).ToContainTextAsync("Actions: 1 · Last: print");
+            await page.GetByLabel("Disabled", new() { Exact = true }).CheckAsync();
+            await Assertions.Expect(demo.Locator(".rz-splitbutton-menubutton")).ToBeDisabledAsync();
+            var related = page.Locator("#main-content a[href='components/menu']");
+            Assert.That(new Uri(new Uri(url), await related.GetAttributeAsync("href")).AbsolutePath,
+                Is.EqualTo("/admiral-radzen/components/menu"));
+        }
 
         // Act: navigate through the searchable component catalog.
         var catalogToggle = page.GetByRole(

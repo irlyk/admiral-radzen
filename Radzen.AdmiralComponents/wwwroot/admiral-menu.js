@@ -70,13 +70,34 @@ export function connectOutsideClick(trigger, popupId, dotnet) {
         const popup = document.getElementById(popupId);
         if (!popup || !root) return;
 
-        popup.style.insetInlineStart = '0px';
-        const width = popup.getBoundingClientRect().width;
-        const rootLeft = root.getBoundingClientRect().left;
+        const rootBounds = root.getBoundingClientRect();
         const viewportLeft = window.visualViewport?.offsetLeft ?? 0;
         const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
-        const left = Math.max(viewportLeft + 16, Math.min(rootLeft, viewportLeft + viewportWidth - width - 16));
-        popup.style.insetInlineStart = `${left - rootLeft}px`;
+        const viewportTop = window.visualViewport?.offsetTop ?? 0;
+        const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+        let topLimit = viewportTop + 16;
+        let bottomLimit = viewportTop + viewportHeight - 16;
+        // Absolute popups are also clipped by scroll containers. Keep the menu
+        // inside their visible area, including a layout's body below its header.
+        for (let parent = root.parentElement; parent; parent = parent.parentElement) {
+            if (!/(auto|scroll|hidden|clip)/.test(getComputedStyle(parent).overflowY)) continue;
+            const bounds = parent.getBoundingClientRect();
+            topLimit = Math.max(topLimit, bounds.top + 16);
+            bottomLimit = Math.min(bottomLimit, bounds.bottom - 16);
+        }
+        popup.style.maxHeight = `${Math.max(0, bottomLimit - topLimit)}px`;
+        popup.style.overflowY = 'auto';
+        const width = popup.getBoundingClientRect().width;
+        const left = Math.max(viewportLeft + 16, Math.min(rootBounds.left, viewportLeft + viewportWidth - width - 16));
+        const rtl = getComputedStyle(root).direction === 'rtl';
+        popup.style.insetInlineStart = `${rtl ? rootBounds.right - left - width : left - rootBounds.left}px`;
+        const below = Math.max(0, bottomLimit - rootBounds.bottom - 8);
+        const above = Math.max(0, rootBounds.top - topLimit - 8);
+        const openAbove = popup.scrollHeight > below && above > below;
+        popup.style.maxHeight = `${openAbove ? above : below}px`;
+        const height = popup.getBoundingClientRect().height;
+        const top = openAbove ? rootBounds.top - 8 - height : rootBounds.bottom + 8;
+        popup.style.insetBlockStart = `${Math.max(topLimit, Math.min(top, bottomLimit - height)) - rootBounds.top}px`;
     };
     const schedulePosition = () => {
         cancelAnimationFrame(frame);
@@ -101,6 +122,7 @@ export function connectOutsideClick(trigger, popupId, dotnet) {
     window.visualViewport?.addEventListener('resize', schedulePosition);
     const observer = new ResizeObserver(schedulePosition);
     if (root) observer.observe(root);
+    observer.observe(popup);
     observer.observe(document.documentElement);
     registrations.set(popupId, { popup, keydown, handler, schedulePosition, observer, cancelFrame: () => cancelAnimationFrame(frame) });
 }

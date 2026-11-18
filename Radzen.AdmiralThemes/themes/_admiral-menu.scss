@@ -67,6 +67,27 @@
 .admiral-menu-item__shortcut { flex: 0 0 auto; margin-inline-start: 0.75rem; }
 .admiral-menu-item__divider { height: 1px; margin: 0.375rem 0; background: var(--rz-base-300); }
 
-.admiral-multi-button { display: inline-flex; }
+.admiral-multi-button { display: inline-flex; gap: 1px; }
 .admiral-multi-button > .admiral-button:first-child { border-start-end-radius: 0; border-end-end-radius: 0; }
-.admiral-multi-button .admiral-menu__trigger > .admiral-icon-button { border-start-start-radius: 0; border-end-start-radius: 0; }
+.admiral-multi-button .admiral-menu__trigger > .admiral-button { border-start-start-radius: 0; border-end-start-radius: 0; }
+.admiral-multi-button > .admiral-button:focus-visible,
+.admiral-multi-button__toggle:focus-visible {
+  outline-offset: -4px;
+  &.admiral-button--primary { outline-color: $admiral-button-neutral-00; }
+}
+.admiral-multi-button--secondary {
+  > .admiral-button { border-inline-end: 0; }
+  .admiral-multi-button__toggle { border-inline-start: 0; }
+  > .admiral-menu-root::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: -1px;
+    width: 1px;
+    background: $admiral-button-primary-60;
+  }
+  &.admiral-multi-button--disabled > .admiral-menu-root::before { background: $admiral-button-neutral-30; }
+}
+.admiral-multi-button__toggle[aria-expanded='true'] .admiral-icon {
+  transform: rotate(180deg);
+}

@@ -30,6 +30,7 @@ internal static class DocsCatalog
             new("TextButton", "components/text-button"),
             new("ButtonGroup", "components/button-groups"),
             new("IconButtonGroup", "components/icon-button-group"),
+            new("MultiButton", "components/multi-button"),
             new("FloatingButton", "components/floating-button"),
             new("FloatingButtonMenu", "components/floating-button-menu"),
             new("ActionBar / GroupActionsPane", "components/action-bar"),

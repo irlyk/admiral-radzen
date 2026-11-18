@@ -25,6 +25,9 @@ public partial class AdmiralMenu : IAsyncDisposable
     public bool MatchTriggerWidth { get; set; }
 
     [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
     public string AriaLabel { get; set; } = "Menu";
 
     [Parameter]
@@ -51,7 +54,16 @@ public partial class AdmiralMenu : IAsyncDisposable
         };
     }
 
-    private Task ToggleAsync() => Open ? CloseAsync() : OpenAsync();
+    private Task ToggleAsync() => Disabled ? Task.CompletedTask : Open ? CloseAsync() : OpenAsync();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Disabled && Open)
+        {
+            Open = false;
+            await OpenChanged.InvokeAsync(false);
+        }
+    }
 
     private async Task OpenAsync()
     {
@@ -64,7 +76,7 @@ public partial class AdmiralMenu : IAsyncDisposable
     {
         if (firstRender)
         {
-            module = await JS.InvokeAsync<IJSObjectReference>("import", "./_content/Radzen.Admiral.Components/admiral-menu.js?v=20261008");
+            module = await JS.InvokeAsync<IJSObjectReference>("import", "./_content/Radzen.Admiral.Components/admiral-menu.js?v=20261118");
             dotNetReference = DotNetObjectReference.Create(this);
             await module.InvokeVoidAsync("connectTrigger", anchor, popupId);
         }
