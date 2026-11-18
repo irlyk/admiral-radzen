@@ -10,7 +10,7 @@ public sealed class MenuActionExamplesTests : GalleryTest
     {
         await StartPageAsync("admiral", "en");
         var compiler = await SnippetCompiler.CreateAsync();
-        foreach (var route in new[] { "/components/multi-button", "/components/text-button-menu" })
+        foreach (var route in new[] { "/components/multi-button", "/components/text-button-menu", "/components/tag-menu" })
         {
             foreach (var themeOnly in new[] { false, true })
             {

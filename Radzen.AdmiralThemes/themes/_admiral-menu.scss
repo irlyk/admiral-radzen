@@ -92,3 +92,24 @@
 .admiral-text-button-menu__trigger [aria-expanded='true'] .admiral-text-button__content > .admiral-icon:last-child {
   transform: rotate(180deg);
 }
+
+.admiral-tag-menu > .admiral-tag__text {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.admiral-tag-menu__label { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.admiral-tag-menu__chevron { flex: 0 0 auto; color: $admiral-button-neutral-50; }
+.admiral-tag-menu:disabled .admiral-tag-menu__chevron { color: $admiral-button-neutral-30; }
+.admiral-tag-menu[aria-expanded='true'] .admiral-tag-menu__chevron { transform: rotate(180deg); }
+// Preserve the status hue instead of replacing every background with neutral hover.
+.admiral-tag-menu { --admiral-tag-hover-background: #{$admiral-button-neutral-12}; }
+button.admiral-tag-menu:hover:not(:disabled) {
+  background: var(--admiral-tag-hover-background);
+}
+.admiral-tag-menu.admiral-tag--background {
+  &.admiral-tag--primary { --admiral-tag-hover-background: #{if($theme-dark, #162B67, #DDE9FF)}; }
+  &.admiral-tag--success { --admiral-tag-hover-background: #{if($theme-dark, #0E3B1E, #C3F4D3)}; }
+  &.admiral-tag--danger { --admiral-tag-hover-background: #{if($theme-dark, #571B1B, #FFDDDD)}; }
+  &.admiral-tag--warning { --admiral-tag-hover-background: #{if($theme-dark, #591C04, #FFDECE)}; }
+}
