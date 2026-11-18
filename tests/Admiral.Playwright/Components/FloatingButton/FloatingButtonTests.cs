@@ -67,14 +67,31 @@ public sealed class FloatingButtonTests : GalleryTest
         await Assertions.Expect(gallery.Button).ToHaveCSSAsync("bottom", "0px");
         await gallery.SetAsync("Fixed", true);
         await Assertions.Expect(gallery.Button).ToHaveCSSAsync("position", "fixed");
-        var mobile = await gallery.Button.GetBoundsAsync();
-        Assert.That(390 - mobile.X - mobile.Width, Is.EqualTo(16).Within(1));
-        Assert.That(800 - mobile.Y - mobile.Height, Is.EqualTo(16).Within(1));
-        await Page.Locator(".admiral-layout__body").EvaluateAsync("e => e.scrollTop = 0");
-        var scrolled = await gallery.Button.GetBoundsAsync();
-        Assert.That(scrolled.X, Is.EqualTo(mobile.X).Within(1));
-        Assert.That(scrolled.Y, Is.EqualTo(mobile.Y).Within(1));
-        await Page.ScreenshotAsync(new() { Path = $"{Output}/{theme}-{themeOnly}-mobile-fixed.png" });
+        await Assertions.Expect(gallery.Button).ToHaveCSSAsync("right", "16px");
+        await Assertions.Expect(gallery.Button).ToHaveCSSAsync("bottom", "16px");
+        foreach (var gutter in new[] { "auto", "stable" })
+        {
+            await Page.AddStyleTagAsync(new() { Content = $"html {{ scrollbar-gutter: {gutter}; }}" });
+            // Measure the viewport independently of the demo's ancestors. Classic
+            // scrollbar gutters reduce this area; overlay scrollbars do not.
+            var viewport = await Page.ReadSnapshotAsync<DomRectangle>("""
+                () => {
+                  const probe = document.createElement('div');
+                  probe.style.cssText = 'position:fixed;inset:0;visibility:hidden;pointer-events:none';
+                  document.documentElement.appendChild(probe);
+                  try { return probe.getBoundingClientRect().toJSON(); }
+                  finally { probe.remove(); }
+                }
+                """);
+            var mobile = await gallery.Button.GetBoundsAsync();
+            Assert.That(viewport.Right - mobile.X - mobile.Width, Is.EqualTo(16).Within(1));
+            Assert.That(viewport.Bottom - mobile.Y - mobile.Height, Is.EqualTo(16).Within(1));
+            await Page.Locator(".admiral-layout__body").EvaluateAsync("e => e.scrollTop = 0");
+            var scrolled = await gallery.Button.GetBoundsAsync();
+            Assert.That(scrolled.X, Is.EqualTo(mobile.X).Within(1));
+            Assert.That(scrolled.Y, Is.EqualTo(mobile.Y).Within(1));
+            await Page.ScreenshotAsync(new() { Path = $"{Output}/{theme}-{themeOnly}-{gutter}-mobile-fixed.png" });
+        }
         await gallery.SetAsync("Mobile", false);
         await Assertions.Expect(gallery.Button).ToHaveCSSAsync("right", "28px");
         await Assertions.Expect(gallery.Button).ToHaveCSSAsync("bottom", "28px");
